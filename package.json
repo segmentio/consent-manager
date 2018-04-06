@@ -1,0 +1,82 @@
+{
+  "name": "consent-manager",
+  "version": "0.0.0",
+  "description": "Project description.",
+  "keywords": [],
+  "repository": "segmentio/consent-manager",
+  "license": "ISC",
+  "private": true,
+  "main": "commonjs/index.js",
+  "module": "esm/index.js",
+  "sideEffects": false,
+  "files": [
+    "commonjs",
+    "esm"
+  ],
+  "scripts": {
+    "test": "xo",
+    "prepublishOnly": "yarn run build",
+    "precommit": "lint-staged",
+    "dev": "start-storybook -p 9009",
+    "build-commonjs": "BABEL_ENV=commonjs babel src --out-dir commonjs",
+    "build-esm": "BABEL_ENV=esm babel src --out-dir esm",
+    "build": "yarn run build-commonjs && yarn run build-esm"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.1"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.4.0",
+    "ava": "^0.25.0",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "eslint-config-xo-react": "^0.16.0",
+    "eslint-plugin-react": "^7.7.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.4",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "size-limit": "^0.17.0",
+    "xo": "^0.20.3"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  },
+  "xo": {
+    "parser": "babel-eslint",
+    "extends": "xo-react",
+    "envs": [
+      "node",
+      "browser"
+    ],
+    "prettier": true,
+    "space": true,
+    "semicolon": false
+  },
+  "lint-staged": {
+    "*.js": [
+      "xo --fix",
+      "git add"
+    ]
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
+  "size-limit": [
+    {
+      "path": "esm/index.js",
+      "limit": "10 KB"
+    }
+  ]
+}
