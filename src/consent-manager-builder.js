@@ -11,12 +11,12 @@ export default class ConsentManagerBuilder extends Component {
     children: PropTypes.func.isRequired,
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
-    // TODO shouldEnforceConsent: PropTypes.func,
+    shouldEnforceConsent: PropTypes.func,
   }
 
   static defaultProps = {
     otherWriteKeys: [],
-    // TODO shouldEnforceConsent: () => Promise.resolve(true),
+    shouldEnforceConsent: () => Promise.resolve(true),
   }
 
   constructor() {
@@ -46,15 +46,19 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   async componentDidMount() {
-    const {writeKey, otherWriteKeys} = this.props
+    const {writeKey, otherWriteKeys, shouldEnforceConsent} = this.props
     const preferences = loadPreferences()
 
-    const destinationsRequests = [fetchDestinations(writeKey)]
-    for (const otherWriteKey of otherWriteKeys) {
-      destinationsRequests.push(fetchDestinations(otherWriteKey))
-    }
-
     try {
+      if (!await shouldEnforceConsent()) {
+        return
+      }
+
+      const destinationsRequests = [fetchDestinations(writeKey)]
+      for (const otherWriteKey of otherWriteKeys) {
+        destinationsRequests.push(fetchDestinations(otherWriteKey))
+      }
+
       let destinations = flatten(await Promise.all(destinationsRequests))
 
       destinations = sortBy(destinations, ['id'])
@@ -62,6 +66,7 @@ export default class ConsentManagerBuilder extends Component {
 
       this.setState({isLoading: false, destinations, preferences})
     } catch (error) {
+      // TODO: handle errors properly
       console.error(error)
     }
   }
