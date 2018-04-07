@@ -45,30 +45,31 @@ export default class ConsentManagerBuilder extends Component {
     })
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    // TODO: handle errors properly
+    this.load().catch(error => console.error(error))
+  }
+
+  load = async () => {
     const {writeKey, otherWriteKeys, shouldEnforceConsent} = this.props
+
+    if (!await shouldEnforceConsent()) {
+      return
+    }
+
+    const destinationsRequests = [fetchDestinations(writeKey)]
+    for (const otherWriteKey of otherWriteKeys) {
+      destinationsRequests.push(fetchDestinations(otherWriteKey))
+    }
+
+    let destinations = flatten(await Promise.all(destinationsRequests))
+
+    destinations = sortBy(destinations, ['id'])
+    destinations = sortedUniqBy(destinations, 'id')
+
     const preferences = loadPreferences()
 
-    try {
-      if (!await shouldEnforceConsent()) {
-        return
-      }
-
-      const destinationsRequests = [fetchDestinations(writeKey)]
-      for (const otherWriteKey of otherWriteKeys) {
-        destinationsRequests.push(fetchDestinations(otherWriteKey))
-      }
-
-      let destinations = flatten(await Promise.all(destinationsRequests))
-
-      destinations = sortBy(destinations, ['id'])
-      destinations = sortedUniqBy(destinations, 'id')
-
-      this.setState({isLoading: false, destinations, preferences})
-    } catch (error) {
-      // TODO: handle errors properly
-      console.error(error)
-    }
+    this.setState({isLoading: false, destinations, preferences})
   }
 
   handleSetPreferences = preferences => {
