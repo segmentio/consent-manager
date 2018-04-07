@@ -1,8 +1,6 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
-import flatten from 'lodash.flatten'
-import sortedUniqBy from 'lodash.sorteduniqby'
-import sortBy from 'lodash.sortby'
+import {flatten, sortedUniqBy, sortBy} from 'lodash'
 import {loadPreferences, savePreferences} from './preferences'
 import fetchDestinations from './fetch-destinations'
 

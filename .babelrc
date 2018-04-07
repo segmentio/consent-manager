@@ -1,5 +1,5 @@
 {
-  "plugins": ["transform-runtime"],
+  "plugins": ["transform-runtime", "lodash"],
   "sourceMaps": "inline",
   "env": {
     // Workaround Babel 6's weird config inheritance by not having any root
