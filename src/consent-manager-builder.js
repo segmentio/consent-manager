@@ -44,6 +44,7 @@ export default class ConsentManagerBuilder extends Component {
       newDestinations,
       preferences,
       setPreferences: this.handleSetPreferences,
+      resetPreferences: this.handleResetPreferences,
       saveConsent: this.handleSaveConsent,
     })
   }
@@ -55,11 +56,12 @@ export default class ConsentManagerBuilder extends Component {
 
   load = async () => {
     const {writeKey, otherWriteKeys, shouldEnforceConsent} = this.props
-    const preferences = loadPreferences()
 
     if (!await shouldEnforceConsent()) {
       return
     }
+
+    const preferences = loadPreferences()
 
     const destinationsRequests = [fetchDestinations(writeKey)]
     for (const otherWriteKey of otherWriteKeys) {
@@ -92,6 +94,10 @@ export default class ConsentManagerBuilder extends Component {
         }),
       }
     })
+  }
+
+  handleResetPreferences = () => {
+    this.setState({preferences: loadPreferences()})
   }
 
   handleSaveConsent = newPreferences => {
