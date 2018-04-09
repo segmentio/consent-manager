@@ -1,4 +1,4 @@
-export default function doNotTrack() {
+export function doNotTrack() {
   let doNotTrackValue =
     navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack
 
@@ -17,4 +17,16 @@ export default function doNotTrack() {
     return false
   }
   return null
+}
+
+export function getNewDestinations({destinations, preferences}) {
+  const newDestinations = []
+
+  for (const destination of destinations) {
+    if (!preferences[destination.id]) {
+      newDestinations.push(destination)
+    }
+  }
+
+  return newDestinations
 }

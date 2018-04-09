@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {flatten, sortedUniqBy, sortBy} from 'lodash'
 import {loadPreferences, savePreferences} from './preferences'
 import fetchDestinations from './fetch-destinations'
+import {getNewDestinations} from './utils'
 
 export default class ConsentManagerBuilder extends Component {
   static displayName = 'ConsentManagerBuilder'
@@ -16,7 +17,7 @@ export default class ConsentManagerBuilder extends Component {
 
   static defaultProps = {
     otherWriteKeys: [],
-    shouldEnforceConsent: () => Promise.resolve(true),
+    shouldEnforceConsent: () => true,
   }
 
   constructor() {
@@ -24,14 +25,15 @@ export default class ConsentManagerBuilder extends Component {
 
     this.state = {
       isLoading: true,
-      destinations: null,
-      preferences: null,
+      destinations: [],
+      newDestinations: [],
+      preferences: {},
     }
   }
 
   render() {
     const {children} = this.props
-    const {isLoading, destinations, preferences} = this.state
+    const {isLoading, destinations, preferences, newDestinations} = this.state
 
     if (isLoading) {
       return null
@@ -39,6 +41,7 @@ export default class ConsentManagerBuilder extends Component {
 
     return children({
       destinations,
+      newDestinations,
       preferences,
       setPreferences: this.handleSetPreferences,
       saveConsent: this.handleSaveConsent,
@@ -47,11 +50,12 @@ export default class ConsentManagerBuilder extends Component {
 
   componentDidMount() {
     // TODO: handle errors properly
-    this.load().catch(error => console.error(error))
+    this.load()
   }
 
   load = async () => {
     const {writeKey, otherWriteKeys, shouldEnforceConsent} = this.props
+    const preferences = loadPreferences()
 
     if (!await shouldEnforceConsent()) {
       return
@@ -67,9 +71,14 @@ export default class ConsentManagerBuilder extends Component {
     destinations = sortBy(destinations, ['id'])
     destinations = sortedUniqBy(destinations, 'id')
 
-    const preferences = loadPreferences()
+    const newDestinations = getNewDestinations({destinations, preferences})
 
-    this.setState({isLoading: false, destinations, preferences})
+    this.setState({
+      isLoading: false,
+      destinations,
+      newDestinations,
+      preferences,
+    })
   }
 
   handleSetPreferences = preferences => {
@@ -81,10 +90,16 @@ export default class ConsentManagerBuilder extends Component {
     }))
   }
 
-  handleSaveConsent = preferences => {
-    savePreferences({
-      ...this.state.preferences,
-      ...preferences,
-    })
+  handleSaveConsent = newPreferences => {
+    const {destinations, preferences: existingPreferences} = this.state
+    const preferences = {
+      ...existingPreferences,
+      ...newPreferences,
+    }
+    const newDestinations = getNewDestinations({destinations, preferences})
+
+    savePreferences(preferences)
+
+    this.setState({newDestinations})
   }
 }

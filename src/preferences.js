@@ -6,12 +6,11 @@ const COOKIE_EXPIRES = 365
 export function loadPreferences() {
   const preferences = cookies.get(COOKIE_KEY)
 
-  // Return `null` when no preferences have been set
   if (!preferences) {
-    return null
+    return {}
   }
 
-  return JSON.parse(preferences).destinations
+  return JSON.parse(preferences).destinations || {}
 }
 
 export function savePreferences(preferences) {
