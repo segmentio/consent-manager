@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {flatten, sortedUniqBy, sortBy} from 'lodash'
 import {loadPreferences, savePreferences} from './preferences'
 import fetchDestinations from './fetch-destinations'
-import {getNewDestinations} from './utils'
+import {getNewDestinations, mergePreferences} from './utils'
 
 export default class ConsentManagerBuilder extends Component {
   static displayName = 'ConsentManagerBuilder'
@@ -71,7 +71,7 @@ export default class ConsentManagerBuilder extends Component {
     destinations = sortBy(destinations, ['id'])
     destinations = sortedUniqBy(destinations, 'id')
 
-    const newDestinations = getNewDestinations({destinations, preferences})
+    const newDestinations = getNewDestinations(destinations, preferences)
 
     this.setState({
       isLoading: false,
@@ -81,22 +81,28 @@ export default class ConsentManagerBuilder extends Component {
     })
   }
 
-  handleSetPreferences = preferences => {
-    this.setState(prevState => ({
-      preferences: {
-        ...prevState.preferences,
-        ...preferences,
-      },
-    }))
+  handleSetPreferences = newPreferences => {
+    this.setState(prevState => {
+      const {destinations, preferences: existingPreferences} = prevState
+      return {
+        preferences: mergePreferences({
+          destinations,
+          existingPreferences,
+          newPreferences,
+        }),
+      }
+    })
   }
 
   handleSaveConsent = newPreferences => {
     const {destinations, preferences: existingPreferences} = this.state
-    const preferences = {
-      ...existingPreferences,
-      ...newPreferences,
-    }
-    const newDestinations = getNewDestinations({destinations, preferences})
+    const preferences = mergePreferences({
+      destinations,
+      existingPreferences,
+      newPreferences,
+    })
+
+    const newDestinations = getNewDestinations(destinations, preferences)
 
     savePreferences(preferences)
 

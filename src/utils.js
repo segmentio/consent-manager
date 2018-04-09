@@ -19,7 +19,7 @@ export function doNotTrack() {
   return null
 }
 
-export function getNewDestinations({destinations, preferences}) {
+export function getNewDestinations(destinations, preferences) {
   const newDestinations = []
 
   for (const destination of destinations) {
@@ -29,4 +29,26 @@ export function getNewDestinations({destinations, preferences}) {
   }
 
   return newDestinations
+}
+
+export function mergePreferences({
+  destinations,
+  existingPreferences,
+  newPreferences,
+}) {
+  let preferences
+
+  if (typeof newPreferences === 'boolean') {
+    preferences = {}
+    for (const destination of destinations) {
+      preferences[destination.id] = newPreferences
+    }
+  } else {
+    preferences = {
+      ...existingPreferences,
+      ...newPreferences,
+    }
+  }
+
+  return preferences
 }
