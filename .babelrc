@@ -1,6 +1,5 @@
 {
   "plugins": ["transform-runtime", "lodash"],
-  "sourceMaps": "inline",
   "env": {
     // Workaround Babel 6's weird config inheritance by not having any root
     // config (`{"modules":false}` gets overridden). This can be improved with

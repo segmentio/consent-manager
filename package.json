@@ -18,8 +18,8 @@
     "prepublishOnly": "yarn run build",
     "precommit": "lint-staged",
     "dev": "start-storybook -p 9009",
-    "build-commonjs": "BABEL_ENV=commonjs babel src --out-dir commonjs",
-    "build-esm": "BABEL_ENV=esm babel src --out-dir esm",
+    "build-commonjs": "BABEL_ENV=commonjs babel src --out-dir commonjs --source-maps inline",
+    "build-esm": "BABEL_ENV=esm babel src --out-dir esm --source-maps inline",
     "build": "yarn run build-commonjs && yarn run build-esm"
   },
   "engines": {
