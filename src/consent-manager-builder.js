@@ -18,11 +18,13 @@ export default class ConsentManagerBuilder extends Component {
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldEnforceConsent: PropTypes.func,
+    onSave: PropTypes.func,
   }
 
   static defaultProps = {
     otherWriteKeys: [],
     shouldEnforceConsent: () => true,
+    onSave: () => {},
   }
 
   state = {
@@ -103,7 +105,7 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   handleSaveConsent = newPreferences => {
-    const {writeKey} = this.props
+    const {writeKey, onSave} = this.props
     const {destinations, preferences: existingPreferences} = this.state
     let preferences = mergePreferences({
       destinations,
@@ -118,5 +120,7 @@ export default class ConsentManagerBuilder extends Component {
     this.setState({preferences, newDestinations})
 
     loadAnalytics({writeKey, destinations, preferences})
+
+    onSave(preferences)
   }
 }
