@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "evergreen-ui": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.5",

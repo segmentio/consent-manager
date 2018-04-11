@@ -57,3 +57,17 @@ export function mergePreferences({
 
   return preferences
 }
+
+export function addMissingPreferences(destinations, preferences) {
+  const newPreferences = {
+    ...preferences,
+  }
+
+  for (const destination of destinations) {
+    if (newPreferences[destination.id] === undefined) {
+      newPreferences[destination.id] = false
+    }
+  }
+
+  return newPreferences
+}

@@ -10,6 +10,7 @@ export function loadPreferences() {
     return null
   }
 
+  // TODO: add support for custom preferences
   return JSON.parse(preferences).destinations
 }
 

@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import {flatten, sortedUniqBy, sortBy} from 'lodash'
 import {loadPreferences, savePreferences} from './preferences'
 import fetchDestinations from './fetch-destinations'
-import {getNewDestinations, mergePreferences} from './utils'
+import {
+  getNewDestinations,
+  mergePreferences,
+  addMissingPreferences,
+} from './utils'
 import loadAnalytics from './analytics'
 
 export default class ConsentManagerBuilder extends Component {
@@ -21,15 +25,11 @@ export default class ConsentManagerBuilder extends Component {
     shouldEnforceConsent: () => true,
   }
 
-  constructor() {
-    super()
-
-    this.state = {
-      isLoading: true,
-      destinations: [],
-      newDestinations: [],
-      preferences: {},
-    }
+  state = {
+    isLoading: true,
+    destinations: [],
+    newDestinations: [],
+    preferences: null,
   }
 
   render() {
@@ -43,7 +43,7 @@ export default class ConsentManagerBuilder extends Component {
     return children({
       destinations,
       newDestinations,
-      preferences,
+      preferences: preferences || {},
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
       saveConsent: this.handleSaveConsent,
@@ -105,11 +105,12 @@ export default class ConsentManagerBuilder extends Component {
   handleSaveConsent = newPreferences => {
     const {writeKey} = this.props
     const {destinations, preferences: existingPreferences} = this.state
-    const preferences = mergePreferences({
+    let preferences = mergePreferences({
       destinations,
       existingPreferences,
       newPreferences,
     })
+    preferences = addMissingPreferences(destinations, preferences)
 
     const newDestinations = getNewDestinations(destinations, preferences)
 

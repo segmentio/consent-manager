@@ -1,37 +1,81 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import {storiesOf} from '@storybook/react'
+import {Pane, Button, Heading, Ul, Li, Code, Checkbox} from 'evergreen-ui'
 import {ConsentManagerBuilder} from '../src'
+
+function Section(props) {
+  return <Pane is="section" marginBottom={24} {...props} />
+}
 
 storiesOf('ConsentManagerBuilder', module).add(`basic`, () => (
   <ConsentManagerBuilder
     writeKey="uA7UpbCh8Z0Ybodlnf4rJ6vLa85WrJfe"
     otherWriteKeys={['SeTHUkkIadsYUTWhMI3tkGu01XKogPHn']}
   >
-    {({destinations, newDestinations, preferences, saveConsent}) => (
-      <Fragment>
-        <strong>All destinations</strong>
-        <ul>
-          {destinations.map(destination => (
-            <li key={destination.id}>{destination.name}</li>
-          ))}
-        </ul>
-        <strong>New destinations:</strong>
-        <ul>
-          {newDestinations.map(destination => (
-            <li key={destination.id}>{destination.name}</li>
-          ))}
-        </ul>
+    {({
+      destinations,
+      newDestinations,
+      preferences,
+      setPreferences,
+      saveConsent,
+    }) => {
+      function handleSubmit(e) {
+        e.preventDefault()
+        saveConsent()
+      }
 
-        <button type="button" onClick={() => saveConsent(true)}>
-          Allow all
-        </button>
+      return (
+        <form onSubmit={handleSubmit}>
+          <Section>
+            <Heading>All destinations</Heading>
+            <Ul>
+              {destinations.map(destination => (
+                <Li key={destination.id}>
+                  <Checkbox
+                    label={destination.name}
+                    checked={Boolean(preferences[destination.id])}
+                    onChange={() =>
+                      setPreferences({
+                        [destination.id]: !preferences[destination.id],
+                      })
+                    }
+                  />
+                </Li>
+              ))}
+            </Ul>
+          </Section>
 
-        <button type="button" onClick={() => saveConsent(false)}>
-          Deny all
-        </button>
+          <Section>
+            <Heading>New destinations</Heading>
+            <Ul>
+              {newDestinations.map(destination => (
+                <Li key={destination.id}>{destination.name}</Li>
+              ))}
+            </Ul>
+          </Section>
 
-        {JSON.stringify(preferences)}
-      </Fragment>
-    )}
+          <Section>
+            <Heading>Preferences</Heading>
+            <Code>{JSON.stringify(preferences)}</Code>
+          </Section>
+
+          <Button type="submit" marginRight={8}>
+            Save
+          </Button>
+
+          <Button
+            type="button"
+            onClick={() => saveConsent(true)}
+            marginRight={8}
+          >
+            Allow all
+          </Button>
+
+          <Button type="button" onClick={() => saveConsent(false)}>
+            Deny all
+          </Button>
+        </form>
+      )
+    }}
   </ConsentManagerBuilder>
 ))
