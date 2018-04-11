@@ -44,12 +44,15 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint-config-xo-react": "^0.16.0",
     "eslint-plugin-react": "^7.7.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.4",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "sinon": "^4.5.0",
     "size-limit": "^0.17.0",
     "xo": "^0.20.3"
   },
@@ -76,7 +79,8 @@
   },
   "ava": {
     "require": [
-      "babel-register"
+      "babel-register",
+      "./tools/enzyme-config"
     ],
     "babel": "inherit"
   },
