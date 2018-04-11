@@ -22,8 +22,13 @@ export function doNotTrack() {
 export function getNewDestinations(destinations, preferences) {
   const newDestinations = []
 
+  // If there are no preferences then all destinations are new
+  if (!preferences) {
+    return destinations
+  }
+
   for (const destination of destinations) {
-    if (!preferences[destination.id]) {
+    if (preferences[destination.id] === undefined) {
       newDestinations.push(destination)
     }
   }

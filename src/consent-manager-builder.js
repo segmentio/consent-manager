@@ -4,6 +4,7 @@ import {flatten, sortedUniqBy, sortBy} from 'lodash'
 import {loadPreferences, savePreferences} from './preferences'
 import fetchDestinations from './fetch-destinations'
 import {getNewDestinations, mergePreferences} from './utils'
+import loadAnalytics from './analytics'
 
 export default class ConsentManagerBuilder extends Component {
   static displayName = 'ConsentManagerBuilder'
@@ -51,17 +52,16 @@ export default class ConsentManagerBuilder extends Component {
 
   componentDidMount() {
     // TODO: handle errors properly
-    this.load()
+    this.initialise()
   }
 
-  load = async () => {
+  initialise = async () => {
     const {writeKey, otherWriteKeys, shouldEnforceConsent} = this.props
+    const preferences = loadPreferences()
 
     if (!await shouldEnforceConsent()) {
       return
     }
-
-    const preferences = loadPreferences()
 
     const destinationsRequests = [fetchDestinations(writeKey)]
     for (const otherWriteKey of otherWriteKeys) {
@@ -72,6 +72,8 @@ export default class ConsentManagerBuilder extends Component {
 
     destinations = sortBy(destinations, ['id'])
     destinations = sortedUniqBy(destinations, 'id')
+
+    loadAnalytics({writeKey, destinations, preferences})
 
     const newDestinations = getNewDestinations(destinations, preferences)
 
@@ -101,6 +103,7 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   handleSaveConsent = newPreferences => {
+    const {writeKey} = this.props
     const {destinations, preferences: existingPreferences} = this.state
     const preferences = mergePreferences({
       destinations,
@@ -111,7 +114,8 @@ export default class ConsentManagerBuilder extends Component {
     const newDestinations = getNewDestinations(destinations, preferences)
 
     savePreferences(preferences)
+    this.setState({preferences, newDestinations})
 
-    this.setState({newDestinations})
+    loadAnalytics({writeKey, destinations, preferences})
   }
 }

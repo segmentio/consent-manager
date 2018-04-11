@@ -7,10 +7,10 @@ export function loadPreferences() {
   const preferences = cookies.get(COOKIE_KEY)
 
   if (!preferences) {
-    return {}
+    return null
   }
 
-  return JSON.parse(preferences).destinations || {}
+  return JSON.parse(preferences).destinations
 }
 
 export function savePreferences(preferences) {
