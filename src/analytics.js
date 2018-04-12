@@ -1,6 +1,10 @@
 let initialised = false
 
-export default function loadAnalytics({writeKey, destinations, preferences}) {
+export default function conditionallyLoadAnalytics({
+  writeKey,
+  destinations,
+  preferences,
+}) {
   const integrations = {All: false}
   let isAnythingEnabled = false
 

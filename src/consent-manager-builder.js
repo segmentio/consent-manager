@@ -8,7 +8,7 @@ import {
   mergePreferences,
   addMissingPreferences,
 } from './utils'
-import loadAnalytics from './analytics'
+import conditionallyLoadAnalytics from './analytics'
 
 export default class ConsentManagerBuilder extends Component {
   static displayName = 'ConsentManagerBuilder'
@@ -71,11 +71,8 @@ export default class ConsentManagerBuilder extends Component {
     }
 
     let destinations = flatten(await Promise.all(destinationsRequests))
-
     destinations = sortBy(destinations, ['id'])
     destinations = sortedUniqBy(destinations, 'id')
-
-    loadAnalytics({writeKey, destinations, preferences})
 
     const newDestinations = getNewDestinations(destinations, preferences)
 
@@ -85,6 +82,8 @@ export default class ConsentManagerBuilder extends Component {
       newDestinations,
       preferences,
     })
+
+    conditionallyLoadAnalytics({writeKey, destinations, preferences})
   }
 
   handleSetPreferences = newPreferences => {
@@ -119,7 +118,7 @@ export default class ConsentManagerBuilder extends Component {
     savePreferences(preferences)
     this.setState({preferences, newDestinations})
 
-    loadAnalytics({writeKey, destinations, preferences})
+    conditionallyLoadAnalytics({writeKey, destinations, preferences})
 
     onSave(preferences)
   }
