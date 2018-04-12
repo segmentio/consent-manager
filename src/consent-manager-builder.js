@@ -105,21 +105,24 @@ export default class ConsentManagerBuilder extends Component {
 
   handleSaveConsent = newPreferences => {
     const {writeKey, onSave} = this.props
-    const {destinations, preferences: existingPreferences} = this.state
-    let preferences = mergePreferences({
-      destinations,
-      existingPreferences,
-      newPreferences,
+
+    this.setState(prevState => {
+      const {destinations, preferences: existingPreferences} = prevState
+
+      let preferences = mergePreferences({
+        destinations,
+        existingPreferences,
+        newPreferences,
+      })
+      preferences = addMissingPreferences(destinations, preferences)
+
+      const newDestinations = getNewDestinations(destinations, preferences)
+
+      savePreferences(preferences)
+      conditionallyLoadAnalytics({writeKey, destinations, preferences})
+      onSave(preferences)
+
+      return {preferences, newDestinations}
     })
-    preferences = addMissingPreferences(destinations, preferences)
-
-    const newDestinations = getNewDestinations(destinations, preferences)
-
-    savePreferences(preferences)
-    this.setState({preferences, newDestinations})
-
-    conditionallyLoadAnalytics({writeKey, destinations, preferences})
-
-    onSave(preferences)
   }
 }
