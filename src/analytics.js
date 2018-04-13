@@ -1,5 +1,3 @@
-let initialised = false
-
 export default function conditionallyLoadAnalytics({
   writeKey,
   destinations,
@@ -22,12 +20,10 @@ export default function conditionallyLoadAnalytics({
 
   // Reload the page if the trackers have already been initialised so that
   // the user's new preferences can take affect
-  if (initialised) {
+  if (window.analytics.initialized) {
     window.location.reload()
     return
   }
-
-  initialised = true
 
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
