@@ -1,7 +1,6 @@
 /*
 Doesn't initialise if we shouldn't enforce consent
 ~~Includes destinations for every provided write key~~
-~~There's no duplicate destinations~~
 Loads analytics.js with the user's preferences
 
 ~~Provides a list of enabled destinations~~
@@ -78,63 +77,7 @@ test.cb.serial('provides a list of enabled destinations', t => {
           {
             name: 'Segment',
             id: 'Segment.io',
-            category: 'Segment',
-            website: 'https://segment.com',
-            description:
-              'Segment is trusted by thousands of companies as their Customer Data Platform. Collect user data with one API and send it to hundreds of tools or a data warehouse.',
-          },
-        ])
-        t.end()
-      }}
-    </ConsentManagerBuilder>
-  )
-})
-
-test.cb.serial('doesn՚t include any duplicates in the destinations list', t => {
-  nock('http://localhost:3000')
-    .get('/v1/projects/123/integrations')
-    .reply(200, [
-      {
-        name: 'Google Analytics',
-        creationName: 'Google Analytics',
-      },
-      {
-        name: 'Amplitude',
-        creationName: 'Amplitude',
-      },
-    ])
-    .get('/v1/projects/abc/integrations')
-    .reply(200, [
-      {
-        name: 'Google Analytics',
-        creationName: 'Google Analytics',
-      },
-      {
-        name: 'FullStory',
-        creationName: 'FullStory',
-      },
-    ])
-
-  shallow(
-    <ConsentManagerBuilder writeKey="123" otherWriteKeys={['abc']}>
-      {({destinations}) => {
-        t.deepEqual(destinations, [
-          {
-            name: 'Amplitude',
-            id: 'Amplitude',
-          },
-          {
-            name: 'FullStory',
-            id: 'FullStory',
-          },
-          {
-            name: 'Google Analytics',
-            id: 'Google Analytics',
-          },
-          {
-            name: 'Segment',
-            id: 'Segment.io',
-            category: 'Segment',
+            category: 'Analytics',
             website: 'https://segment.com',
             description:
               'Segment is trusted by thousands of companies as their Customer Data Platform. Collect user data with one API and send it to hundreds of tools or a data warehouse.',
