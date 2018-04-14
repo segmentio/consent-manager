@@ -17,12 +17,14 @@ export default class ConsentManagerBuilder extends Component {
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldEnforceConsent: PropTypes.func,
+    onLoad: PropTypes.func,
     onSave: PropTypes.func,
   }
 
   static defaultProps = {
     otherWriteKeys: [],
     shouldEnforceConsent: () => true,
+    onLoad: () => {},
     onSave: () => {},
   }
 
@@ -57,7 +59,7 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   initialise = async () => {
-    const {writeKey, otherWriteKeys, shouldEnforceConsent} = this.props
+    const {writeKey, otherWriteKeys, shouldEnforceConsent, onLoad} = this.props
     const preferences = loadPreferences()
 
     if (!await shouldEnforceConsent()) {
@@ -66,6 +68,8 @@ export default class ConsentManagerBuilder extends Component {
 
     const destinations = await fetchDestinations([writeKey, ...otherWriteKeys])
     const newDestinations = getNewDestinations(destinations, preferences)
+
+    onLoad({destinations, newDestinations, preferences})
 
     this.setState({
       isLoading: false,
@@ -107,11 +111,15 @@ export default class ConsentManagerBuilder extends Component {
       })
       preferences = addMissingPreferences(destinations, preferences)
 
+      const overridePreferences = onSave(preferences)
+      if (overridePreferences) {
+        preferences = overridePreferences
+      }
+
       const newDestinations = getNewDestinations(destinations, preferences)
 
       savePreferences(preferences)
       conditionallyLoadAnalytics({writeKey, destinations, preferences})
-      onSave(preferences)
 
       return {preferences, newDestinations}
     })
