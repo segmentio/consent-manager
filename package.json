@@ -14,7 +14,7 @@
     "esm"
   ],
   "scripts": {
-    "test": "xo",
+    "test": "xo && ava",
     "prepublishOnly": "yarn run build",
     "precommit": "lint-staged",
     "dev": "start-storybook -p 9009",
