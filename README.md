@@ -1,4 +1,4 @@
-# consent-manager
+# consent-manager [![build status](https://circleci.com/gh/segmentio/consent-manager.svg?style=svg)](https://circleci.com/gh/segmentio/consent-manager)
 
 Project description.
 
