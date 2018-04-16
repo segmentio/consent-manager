@@ -71,6 +71,7 @@ export default class ConsentManagerBuilder extends Component {
 
     onLoad({destinations, newDestinations, preferences})
 
+    // TODO: load without destinations? (faster)
     conditionallyLoadAnalytics({writeKey, destinations, preferences})
 
     this.setState({

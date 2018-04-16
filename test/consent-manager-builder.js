@@ -1,22 +1,3 @@
-/*
-Doesn't initialise if we shouldn't enforce consent
-~~Includes destinations for every provided write key~~
-~~Loads analytics.js with the user's preferences~~
-
-~~Provides a list of enabled destinations~~
-~~Provides a list of newly added destinations~~
-~~Provides an object containing the WIP preferences~~
-Provides a setPreferences() function for setting the preferences
-setPreferences() function can be passed a boolean to set all preferences
-Provides a resetPreferences() function for resetting the preferences
-Provides a saveConsent() function for persisting the preferences and loading analytics.js
-saveConsent() can be passed additional preferences to persist
-saveConsent() can be passed a boolean to set all preferences
-saveConsent() fills in missing preferences
-~~Calls the onLoad event handler with the destinations, newDestinations and preferences~~
-Calls the onSave event handler with the preferences
-The onSave event handler can overwrite the preferences by returning a value
-*/
 import test from 'ava'
 import React from 'react'
 import {shallow} from 'enzyme'
@@ -29,14 +10,7 @@ test.beforeEach(() => {
   global.window = {}
 })
 
-test.failing('doesn՚t initialise if we shouldn՚t enforce consent', () => {
-  const falsy = () => Promise.resolve(false)
-  shallow(
-    <ConsentManagerBuilder shouldEnforceConsent={falsy} writeKey="123">
-      {() => {}}
-    </ConsentManagerBuilder>
-  )
-})
+test.todo('doesn՚t initialise if we shouldn՚t enforce consent')
 
 test.cb.serial('provides a list of enabled destinations', t => {
   nock('http://localhost:3000')
@@ -183,6 +157,26 @@ test.cb.serial('provides an object containing the WIP preferences', t => {
   )
 })
 
+test.todo('provides a setPreferences() function for setting the preferences')
+
+test.todo(
+  'setPreferences() function can be passed a boolean to set all preferences'
+)
+
+test.todo(
+  'provides a resetPreferences() function for resetting the preferences'
+)
+
+test.todo(
+  'provides a saveConsent() function for persisting the preferences and loading analytics.js'
+)
+
+test.todo('saveConsent() can be passed additional preferences to persist')
+
+test.todo('saveConsent() can be passed a boolean to set all preferences')
+
+test.todo('saveConsent() fills in missing preferences')
+
 test.cb.serial(
   'calls the onLoad event handler with the destinations, newDestinations and preferences',
   t => {
@@ -241,4 +235,10 @@ test.cb.serial(
       </ConsentManagerBuilder>
     )
   }
+)
+
+test.todo('calls the onSave event handler with the preferences')
+
+test.todo(
+  'the onSave event handler can overwrite the preferences by returning a value'
 )
