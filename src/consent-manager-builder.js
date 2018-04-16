@@ -71,14 +71,14 @@ export default class ConsentManagerBuilder extends Component {
 
     onLoad({destinations, newDestinations, preferences})
 
+    conditionallyLoadAnalytics({writeKey, destinations, preferences})
+
     this.setState({
       isLoading: false,
       destinations,
       newDestinations,
       preferences,
     })
-
-    conditionallyLoadAnalytics({writeKey, destinations, preferences})
   }
 
   handleSetPreferences = newPreferences => {
