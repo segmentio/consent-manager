@@ -1,6 +1,9 @@
 import test from 'ava'
 import sinon from 'sinon'
-import {loadPreferences, savePreferences} from '../src/preferences'
+import {
+  loadPreferences,
+  savePreferences,
+} from '../../src/consent-manager-builder/preferences'
 
 test.beforeEach(() => {
   global.window = {}

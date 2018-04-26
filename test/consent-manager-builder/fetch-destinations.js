@@ -1,6 +1,6 @@
 import test from 'ava'
 import nock from 'nock'
-import fetchDestinations from '../src/fetch-destinations'
+import fetchDestinations from '../../src/consent-manager-builder/fetch-destinations'
 
 test('Returns destinations for a writekey', async t => {
   nock('http://localhost:3000')

@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import conditionallyLoadAnalytics from '../src/analytics'
+import conditionallyLoadAnalytics from '../../src/consent-manager-builder/analytics'
 
 test.beforeEach(() => {
   global.window = {}
