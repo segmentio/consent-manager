@@ -18,20 +18,19 @@ test('Returns destinations for a writekey', async t => {
 
   t.deepEqual(await fetchDestinations(['123']), [
     {
-      name: 'Amplitude',
       id: 'Amplitude',
+      name: 'Amplitude',
     },
     {
-      name: 'Google Analytics',
       id: 'Google Analytics',
+      name: 'Google Analytics',
     },
     {
-      name: 'Segment',
-      id: 'Segment.io',
-      category: 'Analytics',
+      id: '_tbd',
+      name: 'TBD',
+      category: 'TBD',
+      description: 'TBD',
       website: 'https://segment.com',
-      description:
-        'Segment is trusted by thousands of companies as their Customer Data Platform. Collect user data with one API and send it to hundreds of tools or a data warehouse.',
     },
   ])
 })
@@ -48,16 +47,15 @@ test('Renames creationName to id', async t => {
 
   t.deepEqual(await fetchDestinations(['123']), [
     {
-      name: 'New Amplitude',
       id: 'Old Amplitude',
+      name: 'New Amplitude',
     },
     {
-      name: 'Segment',
-      id: 'Segment.io',
-      category: 'Analytics',
+      id: '_tbd',
+      name: 'TBD',
+      category: 'TBD',
+      description: 'TBD',
       website: 'https://segment.com',
-      description:
-        'Segment is trusted by thousands of companies as their Customer Data Platform. Collect user data with one API and send it to hundreds of tools or a data warehouse.',
     },
   ])
 })
@@ -89,24 +87,23 @@ test('Doesn՚t include duplicate destinations', async t => {
 
   t.deepEqual(await fetchDestinations(['123', 'abc']), [
     {
-      name: 'Amplitude',
       id: 'Amplitude',
+      name: 'Amplitude',
     },
     {
-      name: 'FullStory',
       id: 'FullStory',
+      name: 'FullStory',
     },
     {
-      name: 'Google Analytics',
       id: 'Google Analytics',
+      name: 'Google Analytics',
     },
     {
-      name: 'Segment',
-      id: 'Segment.io',
-      category: 'Analytics',
+      id: '_tbd',
+      name: 'TBD',
+      category: 'TBD',
+      description: 'TBD',
       website: 'https://segment.com',
-      description:
-        'Segment is trusted by thousands of companies as their Customer Data Platform. Collect user data with one API and send it to hundreds of tools or a data warehouse.',
     },
   ])
 })

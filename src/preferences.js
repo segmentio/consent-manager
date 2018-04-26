@@ -15,6 +15,10 @@ export function loadPreferences() {
 }
 
 export function savePreferences(preferences) {
+  window.analytics.identify({
+    tbd: preferences._tbd,
+  })
+
   const data = JSON.stringify({
     version: 1,
     destinations: preferences,

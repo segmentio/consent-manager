@@ -23,6 +23,7 @@ test('loads analytics.js with preferences', t => {
     integrations: {
       All: false,
       Amplitude: true,
+      'Segment.io': true,
     },
   })
 })
@@ -33,20 +34,6 @@ test('doesn՚t load analytics.js when there are no preferences', t => {
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const preferences = null
-
-  conditionallyLoadAnalytics({writeKey, destinations, preferences})
-
-  t.true(ajsLoad.notCalled)
-})
-
-test('doesn՚t load analytics.js when all preferences are false', t => {
-  const ajsLoad = sinon.spy()
-  global.window.analytics = {load: ajsLoad}
-  const writeKey = '123'
-  const destinations = [{id: 'Amplitude'}]
-  const preferences = {
-    Amplitude: false,
-  }
 
   conditionallyLoadAnalytics({writeKey, destinations, preferences})
 

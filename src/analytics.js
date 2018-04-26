@@ -3,19 +3,13 @@ export default function conditionallyLoadAnalytics({
   destinations,
   preferences,
 }) {
-  const integrations = {All: false}
-  let isAnythingEnabled = false
-
+  const integrations = {All: false, 'Segment.io': true}
   if (!preferences) {
     return
   }
 
   for (const destination of destinations) {
-    const isEnabled = Boolean(preferences[destination.id])
-    if (isEnabled) {
-      isAnythingEnabled = true
-    }
-    integrations[destination.id] = isEnabled
+    integrations[destination.id] = Boolean(preferences[destination.id])
   }
 
   // Reload the page if the trackers have already been initialised so that
@@ -25,8 +19,5 @@ export default function conditionallyLoadAnalytics({
     return
   }
 
-  // Don't load a.js at all if nothing has been enabled
-  if (isAnythingEnabled) {
-    window.analytics.load(writeKey, {integrations})
-  }
+  window.analytics.load(writeKey, {integrations})
 }

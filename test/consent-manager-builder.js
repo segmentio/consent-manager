@@ -38,24 +38,23 @@ test.cb.serial('provides a list of enabled destinations', t => {
       {({destinations}) => {
         t.deepEqual(destinations, [
           {
-            name: 'Amplitude',
             id: 'Amplitude',
+            name: 'Amplitude',
           },
           {
-            name: 'FullStory',
             id: 'FullStory',
+            name: 'FullStory',
           },
           {
-            name: 'Google Analytics',
             id: 'Google Analytics',
+            name: 'Google Analytics',
           },
           {
-            name: 'Segment',
-            id: 'Segment.io',
-            category: 'Analytics',
+            id: '_tbd',
+            name: 'TBD',
+            category: 'TBD',
+            description: 'TBD',
             website: 'https://segment.com',
-            description:
-              'Segment is trusted by thousands of companies as their Customer Data Platform. Collect user data with one API and send it to hundreds of tools or a data warehouse.',
           },
         ])
         t.end()
@@ -66,7 +65,7 @@ test.cb.serial('provides a list of enabled destinations', t => {
 
 test.cb.serial('provides a list of newly added destinations', t => {
   global.document.cookie =
-    'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22Segment.io%22:false}}'
+    'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22_tbd%22:true}}'
   global.window.analytics = {load() {}}
 
   nock('http://localhost:3000')
@@ -122,7 +121,8 @@ test.cb.serial('loads analytics.js with the user՚s preferences', t => {
           integrations: {
             All: false,
             Amplitude: true,
-            'Segment.io': false,
+            'Segment.io': true,
+            _tbd: false,
           },
         })
         t.end()
@@ -181,7 +181,7 @@ test.cb.serial(
   'calls the onLoad event handler with the destinations, newDestinations and preferences',
   t => {
     global.document.cookie =
-      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22Segment.io%22:false}}'
+      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22_tbd%22:false}}'
     global.window.analytics = {load() {}}
 
     nock('http://localhost:3000')
@@ -200,31 +200,30 @@ test.cb.serial(
     function onLoad({destinations, newDestinations, preferences}) {
       t.deepEqual(destinations, [
         {
-          name: 'Amplitude',
           id: 'Amplitude',
+          name: 'Amplitude',
         },
         {
-          name: 'Google Analytics',
           id: 'Google Analytics',
+          name: 'Google Analytics',
         },
         {
-          name: 'Segment',
-          id: 'Segment.io',
-          category: 'Analytics',
+          id: '_tbd',
+          name: 'TBD',
+          category: 'TBD',
+          description: 'TBD',
           website: 'https://segment.com',
-          description:
-            'Segment is trusted by thousands of companies as their Customer Data Platform. Collect user data with one API and send it to hundreds of tools or a data warehouse.',
         },
       ])
       t.deepEqual(newDestinations, [
         {
-          name: 'Google Analytics',
           id: 'Google Analytics',
+          name: 'Google Analytics',
         },
       ])
       t.deepEqual(preferences, {
         Amplitude: true,
-        'Segment.io': false,
+        _tbd: false,
       })
       t.end()
     }

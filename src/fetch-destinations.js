@@ -33,11 +33,10 @@ export default async function fetchDestinations(writeKeys) {
 
   let destinations = flatten(await Promise.all(destinationsRequests))
   destinations.push({
-    id: 'Segment.io',
-    name: 'Segment',
-    category: 'Analytics',
-    description:
-      'Segment is trusted by thousands of companies as their Customer Data Platform. Collect user data with one API and send it to hundreds of tools or a data warehouse.',
+    id: '_tbd',
+    name: 'TBD',
+    category: 'TBD',
+    description: 'TBD',
     website: 'https://segment.com',
   })
   destinations = sortBy(destinations, ['id'])
