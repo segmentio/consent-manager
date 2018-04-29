@@ -1,4 +1,5 @@
 export ConsentManagerBuilder from './consent-manager-builder'
+export ConsentManager from './consent-manager'
 
 export function doNotTrack() {
   let doNotTrackValue =

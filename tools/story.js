@@ -1,13 +1,31 @@
 import React from 'react'
 import {storiesOf} from '@storybook/react'
 import {Pane, Button, Heading, Ul, Li, Code, Checkbox} from 'evergreen-ui'
-import {ConsentManagerBuilder} from '../src'
+import {injectGlobal} from 'emotion'
+import {ConsentManagerBuilder, ConsentManager} from '../src'
+
+injectGlobal(`
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    color: #435a6f;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.05px;
+  }
+`)
 
 function Section(props) {
   return <Pane is="section" marginBottom={24} {...props} />
 }
 
-storiesOf('ConsentManagerBuilder', module).add(`basic`, () => (
+storiesOf('ConsentManagerBuilder', module).add(`example`, () => (
   <ConsentManagerBuilder
     writeKey="uA7UpbCh8Z0Ybodlnf4rJ6vLa85WrJfe"
     otherWriteKeys={['SeTHUkkIadsYUTWhMI3tkGu01XKogPHn']}
@@ -78,4 +96,11 @@ storiesOf('ConsentManagerBuilder', module).add(`basic`, () => (
       )
     }}
   </ConsentManagerBuilder>
+))
+
+storiesOf('ConsentManager', module).add(`example`, () => (
+  <ConsentManager
+    writeKey="uA7UpbCh8Z0Ybodlnf4rJ6vLa85WrJfe"
+    otherWriteKeys={['SeTHUkkIadsYUTWhMI3tkGu01XKogPHn']}
+  />
 ))
