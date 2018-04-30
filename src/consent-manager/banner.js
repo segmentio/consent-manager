@@ -41,6 +41,7 @@ const CloseButton = styled('button')`
   border: none;
   background: none;
   color: inherit;
+  font: inherit;
   font-size: 14px;
   line-height: 1;
   cursor: pointer;

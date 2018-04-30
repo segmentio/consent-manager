@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import Banner from './banner'
 import Dialog from './dialog'
@@ -23,7 +23,7 @@ export default class Wrapper extends PureComponent {
     const {isDialogShown} = this.state
 
     return (
-      <Fragment>
+      <div>
         {newDestinations.length > 0 && (
           <Banner
             onAccept={this.handleAccept}
@@ -33,7 +33,7 @@ export default class Wrapper extends PureComponent {
         {isDialogShown && (
           <Dialog onCancel={this.handleCancel} onSave={this.handleSave} />
         )}
-      </Fragment>
+      </div>
     )
   }
 

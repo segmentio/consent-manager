@@ -3,7 +3,7 @@
 // Babel 7's `.babelrc.js` support.
 {
   "plugins": [
-    ["emotion", { "hoist": true }],
+    ["emotion", { "hoist": true, "autoLabel": true }],
     "transform-runtime",
     "lodash"
   ],

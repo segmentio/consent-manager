@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import {storiesOf} from '@storybook/react'
 import {Pane, Button, Heading, Ul, Li, Code, Checkbox} from 'evergreen-ui'
 import {injectGlobal} from 'emotion'
@@ -99,8 +99,43 @@ storiesOf('ConsentManagerBuilder', module).add(`example`, () => (
 ))
 
 storiesOf('ConsentManager', module).add(`example`, () => (
-  <ConsentManager
-    writeKey="uA7UpbCh8Z0Ybodlnf4rJ6vLa85WrJfe"
-    otherWriteKeys={['SeTHUkkIadsYUTWhMI3tkGu01XKogPHn']}
-  />
+  <Fragment>
+    <ConsentManager
+      writeKey="uA7UpbCh8Z0Ybodlnf4rJ6vLa85WrJfe"
+      otherWriteKeys={['SeTHUkkIadsYUTWhMI3tkGu01XKogPHn']}
+    />
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+      dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
+      quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+      dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
+      quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+      dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
+      quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+      dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
+      quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+      dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
+      quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+      dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
+      quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+      dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
+      quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+      dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
+      quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+      dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
+      quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+    </p>
+  </Fragment>
 ))
