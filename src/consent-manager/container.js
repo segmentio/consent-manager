@@ -14,24 +14,39 @@ export default class Container extends PureComponent {
   constructor() {
     super()
     this.state = {
-      isDialogShown: false,
+      isDialogOpen: false,
+      marketingAllowed: true,
+      advertisingAllowed: true,
+      functionalAllowed: true,
     }
   }
 
   render() {
     const {newDestinations} = this.props
-    const {isDialogShown} = this.state
+    const {
+      isDialogOpen,
+      marketingAllowed,
+      advertisingAllowed,
+      functionalAllowed,
+    } = this.state
 
     return (
       <div>
         {newDestinations.length > 0 && (
           <Banner
             onAccept={this.handleAccept}
-            onChangePreferences={this.handleChangePreferences}
+            onChangePreferencesClick={this.handleChangePreferencesClick}
           />
         )}
-        {isDialogShown && (
-          <Dialog onCancel={this.handleCancel} onSave={this.handleSave} />
+        {isDialogOpen && (
+          <Dialog
+            onCancel={this.handleCancel}
+            onSave={this.handleSave}
+            onChange={this.handleChange}
+            marketingAllowed={marketingAllowed}
+            advertisingAllowed={advertisingAllowed}
+            functionalAllowed={functionalAllowed}
+          />
         )}
       </div>
     )
@@ -42,19 +57,25 @@ export default class Container extends PureComponent {
 
     saveConsent(true)
     this.setState({
-      isDialogShown: false,
+      isDialogOpen: false,
     })
   }
 
-  handleChangePreferences = () => {
+  handleChangePreferencesClick = () => {
     this.setState({
-      isDialogShown: true,
+      isDialogOpen: true,
+    })
+  }
+
+  handleChange = (category, value) => {
+    this.setState({
+      [category]: value,
     })
   }
 
   handleCancel = () => {
     this.setState({
-      isDialogShown: false,
+      isDialogOpen: false,
     })
   }
 
@@ -63,7 +84,7 @@ export default class Container extends PureComponent {
 
     saveConsent()
     this.setState({
-      isDialogShown: false,
+      isDialogOpen: false,
     })
   }
 }

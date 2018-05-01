@@ -54,11 +54,11 @@ export default class Banner extends PureComponent {
 
   static propTypes = {
     onAccept: PropTypes.func.isRequired,
-    onChangePreferences: PropTypes.func.isRequired,
+    onChangePreferencesClick: PropTypes.func.isRequired,
   }
 
   render() {
-    const {onAccept, onChangePreferences} = this.props
+    const {onAccept, onChangePreferencesClick} = this.props
 
     return (
       <Root>
@@ -68,7 +68,7 @@ export default class Banner extends PureComponent {
         </P>
         <P>
           You can{' '}
-          <TextButton type="button" onClick={onChangePreferences}>
+          <TextButton type="button" onClick={onChangePreferencesClick}>
             change your preferences
           </TextButton>{' '}
           at any time.

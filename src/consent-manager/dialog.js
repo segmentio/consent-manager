@@ -228,6 +228,10 @@ export default class Dialog extends PureComponent {
   static propTypes = {
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    marketingAllowed: PropTypes.bool.isRequired,
+    advertisingAllowed: PropTypes.bool.isRequired,
+    functionalAllowed: PropTypes.bool.isRequired,
   }
 
   constructor() {
@@ -236,7 +240,13 @@ export default class Dialog extends PureComponent {
   }
 
   render() {
-    const {onCancel, onSave} = this.props
+    const {
+      onCancel,
+      onSave,
+      marketingAllowed,
+      advertisingAllowed,
+      functionalAllowed,
+    } = this.props
 
     return (
       <Overlay onClick={this.handleOverlayClick}>
@@ -289,7 +299,9 @@ export default class Dialog extends PureComponent {
                     <CheckboxCell>
                       <input
                         type="checkbox"
-                        checked
+                        name="marketingAllowed"
+                        checked={marketingAllowed}
+                        onChange={this.handleChange}
                         aria-label="Allow marketing and analytics tracking"
                       />
                     </CheckboxCell>
@@ -306,7 +318,9 @@ export default class Dialog extends PureComponent {
                     <CheckboxCell>
                       <input
                         type="checkbox"
-                        checked
+                        name="advertisingAllowed"
+                        checked={advertisingAllowed}
+                        onChange={this.handleChange}
                         aria-label="Allow advertising tracking"
                       />
                     </CheckboxCell>
@@ -323,7 +337,9 @@ export default class Dialog extends PureComponent {
                     <CheckboxCell>
                       <input
                         type="checkbox"
-                        checked
+                        name="functionalAllowed"
+                        checked={functionalAllowed}
+                        onChange={this.handleChange}
                         aria-label="Allow functional tracking"
                       />
                     </CheckboxCell>
@@ -399,5 +415,11 @@ export default class Dialog extends PureComponent {
     if (e.keyCode === 27) {
       onCancel()
     }
+  }
+
+  handleChange = e => {
+    const {onChange} = this.props
+
+    onChange(e.target.name, e.target.checked)
   }
 }
