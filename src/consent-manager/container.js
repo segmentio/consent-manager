@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import Banner from './banner'
 import Dialog from './dialog'
 
-export default class Wrapper extends PureComponent {
-  static displayName = 'Wrapper'
+export default class Container extends PureComponent {
+  static displayName = 'Container'
 
   static propTypes = {
     saveConsent: PropTypes.func.isRequired,

@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import ConsentManagerBuilder from '../consent-manager-builder'
-import Wrapper from './wrapper'
+import Container from './container'
 
 export default class ConsentManager extends PureComponent {
   static displayName = 'ConsentManager'
@@ -33,7 +33,7 @@ export default class ConsentManager extends PureComponent {
           setPreferences,
           saveConsent,
         }) => (
-          <Wrapper
+          <Container
             destinations={destinations}
             newDestinations={newDestinations}
             preferences={preferences}
