@@ -34,15 +34,15 @@ export default class Container extends PureComponent {
       <div>
         {newDestinations.length > 0 && (
           <Banner
-            onAccept={this.handleAccept}
-            onChangePreferencesClick={this.handleChangePreferencesClick}
+            onAccept={this.handleBannerAccept}
+            onChangePreferences={this.handleBannerChangePreferences}
           />
         )}
         {isDialogOpen && (
           <Dialog
-            onCancel={this.handleCancel}
-            onSave={this.handleSave}
-            onChange={this.handleChange}
+            onCancel={this.handleDialogCancel}
+            onSave={this.handleDialogSave}
+            onChange={this.handleDialogChange}
             marketingAllowed={marketingAllowed}
             advertisingAllowed={advertisingAllowed}
             functionalAllowed={functionalAllowed}
@@ -52,7 +52,7 @@ export default class Container extends PureComponent {
     )
   }
 
-  handleAccept = () => {
+  handleBannerAccept = () => {
     const {saveConsent} = this.props
 
     saveConsent(true)
@@ -61,25 +61,25 @@ export default class Container extends PureComponent {
     })
   }
 
-  handleChangePreferencesClick = () => {
+  handleBannerChangePreferences = () => {
     this.setState({
       isDialogOpen: true,
     })
   }
 
-  handleChange = (category, value) => {
+  handleDialogChange = (category, value) => {
     this.setState({
       [category]: value,
     })
   }
 
-  handleCancel = () => {
+  handleDialogCancel = () => {
     this.setState({
       isDialogOpen: false,
     })
   }
 
-  handleSave = () => {
+  handleDialogSave = () => {
     const {saveConsent} = this.props
 
     saveConsent()
