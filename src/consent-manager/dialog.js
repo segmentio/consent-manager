@@ -84,21 +84,16 @@ const HeaderCancelButton = styled('button')`
 
 const Content = styled('div')`
   overflow-y: auto;
+  padding: 16px;
+  padding-bottom: 0;
   min-height: 0;
   font-size: 14px;
   line-height: 1.3;
 `
 
-// Firefox lets the contents overflow the padding
-// when it's set on the flex item (Content)
-const ContentPadding = styled('div')`
-  padding: 16px;
-`
-
 const P = styled('p')`
   margin: 16px 0;
-  &:first-child,
-  &:last-child {
+  &:first-child {
     margin-top: 0;
   }
 `
@@ -155,7 +150,7 @@ const CheckboxCell = styled('td')`
 `
 
 const Buttons = styled('div')`
-  margin-top: 24px;
+  padding: 16px;
   text-align: right;
 `
 
@@ -263,116 +258,106 @@ export default class Dialog extends PureComponent {
           </Header>
 
           <Content innerRef={this.handleContentRef}>
-            <ContentPadding>
-              <P>
-                Segment collects data to improve your browsing experience,
-                analyze our site traffic, send tailored messages, and to
-                increase the overall performance of our site. By using our
-                services, you’re agreeing to our{' '}
-                <A
-                  href="https://segment.com/docs/legal/privacy/"
-                  target="_blank"
-                >
-                  privacy policy
-                </A>. You can change your preferences at any time.
-              </P>
-              <P>
-                We collect data for the following categories of tools. To opt
-                out of any category, uncheck the box and save your preferences.
-              </P>
+            <P>
+              Segment collects data to improve your browsing experience, analyze
+              our site traffic, send tailored messages, and to increase the
+              overall performance of our site. By using our services, you’re
+              agreeing to our{' '}
+              <A href="https://segment.com/docs/legal/privacy/" target="_blank">
+                privacy policy
+              </A>. You can change your preferences at any time.
+            </P>
+            <P>
+              We collect data for the following categories of tools. To opt out
+              of any category, uncheck the box and save your preferences.
+            </P>
 
-              <TableScroll>
-                <Table>
-                  <thead>
-                    <Row>
-                      <ColumnHeading scope="col">Allow</ColumnHeading>
-                      <ColumnHeading scope="col">Category</ColumnHeading>
-                      <ColumnHeading scope="col">Description</ColumnHeading>
-                      <ColumnHeading scope="col" className={examplesColumn}>
-                        Examples
-                      </ColumnHeading>
-                    </Row>
-                  </thead>
-                  <tbody>
-                    <Row>
-                      <CheckboxCell>
-                        <input
-                          type="checkbox"
-                          checked
-                          aria-label="Allow marketing and analytics tracking"
-                        />
-                      </CheckboxCell>
-                      <RowHeading scope="row">
-                        Marketing and Analytics
-                      </RowHeading>
-                      <td>
-                        Tools we use to understand user behavior on our site.
-                      </td>
-                      <td className={examplesColumn}>
-                        Mixpanel, Amplitude, Data Warehouse, Personas,
-                        Heatmapping, Enrichment, Raw Data
-                      </td>
-                    </Row>
-                    <Row>
-                      <CheckboxCell>
-                        <input
-                          type="checkbox"
-                          checked
-                          aria-label="Allow advertising tracking"
-                        />
-                      </CheckboxCell>
-                      <RowHeading scope="row">Advertising</RowHeading>
-                      <td>
-                        Tools we use for attribution and targeted advertising.
-                      </td>
-                      <td className={examplesColumn}>
-                        FB Ads, LinkedIn Pixel, Personas, Email, SMS/ push, Tag
-                        Manager?!
-                      </td>
-                    </Row>
-                    <Row>
-                      <CheckboxCell>
-                        <input
-                          type="checkbox"
-                          checked
-                          aria-label="Allow functional tracking"
-                        />
-                      </CheckboxCell>
-                      <RowHeading scope="row">Functional</RowHeading>
-                      <td>
-                        Tools we use to improve the performance of our site in
-                        order to help our customers.
-                      </td>
-                      <td className={examplesColumn}>
-                        New Relic, Optimizely, Live Chat, Zendesk, Security and
-                        fraud tools
-                      </td>
-                    </Row>
-                  </tbody>
-                </Table>
-              </TableScroll>
+            <TableScroll>
+              <Table>
+                <thead>
+                  <Row>
+                    <ColumnHeading scope="col">Allow</ColumnHeading>
+                    <ColumnHeading scope="col">Category</ColumnHeading>
+                    <ColumnHeading scope="col">Description</ColumnHeading>
+                    <ColumnHeading scope="col" className={examplesColumn}>
+                      Examples
+                    </ColumnHeading>
+                  </Row>
+                </thead>
+                <tbody>
+                  <Row>
+                    <CheckboxCell>
+                      <input
+                        type="checkbox"
+                        checked
+                        aria-label="Allow marketing and analytics tracking"
+                      />
+                    </CheckboxCell>
+                    <RowHeading scope="row">Marketing and Analytics</RowHeading>
+                    <td>
+                      Tools we use to understand user behavior on our site.
+                    </td>
+                    <td className={examplesColumn}>
+                      Mixpanel, Amplitude, Data Warehouse, Personas,
+                      Heatmapping, Enrichment, Raw Data
+                    </td>
+                  </Row>
+                  <Row>
+                    <CheckboxCell>
+                      <input
+                        type="checkbox"
+                        checked
+                        aria-label="Allow advertising tracking"
+                      />
+                    </CheckboxCell>
+                    <RowHeading scope="row">Advertising</RowHeading>
+                    <td>
+                      Tools we use for attribution and targeted advertising.
+                    </td>
+                    <td className={examplesColumn}>
+                      FB Ads, LinkedIn Pixel, Personas, Email, SMS/ push, Tag
+                      Manager?!
+                    </td>
+                  </Row>
+                  <Row>
+                    <CheckboxCell>
+                      <input
+                        type="checkbox"
+                        checked
+                        aria-label="Allow functional tracking"
+                      />
+                    </CheckboxCell>
+                    <RowHeading scope="row">Functional</RowHeading>
+                    <td>
+                      Tools we use to improve the performance of our site in
+                      order to help our customers.
+                    </td>
+                    <td className={examplesColumn}>
+                      New Relic, Optimizely, Live Chat, Zendesk, Security and
+                      fraud tools
+                    </td>
+                  </Row>
+                </tbody>
+              </Table>
+            </TableScroll>
 
-              <P>
-                Segment respects your privacy and is committed to transparent
-                privacy practices.{' '}
-                <A
-                  href="https://segment.com/docs/legal/privacy/"
-                  target="_blank"
-                >
-                  Learn more
-                </A>
-              </P>
-
-              <Buttons>
-                <CancelButton type="button" onClick={onCancel}>
-                  Cancel
-                </CancelButton>
-                <SaveButton type="button" onClick={onSave}>
-                  Save
-                </SaveButton>
-              </Buttons>
-            </ContentPadding>
+            <P>
+              Segment respects your privacy and is committed to transparent
+              privacy practices.{' '}
+              <A href="https://segment.com/docs/legal/privacy/" target="_blank">
+                Learn more
+              </A>
+            </P>
           </Content>
+
+          <Buttons>
+            <CancelButton type="button" onClick={onCancel}>
+              Cancel
+            </CancelButton>
+            <SaveButton type="button" onClick={onSave}>
+              Save
+            </SaveButton>
+          </Buttons>
         </Root>
       </Overlay>
     )
