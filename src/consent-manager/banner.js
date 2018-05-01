@@ -1,8 +1,10 @@
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'react-emotion'
+import fontStyles from './font-styles'
 
 const Root = styled('div')`
+  ${fontStyles};
   position: relative;
   padding: 8px;
   padding-right: 32px;
@@ -62,7 +64,7 @@ export default class Banner extends PureComponent {
       <Root>
         <P>
           We collect data to improve your experience on our site. By using our
-          services, you’re agreeing to our data collection policy.
+          services, you՚re agreeing to our privacy policy.
         </P>
         <P>
           You can{' '}

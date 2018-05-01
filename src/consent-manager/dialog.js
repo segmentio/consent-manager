@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import styled, {css, keyframes} from 'react-emotion'
 import nanoid from 'nanoid'
+import fontStyles from './font-styles'
 
 const ANIMATION_DURATION = '200ms'
 const ANIMATION_EASING = 'cubic-bezier(0.0, 0.0, 0.2, 1)'
@@ -41,10 +42,12 @@ const openAnimation = keyframes`
 `
 
 const Root = styled('section')`
+  ${fontStyles};
   display: flex;
   flex-direction: column;
+  max-width: calc(100vw - 16px);
   max-height: calc(100vh - 16px);
-  flex-basis: 600px;
+  width: 650px;
   margin: 8px;
   background: #fff;
   border-radius: 8px;
@@ -56,14 +59,15 @@ const Header = styled('div')`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
+  padding: 12px 16px;
   border-bottom: 1px solid rgba(67, 90, 111, 0.079);
 `
 
 const Title = styled('h2')`
   margin: 0;
+  color: #1f4160;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.3;
 `
 
@@ -109,8 +113,45 @@ const A = styled('a')`
   }
 `
 
+const TableScroll = styled('div')`
+  overflow-x: auto;
+`
+
 const Table = styled('table')`
+  border-collapse: collapse;
   font-size: 12px;
+`
+
+const examplesColumn = css`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`
+
+const ColumnHeading = styled('th')`
+  background: #435a6f0a;
+  color: #1f4160;
+  font-weight: 600;
+  text-align: left;
+`
+
+const RowHeading = styled('th')`
+  font-weight: normal;
+  text-align: left;
+`
+
+const Row = styled('tr')`
+  th,
+  td {
+    padding: 8px 12px;
+    border: 1px solid #435a6f14;
+    border-top: none;
+    border-left: none;
+  }
+`
+
+const CheckboxCell = styled('td')`
+  text-align: center;
 `
 
 const Buttons = styled('div')`
@@ -227,71 +268,97 @@ export default class Dialog extends PureComponent {
                 Segment collects data to improve your browsing experience,
                 analyze our site traffic, send tailored messages, and to
                 increase the overall performance of our site. By using our
-                services, you’re agreeing to our data collection policy. You can
-                change your preferences at any time.
+                services, you’re agreeing to our{' '}
+                <A
+                  href="https://segment.com/docs/legal/privacy/"
+                  target="_blank"
+                >
+                  privacy policy
+                </A>. You can change your preferences at any time.
               </P>
               <P>
                 We collect data for the following categories of tools. To opt
                 out of any category, uncheck the box and save your preferences.
               </P>
 
-              <Table>
-                <thead>
-                  <tr>
-                    <td>Allow</td>
-                    <td>Category</td>
-                    <td>Description</td>
-                    <td>Examples</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>Marketing and Analytics</td>
-                    <td>
-                      Tools we use to understand user behavior on our site.
-                    </td>
-                    <td>
-                      Mixpanel, Amplitude, Data Warehouse, Personas,
-                      Heatmapping, Enrichment, Raw Data
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>Advertising</td>
-                    <td>
-                      Tools we use for attribution and targeted advertising.{' '}
-                    </td>
-                    <td>
-                      FB Ads, LinkedIn Pixel, Personas, Email, SMS/ push, Tag
-                      Manager?!
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>Functional</td>
-                    <td>
-                      Tools we use to improve the performance of our site in
-                      order to help our customers.{' '}
-                    </td>
-                    <td>
-                      New Relic, Optimizely, Live Chat, Zendesk, Security and
-                      fraud tools
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
+              <TableScroll>
+                <Table>
+                  <thead>
+                    <Row>
+                      <ColumnHeading scope="col">Allow</ColumnHeading>
+                      <ColumnHeading scope="col">Category</ColumnHeading>
+                      <ColumnHeading scope="col">Description</ColumnHeading>
+                      <ColumnHeading scope="col" className={examplesColumn}>
+                        Examples
+                      </ColumnHeading>
+                    </Row>
+                  </thead>
+                  <tbody>
+                    <Row>
+                      <CheckboxCell>
+                        <input
+                          type="checkbox"
+                          checked
+                          aria-label="Allow marketing and analytics tracking"
+                        />
+                      </CheckboxCell>
+                      <RowHeading scope="row">
+                        Marketing and Analytics
+                      </RowHeading>
+                      <td>
+                        Tools we use to understand user behavior on our site.
+                      </td>
+                      <td className={examplesColumn}>
+                        Mixpanel, Amplitude, Data Warehouse, Personas,
+                        Heatmapping, Enrichment, Raw Data
+                      </td>
+                    </Row>
+                    <Row>
+                      <CheckboxCell>
+                        <input
+                          type="checkbox"
+                          checked
+                          aria-label="Allow advertising tracking"
+                        />
+                      </CheckboxCell>
+                      <RowHeading scope="row">Advertising</RowHeading>
+                      <td>
+                        Tools we use for attribution and targeted advertising.
+                      </td>
+                      <td className={examplesColumn}>
+                        FB Ads, LinkedIn Pixel, Personas, Email, SMS/ push, Tag
+                        Manager?!
+                      </td>
+                    </Row>
+                    <Row>
+                      <CheckboxCell>
+                        <input
+                          type="checkbox"
+                          checked
+                          aria-label="Allow functional tracking"
+                        />
+                      </CheckboxCell>
+                      <RowHeading scope="row">Functional</RowHeading>
+                      <td>
+                        Tools we use to improve the performance of our site in
+                        order to help our customers.
+                      </td>
+                      <td className={examplesColumn}>
+                        New Relic, Optimizely, Live Chat, Zendesk, Security and
+                        fraud tools
+                      </td>
+                    </Row>
+                  </tbody>
+                </Table>
+              </TableScroll>
 
               <P>
-                Segment commits to strong, secure, and transparent privacy
-                practices.{' '}
-                <A href="" target="_blank">
+                Segment respects your privacy and is committed to transparent
+                privacy practices.{' '}
+                <A
+                  href="https://segment.com/docs/legal/privacy/"
+                  target="_blank"
+                >
                   Learn more
                 </A>
               </P>
