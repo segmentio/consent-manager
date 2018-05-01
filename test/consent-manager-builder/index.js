@@ -177,67 +177,12 @@ test.todo('saveConsent() can be passed a boolean to set all preferences')
 
 test.todo('saveConsent() fills in missing preferences')
 
-test.cb.serial(
-  'calls the onLoad event handler with the destinations, newDestinations and preferences',
-  t => {
-    global.document.cookie =
-      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22_tbd%22:false}}'
-    global.window.analytics = {load() {}}
+test.todo('maps to preferences on load')
 
-    nock('http://localhost:3000')
-      .get('/v1/projects/123/integrations')
-      .reply(200, [
-        {
-          name: 'Google Analytics',
-          creationName: 'Google Analytics',
-        },
-        {
-          name: 'Amplitude',
-          creationName: 'Amplitude',
-        },
-      ])
+test.todo('maps to preferences when setPreferences() is passed a boolean')
 
-    function onLoad({destinations, newDestinations, preferences}) {
-      t.deepEqual(destinations, [
-        {
-          id: 'Amplitude',
-          name: 'Amplitude',
-        },
-        {
-          id: 'Google Analytics',
-          name: 'Google Analytics',
-        },
-        {
-          id: '_tbd',
-          name: 'TBD',
-          category: 'TBD',
-          description: 'TBD',
-          website: 'https://segment.com',
-        },
-      ])
-      t.deepEqual(newDestinations, [
-        {
-          id: 'Google Analytics',
-          name: 'Google Analytics',
-        },
-      ])
-      t.deepEqual(preferences, {
-        Amplitude: true,
-        _tbd: false,
-      })
-      t.end()
-    }
+test.todo('maps to preferences when resetPreferences() is called')
 
-    shallow(
-      <ConsentManagerBuilder writeKey="123" onLoad={onLoad}>
-        {() => {}}
-      </ConsentManagerBuilder>
-    )
-  }
-)
+test.todo('maps to preferences when saveConsent() is passed a boolean')
 
-test.todo('calls the onSave event handler with the preferences')
-
-test.todo(
-  'the onSave event handler can overwrite the preferences by returning a value'
-)
+test.todo('maps from preferences before saving')

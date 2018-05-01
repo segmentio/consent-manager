@@ -2,12 +2,11 @@ import {Component} from 'react'
 import PropTypes from 'prop-types'
 import {loadPreferences, savePreferences} from './preferences'
 import fetchDestinations from './fetch-destinations'
-import {
-  getNewDestinations,
-  mergePreferences,
-  addMissingPreferences,
-} from './utils'
+import {getNewDestinations, addMissingPreferences} from './utils'
 import conditionallyLoadAnalytics from './analytics'
+
+// Used to provide a stable value in render
+const emptyObject = {}
 
 export default class ConsentManagerBuilder extends Component {
   static displayName = 'ConsentManagerBuilder'
@@ -17,15 +16,15 @@ export default class ConsentManagerBuilder extends Component {
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldEnforceConsent: PropTypes.func,
-    onLoad: PropTypes.func,
-    onSave: PropTypes.func,
+    mapToPreferences: PropTypes.func,
+    mapFromPreferences: PropTypes.func,
   }
 
   static defaultProps = {
     otherWriteKeys: [],
     shouldEnforceConsent: () => true,
-    onLoad: () => {},
-    onSave: () => {},
+    mapToPreferences: undefined,
+    mapFromPreferences: undefined,
   }
 
   state = {
@@ -46,7 +45,7 @@ export default class ConsentManagerBuilder extends Component {
     return children({
       destinations,
       newDestinations,
-      preferences: preferences || {},
+      preferences: preferences || emptyObject,
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
       saveConsent: this.handleSaveConsent,
@@ -54,25 +53,61 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   componentDidMount() {
+    const {mapToPreferences, mapFromPreferences} = this.props
     // TODO: handle errors properly
     this.initialise()
+
+    if (process.env.NODE_ENV !== 'production') {
+      if (mapToPreferences && !mapFromPreferences) {
+        console.error(
+          `ConsentManagerBuilder: to use “mapToPreferences” you must also set “mapFromPreferences”`
+        )
+      }
+
+      if (!mapToPreferences && mapFromPreferences) {
+        console.error(
+          `ConsentManagerBuilder: to use “mapFromPreferences” you must also set “mapToPreferences”`
+        )
+      }
+    }
   }
 
   initialise = async () => {
-    const {writeKey, otherWriteKeys, shouldEnforceConsent, onLoad} = this.props
-    const preferences = loadPreferences()
+    const {
+      writeKey,
+      otherWriteKeys,
+      shouldEnforceConsent,
+      mapToPreferences,
+    } = this.props
+    const destinationPreferences = loadPreferences()
 
     if (!await shouldEnforceConsent()) {
       return
     }
 
     const destinations = await fetchDestinations([writeKey, ...otherWriteKeys])
-    const newDestinations = getNewDestinations(destinations, preferences)
-
-    onLoad({destinations, newDestinations, preferences})
+    const newDestinations = getNewDestinations(
+      destinations,
+      destinationPreferences
+    )
 
     // TODO: load without destinations? (faster)
-    conditionallyLoadAnalytics({writeKey, destinations, preferences})
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+    })
+
+    let preferences
+    if (mapToPreferences) {
+      preferences = mapToPreferences({
+        destinations,
+        newDestinations,
+        destinationPreferences,
+      })
+    } else {
+      preferences = destinationPreferences
+    }
 
     this.setState({
       isLoading: false,
@@ -85,44 +120,103 @@ export default class ConsentManagerBuilder extends Component {
   handleSetPreferences = newPreferences => {
     this.setState(prevState => {
       const {destinations, preferences: existingPreferences} = prevState
-      return {
-        preferences: mergePreferences({
-          destinations,
-          existingPreferences,
-          newPreferences,
-        }),
-      }
+      const preferences = this.mergePreferences({
+        destinations,
+        newPreferences,
+        existingPreferences,
+      })
+      return {preferences}
     })
   }
 
   handleResetPreferences = () => {
-    this.setState({preferences: loadPreferences()})
+    const {mapToPreferences} = this.props
+    const destinationPreferences = loadPreferences()
+
+    this.setState(prevState => {
+      const {destinations} = prevState
+
+      let preferences
+      if (mapToPreferences) {
+        preferences = mapToPreferences({
+          destinations,
+          destinationPreferences,
+        })
+      } else {
+        preferences = destinationPreferences
+      }
+
+      return {preferences}
+    })
   }
 
   handleSaveConsent = newPreferences => {
-    const {writeKey, onSave} = this.props
+    const {writeKey, mapFromPreferences} = this.props
 
     this.setState(prevState => {
       const {destinations, preferences: existingPreferences} = prevState
 
-      let preferences = mergePreferences({
+      const preferences = this.mergePreferences({
         destinations,
-        existingPreferences,
         newPreferences,
+        existingPreferences,
       })
-      preferences = addMissingPreferences(destinations, preferences)
 
-      const overridePreferences = onSave(preferences)
-      if (overridePreferences) {
-        preferences = overridePreferences
+      let destinationPreferences
+      if (mapFromPreferences) {
+        destinationPreferences = mapFromPreferences({
+          destinations,
+          preferences,
+        })
+      } else {
+        destinationPreferences = preferences
       }
 
-      const newDestinations = getNewDestinations(destinations, preferences)
+      destinationPreferences = addMissingPreferences(
+        destinations,
+        destinationPreferences
+      )
+      const newDestinations = getNewDestinations(
+        destinations,
+        destinationPreferences
+      )
 
-      savePreferences(preferences)
-      conditionallyLoadAnalytics({writeKey, destinations, preferences})
+      savePreferences(destinationPreferences)
+      conditionallyLoadAnalytics({
+        writeKey,
+        destinations,
+        destinationPreferences,
+      })
 
       return {preferences, newDestinations}
     })
+  }
+
+  mergePreferences = ({destinations, existingPreferences, newPreferences}) => {
+    const {mapToPreferences} = this.props
+    let preferences
+
+    if (typeof newPreferences === 'boolean') {
+      const destinationPreferences = {}
+      for (const destination of destinations) {
+        destinationPreferences[destination.id] = newPreferences
+      }
+
+      if (mapToPreferences) {
+        preferences = mapToPreferences({
+          destinations,
+          destinationPreferences,
+        })
+      } else {
+        preferences = destinationPreferences
+      }
+    } else {
+      preferences = {
+        ...existingPreferences,
+        ...newPreferences,
+      }
+    }
+
+    return preferences
   }
 }

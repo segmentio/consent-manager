@@ -10,7 +10,7 @@ test.beforeEach(() => {
   global.document = {}
 })
 
-test('loadPreferences() returns preferences when cookie exists', t => {
+test.serial('loadPreferences() returns preferences when cookie exists', t => {
   global.document.cookie =
     'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22_tbd%22:false}}'
 
@@ -20,13 +20,13 @@ test('loadPreferences() returns preferences when cookie exists', t => {
   })
 })
 
-test('loadPreferences() returns null when cookie doesn՚t exist', t => {
+test.serial('loadPreferences() returns null when cookie doesn՚t exist', t => {
   global.document.cookie = ''
 
   t.is(loadPreferences(), null)
 })
 
-test('savePreferences() saves the preferences', t => {
+test.serial('savePreferences() saves the preferences', t => {
   const ajsIdentify = sinon.spy()
   global.window.analytics = {identify: ajsIdentify}
   global.document.cookie = ''

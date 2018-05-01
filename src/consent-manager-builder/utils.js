@@ -15,28 +15,6 @@ export function getNewDestinations(destinations, preferences) {
   return newDestinations
 }
 
-export function mergePreferences({
-  destinations,
-  existingPreferences,
-  newPreferences,
-}) {
-  let preferences
-
-  if (typeof newPreferences === 'boolean') {
-    preferences = {}
-    for (const destination of destinations) {
-      preferences[destination.id] = newPreferences
-    }
-  } else {
-    preferences = {
-      ...existingPreferences,
-      ...newPreferences,
-    }
-  }
-
-  return preferences
-}
-
 export function addMissingPreferences(destinations, preferences) {
   const newPreferences = {
     ...preferences,

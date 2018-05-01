@@ -6,16 +6,16 @@ test.beforeEach(() => {
   global.window = {}
 })
 
-test('loads analytics.js with preferences', t => {
+test.serial('loads analytics.js with preferences', t => {
   const ajsLoad = sinon.spy()
   global.window.analytics = {load: ajsLoad}
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
-  const preferences = {
+  const destinationPreferences = {
     Amplitude: true,
   }
 
-  conditionallyLoadAnalytics({writeKey, destinations, preferences})
+  conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
 
   t.true(ajsLoad.calledOnce)
   t.is(ajsLoad.args[0][0], writeKey)
@@ -28,48 +28,51 @@ test('loads analytics.js with preferences', t => {
   })
 })
 
-test('doesn՚t load analytics.js when there are no preferences', t => {
+test.serial('doesn՚t load analytics.js when there are no preferences', t => {
   const ajsLoad = sinon.spy()
   global.window.analytics = {load: ajsLoad}
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
-  const preferences = null
+  const destinationPreferences = null
 
-  conditionallyLoadAnalytics({writeKey, destinations, preferences})
+  conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
 
   t.true(ajsLoad.notCalled)
 })
 
-test('doesn՚t load analytics.js when all preferences are false', t => {
+test.serial('doesn՚t load analytics.js when all preferences are false', t => {
   const ajsLoad = sinon.spy()
   global.window.analytics = {load: ajsLoad}
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
-  const preferences = {
+  const destinationPreferences = {
     Amplitude: false,
   }
 
-  conditionallyLoadAnalytics({writeKey, destinations, preferences})
+  conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
 
   t.true(ajsLoad.notCalled)
 })
 
-test('reloads the page when analytics.js has already been initialised', t => {
-  const reload = sinon.spy()
-  global.window.analytics = {
-    load() {
-      this.initialized = true
-    },
-  }
-  global.window.location = {reload}
-  const writeKey = '123'
-  const destinations = [{id: 'Amplitude'}]
-  const preferences = {
-    Amplitude: true,
-  }
+test.serial(
+  'reloads the page when analytics.js has already been initialised',
+  t => {
+    const reload = sinon.spy()
+    global.window.analytics = {
+      load() {
+        this.initialized = true
+      },
+    }
+    global.window.location = {reload}
+    const writeKey = '123'
+    const destinations = [{id: 'Amplitude'}]
+    const destinationPreferences = {
+      Amplitude: true,
+    }
 
-  conditionallyLoadAnalytics({writeKey, destinations, preferences})
-  conditionallyLoadAnalytics({writeKey, destinations, preferences})
+    conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
+    conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
 
-  t.true(reload.calledOnce)
-})
+    t.true(reload.calledOnce)
+  }
+)

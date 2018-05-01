@@ -1,17 +1,17 @@
 export default function conditionallyLoadAnalytics({
   writeKey,
   destinations,
-  preferences,
+  destinationPreferences,
 }) {
   const integrations = {All: false, 'Segment.io': true}
   let isAnythingEnabled = false
 
-  if (!preferences) {
+  if (!destinationPreferences) {
     return
   }
 
   for (const destination of destinations) {
-    const isEnabled = Boolean(preferences[destination.id])
+    const isEnabled = Boolean(destinationPreferences[destination.id])
     if (isEnabled) {
       isAnythingEnabled = true
     }
