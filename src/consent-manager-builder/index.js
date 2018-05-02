@@ -176,7 +176,7 @@ export default class ConsentManagerBuilder extends Component {
     })
   }
 
-  handleSaveConsent = newPreferences => {
+  handleSaveConsent = (newPreferences, shouldReload) => {
     const {writeKey, mapFromPreferences} = this.props
 
     this.setState(prevState => {
@@ -213,6 +213,7 @@ export default class ConsentManagerBuilder extends Component {
         destinations,
         destinationPreferences,
         isEnforcingConsent,
+        shouldReload,
       })
 
       return {preferences, newDestinations}
@@ -237,11 +238,13 @@ export default class ConsentManagerBuilder extends Component {
       } else {
         preferences = destinationPreferences
       }
-    } else {
+    } else if (newPreferences) {
       preferences = {
         ...existingPreferences,
         ...newPreferences,
       }
+    } else {
+      preferences = existingPreferences
     }
 
     return preferences

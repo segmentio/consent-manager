@@ -11,15 +11,22 @@ export default class ConsentManager extends PureComponent {
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldEnforceConsent: PropTypes.func,
+    implyConsentOnInteraction: PropTypes.bool,
   }
 
   static defaultProps = {
     otherWriteKeys: [],
     shouldEnforceConsent: () => true,
+    implyConsentOnInteraction: true,
   }
 
   render() {
-    const {writeKey, otherWriteKeys, shouldEnforceConsent} = this.props
+    const {
+      writeKey,
+      otherWriteKeys,
+      shouldEnforceConsent,
+      implyConsentOnInteraction,
+    } = this.props
 
     return (
       <ConsentManagerBuilder
@@ -44,6 +51,7 @@ export default class ConsentManager extends PureComponent {
             isEnforcingConsent={isEnforcingConsent}
             setPreferences={setPreferences}
             saveConsent={saveConsent}
+            implyConsentOnInteraction={implyConsentOnInteraction}
           />
         )}
       </ConsentManagerBuilder>

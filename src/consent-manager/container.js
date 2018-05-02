@@ -21,6 +21,7 @@ export default class Container extends PureComponent {
     newDestinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     preferences: PropTypes.object.isRequired,
     isEnforcingConsent: PropTypes.bool.isRequired,
+    implyConsentOnInteraction: PropTypes.bool.isRequired,
   }
 
   state = {
@@ -51,7 +52,7 @@ export default class Container extends PureComponent {
     }
 
     return (
-      <div>
+      <div ref={this.handleRootRef}>
         {isEnforcingConsent &&
           newDestinations.length > 0 && (
             <Banner
@@ -77,11 +78,18 @@ export default class Container extends PureComponent {
   }
 
   componentDidMount() {
+    const {isEnforcingConsent, implyConsentOnInteraction} = this.props
+
     emitter.on('openDialog', this.openDialog)
+
+    if (isEnforcingConsent && implyConsentOnInteraction) {
+      document.body.addEventListener('click', this.handleBodyClick, false)
+    }
   }
 
   componentWillUnmount() {
     emitter.removeListener('openDialog', this.openDialog)
+    document.body.removeEventListener('click', this.handleBodyClick, false)
   }
 
   allowAllTracking = () => {
@@ -103,6 +111,31 @@ export default class Container extends PureComponent {
     this.setState({
       isDialogOpen: false,
     })
+  }
+
+  handleRootRef = node => {
+    this.root = node
+  }
+
+  handleBodyClick = e => {
+    const {
+      newDestinations,
+      saveConsent,
+      isEnforcingConsent,
+      implyConsentOnInteraction,
+    } = this.props
+
+    if (this.root.contains(e.target)) {
+      return
+    }
+
+    if (
+      isEnforcingConsent &&
+      implyConsentOnInteraction &&
+      newDestinations.length > 0
+    ) {
+      saveConsent(undefined, false)
+    }
   }
 
   handleCategoryChange = (category, value) => {

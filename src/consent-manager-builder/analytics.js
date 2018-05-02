@@ -3,6 +3,7 @@ export default function conditionallyLoadAnalytics({
   destinations,
   destinationPreferences,
   isEnforcingConsent,
+  shouldReload = true,
 }) {
   const integrations = {All: false, 'Segment.io': true}
   let isAnythingEnabled = false
@@ -30,7 +31,9 @@ export default function conditionallyLoadAnalytics({
   // Reload the page if the trackers have already been initialised so that
   // the user's new preferences can take affect
   if (window.analytics.initialized) {
-    window.location.reload()
+    if (shouldReload) {
+      window.location.reload()
+    }
     return
   }
 

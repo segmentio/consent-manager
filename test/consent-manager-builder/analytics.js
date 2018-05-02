@@ -102,6 +102,37 @@ test.serial(
   }
 )
 
+test.serial('should allow the reload behvaiour to be disabled', t => {
+  const reload = sinon.spy()
+  global.window.analytics = {
+    load() {
+      this.initialized = true
+    },
+  }
+  global.window.location = {reload}
+  const writeKey = '123'
+  const destinations = [{id: 'Amplitude'}]
+  const destinationPreferences = {
+    Amplitude: true,
+  }
+
+  conditionallyLoadAnalytics({
+    writeKey,
+    destinations,
+    destinationPreferences,
+    isEnforcingConsent: true,
+  })
+  conditionallyLoadAnalytics({
+    writeKey,
+    destinations,
+    destinationPreferences,
+    isEnforcingConsent: true,
+    shouldReload: false,
+  })
+
+  t.false(reload.calledOnce)
+})
+
 test.serial('loads analytics.js normally when not enforcing consent', t => {
   const ajsLoad = sinon.spy()
   global.window.analytics = {load: ajsLoad}
