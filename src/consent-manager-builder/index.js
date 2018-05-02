@@ -2,11 +2,27 @@ import {Component} from 'react'
 import PropTypes from 'prop-types'
 import {loadPreferences, savePreferences} from './preferences'
 import fetchDestinations from './fetch-destinations'
-import {getNewDestinations, addMissingPreferences} from './utils'
 import conditionallyLoadAnalytics from './analytics'
 
 // Used to provide a stable value in render
 const emptyObject = {}
+
+function getNewDestinations(destinations, preferences) {
+  const newDestinations = []
+
+  // If there are no preferences then all destinations are new
+  if (!preferences) {
+    return destinations
+  }
+
+  for (const destination of destinations) {
+    if (preferences[destination.id] === undefined) {
+      newDestinations.push(destination)
+    }
+  }
+
+  return newDestinations
+}
 
 export default class ConsentManagerBuilder extends Component {
   static displayName = 'ConsentManagerBuilder'
@@ -172,10 +188,6 @@ export default class ConsentManagerBuilder extends Component {
         destinationPreferences = preferences
       }
 
-      destinationPreferences = addMissingPreferences(
-        destinations,
-        destinationPreferences
-      )
       const newDestinations = getNewDestinations(
         destinations,
         destinationPreferences
