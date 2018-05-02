@@ -2,33 +2,40 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import Banner from './banner'
 import Dialog from './dialog'
+import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
 
 export default class Container extends PureComponent {
   static displayName = 'Container'
 
   static propTypes = {
+    setPreferences: PropTypes.func.isRequired,
     saveConsent: PropTypes.func.isRequired,
+    destinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     newDestinations: PropTypes.arrayOf(PropTypes.object).isRequired,
+    preferences: PropTypes.object.isRequired,
   }
 
-  constructor() {
-    super()
-    this.state = {
-      isDialogOpen: false,
-      marketingAllowed: true,
-      advertisingAllowed: true,
-      functionalAllowed: true,
-    }
+  state = {
+    isDialogOpen: false,
   }
 
   render() {
-    const {newDestinations} = this.props
-    const {
-      isDialogOpen,
-      marketingAllowed,
-      advertisingAllowed,
-      functionalAllowed,
-    } = this.state
+    const {destinations, newDestinations, preferences} = this.props
+    const {isDialogOpen} = this.state
+    const marketingDestinations = []
+    const advertisingDestinations = []
+    const functionalDestinations = []
+
+    for (const destination of destinations) {
+      if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
+        advertisingDestinations.push(destination)
+      } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
+        functionalDestinations.push(destination)
+      } else {
+        // Fallback to marketing
+        marketingDestinations.push(destination)
+      }
+    }
 
     return (
       <div>
@@ -43,9 +50,12 @@ export default class Container extends PureComponent {
             onCancel={this.handleDialogCancel}
             onSave={this.handleDialogSave}
             onChange={this.handleDialogChange}
-            marketingAllowed={marketingAllowed}
-            advertisingAllowed={advertisingAllowed}
-            functionalAllowed={functionalAllowed}
+            marketingDestinations={marketingDestinations}
+            advertisingDestinations={advertisingDestinations}
+            functionalDestinations={functionalDestinations}
+            marketingAllowed={preferences.marketingAllowed}
+            advertisingAllowed={preferences.advertisingAllowed}
+            functionalAllowed={preferences.functionalAllowed}
           />
         )}
       </div>
@@ -68,7 +78,9 @@ export default class Container extends PureComponent {
   }
 
   handleDialogChange = (category, value) => {
-    this.setState({
+    const {setPreferences} = this.props
+
+    setPreferences({
       [category]: value,
     })
   }

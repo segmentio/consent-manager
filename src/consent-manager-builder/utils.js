@@ -15,6 +15,7 @@ export function getNewDestinations(destinations, preferences) {
   return newDestinations
 }
 
+// TODO: delete this
 export function addMissingPreferences(destinations, preferences) {
   const newPreferences = {
     ...preferences,

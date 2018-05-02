@@ -117,7 +117,7 @@ const Table = styled('table')`
   font-size: 12px;
 `
 
-const examplesColumn = css`
+const toolsColumn = css`
   @media (max-width: 600px) {
     display: none;
   }
@@ -229,6 +229,21 @@ export default class Dialog extends PureComponent {
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    marketingDestinations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    advertisingDestinations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    functionalDestinations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     marketingAllowed: PropTypes.bool.isRequired,
     advertisingAllowed: PropTypes.bool.isRequired,
     functionalAllowed: PropTypes.bool.isRequired,
@@ -243,6 +258,9 @@ export default class Dialog extends PureComponent {
     const {
       onCancel,
       onSave,
+      marketingDestinations,
+      advertisingDestinations,
+      functionalDestinations,
       marketingAllowed,
       advertisingAllowed,
       functionalAllowed,
@@ -289,8 +307,8 @@ export default class Dialog extends PureComponent {
                     <ColumnHeading scope="col">Allow</ColumnHeading>
                     <ColumnHeading scope="col">Category</ColumnHeading>
                     <ColumnHeading scope="col">Description</ColumnHeading>
-                    <ColumnHeading scope="col" className={examplesColumn}>
-                      Examples
+                    <ColumnHeading scope="col" className={toolsColumn}>
+                      Tools
                     </ColumnHeading>
                   </Row>
                 </thead>
@@ -309,9 +327,8 @@ export default class Dialog extends PureComponent {
                     <td>
                       Tools we use to understand user behavior on our site.
                     </td>
-                    <td className={examplesColumn}>
-                      Mixpanel, Amplitude, Data Warehouse, Personas,
-                      Heatmapping, Enrichment, Raw Data
+                    <td className={toolsColumn}>
+                      {marketingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
                   <Row>
@@ -328,9 +345,8 @@ export default class Dialog extends PureComponent {
                     <td>
                       Tools we use for attribution and targeted advertising.
                     </td>
-                    <td className={examplesColumn}>
-                      FB Ads, LinkedIn Pixel, Personas, Email, SMS/ push, Tag
-                      Manager?!
+                    <td className={toolsColumn}>
+                      {advertisingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
                   <Row>
@@ -348,9 +364,8 @@ export default class Dialog extends PureComponent {
                       Tools we use to improve the performance of our site in
                       order to help our customers.
                     </td>
-                    <td className={examplesColumn}>
-                      New Relic, Optimizely, Live Chat, Zendesk, Security and
-                      fraud tools
+                    <td className={toolsColumn}>
+                      {functionalDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
                 </tbody>
