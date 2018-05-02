@@ -2,7 +2,7 @@ import React, {Fragment} from 'react'
 import {storiesOf} from '@storybook/react'
 import {Pane, Button, Heading, Ul, Li, Code, Checkbox} from 'evergreen-ui'
 import {injectGlobal} from 'emotion'
-import {ConsentManagerBuilder, ConsentManager} from '../src'
+import {ConsentManagerBuilder, ConsentManager, openConsentManager} from '../src'
 
 injectGlobal(`
   body {
@@ -125,6 +125,11 @@ storiesOf('ConsentManager', module).add(`example`, () => (
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
       dignissimos porro omnis illo iusto non, unde veniam praesentium ut. Veniam
       quidem odio nisi possimus minus quae ipsa rem voluptates consequatur.
+    </p>
+    <p>
+      <button type="button" onClick={openConsentManager}>
+        Change preferences
+      </button>
     </p>
   </Fragment>
 ))

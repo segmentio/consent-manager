@@ -1,8 +1,15 @@
+import EventEmitter from 'events'
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import Banner from './banner'
 import Dialog from './dialog'
 import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
+
+const emitter = new EventEmitter()
+
+export function openDialog() {
+  emitter.emit('openDialog')
+}
 
 export default class Container extends PureComponent {
   static displayName = 'Container'
@@ -41,15 +48,15 @@ export default class Container extends PureComponent {
       <div>
         {newDestinations.length > 0 && (
           <Banner
-            onAccept={this.handleBannerAccept}
-            onChangePreferences={this.handleBannerChangePreferences}
+            onAccept={this.allowAllTracking}
+            onChangePreferences={this.openDialog}
           />
         )}
         {isDialogOpen && (
           <Dialog
-            onCancel={this.handleDialogCancel}
-            onSave={this.handleDialogSave}
-            onChange={this.handleDialogChange}
+            onCancel={this.closeDialog}
+            onSave={this.handleSave}
+            onChange={this.handleCategoryChange}
             marketingDestinations={marketingDestinations}
             advertisingDestinations={advertisingDestinations}
             functionalDestinations={functionalDestinations}
@@ -62,7 +69,15 @@ export default class Container extends PureComponent {
     )
   }
 
-  handleBannerAccept = () => {
+  componentDidMount() {
+    emitter.on('openDialog', this.openDialog)
+  }
+
+  componentWillUnmount() {
+    emitter.removeListener('openDialog', this.openDialog)
+  }
+
+  allowAllTracking = () => {
     const {saveConsent} = this.props
 
     saveConsent(true)
@@ -71,13 +86,19 @@ export default class Container extends PureComponent {
     })
   }
 
-  handleBannerChangePreferences = () => {
+  openDialog = () => {
     this.setState({
       isDialogOpen: true,
     })
   }
 
-  handleDialogChange = (category, value) => {
+  closeDialog = () => {
+    this.setState({
+      isDialogOpen: false,
+    })
+  }
+
+  handleCategoryChange = (category, value) => {
     const {setPreferences} = this.props
 
     setPreferences({
@@ -85,13 +106,7 @@ export default class Container extends PureComponent {
     })
   }
 
-  handleDialogCancel = () => {
-    this.setState({
-      isDialogOpen: false,
-    })
-  }
-
-  handleDialogSave = () => {
+  handleSave = () => {
     const {saveConsent} = this.props
 
     saveConsent()

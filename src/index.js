@@ -1,5 +1,6 @@
 export ConsentManagerBuilder from './consent-manager-builder'
 export ConsentManager from './consent-manager'
+export {openDialog as openConsentManager} from './consent-manager/container'
 
 export function doNotTrack() {
   let doNotTrackValue =
