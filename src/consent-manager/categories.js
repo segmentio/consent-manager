@@ -1,30 +1,27 @@
 export const MARKETING_CATEGORIES = [
   'TBD',
+  'A/B Testing',
   'Analytics',
+  'Attribution',
+  'Email',
   'Enrichment',
   'Heatmaps & Recordings',
   'Raw Data',
   'Realtime Dashboards',
   'Referrals',
+  'Surveys',
 ]
 
-export const ADVERTISING_CATEGORIES = [
-  'Advertising',
-  'Attribution',
-  'Deep Linking',
-  'Email',
-  'SMS & Push Notifications',
-  'Tag Manager',
-]
+export const ADVERTISING_CATEGORIES = ['Advertising', 'Tag Manager']
 
 export const FUNCTIONAL_CATEGORIES = [
-  'A/B Testing',
   'CRM',
   'Customer Success',
+  'Deep Linking',
   'Helpdesk',
   'Livechat',
   'Performance Monitoring',
   'Personalization',
+  'SMS & Push Notifications',
   'Security & Fraud',
-  'Surveys',
 ]
