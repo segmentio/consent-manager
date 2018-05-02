@@ -15,7 +15,12 @@ test.serial('loads analytics.js with preferences', t => {
     Amplitude: true,
   }
 
-  conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
+  conditionallyLoadAnalytics({
+    writeKey,
+    destinations,
+    destinationPreferences,
+    isEnforcingConsent: true,
+  })
 
   t.true(ajsLoad.calledOnce)
   t.is(ajsLoad.args[0][0], writeKey)
@@ -35,7 +40,12 @@ test.serial('doesn՚t load analytics.js when there are no preferences', t => {
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = null
 
-  conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
+  conditionallyLoadAnalytics({
+    writeKey,
+    destinations,
+    destinationPreferences,
+    isEnforcingConsent: true,
+  })
 
   t.true(ajsLoad.notCalled)
 })
@@ -49,7 +59,12 @@ test.serial('doesn՚t load analytics.js when all preferences are false', t => {
     Amplitude: false,
   }
 
-  conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
+  conditionallyLoadAnalytics({
+    writeKey,
+    destinations,
+    destinationPreferences,
+    isEnforcingConsent: true,
+  })
 
   t.true(ajsLoad.notCalled)
 })
@@ -70,9 +85,65 @@ test.serial(
       Amplitude: true,
     }
 
-    conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
-    conditionallyLoadAnalytics({writeKey, destinations, destinationPreferences})
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isEnforcingConsent: true,
+    })
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isEnforcingConsent: true,
+    })
 
     t.true(reload.calledOnce)
   }
 )
+
+test.serial('loads analytics.js normally when not enforcing consent', t => {
+  const ajsLoad = sinon.spy()
+  global.window.analytics = {load: ajsLoad}
+  const writeKey = '123'
+  const destinations = [{id: 'Amplitude'}]
+  const destinationPreferences = null
+
+  conditionallyLoadAnalytics({
+    writeKey,
+    destinations,
+    destinationPreferences,
+    isEnforcingConsent: false,
+  })
+
+  t.true(ajsLoad.calledOnce)
+  t.is(ajsLoad.args[0][0], writeKey)
+  t.is(ajsLoad.args[0][1], undefined)
+})
+
+test.serial('still enforces preferences when not enforcing consent', t => {
+  const ajsLoad = sinon.spy()
+  global.window.analytics = {load: ajsLoad}
+  const writeKey = '123'
+  const destinations = [{id: 'Amplitude'}]
+  const destinationPreferences = {
+    Amplitude: true,
+  }
+
+  conditionallyLoadAnalytics({
+    writeKey,
+    destinations,
+    destinationPreferences,
+    isEnforcingConsent: false,
+  })
+
+  t.true(ajsLoad.calledOnce)
+  t.is(ajsLoad.args[0][0], writeKey)
+  t.deepEqual(ajsLoad.args[0][1], {
+    integrations: {
+      All: false,
+      Amplitude: true,
+      'Segment.io': true,
+    },
+  })
+})

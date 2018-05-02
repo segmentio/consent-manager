@@ -3,6 +3,7 @@ import cookies from 'js-cookie'
 const COOKIE_KEY = 'tracking-preferences'
 const COOKIE_EXPIRES = 365
 
+// TODO: harden against invalid cookies
 export function loadPreferences() {
   const preferences = cookies.get(COOKIE_KEY)
 

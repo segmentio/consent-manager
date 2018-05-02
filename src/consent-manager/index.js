@@ -33,6 +33,7 @@ export default class ConsentManager extends PureComponent {
           destinations,
           newDestinations,
           preferences,
+          isEnforcingConsent,
           setPreferences,
           saveConsent,
         }) => (
@@ -40,6 +41,7 @@ export default class ConsentManager extends PureComponent {
             destinations={destinations}
             newDestinations={newDestinations}
             preferences={preferences}
+            isEnforcingConsent={isEnforcingConsent}
             setPreferences={setPreferences}
             saveConsent={saveConsent}
           />

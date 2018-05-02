@@ -157,6 +157,10 @@ test.cb.serial('provides an object containing the WIP preferences', t => {
   )
 })
 
+test.todo('loads analytics.js normally when not enforcing consent')
+
+test.todo('still enforces preferences when not enforcing consent')
+
 test.todo('provides a setPreferences() function for setting the preferences')
 
 test.todo(

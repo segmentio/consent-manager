@@ -20,6 +20,7 @@ export default class Container extends PureComponent {
     destinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     newDestinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     preferences: PropTypes.object.isRequired,
+    isEnforcingConsent: PropTypes.bool.isRequired,
   }
 
   state = {
@@ -27,7 +28,12 @@ export default class Container extends PureComponent {
   }
 
   render() {
-    const {destinations, newDestinations, preferences} = this.props
+    const {
+      destinations,
+      newDestinations,
+      preferences,
+      isEnforcingConsent,
+    } = this.props
     const {isDialogOpen} = this.state
     const marketingDestinations = []
     const advertisingDestinations = []
@@ -46,12 +52,13 @@ export default class Container extends PureComponent {
 
     return (
       <div>
-        {newDestinations.length > 0 && (
-          <Banner
-            onAccept={this.allowAllTracking}
-            onChangePreferences={this.openDialog}
-          />
-        )}
+        {isEnforcingConsent &&
+          newDestinations.length > 0 && (
+            <Banner
+              onAccept={this.allowAllTracking}
+              onChangePreferences={this.openDialog}
+            />
+          )}
         {isDialogOpen && (
           <Dialog
             onCancel={this.closeDialog}

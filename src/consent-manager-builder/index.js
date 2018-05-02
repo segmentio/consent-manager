@@ -48,11 +48,18 @@ export default class ConsentManagerBuilder extends Component {
     destinations: [],
     newDestinations: [],
     preferences: null,
+    isEnforcingConsent: true,
   }
 
   render() {
     const {children} = this.props
-    const {isLoading, destinations, preferences, newDestinations} = this.state
+    const {
+      isLoading,
+      destinations,
+      preferences,
+      newDestinations,
+      isEnforcingConsent,
+    } = this.state
 
     if (isLoading) {
       return null
@@ -62,6 +69,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       newDestinations,
       preferences: preferences || emptyObject,
+      isEnforcingConsent,
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
       saveConsent: this.handleSaveConsent,
@@ -97,21 +105,22 @@ export default class ConsentManagerBuilder extends Component {
     } = this.props
     const destinationPreferences = loadPreferences()
 
-    if (!await shouldEnforceConsent()) {
-      return
-    }
+    const [isEnforcingConsent, destinations] = await Promise.all([
+      shouldEnforceConsent(),
+      fetchDestinations([writeKey, ...otherWriteKeys]),
+    ])
 
-    const destinations = await fetchDestinations([writeKey, ...otherWriteKeys])
     const newDestinations = getNewDestinations(
       destinations,
       destinationPreferences
     )
 
-    // TODO: load without destinations? (faster)
+    // TODO: load without destinations? (faster but could result in sending an invalid integrations option)
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
       destinationPreferences,
+      isEnforcingConsent,
     })
 
     let preferences
@@ -130,6 +139,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       newDestinations,
       preferences,
+      isEnforcingConsent,
     })
   }
 
@@ -170,7 +180,11 @@ export default class ConsentManagerBuilder extends Component {
     const {writeKey, mapFromPreferences} = this.props
 
     this.setState(prevState => {
-      const {destinations, preferences: existingPreferences} = prevState
+      const {
+        destinations,
+        preferences: existingPreferences,
+        isEnforcingConsent,
+      } = prevState
 
       const preferences = this.mergePreferences({
         destinations,
@@ -198,6 +212,7 @@ export default class ConsentManagerBuilder extends Component {
         writeKey,
         destinations,
         destinationPreferences,
+        isEnforcingConsent,
       })
 
       return {preferences, newDestinations}
