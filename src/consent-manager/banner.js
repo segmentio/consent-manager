@@ -1,13 +1,13 @@
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import styled from 'react-emotion'
+import styled, {css} from 'react-emotion'
 import fontStyles from './font-styles'
 
 const Root = styled('div')`
   ${fontStyles};
   position: relative;
   padding: 8px;
-  padding-right: 32px;
+  padding-right: 40px;
   background: #1f4160;
   color: #fff;
   text-align: center;
@@ -22,7 +22,7 @@ const P = styled('p')`
   }
 `
 
-const TextButton = styled('button')`
+const link = css`
   display: inline;
   padding: 0;
   border: none;
@@ -62,17 +62,27 @@ export default class Banner extends PureComponent {
 
     return (
       <Root>
-        <P>
-          We collect data to improve your experience on our site. By using our
-          services, you՚re agreeing to our privacy policy.
-        </P>
-        <P>
-          You can{' '}
-          <TextButton type="button" onClick={onChangePreferences}>
-            change your preferences
-          </TextButton>{' '}
-          at any time.
-        </P>
+        <div>
+          <P>
+            We collect data and use cookies to improve your experience on our
+            site. By using our website, you’re agreeing to the collection of
+            data and use of cookies as described in our{' '}
+            <a className={link} href="/docs/legal/privacy/" target="_blank">
+              privacy policy
+            </a>.
+          </P>
+          <P>
+            You can{' '}
+            <button
+              className={link}
+              type="button"
+              onClick={onChangePreferences}
+            >
+              change your preferences
+            </button>{' '}
+            at any time.
+          </P>
+        </div>
 
         <CloseButton
           type="button"

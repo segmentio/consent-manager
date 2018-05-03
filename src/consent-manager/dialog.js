@@ -16,6 +16,12 @@ const fadeInAnimation = keyframes`
   }
 `
 
+const hideOnMobile = css`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`
+
 const Overlay = styled('div')`
   position: fixed;
   left: 0;
@@ -47,7 +53,7 @@ const Root = styled('section')`
   flex-direction: column;
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 16px);
-  width: 650px;
+  width: 700px;
   margin: 8px;
   background: #fff;
   border-radius: 8px;
@@ -92,9 +98,9 @@ const Content = styled('div')`
 `
 
 const P = styled('p')`
-  margin: 16px 0;
-  &:first-child {
-    margin-top: 0;
+  margin: 0;
+  &:not(:last-child) {
+    margin-bottom: 0.7em;
   }
 `
 
@@ -113,14 +119,9 @@ const TableScroll = styled('div')`
 `
 
 const Table = styled('table')`
+  margin-top: 16px;
   border-collapse: collapse;
   font-size: 12px;
-`
-
-const toolsColumn = css`
-  @media (max-width: 600px) {
-    display: none;
-  }
 `
 
 const ColumnHeading = styled('th')`
@@ -275,7 +276,9 @@ export default class Dialog extends PureComponent {
           aria-labelledby={this.titleId}
         >
           <Header>
-            <Title id={this.titleId}>Segment Data Collection Preferences</Title>
+            <Title id={this.titleId}>
+              Segment Data Collection and Cookie Preferences
+            </Title>
             <HeaderCancelButton
               onClick={onCancel}
               title="Cancel"
@@ -287,17 +290,19 @@ export default class Dialog extends PureComponent {
 
           <Content innerRef={this.handleContentRef}>
             <P>
-              Segment collects data to improve your browsing experience, analyze
-              our site traffic, send tailored messages, and to increase the
-              overall performance of our site. By using our services, you’re
-              agreeing to our{' '}
-              <A href="https://segment.com/docs/legal/privacy/" target="_blank">
+              Segment collects data and uses cookies or other similar
+              technologies to improve your browsing experience, analyze our site
+              traffic, send tailored messages, and increase the overall
+              performance of our site. By using our website, you’re agreeing to
+              the collection of data and use of cookies as described in our{' '}
+              <A href="/docs/legal/privacy/" target="_blank">
                 privacy policy
               </A>. You can change your preferences at any time.
             </P>
             <P>
-              We collect data for the following categories of tools. To opt out
-              of any category, uncheck the box and save your preferences.
+              We collect data and/or use cookies for the following categories of
+              tools. To opt out of any category, uncheck the box and save your
+              preferences.
             </P>
 
             <TableScroll>
@@ -306,8 +311,8 @@ export default class Dialog extends PureComponent {
                   <Row>
                     <ColumnHeading scope="col">Allow</ColumnHeading>
                     <ColumnHeading scope="col">Category</ColumnHeading>
-                    <ColumnHeading scope="col">Description</ColumnHeading>
-                    <ColumnHeading scope="col" className={toolsColumn}>
+                    <ColumnHeading scope="col">Purpose</ColumnHeading>
+                    <ColumnHeading scope="col" className={hideOnMobile}>
                       Tools
                     </ColumnHeading>
                   </Row>
@@ -325,9 +330,17 @@ export default class Dialog extends PureComponent {
                     </CheckboxCell>
                     <RowHeading scope="row">Marketing and Analytics</RowHeading>
                     <td>
-                      Tools we use to understand user behavior on our site.
+                      <P>
+                        We use these tools to understand user behavior in order
+                        to provide you with a more relevant browsing experience.
+                      </P>
+                      <P className={hideOnMobile}>
+                        For example, we collect information about which pages
+                        you visit to help us present information that you find
+                        relevant when you visit our site.
+                      </P>
                     </td>
-                    <td className={toolsColumn}>
+                    <td className={hideOnMobile}>
                       {marketingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
@@ -343,9 +356,18 @@ export default class Dialog extends PureComponent {
                     </CheckboxCell>
                     <RowHeading scope="row">Advertising</RowHeading>
                     <td>
-                      Tools we use for attribution and targeted advertising.
+                      <P>
+                        We use these tools to personalize and measure the
+                        effectiveness of our advertising.
+                      </P>
+                      <P className={hideOnMobile}>
+                        For example, we may serve you a personalized ad based on
+                        the pages you visit on our site. This information may
+                        also be used to ensure we do not repeatedly serve you
+                        the same ad.
+                      </P>
                     </td>
-                    <td className={toolsColumn}>
+                    <td className={hideOnMobile}>
                       {advertisingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
@@ -361,24 +383,23 @@ export default class Dialog extends PureComponent {
                     </CheckboxCell>
                     <RowHeading scope="row">Functional</RowHeading>
                     <td>
-                      Tools we use to improve the performance of our site in
-                      order to help our customers.
+                      <P>
+                        We use these tools to monitor the performance of our
+                        site and to enhance your browsing experience.
+                      </P>
+                      <P className={hideOnMobile}>
+                        For example, these tools enable you to communicate with
+                        us via live chat if you have any questions while you’re
+                        on our site.
+                      </P>
                     </td>
-                    <td className={toolsColumn}>
+                    <td className={hideOnMobile}>
                       {functionalDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
                 </tbody>
               </Table>
             </TableScroll>
-
-            <P>
-              Segment respects your privacy and is committed to transparent
-              privacy practices.{' '}
-              <A href="https://segment.com/docs/legal/privacy/" target="_blank">
-                Learn more
-              </A>
-            </P>
           </Content>
 
           <Buttons>
