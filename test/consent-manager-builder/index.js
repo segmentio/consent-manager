@@ -13,7 +13,7 @@ test.beforeEach(() => {
 test.todo('doesn՚t initialise if we shouldn՚t enforce consent')
 
 test.cb.serial('provides a list of enabled destinations', t => {
-  nock('http://localhost:3000')
+  nock('https://cdn.segment.com')
     .get('/v1/projects/123/integrations')
     .reply(200, [
       {
@@ -68,7 +68,7 @@ test.cb.serial('provides a list of newly added destinations', t => {
     'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22_tbd%22:true}}'
   global.window.analytics = {load() {}}
 
-  nock('http://localhost:3000')
+  nock('https://cdn.segment.com')
     .get('/v1/projects/123/integrations')
     .reply(200, [
       {
@@ -103,7 +103,7 @@ test.cb.serial('loads analytics.js with the user՚s preferences', t => {
   global.window.analytics = {load: ajsLoad}
   const writeKey = '123'
 
-  nock('http://localhost:3000')
+  nock('https://cdn.segment.com')
     .get('/v1/projects/123/integrations')
     .reply(200, [
       {
@@ -136,7 +136,7 @@ test.cb.serial('provides an object containing the WIP preferences', t => {
     'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
   global.window.analytics = {load() {}}
 
-  nock('http://localhost:3000')
+  nock('https://cdn.segment.com')
     .get('/v1/projects/123/integrations')
     .reply(200, [
       {
