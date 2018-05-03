@@ -34,6 +34,7 @@ export default class ConsentManagerBuilder extends Component {
     shouldEnforceConsent: PropTypes.func,
     mapToPreferences: PropTypes.func,
     mapFromPreferences: PropTypes.func,
+    cookieDomain: PropTypes.string,
   }
 
   static defaultProps = {
@@ -41,6 +42,7 @@ export default class ConsentManagerBuilder extends Component {
     shouldEnforceConsent: () => true,
     mapToPreferences: undefined,
     mapFromPreferences: undefined,
+    cookieDomain: undefined,
   }
 
   state = {
@@ -177,7 +179,7 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   handleSaveConsent = (newPreferences, shouldReload) => {
-    const {writeKey, mapFromPreferences} = this.props
+    const {writeKey, mapFromPreferences, cookieDomain} = this.props
 
     this.setState(prevState => {
       const {
@@ -207,7 +209,7 @@ export default class ConsentManagerBuilder extends Component {
         destinationPreferences
       )
 
-      savePreferences(destinationPreferences)
+      savePreferences(destinationPreferences, cookieDomain)
       conditionallyLoadAnalytics({
         writeKey,
         destinations,

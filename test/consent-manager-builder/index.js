@@ -190,3 +190,5 @@ test.todo('maps to preferences when resetPreferences() is called')
 test.todo('maps to preferences when saveConsent() is passed a boolean')
 
 test.todo('maps from preferences before saving')
+
+test.todo('cookieDomain sets the cookie domain')

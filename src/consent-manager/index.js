@@ -12,12 +12,14 @@ export default class ConsentManager extends PureComponent {
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldEnforceConsent: PropTypes.func,
     implyConsentOnInteraction: PropTypes.bool,
+    cookieDomain: PropTypes.string,
   }
 
   static defaultProps = {
     otherWriteKeys: [],
     shouldEnforceConsent: () => true,
     implyConsentOnInteraction: true,
+    cookieDomain: undefined,
   }
 
   render() {
@@ -26,6 +28,7 @@ export default class ConsentManager extends PureComponent {
       otherWriteKeys,
       shouldEnforceConsent,
       implyConsentOnInteraction,
+      cookieDomain,
     } = this.props
 
     return (
@@ -33,6 +36,7 @@ export default class ConsentManager extends PureComponent {
         writeKey={writeKey}
         otherWriteKeys={otherWriteKeys}
         shouldEnforceConsent={shouldEnforceConsent}
+        cookieDomain={cookieDomain}
         mapToPreferences={this.handleMapToPreferences}
         mapFromPreferences={this.handleMapFromPreferences}
       >

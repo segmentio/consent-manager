@@ -5,24 +5,27 @@ const COOKIE_EXPIRES = 365
 
 // TODO: harden against invalid cookies
 export function loadPreferences() {
-  const preferences = cookies.get(COOKIE_KEY)
+  const preferences = cookies.getJSON(COOKIE_KEY)
 
   if (!preferences) {
     return null
   }
 
   // TODO: add support for custom preferences
-  return JSON.parse(preferences).destinations
+  return preferences.destinations
 }
 
-export function savePreferences(preferences) {
+export function savePreferences(preferences, cookieDomain) {
   window.analytics.identify({
     tbd: preferences._tbd,
   })
 
-  const data = JSON.stringify({
+  const value = {
     version: 1,
     destinations: preferences,
+  }
+  cookies.set(COOKIE_KEY, value, {
+    expires: COOKIE_EXPIRES,
+    domain: cookieDomain,
   })
-  cookies.set(COOKIE_KEY, data, {expires: COOKIE_EXPIRES})
 }

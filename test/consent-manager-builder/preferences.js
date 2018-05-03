@@ -46,3 +46,20 @@ test.serial('savePreferences() saves the preferences', t => {
     )
   )
 })
+
+test.serial('savePreferences() sets the cookie domain', t => {
+  const ajsIdentify = sinon.spy()
+  global.window.analytics = {identify: ajsIdentify}
+  global.document.cookie = ''
+  const preferences = {
+    Amplitude: true,
+    _tbd: false,
+  }
+
+  savePreferences(preferences, 'example.com')
+
+  t.true(ajsIdentify.calledOnce)
+  t.deepEqual(ajsIdentify.args[0][0], {tbd: false})
+
+  t.true(global.document.cookie.includes('domain=example.com'))
+})
