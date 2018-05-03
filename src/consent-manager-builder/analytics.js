@@ -28,6 +28,8 @@ export default function conditionallyLoadAnalytics({
     integrations[destination.id] = isEnabled
   }
 
+  console.log(integrations)
+
   // Reload the page if the trackers have already been initialised so that
   // the user's new preferences can take affect
   if (window.analytics.initialized) {

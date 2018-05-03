@@ -4,6 +4,10 @@ import {Pane, Button, Heading, Ul, Li, Code, Checkbox} from 'evergreen-ui'
 import {injectGlobal} from 'emotion'
 import {ConsentManagerBuilder, ConsentManager, openConsentManager} from '../src'
 
+if (window.localStorage) {
+  window.localStorage.setItem('debug', 'analytics.js')
+}
+
 injectGlobal(`
   body {
     margin: 0;
@@ -16,8 +20,8 @@ function Section(props) {
 
 storiesOf('ConsentManagerBuilder', module).add(`example`, () => (
   <ConsentManagerBuilder
-    writeKey="uA7UpbCh8Z0Ybodlnf4rJ6vLa85WrJfe"
-    otherWriteKeys={['SeTHUkkIadsYUTWhMI3tkGu01XKogPHn']}
+    writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
+    otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
   >
     {({
       destinations,
@@ -90,8 +94,8 @@ storiesOf('ConsentManagerBuilder', module).add(`example`, () => (
 storiesOf('ConsentManager', module).add(`example`, () => (
   <Fragment>
     <ConsentManager
-      writeKey="uA7UpbCh8Z0Ybodlnf4rJ6vLa85WrJfe"
-      otherWriteKeys={['SeTHUkkIadsYUTWhMI3tkGu01XKogPHn']}
+      writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
+      otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
     />
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
