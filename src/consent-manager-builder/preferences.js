@@ -1,4 +1,5 @@
 import cookies from 'js-cookie'
+import topDomain from '@segment/top-domain'
 
 const COOKIE_KEY = 'tracking-preferences'
 const COOKIE_EXPIRES = 365
@@ -20,12 +21,13 @@ export function savePreferences(preferences, cookieDomain) {
     tbd: preferences._tbd,
   })
 
+  const domain = cookieDomain || topDomain(window.location.href)
   const value = {
     version: 1,
     destinations: preferences,
   }
   cookies.set(COOKIE_KEY, value, {
     expires: COOKIE_EXPIRES,
-    domain: cookieDomain,
+    domain,
   })
 }

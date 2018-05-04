@@ -26,6 +26,7 @@
     "node": ">=8"
   },
   "dependencies": {
+    "@segment/top-domain": "^3.0.0",
     "babel-runtime": "^6.26.0",
     "emotion": "^9.1.2",
     "isomorphic-fetch": "^2.2.1",
@@ -93,7 +94,7 @@
   "size-limit": [
     {
       "path": "esm/index.js",
-      "limit": "40 KB"
+      "limit": "42 KB"
     }
   ]
 }
