@@ -31,6 +31,7 @@ export default class ConsentManagerBuilder extends Component {
     children: PropTypes.func.isRequired,
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
+    // TODO: enforce -> require
     shouldEnforceConsent: PropTypes.func,
     mapToPreferences: PropTypes.func,
     mapFromPreferences: PropTypes.func,

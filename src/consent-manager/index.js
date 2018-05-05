@@ -97,6 +97,7 @@ export default class ConsentManager extends PureComponent {
   }
 
   handleMapFromPreferences = ({destinations, preferences}) => {
+    // TODO: merge with existing preferences
     const destinationPreferences = {}
 
     for (const destination of destinations) {
