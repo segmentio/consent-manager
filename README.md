@@ -5,6 +5,6 @@ Project description.
 
 License
 -------
-consent-manager is released under the ISC license.
+consent-manager is released under the MIT license.
 
 Copyright © 2018, Segment.io, Inc.
