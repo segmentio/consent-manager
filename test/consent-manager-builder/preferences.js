@@ -1,3 +1,4 @@
+import {URL} from 'url'
 import test from 'ava'
 import sinon from 'sinon'
 import {
@@ -6,8 +7,18 @@ import {
 } from '../../src/consent-manager-builder/preferences'
 
 test.beforeEach(() => {
-  global.window = {}
-  global.document = {}
+  global.window = {
+    location: {
+      href: 'http://localhost/',
+    },
+  }
+  global.document = {
+    createElement(type) {
+      if (type === 'a') {
+        return new URL('http://localhost/')
+      }
+    },
+  }
 })
 
 test.serial('loadPreferences() returns preferences when cookie exists', t => {
