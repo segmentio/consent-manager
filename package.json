@@ -2,7 +2,11 @@
   "name": "@segment/consent-manager",
   "version": "0.1.0",
   "description": "The Segment user tracking consent manager",
-  "keywords": ["gdpr", "tracking", "analytics"],
+  "keywords": [
+    "gdpr",
+    "tracking",
+    "analytics"
+  ],
   "repository": "segmentio/consent-manager",
   "license": "MIT",
   "main": "commonjs/index.js",

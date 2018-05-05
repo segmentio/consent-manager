@@ -10,7 +10,7 @@ test.beforeEach(() => {
   global.window = {}
 })
 
-test.todo('doesn՚t initialise if we shouldn՚t enforce consent')
+test.todo('doesn՚t load analytics.js when consent is required')
 
 test.cb.serial('provides a list of enabled destinations', t => {
   nock('https://cdn.segment.com')
@@ -157,9 +157,9 @@ test.cb.serial('provides an object containing the WIP preferences', t => {
   )
 })
 
-test.todo('loads analytics.js normally when not enforcing consent')
+test.todo('loads analytics.js normally when consent isn՚t required')
 
-test.todo('still enforces preferences when not enforcing consent')
+test.todo('still applies preferences when consent isn՚t required')
 
 test.todo('provides a setPreferences() function for setting the preferences')
 

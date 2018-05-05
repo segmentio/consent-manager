@@ -31,8 +31,7 @@ export default class ConsentManagerBuilder extends Component {
     children: PropTypes.func.isRequired,
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
-    // TODO: enforce -> require
-    shouldEnforceConsent: PropTypes.func,
+    shouldRequireConsent: PropTypes.func,
     mapToPreferences: PropTypes.func,
     mapFromPreferences: PropTypes.func,
     cookieDomain: PropTypes.string,
@@ -40,7 +39,7 @@ export default class ConsentManagerBuilder extends Component {
 
   static defaultProps = {
     otherWriteKeys: [],
-    shouldEnforceConsent: () => true,
+    shouldRequireConsent: () => true,
     mapToPreferences: undefined,
     mapFromPreferences: undefined,
     cookieDomain: undefined,
@@ -51,7 +50,7 @@ export default class ConsentManagerBuilder extends Component {
     destinations: [],
     newDestinations: [],
     preferences: null,
-    isEnforcingConsent: true,
+    isConsentRequired: true,
   }
 
   render() {
@@ -61,7 +60,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       preferences,
       newDestinations,
-      isEnforcingConsent,
+      isConsentRequired,
     } = this.state
 
     if (isLoading) {
@@ -72,7 +71,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       newDestinations,
       preferences: preferences || emptyObject,
-      isEnforcingConsent,
+      isConsentRequired,
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
       saveConsent: this.handleSaveConsent,
@@ -103,13 +102,13 @@ export default class ConsentManagerBuilder extends Component {
     const {
       writeKey,
       otherWriteKeys,
-      shouldEnforceConsent,
+      shouldRequireConsent,
       mapToPreferences,
     } = this.props
     const destinationPreferences = loadPreferences()
 
-    const [isEnforcingConsent, destinations] = await Promise.all([
-      shouldEnforceConsent(),
+    const [isConsentRequired, destinations] = await Promise.all([
+      shouldRequireConsent(),
       fetchDestinations([writeKey, ...otherWriteKeys]),
     ])
 
@@ -123,7 +122,7 @@ export default class ConsentManagerBuilder extends Component {
       writeKey,
       destinations,
       destinationPreferences,
-      isEnforcingConsent,
+      isConsentRequired,
     })
 
     let preferences
@@ -142,7 +141,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       newDestinations,
       preferences,
-      isEnforcingConsent,
+      isConsentRequired,
     })
   }
 
@@ -186,7 +185,7 @@ export default class ConsentManagerBuilder extends Component {
       const {
         destinations,
         preferences: existingPreferences,
-        isEnforcingConsent,
+        isConsentRequired,
       } = prevState
 
       const preferences = this.mergePreferences({
@@ -215,7 +214,7 @@ export default class ConsentManagerBuilder extends Component {
         writeKey,
         destinations,
         destinationPreferences,
-        isEnforcingConsent,
+        isConsentRequired,
         shouldReload,
       })
 

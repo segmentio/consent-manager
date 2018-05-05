@@ -2,18 +2,18 @@ export default function conditionallyLoadAnalytics({
   writeKey,
   destinations,
   destinationPreferences,
-  isEnforcingConsent,
+  isConsentRequired,
   shouldReload = true,
 }) {
   const integrations = {All: false, 'Segment.io': true}
   let isAnythingEnabled = false
 
   if (!destinationPreferences) {
-    if (isEnforcingConsent) {
+    if (isConsentRequired) {
       return
     }
 
-    // Load a.js normally when not enforcing consent and there's no preferences
+    // Load a.js normally when consent isn't required and there's no preferences
     if (!window.analytics.initialized) {
       window.analytics.load(writeKey)
     }

@@ -10,14 +10,14 @@ export default class ConsentManager extends PureComponent {
   static propTypes = {
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
-    shouldEnforceConsent: PropTypes.func,
+    shouldRequireConsent: PropTypes.func,
     implyConsentOnInteraction: PropTypes.bool,
     cookieDomain: PropTypes.string,
   }
 
   static defaultProps = {
     otherWriteKeys: [],
-    shouldEnforceConsent: () => true,
+    shouldRequireConsent: () => true,
     implyConsentOnInteraction: true,
     cookieDomain: undefined,
   }
@@ -26,7 +26,7 @@ export default class ConsentManager extends PureComponent {
     const {
       writeKey,
       otherWriteKeys,
-      shouldEnforceConsent,
+      shouldRequireConsent,
       implyConsentOnInteraction,
       cookieDomain,
     } = this.props
@@ -35,7 +35,7 @@ export default class ConsentManager extends PureComponent {
       <ConsentManagerBuilder
         writeKey={writeKey}
         otherWriteKeys={otherWriteKeys}
-        shouldEnforceConsent={shouldEnforceConsent}
+        shouldRequireConsent={shouldRequireConsent}
         cookieDomain={cookieDomain}
         mapToPreferences={this.handleMapToPreferences}
         mapFromPreferences={this.handleMapFromPreferences}
@@ -44,7 +44,7 @@ export default class ConsentManager extends PureComponent {
           destinations,
           newDestinations,
           preferences,
-          isEnforcingConsent,
+          isConsentRequired,
           setPreferences,
           saveConsent,
         }) => (
@@ -52,7 +52,7 @@ export default class ConsentManager extends PureComponent {
             destinations={destinations}
             newDestinations={newDestinations}
             preferences={preferences}
-            isEnforcingConsent={isEnforcingConsent}
+            isConsentRequired={isConsentRequired}
             setPreferences={setPreferences}
             saveConsent={saveConsent}
             implyConsentOnInteraction={implyConsentOnInteraction}

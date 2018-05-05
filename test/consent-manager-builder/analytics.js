@@ -19,7 +19,7 @@ test.serial('loads analytics.js with preferences', t => {
     writeKey,
     destinations,
     destinationPreferences,
-    isEnforcingConsent: true,
+    isConsentRequired: true,
   })
 
   t.true(ajsLoad.calledOnce)
@@ -44,7 +44,7 @@ test.serial('doesn՚t load analytics.js when there are no preferences', t => {
     writeKey,
     destinations,
     destinationPreferences,
-    isEnforcingConsent: true,
+    isConsentRequired: true,
   })
 
   t.true(ajsLoad.notCalled)
@@ -63,7 +63,7 @@ test.serial('doesn՚t load analytics.js when all preferences are false', t => {
     writeKey,
     destinations,
     destinationPreferences,
-    isEnforcingConsent: true,
+    isConsentRequired: true,
   })
 
   t.true(ajsLoad.notCalled)
@@ -89,13 +89,13 @@ test.serial(
       writeKey,
       destinations,
       destinationPreferences,
-      isEnforcingConsent: true,
+      isConsentRequired: true,
     })
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
       destinationPreferences,
-      isEnforcingConsent: true,
+      isConsentRequired: true,
     })
 
     t.true(reload.calledOnce)
@@ -120,20 +120,20 @@ test.serial('should allow the reload behvaiour to be disabled', t => {
     writeKey,
     destinations,
     destinationPreferences,
-    isEnforcingConsent: true,
+    isConsentRequired: true,
   })
   conditionallyLoadAnalytics({
     writeKey,
     destinations,
     destinationPreferences,
-    isEnforcingConsent: true,
+    isConsentRequired: true,
     shouldReload: false,
   })
 
   t.false(reload.calledOnce)
 })
 
-test.serial('loads analytics.js normally when not enforcing consent', t => {
+test.serial('loads analytics.js normally when consent isn՚t required', t => {
   const ajsLoad = sinon.spy()
   global.window.analytics = {load: ajsLoad}
   const writeKey = '123'
@@ -144,7 +144,7 @@ test.serial('loads analytics.js normally when not enforcing consent', t => {
     writeKey,
     destinations,
     destinationPreferences,
-    isEnforcingConsent: false,
+    isConsentRequired: false,
   })
 
   t.true(ajsLoad.calledOnce)
@@ -152,7 +152,7 @@ test.serial('loads analytics.js normally when not enforcing consent', t => {
   t.is(ajsLoad.args[0][1], undefined)
 })
 
-test.serial('still enforces preferences when not enforcing consent', t => {
+test.serial('still applies preferences when consent isn՚t required', t => {
   const ajsLoad = sinon.spy()
   global.window.analytics = {load: ajsLoad}
   const writeKey = '123'
@@ -165,7 +165,7 @@ test.serial('still enforces preferences when not enforcing consent', t => {
     writeKey,
     destinations,
     destinationPreferences,
-    isEnforcingConsent: false,
+    isConsentRequired: false,
   })
 
   t.true(ajsLoad.calledOnce)

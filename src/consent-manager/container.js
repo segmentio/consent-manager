@@ -20,7 +20,7 @@ export default class Container extends PureComponent {
     destinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     newDestinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     preferences: PropTypes.object.isRequired,
-    isEnforcingConsent: PropTypes.bool.isRequired,
+    isConsentRequired: PropTypes.bool.isRequired,
     implyConsentOnInteraction: PropTypes.bool.isRequired,
   }
 
@@ -33,7 +33,7 @@ export default class Container extends PureComponent {
       destinations,
       newDestinations,
       preferences,
-      isEnforcingConsent,
+      isConsentRequired,
     } = this.props
     const {isDialogOpen} = this.state
     const marketingDestinations = []
@@ -53,7 +53,7 @@ export default class Container extends PureComponent {
 
     return (
       <div ref={this.handleRootRef}>
-        {isEnforcingConsent &&
+        {isConsentRequired &&
           newDestinations.length > 0 && (
             <Banner
               onAccept={this.allowAllTracking}
@@ -78,11 +78,11 @@ export default class Container extends PureComponent {
   }
 
   componentDidMount() {
-    const {isEnforcingConsent, implyConsentOnInteraction} = this.props
+    const {isConsentRequired, implyConsentOnInteraction} = this.props
 
     emitter.on('openDialog', this.openDialog)
 
-    if (isEnforcingConsent && implyConsentOnInteraction) {
+    if (isConsentRequired && implyConsentOnInteraction) {
       document.body.addEventListener('click', this.handleBodyClick, false)
     }
   }
@@ -121,7 +121,7 @@ export default class Container extends PureComponent {
     const {
       newDestinations,
       saveConsent,
-      isEnforcingConsent,
+      isConsentRequired,
       implyConsentOnInteraction,
     } = this.props
 
@@ -130,7 +130,7 @@ export default class Container extends PureComponent {
     }
 
     if (
-      isEnforcingConsent &&
+      isConsentRequired &&
       implyConsentOnInteraction &&
       newDestinations.length > 0
     ) {
