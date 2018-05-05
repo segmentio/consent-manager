@@ -96,9 +96,14 @@ export default class ConsentManager extends PureComponent {
     return preferences
   }
 
-  handleMapFromPreferences = ({destinations, preferences}) => {
-    // TODO: merge with existing preferences
-    const destinationPreferences = {}
+  handleMapFromPreferences = ({
+    destinations,
+    destinationPreferences: existingDestinationPreferences,
+    preferences,
+  }) => {
+    const destinationPreferences = {
+      ...existingDestinationPreferences,
+    }
 
     for (const destination of destinations) {
       if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {

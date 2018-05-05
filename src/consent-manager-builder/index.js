@@ -49,6 +49,7 @@ export default class ConsentManagerBuilder extends Component {
     isLoading: true,
     destinations: [],
     newDestinations: [],
+    destinationPreferences: null,
     preferences: null,
     isConsentRequired: true,
   }
@@ -140,6 +141,7 @@ export default class ConsentManagerBuilder extends Component {
       isLoading: false,
       destinations,
       newDestinations,
+      destinationPreferences,
       preferences,
       isConsentRequired,
     })
@@ -159,7 +161,7 @@ export default class ConsentManagerBuilder extends Component {
 
   handleResetPreferences = () => {
     const {mapToPreferences} = this.props
-    const destinationPreferences = loadPreferences()
+    const {destinationPreferences} = this.state
 
     this.setState(prevState => {
       const {destinations} = prevState
@@ -184,6 +186,7 @@ export default class ConsentManagerBuilder extends Component {
     this.setState(prevState => {
       const {
         destinations,
+        destinationPreferences: existingDestinationPreferences,
         preferences: existingPreferences,
         isConsentRequired,
       } = prevState
@@ -198,6 +201,7 @@ export default class ConsentManagerBuilder extends Component {
       if (mapFromPreferences) {
         destinationPreferences = mapFromPreferences({
           destinations,
+          destinationPreferences: existingDestinationPreferences,
           preferences,
         })
       } else {
@@ -218,7 +222,7 @@ export default class ConsentManagerBuilder extends Component {
         shouldReload,
       })
 
-      return {preferences, newDestinations}
+      return {destinationPreferences, preferences, newDestinations}
     })
   }
 
