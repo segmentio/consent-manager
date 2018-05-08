@@ -4,9 +4,6 @@ import {loadPreferences, savePreferences} from './preferences'
 import fetchDestinations from './fetch-destinations'
 import conditionallyLoadAnalytics from './analytics'
 
-// Used to provide a stable value in render
-const emptyObject = {}
-
 function getNewDestinations(destinations, preferences) {
   const newDestinations = []
 
@@ -32,16 +29,16 @@ export default class ConsentManagerBuilder extends Component {
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldRequireConsent: PropTypes.func,
-    mapToPreferences: PropTypes.func,
-    mapFromPreferences: PropTypes.func,
+    initialPreferences: PropTypes.object,
+    mapCustomPreferences: PropTypes.func,
     cookieDomain: PropTypes.string,
   }
 
   static defaultProps = {
     otherWriteKeys: [],
     shouldRequireConsent: () => true,
-    mapToPreferences: undefined,
-    mapFromPreferences: undefined,
+    initialPreferences: {},
+    mapCustomPreferences: undefined,
     cookieDomain: undefined,
   }
 
@@ -49,8 +46,7 @@ export default class ConsentManagerBuilder extends Component {
     isLoading: true,
     destinations: [],
     newDestinations: [],
-    destinationPreferences: null,
-    preferences: null,
+    preferences: {},
     isConsentRequired: true,
   }
 
@@ -71,7 +67,7 @@ export default class ConsentManagerBuilder extends Component {
     return children({
       destinations,
       newDestinations,
-      preferences: preferences || emptyObject,
+      preferences,
       isConsentRequired,
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
@@ -80,23 +76,8 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   componentDidMount() {
-    const {mapToPreferences, mapFromPreferences} = this.props
     // TODO: handle errors properly
     this.initialise()
-
-    if (process.env.NODE_ENV !== 'production') {
-      if (mapToPreferences && !mapFromPreferences) {
-        console.error(
-          `ConsentManagerBuilder: to use “mapToPreferences” you must also set “mapFromPreferences”`
-        )
-      }
-
-      if (!mapToPreferences && mapFromPreferences) {
-        console.error(
-          `ConsentManagerBuilder: to use “mapFromPreferences” you must also set “mapToPreferences”`
-        )
-      }
-    }
   }
 
   initialise = async () => {
@@ -104,9 +85,11 @@ export default class ConsentManagerBuilder extends Component {
       writeKey,
       otherWriteKeys,
       shouldRequireConsent,
-      mapToPreferences,
+      initialPreferences,
+      mapCustomPreferences,
     } = this.props
-    const destinationPreferences = loadPreferences()
+    // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
+    const {destinationPreferences, customPreferences} = loadPreferences()
 
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),
@@ -118,7 +101,6 @@ export default class ConsentManagerBuilder extends Component {
       destinationPreferences
     )
 
-    // TODO: load without destinations? (faster but could result in sending an invalid integrations option)
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
@@ -127,21 +109,16 @@ export default class ConsentManagerBuilder extends Component {
     })
 
     let preferences
-    if (mapToPreferences) {
-      preferences = mapToPreferences({
-        destinations,
-        newDestinations,
-        destinationPreferences,
-      })
+    if (mapCustomPreferences) {
+      preferences = customPreferences || initialPreferences
     } else {
-      preferences = destinationPreferences
+      preferences = destinationPreferences || initialPreferences
     }
 
     this.setState({
       isLoading: false,
       destinations,
       newDestinations,
-      destinationPreferences,
       preferences,
       isConsentRequired,
     })
@@ -160,33 +137,25 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   handleResetPreferences = () => {
-    const {mapToPreferences} = this.props
-    const {destinationPreferences} = this.state
+    const {initialPreferences, mapCustomPreferences} = this.props
+    const {destinationPreferences, customPreferences} = loadPreferences()
 
-    this.setState(prevState => {
-      const {destinations} = prevState
+    let preferences
+    if (mapCustomPreferences) {
+      preferences = customPreferences || initialPreferences
+    } else {
+      preferences = destinationPreferences || initialPreferences
+    }
 
-      let preferences
-      if (mapToPreferences) {
-        preferences = mapToPreferences({
-          destinations,
-          destinationPreferences,
-        })
-      } else {
-        preferences = destinationPreferences
-      }
-
-      return {preferences}
-    })
+    this.setState({preferences})
   }
 
   handleSaveConsent = (newPreferences, shouldReload) => {
-    const {writeKey, mapFromPreferences, cookieDomain} = this.props
+    const {writeKey, cookieDomain, mapCustomPreferences} = this.props
 
     this.setState(prevState => {
       const {
         destinations,
-        destinationPreferences: existingDestinationPreferences,
         preferences: existingPreferences,
         isConsentRequired,
       } = prevState
@@ -198,12 +167,12 @@ export default class ConsentManagerBuilder extends Component {
       })
 
       let destinationPreferences
-      if (mapFromPreferences) {
-        destinationPreferences = mapFromPreferences({
+      let customPreferences
+      if (mapCustomPreferences) {
+        ;({destinationPreferences, customPreferences} = mapCustomPreferences({
           destinations,
-          destinationPreferences: existingDestinationPreferences,
           preferences,
-        })
+        }))
       } else {
         destinationPreferences = preferences
       }
@@ -213,7 +182,7 @@ export default class ConsentManagerBuilder extends Component {
         destinationPreferences
       )
 
-      savePreferences(destinationPreferences, cookieDomain)
+      savePreferences({destinationPreferences, customPreferences, cookieDomain})
       conditionallyLoadAnalytics({
         writeKey,
         destinations,
@@ -227,7 +196,6 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   mergePreferences = ({destinations, existingPreferences, newPreferences}) => {
-    const {mapToPreferences} = this.props
     let preferences
 
     if (typeof newPreferences === 'boolean') {
@@ -235,15 +203,7 @@ export default class ConsentManagerBuilder extends Component {
       for (const destination of destinations) {
         destinationPreferences[destination.id] = newPreferences
       }
-
-      if (mapToPreferences) {
-        preferences = mapToPreferences({
-          destinations,
-          destinationPreferences,
-        })
-      } else {
-        preferences = destinationPreferences
-      }
+      preferences = destinationPreferences
     } else if (newPreferences) {
       preferences = {
         ...existingPreferences,

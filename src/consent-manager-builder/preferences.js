@@ -9,22 +9,30 @@ export function loadPreferences() {
   const preferences = cookies.getJSON(COOKIE_KEY)
 
   if (!preferences) {
-    return null
+    return {}
   }
 
-  // TODO: add support for custom preferences
-  return preferences.destinations
+  return {
+    destinationPreferences: preferences.destinations,
+    customPreferences: preferences.custom,
+  }
 }
 
-export function savePreferences(preferences, cookieDomain) {
+export function savePreferences({
+  destinationPreferences,
+  customPreferences,
+  cookieDomain,
+}) {
   window.analytics.identify({
-    tbd: preferences._tbd,
+    destinationConsent: destinationPreferences,
+    customConsent: customPreferences,
   })
 
   const domain = cookieDomain || topDomain(window.location.href)
   const value = {
     version: 1,
-    destinations: preferences,
+    destinations: destinationPreferences,
+    custom: customPreferences,
   }
   cookies.set(COOKIE_KEY, value, {
     expires: COOKIE_EXPIRES,

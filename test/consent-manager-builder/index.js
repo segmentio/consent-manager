@@ -49,13 +49,6 @@ test.cb.serial('provides a list of enabled destinations', t => {
             id: 'Google Analytics',
             name: 'Google Analytics',
           },
-          {
-            id: '_tbd',
-            name: 'TBD',
-            category: 'TBD',
-            description: 'TBD',
-            website: 'https://segment.com',
-          },
         ])
         t.end()
       }}
@@ -65,7 +58,7 @@ test.cb.serial('provides a list of enabled destinations', t => {
 
 test.cb.serial('provides a list of newly added destinations', t => {
   global.document.cookie =
-    'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22_tbd%22:true}}'
+    'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
   global.window.analytics = {load() {}}
 
   nock('https://cdn.segment.com')
@@ -122,7 +115,6 @@ test.cb.serial('loads analytics.js with the user՚s preferences', t => {
             All: false,
             Amplitude: true,
             'Segment.io': true,
-            _tbd: false,
           },
         })
         t.end()
@@ -181,14 +173,16 @@ test.todo('saveConsent() can be passed a boolean to set all preferences')
 
 test.todo('saveConsent() fills in missing preferences')
 
-test.todo('maps to preferences on load')
+test.todo('initialPreferences sets the initial preferences')
 
-test.todo('maps to preferences when setPreferences() is passed a boolean')
+test.todo('loads custom preferences')
 
-test.todo('maps to preferences when resetPreferences() is called')
+test.todo(
+  'resetPreferences() maps custom preferences to destination preferences'
+)
 
-test.todo('maps to preferences when saveConsent() is passed a boolean')
+test.todo('saveConsent() maps custom preferences to destination preferences')
 
-test.todo('maps from preferences before saving')
+test.todo('saveConsent() saves custom preferences')
 
 test.todo('cookieDomain sets the cookie domain')

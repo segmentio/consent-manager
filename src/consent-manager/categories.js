@@ -1,5 +1,4 @@
 export const MARKETING_CATEGORIES = [
-  'TBD',
   'A/B Testing',
   'Analytics',
   'Attribution',

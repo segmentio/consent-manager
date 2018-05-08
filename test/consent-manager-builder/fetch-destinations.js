@@ -25,13 +25,6 @@ test('Returns destinations for a writekey', async t => {
       id: 'Google Analytics',
       name: 'Google Analytics',
     },
-    {
-      id: '_tbd',
-      name: 'TBD',
-      category: 'TBD',
-      description: 'TBD',
-      website: 'https://segment.com',
-    },
   ])
 })
 
@@ -49,13 +42,6 @@ test('Renames creationName to id', async t => {
     {
       id: 'Old Amplitude',
       name: 'New Amplitude',
-    },
-    {
-      id: '_tbd',
-      name: 'TBD',
-      category: 'TBD',
-      description: 'TBD',
-      website: 'https://segment.com',
     },
   ])
 })
@@ -97,13 +83,6 @@ test('Doesn՚t include duplicate destinations', async t => {
     {
       id: 'Google Analytics',
       name: 'Google Analytics',
-    },
-    {
-      id: '_tbd',
-      name: 'TBD',
-      category: 'TBD',
-      description: 'TBD',
-      website: 'https://segment.com',
     },
   ])
 })

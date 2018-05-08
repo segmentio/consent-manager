@@ -51,6 +51,7 @@ export default class Container extends PureComponent {
       }
     }
 
+    // TODO: add state for banner so it doesn't disappear on implicit consent (which is annoying UX)
     return (
       <div ref={this.handleRootRef}>
         {isConsentRequired &&
@@ -68,9 +69,9 @@ export default class Container extends PureComponent {
             marketingDestinations={marketingDestinations}
             advertisingDestinations={advertisingDestinations}
             functionalDestinations={functionalDestinations}
-            marketingAllowed={preferences.marketingAllowed}
-            advertisingAllowed={preferences.advertisingAllowed}
-            functionalAllowed={preferences.functionalAllowed}
+            marketingAndAnalytics={preferences.marketingAndAnalytics}
+            advertising={preferences.advertising}
+            functional={preferences.functional}
           />
         )}
       </div>

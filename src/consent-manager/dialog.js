@@ -245,9 +245,9 @@ export default class Dialog extends PureComponent {
         name: PropTypes.string.isRequired,
       })
     ).isRequired,
-    marketingAllowed: PropTypes.bool.isRequired,
-    advertisingAllowed: PropTypes.bool.isRequired,
-    functionalAllowed: PropTypes.bool.isRequired,
+    marketingAndAnalytics: PropTypes.bool.isRequired,
+    advertising: PropTypes.bool.isRequired,
+    functional: PropTypes.bool.isRequired,
   }
 
   constructor() {
@@ -262,9 +262,9 @@ export default class Dialog extends PureComponent {
       marketingDestinations,
       advertisingDestinations,
       functionalDestinations,
-      marketingAllowed,
-      advertisingAllowed,
-      functionalAllowed,
+      marketingAndAnalytics,
+      advertising,
+      functional,
     } = this.props
 
     return (
@@ -322,8 +322,8 @@ export default class Dialog extends PureComponent {
                     <CheckboxCell>
                       <input
                         type="checkbox"
-                        name="marketingAllowed"
-                        checked={marketingAllowed}
+                        name="marketingAndAnalytics"
+                        checked={marketingAndAnalytics}
                         onChange={this.handleChange}
                         aria-label="Allow marketing and analytics tracking"
                       />
@@ -348,8 +348,8 @@ export default class Dialog extends PureComponent {
                     <CheckboxCell>
                       <input
                         type="checkbox"
-                        name="advertisingAllowed"
-                        checked={advertisingAllowed}
+                        name="advertising"
+                        checked={advertising}
                         onChange={this.handleChange}
                         aria-label="Allow advertising tracking"
                       />
@@ -375,8 +375,8 @@ export default class Dialog extends PureComponent {
                     <CheckboxCell>
                       <input
                         type="checkbox"
-                        name="functionalAllowed"
-                        checked={functionalAllowed}
+                        name="functional"
+                        checked={functional}
                         onChange={this.handleChange}
                         aria-label="Allow functional tracking"
                       />

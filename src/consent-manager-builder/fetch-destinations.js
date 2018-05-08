@@ -32,13 +32,6 @@ export default async function fetchDestinations(writeKeys) {
   }
 
   let destinations = flatten(await Promise.all(destinationsRequests))
-  destinations.push({
-    id: '_tbd',
-    name: 'TBD',
-    category: 'TBD',
-    description: 'TBD',
-    website: 'https://segment.com',
-  })
   destinations = sortBy(destinations, ['id'])
   destinations = sortedUniqBy(destinations, 'id')
 

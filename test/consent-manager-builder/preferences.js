@@ -23,37 +23,43 @@ test.beforeEach(() => {
 
 test.serial('loadPreferences() returns preferences when cookie exists', t => {
   global.document.cookie =
-    'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22_tbd%22:false}}'
+    'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}}'
 
   t.deepEqual(loadPreferences(), {
-    Amplitude: true,
-    _tbd: false,
+    destinationPreferences: {
+      Amplitude: true,
+    },
+    customPreferences: {
+      functional: true,
+    },
   })
-})
-
-test.serial('loadPreferences() returns null when cookie doesn՚t exist', t => {
-  global.document.cookie = ''
-
-  t.is(loadPreferences(), null)
 })
 
 test.serial('savePreferences() saves the preferences', t => {
   const ajsIdentify = sinon.spy()
   global.window.analytics = {identify: ajsIdentify}
   global.document.cookie = ''
-  const preferences = {
+  const destinationPreferences = {
     Amplitude: true,
-    _tbd: false,
+  }
+  const customPreferences = {
+    functional: true,
   }
 
-  savePreferences(preferences)
+  savePreferences({
+    destinationPreferences,
+    customPreferences,
+  })
 
   t.true(ajsIdentify.calledOnce)
-  t.deepEqual(ajsIdentify.args[0][0], {tbd: false})
+  t.deepEqual(ajsIdentify.args[0][0], {
+    destinationConsent: destinationPreferences,
+    customConsent: customPreferences,
+  })
 
   t.true(
     global.document.cookie.includes(
-      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true%2C%22_tbd%22:false}}'
+      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}}'
     )
   )
 })
@@ -62,15 +68,20 @@ test.serial('savePreferences() sets the cookie domain', t => {
   const ajsIdentify = sinon.spy()
   global.window.analytics = {identify: ajsIdentify}
   global.document.cookie = ''
-  const preferences = {
+  const destinationPreferences = {
     Amplitude: true,
-    _tbd: false,
   }
 
-  savePreferences(preferences, 'example.com')
+  savePreferences({
+    destinationPreferences,
+    cookieDomain: 'example.com',
+  })
 
   t.true(ajsIdentify.calledOnce)
-  t.deepEqual(ajsIdentify.args[0][0], {tbd: false})
+  t.deepEqual(ajsIdentify.args[0][0], {
+    destinationConsent: destinationPreferences,
+    customConsent: undefined,
+  })
 
   t.true(global.document.cookie.includes('domain=example.com'))
 })

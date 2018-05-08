@@ -4,6 +4,12 @@ import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
 
+const initialPreferences = {
+  marketingAndAnalytics: true,
+  advertising: true,
+  functional: true,
+}
+
 export default class ConsentManager extends PureComponent {
   static displayName = 'ConsentManager'
 
@@ -37,8 +43,8 @@ export default class ConsentManager extends PureComponent {
         otherWriteKeys={otherWriteKeys}
         shouldRequireConsent={shouldRequireConsent}
         cookieDomain={cookieDomain}
-        mapToPreferences={this.handleMapToPreferences}
-        mapFromPreferences={this.handleMapFromPreferences}
+        initialPreferences={initialPreferences}
+        mapCustomPreferences={this.handleMapCustomPreferences}
       >
         {({
           destinations,
@@ -62,60 +68,21 @@ export default class ConsentManager extends PureComponent {
     )
   }
 
-  handleMapToPreferences = ({destinations, destinationPreferences}) => {
-    const preferences = {
-      marketingAllowed: false,
-      advertisingAllowed: false,
-      functionalAllowed: false,
-    }
-
-    if (!destinationPreferences) {
-      return {
-        marketingAllowed: true,
-        advertisingAllowed: true,
-        functionalAllowed: true,
-      }
-    }
-
-    for (const destination of destinations) {
-      const destinationPreference = destinationPreferences[destination.id]
-      if (!destinationPreference) {
-        continue
-      }
-
-      if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
-        preferences.advertisingAllowed = true
-      } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
-        preferences.functionalAllowed = true
-      } else {
-        // Fallback to marketing
-        preferences.marketingAllowed = true
-      }
-    }
-
-    return preferences
-  }
-
-  handleMapFromPreferences = ({
-    destinations,
-    destinationPreferences: existingDestinationPreferences,
-    preferences,
-  }) => {
-    const destinationPreferences = {
-      ...existingDestinationPreferences,
-    }
+  handleMapCustomPreferences = ({destinations, preferences}) => {
+    const destinationPreferences = {}
 
     for (const destination of destinations) {
       if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
-        destinationPreferences[destination.id] = preferences.advertisingAllowed
+        destinationPreferences[destination.id] = preferences.advertising
       } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
-        destinationPreferences[destination.id] = preferences.functionalAllowed
+        destinationPreferences[destination.id] = preferences.functional
       } else {
         // Fallback to marketing
-        destinationPreferences[destination.id] = preferences.marketingAllowed
+        destinationPreferences[destination.id] =
+          preferences.marketingAndAnalytics
       }
     }
 
-    return destinationPreferences
+    return {destinationPreferences, customPreferences: preferences}
   }
 }
