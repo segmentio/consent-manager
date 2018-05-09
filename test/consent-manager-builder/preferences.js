@@ -53,8 +53,8 @@ test.serial('savePreferences() saves the preferences', t => {
 
   t.true(ajsIdentify.calledOnce)
   t.deepEqual(ajsIdentify.args[0][0], {
-    destinationConsent: destinationPreferences,
-    customConsent: customPreferences,
+    destinationTrackingPreferences: destinationPreferences,
+    customTrackingPreferences: customPreferences,
   })
 
   t.true(
@@ -79,8 +79,8 @@ test.serial('savePreferences() sets the cookie domain', t => {
 
   t.true(ajsIdentify.calledOnce)
   t.deepEqual(ajsIdentify.args[0][0], {
-    destinationConsent: destinationPreferences,
-    customConsent: undefined,
+    destinationTrackingPreferences: destinationPreferences,
+    customTrackingPreferences: undefined,
   })
 
   t.true(global.document.cookie.includes('domain=example.com'))

@@ -24,8 +24,8 @@ export function savePreferences({
   cookieDomain,
 }) {
   window.analytics.identify({
-    destinationConsent: destinationPreferences,
-    customConsent: customPreferences,
+    destinationTrackingPreferences: destinationPreferences,
+    customTrackingPreferences: customPreferences,
   })
 
   const domain = cookieDomain || topDomain(window.location.href)
