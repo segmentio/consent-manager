@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import styled, {css} from 'react-emotion'
+import styled from 'react-emotion'
 import fontStyles from './font-styles'
 
 const Root = styled('div')`
@@ -8,11 +8,25 @@ const Root = styled('div')`
   position: relative;
   padding: 8px;
   padding-right: 40px;
-  background: #1f4160;
-  color: #fff;
+  background: ${props => props.backgroundColor};
+  color: ${props => props.textColor};
   text-align: center;
   font-size: 12px;
   line-height: 1.3;
+`
+
+const Content = styled('div')`
+  a,
+  button {
+    display: inline;
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `
 
 const P = styled('p')`
@@ -20,18 +34,6 @@ const P = styled('p')`
   &:not(:last-child) {
     margin-bottom: 4px;
   }
-`
-
-const link = css`
-  display: inline;
-  padding: 0;
-  border: none;
-  color: #fff;
-  background: none;
-  color: inherit;
-  font: inherit;
-  text-decoration: underline;
-  cursor: pointer;
 `
 
 const CloseButton = styled('button')`
@@ -54,35 +56,33 @@ export default class Banner extends PureComponent {
 
   static propTypes = {
     onAccept: PropTypes.func.isRequired,
-    onChangePreferences: PropTypes.func.isRequired
+    onChangePreferences: PropTypes.func.isRequired,
+    content: PropTypes.node.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    textColor: PropTypes.string.isRequired
   }
 
   render() {
-    const {onAccept, onChangePreferences} = this.props
+    const {
+      onAccept,
+      onChangePreferences,
+      content,
+      backgroundColor,
+      textColor
+    } = this.props
 
     return (
-      <Root>
-        <div>
-          <P>
-            We collect data and use cookies to improve your experience on our
-            site. By using our website, you’re agreeing to the collection of
-            data and use of cookies as described in our{' '}
-            <a className={link} href="/docs/legal/privacy/" target="_blank">
-              privacy policy
-            </a>.
-          </P>
+      <Root backgroundColor={backgroundColor} textColor={textColor}>
+        <Content>
+          <P>{content}</P>
           <P>
             You can{' '}
-            <button
-              className={link}
-              type="button"
-              onClick={onChangePreferences}
-            >
+            <button type="button" onClick={onChangePreferences}>
               change your preferences
             </button>{' '}
             at any time.
           </P>
-        </div>
+        </Content>
 
         <CloseButton
           type="button"

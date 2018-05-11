@@ -18,14 +18,21 @@ export default class ConsentManager extends PureComponent {
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldRequireConsent: PropTypes.func,
     implyConsentOnInteraction: PropTypes.bool,
-    cookieDomain: PropTypes.string
+    cookieDomain: PropTypes.string,
+    bannerContent: PropTypes.node.isRequired,
+    bannerTextColor: PropTypes.string,
+    bannerBackgroundColor: PropTypes.string,
+    dialogTitle: PropTypes.node.isRequired,
+    dialogContent: PropTypes.node.isRequired
   }
 
   static defaultProps = {
     otherWriteKeys: [],
     shouldRequireConsent: () => true,
     implyConsentOnInteraction: true,
-    cookieDomain: undefined
+    cookieDomain: undefined,
+    bannerTextColor: '#fff',
+    bannerBackgroundColor: '#1f4160'
   }
 
   render() {
@@ -34,7 +41,12 @@ export default class ConsentManager extends PureComponent {
       otherWriteKeys,
       shouldRequireConsent,
       implyConsentOnInteraction,
-      cookieDomain
+      cookieDomain,
+      bannerContent,
+      bannerTextColor,
+      bannerBackgroundColor,
+      dialogTitle,
+      dialogContent
     } = this.props
 
     return (
@@ -62,6 +74,11 @@ export default class ConsentManager extends PureComponent {
             setPreferences={setPreferences}
             saveConsent={saveConsent}
             implyConsentOnInteraction={implyConsentOnInteraction}
+            bannerContent={bannerContent}
+            bannerTextColor={bannerTextColor}
+            bannerBackgroundColor={bannerBackgroundColor}
+            dialogTitle={dialogTitle}
+            dialogContent={dialogContent}
           />
         )}
       </ConsentManagerBuilder>

@@ -21,7 +21,12 @@ export default class Container extends PureComponent {
     newDestinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     preferences: PropTypes.object.isRequired,
     isConsentRequired: PropTypes.bool.isRequired,
-    implyConsentOnInteraction: PropTypes.bool.isRequired
+    implyConsentOnInteraction: PropTypes.bool.isRequired,
+    bannerContent: PropTypes.node.isRequired,
+    bannerTextColor: PropTypes.string.isRequired,
+    bannerBackgroundColor: PropTypes.string.isRequired,
+    dialogTitle: PropTypes.node.isRequired,
+    dialogContent: PropTypes.node.isRequired
   }
 
   state = {
@@ -33,7 +38,12 @@ export default class Container extends PureComponent {
       destinations,
       newDestinations,
       preferences,
-      isConsentRequired
+      isConsentRequired,
+      bannerContent,
+      bannerTextColor,
+      bannerBackgroundColor,
+      dialogTitle,
+      dialogContent
     } = this.props
     const {isDialogOpen} = this.state
     const marketingDestinations = []
@@ -59,6 +69,9 @@ export default class Container extends PureComponent {
             <Banner
               onAccept={this.allowAllTracking}
               onChangePreferences={this.openDialog}
+              content={bannerContent}
+              textColor={bannerTextColor}
+              backgroundColor={bannerBackgroundColor}
             />
           )}
         {isDialogOpen && (
@@ -72,6 +85,8 @@ export default class Container extends PureComponent {
             marketingAndAnalytics={preferences.marketingAndAnalytics}
             advertising={preferences.advertising}
             functional={preferences.functional}
+            title={dialogTitle}
+            content={dialogContent}
           />
         )}
       </div>
