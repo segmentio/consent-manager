@@ -3,7 +3,7 @@ export default function conditionallyLoadAnalytics({
   destinations,
   destinationPreferences,
   isConsentRequired,
-  shouldReload = true,
+  shouldReload = true
 }) {
   const integrations = {All: false, 'Segment.io': true}
   let isAnythingEnabled = false

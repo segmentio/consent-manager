@@ -14,28 +14,28 @@ export function loadPreferences() {
 
   return {
     destinationPreferences: preferences.destinations,
-    customPreferences: preferences.custom,
+    customPreferences: preferences.custom
   }
 }
 
 export function savePreferences({
   destinationPreferences,
   customPreferences,
-  cookieDomain,
+  cookieDomain
 }) {
   window.analytics.identify({
     destinationTrackingPreferences: destinationPreferences,
-    customTrackingPreferences: customPreferences,
+    customTrackingPreferences: customPreferences
   })
 
   const domain = cookieDomain || topDomain(window.location.href)
   const value = {
     version: 1,
     destinations: destinationPreferences,
-    custom: customPreferences,
+    custom: customPreferences
   }
   cookies.set(COOKIE_KEY, value, {
     expires: COOKIE_EXPIRES,
-    domain,
+    domain
   })
 }

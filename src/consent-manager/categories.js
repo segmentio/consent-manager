@@ -8,7 +8,7 @@ export const MARKETING_CATEGORIES = [
   'Raw Data',
   'Realtime Dashboards',
   'Referrals',
-  'Surveys',
+  'Surveys'
 ]
 
 export const ADVERTISING_CATEGORIES = ['Advertising', 'Tag Manager']
@@ -22,5 +22,5 @@ export const FUNCTIONAL_CATEGORIES = [
   'Performance Monitoring',
   'Personalization',
   'SMS & Push Notifications',
-  'Security & Fraud',
+  'Security & Fraud'
 ]

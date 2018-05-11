@@ -12,14 +12,14 @@ test.serial('loads analytics.js with preferences', t => {
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = {
-    Amplitude: true,
+    Amplitude: true
   }
 
   conditionallyLoadAnalytics({
     writeKey,
     destinations,
     destinationPreferences,
-    isConsentRequired: true,
+    isConsentRequired: true
   })
 
   t.true(ajsLoad.calledOnce)
@@ -28,8 +28,8 @@ test.serial('loads analytics.js with preferences', t => {
     integrations: {
       All: false,
       Amplitude: true,
-      'Segment.io': true,
-    },
+      'Segment.io': true
+    }
   })
 })
 
@@ -44,7 +44,7 @@ test.serial('doesn՚t load analytics.js when there are no preferences', t => {
     writeKey,
     destinations,
     destinationPreferences,
-    isConsentRequired: true,
+    isConsentRequired: true
   })
 
   t.true(ajsLoad.notCalled)
@@ -56,14 +56,14 @@ test.serial('doesn՚t load analytics.js when all preferences are false', t => {
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = {
-    Amplitude: false,
+    Amplitude: false
   }
 
   conditionallyLoadAnalytics({
     writeKey,
     destinations,
     destinationPreferences,
-    isConsentRequired: true,
+    isConsentRequired: true
   })
 
   t.true(ajsLoad.notCalled)
@@ -76,26 +76,26 @@ test.serial(
     global.window.analytics = {
       load() {
         this.initialized = true
-      },
+      }
     }
     global.window.location = {reload}
     const writeKey = '123'
     const destinations = [{id: 'Amplitude'}]
     const destinationPreferences = {
-      Amplitude: true,
+      Amplitude: true
     }
 
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: true,
+      isConsentRequired: true
     })
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: true,
+      isConsentRequired: true
     })
 
     t.true(reload.calledOnce)
@@ -107,27 +107,27 @@ test.serial('should allow the reload behvaiour to be disabled', t => {
   global.window.analytics = {
     load() {
       this.initialized = true
-    },
+    }
   }
   global.window.location = {reload}
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = {
-    Amplitude: true,
+    Amplitude: true
   }
 
   conditionallyLoadAnalytics({
     writeKey,
     destinations,
     destinationPreferences,
-    isConsentRequired: true,
+    isConsentRequired: true
   })
   conditionallyLoadAnalytics({
     writeKey,
     destinations,
     destinationPreferences,
     isConsentRequired: true,
-    shouldReload: false,
+    shouldReload: false
   })
 
   t.false(reload.calledOnce)
@@ -144,7 +144,7 @@ test.serial('loads analytics.js normally when consent isn՚t required', t => {
     writeKey,
     destinations,
     destinationPreferences,
-    isConsentRequired: false,
+    isConsentRequired: false
   })
 
   t.true(ajsLoad.calledOnce)
@@ -158,14 +158,14 @@ test.serial('still applies preferences when consent isn՚t required', t => {
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = {
-    Amplitude: true,
+    Amplitude: true
   }
 
   conditionallyLoadAnalytics({
     writeKey,
     destinations,
     destinationPreferences,
-    isConsentRequired: false,
+    isConsentRequired: false
   })
 
   t.true(ajsLoad.calledOnce)
@@ -174,7 +174,7 @@ test.serial('still applies preferences when consent isn՚t required', t => {
     integrations: {
       All: false,
       Amplitude: true,
-      'Segment.io': true,
-    },
+      'Segment.io': true
+    }
   })
 })

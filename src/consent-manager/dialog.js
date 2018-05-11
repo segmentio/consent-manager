@@ -232,22 +232,22 @@ export default class Dialog extends PureComponent {
     onChange: PropTypes.func.isRequired,
     marketingDestinations: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
       })
     ).isRequired,
     advertisingDestinations: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
       })
     ).isRequired,
     functionalDestinations: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
       })
     ).isRequired,
     marketingAndAnalytics: PropTypes.bool.isRequired,
     advertising: PropTypes.bool.isRequired,
-    functional: PropTypes.bool.isRequired,
+    functional: PropTypes.bool.isRequired
   }
 
   constructor() {
@@ -264,7 +264,7 @@ export default class Dialog extends PureComponent {
       functionalDestinations,
       marketingAndAnalytics,
       advertising,
-      functional,
+      functional
     } = this.props
 
     return (

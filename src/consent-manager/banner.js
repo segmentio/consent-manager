@@ -54,7 +54,7 @@ export default class Banner extends PureComponent {
 
   static propTypes = {
     onAccept: PropTypes.func.isRequired,
-    onChangePreferences: PropTypes.func.isRequired,
+    onChangePreferences: PropTypes.func.isRequired
   }
 
   render() {

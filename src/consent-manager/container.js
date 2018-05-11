@@ -21,11 +21,11 @@ export default class Container extends PureComponent {
     newDestinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     preferences: PropTypes.object.isRequired,
     isConsentRequired: PropTypes.bool.isRequired,
-    implyConsentOnInteraction: PropTypes.bool.isRequired,
+    implyConsentOnInteraction: PropTypes.bool.isRequired
   }
 
   state = {
-    isDialogOpen: false,
+    isDialogOpen: false
   }
 
   render() {
@@ -33,7 +33,7 @@ export default class Container extends PureComponent {
       destinations,
       newDestinations,
       preferences,
-      isConsentRequired,
+      isConsentRequired
     } = this.props
     const {isDialogOpen} = this.state
     const marketingDestinations = []
@@ -98,19 +98,19 @@ export default class Container extends PureComponent {
 
     saveConsent(true)
     this.setState({
-      isDialogOpen: false,
+      isDialogOpen: false
     })
   }
 
   openDialog = () => {
     this.setState({
-      isDialogOpen: true,
+      isDialogOpen: true
     })
   }
 
   closeDialog = () => {
     this.setState({
-      isDialogOpen: false,
+      isDialogOpen: false
     })
   }
 
@@ -123,7 +123,7 @@ export default class Container extends PureComponent {
       newDestinations,
       saveConsent,
       isConsentRequired,
-      implyConsentOnInteraction,
+      implyConsentOnInteraction
     } = this.props
 
     if (this.root.contains(e.target)) {
@@ -143,7 +143,7 @@ export default class Container extends PureComponent {
     const {setPreferences} = this.props
 
     setPreferences({
-      [category]: value,
+      [category]: value
     })
   }
 
@@ -152,7 +152,7 @@ export default class Container extends PureComponent {
 
     saveConsent()
     this.setState({
-      isDialogOpen: false,
+      isDialogOpen: false
     })
   }
 }

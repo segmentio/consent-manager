@@ -18,19 +18,19 @@ test.cb.serial('provides a list of enabled destinations', t => {
     .reply(200, [
       {
         name: 'Google Analytics',
-        creationName: 'Google Analytics',
+        creationName: 'Google Analytics'
       },
       {
         name: 'Amplitude',
-        creationName: 'Amplitude',
-      },
+        creationName: 'Amplitude'
+      }
     ])
     .get('/v1/projects/abc/integrations')
     .reply(200, [
       {
         name: 'FullStory',
-        creationName: 'FullStory',
-      },
+        creationName: 'FullStory'
+      }
     ])
 
   shallow(
@@ -39,16 +39,16 @@ test.cb.serial('provides a list of enabled destinations', t => {
         t.deepEqual(destinations, [
           {
             id: 'Amplitude',
-            name: 'Amplitude',
+            name: 'Amplitude'
           },
           {
             id: 'FullStory',
-            name: 'FullStory',
+            name: 'FullStory'
           },
           {
             id: 'Google Analytics',
-            name: 'Google Analytics',
-          },
+            name: 'Google Analytics'
+          }
         ])
         t.end()
       }}
@@ -66,12 +66,12 @@ test.cb.serial('provides a list of newly added destinations', t => {
     .reply(200, [
       {
         name: 'Google Analytics',
-        creationName: 'Google Analytics',
+        creationName: 'Google Analytics'
       },
       {
         name: 'Amplitude',
-        creationName: 'Amplitude',
-      },
+        creationName: 'Amplitude'
+      }
     ])
 
   shallow(
@@ -80,8 +80,8 @@ test.cb.serial('provides a list of newly added destinations', t => {
         t.deepEqual(newDestinations, [
           {
             name: 'Google Analytics',
-            id: 'Google Analytics',
-          },
+            id: 'Google Analytics'
+          }
         ])
         t.end()
       }}
@@ -101,8 +101,8 @@ test.cb.serial('loads analytics.js with the user՚s preferences', t => {
     .reply(200, [
       {
         name: 'Amplitude',
-        creationName: 'Amplitude',
-      },
+        creationName: 'Amplitude'
+      }
     ])
 
   shallow(
@@ -114,8 +114,8 @@ test.cb.serial('loads analytics.js with the user՚s preferences', t => {
           integrations: {
             All: false,
             Amplitude: true,
-            'Segment.io': true,
-          },
+            'Segment.io': true
+          }
         })
         t.end()
       }}
@@ -133,15 +133,15 @@ test.cb.serial('provides an object containing the WIP preferences', t => {
     .reply(200, [
       {
         name: 'Amplitude',
-        creationName: 'Amplitude',
-      },
+        creationName: 'Amplitude'
+      }
     ])
 
   shallow(
     <ConsentManagerBuilder writeKey="123">
       {({preferences}) => {
         t.deepEqual(preferences, {
-          Amplitude: true,
+          Amplitude: true
         })
         t.end()
       }}

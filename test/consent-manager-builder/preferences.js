@@ -3,21 +3,21 @@ import test from 'ava'
 import sinon from 'sinon'
 import {
   loadPreferences,
-  savePreferences,
+  savePreferences
 } from '../../src/consent-manager-builder/preferences'
 
 test.beforeEach(() => {
   global.window = {
     location: {
-      href: 'http://localhost/',
-    },
+      href: 'http://localhost/'
+    }
   }
   global.document = {
     createElement(type) {
       if (type === 'a') {
         return new URL('http://localhost/')
       }
-    },
+    }
   }
 })
 
@@ -27,11 +27,11 @@ test.serial('loadPreferences() returns preferences when cookie exists', t => {
 
   t.deepEqual(loadPreferences(), {
     destinationPreferences: {
-      Amplitude: true,
+      Amplitude: true
     },
     customPreferences: {
-      functional: true,
-    },
+      functional: true
+    }
   })
 })
 
@@ -40,21 +40,21 @@ test.serial('savePreferences() saves the preferences', t => {
   global.window.analytics = {identify: ajsIdentify}
   global.document.cookie = ''
   const destinationPreferences = {
-    Amplitude: true,
+    Amplitude: true
   }
   const customPreferences = {
-    functional: true,
+    functional: true
   }
 
   savePreferences({
     destinationPreferences,
-    customPreferences,
+    customPreferences
   })
 
   t.true(ajsIdentify.calledOnce)
   t.deepEqual(ajsIdentify.args[0][0], {
     destinationTrackingPreferences: destinationPreferences,
-    customTrackingPreferences: customPreferences,
+    customTrackingPreferences: customPreferences
   })
 
   t.true(
@@ -69,18 +69,18 @@ test.serial('savePreferences() sets the cookie domain', t => {
   global.window.analytics = {identify: ajsIdentify}
   global.document.cookie = ''
   const destinationPreferences = {
-    Amplitude: true,
+    Amplitude: true
   }
 
   savePreferences({
     destinationPreferences,
-    cookieDomain: 'example.com',
+    cookieDomain: 'example.com'
   })
 
   t.true(ajsIdentify.calledOnce)
   t.deepEqual(ajsIdentify.args[0][0], {
     destinationTrackingPreferences: destinationPreferences,
-    customTrackingPreferences: undefined,
+    customTrackingPreferences: undefined
   })
 
   t.true(global.document.cookie.includes('domain=example.com'))

@@ -7,7 +7,7 @@ import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
 const initialPreferences = {
   marketingAndAnalytics: true,
   advertising: true,
-  functional: true,
+  functional: true
 }
 
 export default class ConsentManager extends PureComponent {
@@ -18,14 +18,14 @@ export default class ConsentManager extends PureComponent {
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldRequireConsent: PropTypes.func,
     implyConsentOnInteraction: PropTypes.bool,
-    cookieDomain: PropTypes.string,
+    cookieDomain: PropTypes.string
   }
 
   static defaultProps = {
     otherWriteKeys: [],
     shouldRequireConsent: () => true,
     implyConsentOnInteraction: true,
-    cookieDomain: undefined,
+    cookieDomain: undefined
   }
 
   render() {
@@ -34,7 +34,7 @@ export default class ConsentManager extends PureComponent {
       otherWriteKeys,
       shouldRequireConsent,
       implyConsentOnInteraction,
-      cookieDomain,
+      cookieDomain
     } = this.props
 
     return (
@@ -52,7 +52,7 @@ export default class ConsentManager extends PureComponent {
           preferences,
           isConsentRequired,
           setPreferences,
-          saveConsent,
+          saveConsent
         }) => (
           <Container
             destinations={destinations}

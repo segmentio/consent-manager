@@ -28,7 +28,7 @@ storiesOf('ConsentManagerBuilder', module).add(`example`, () => (
       newDestinations,
       preferences,
       setPreferences,
-      saveConsent,
+      saveConsent
     }) => {
       function handleSubmit(e) {
         e.preventDefault()
@@ -47,7 +47,7 @@ storiesOf('ConsentManagerBuilder', module).add(`example`, () => (
                     checked={Boolean(preferences[destination.id])}
                     onChange={() =>
                       setPreferences({
-                        [destination.id]: !preferences[destination.id],
+                        [destination.id]: !preferences[destination.id]
                       })
                     }
                   />

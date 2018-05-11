@@ -31,7 +31,7 @@ export default class ConsentManagerBuilder extends Component {
     shouldRequireConsent: PropTypes.func,
     initialPreferences: PropTypes.object,
     mapCustomPreferences: PropTypes.func,
-    cookieDomain: PropTypes.string,
+    cookieDomain: PropTypes.string
   }
 
   static defaultProps = {
@@ -39,7 +39,7 @@ export default class ConsentManagerBuilder extends Component {
     shouldRequireConsent: () => true,
     initialPreferences: {},
     mapCustomPreferences: undefined,
-    cookieDomain: undefined,
+    cookieDomain: undefined
   }
 
   state = {
@@ -47,7 +47,7 @@ export default class ConsentManagerBuilder extends Component {
     destinations: [],
     newDestinations: [],
     preferences: {},
-    isConsentRequired: true,
+    isConsentRequired: true
   }
 
   render() {
@@ -57,7 +57,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       preferences,
       newDestinations,
-      isConsentRequired,
+      isConsentRequired
     } = this.state
 
     if (isLoading) {
@@ -71,7 +71,7 @@ export default class ConsentManagerBuilder extends Component {
       isConsentRequired,
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
-      saveConsent: this.handleSaveConsent,
+      saveConsent: this.handleSaveConsent
     })
   }
 
@@ -86,14 +86,14 @@ export default class ConsentManagerBuilder extends Component {
       otherWriteKeys,
       shouldRequireConsent,
       initialPreferences,
-      mapCustomPreferences,
+      mapCustomPreferences
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
     const {destinationPreferences, customPreferences} = loadPreferences()
 
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),
-      fetchDestinations([writeKey, ...otherWriteKeys]),
+      fetchDestinations([writeKey, ...otherWriteKeys])
     ])
 
     const newDestinations = getNewDestinations(
@@ -105,7 +105,7 @@ export default class ConsentManagerBuilder extends Component {
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired,
+      isConsentRequired
     })
 
     let preferences
@@ -120,7 +120,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       newDestinations,
       preferences,
-      isConsentRequired,
+      isConsentRequired
     })
   }
 
@@ -130,7 +130,7 @@ export default class ConsentManagerBuilder extends Component {
       const preferences = this.mergePreferences({
         destinations,
         newPreferences,
-        existingPreferences,
+        existingPreferences
       })
       return {preferences}
     })
@@ -157,13 +157,13 @@ export default class ConsentManagerBuilder extends Component {
       const {
         destinations,
         preferences: existingPreferences,
-        isConsentRequired,
+        isConsentRequired
       } = prevState
 
       const preferences = this.mergePreferences({
         destinations,
         newPreferences,
-        existingPreferences,
+        existingPreferences
       })
 
       let destinationPreferences
@@ -171,7 +171,7 @@ export default class ConsentManagerBuilder extends Component {
       if (mapCustomPreferences) {
         ;({destinationPreferences, customPreferences} = mapCustomPreferences({
           destinations,
-          preferences,
+          preferences
         }))
       } else {
         destinationPreferences = preferences
@@ -188,7 +188,7 @@ export default class ConsentManagerBuilder extends Component {
         destinations,
         destinationPreferences,
         isConsentRequired,
-        shouldReload,
+        shouldReload
       })
 
       return {destinationPreferences, preferences, newDestinations}
@@ -207,7 +207,7 @@ export default class ConsentManagerBuilder extends Component {
     } else if (newPreferences) {
       preferences = {
         ...existingPreferences,
-        ...newPreferences,
+        ...newPreferences
       }
     } else {
       preferences = existingPreferences
