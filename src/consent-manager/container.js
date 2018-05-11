@@ -16,6 +16,7 @@ export default class Container extends PureComponent {
 
   static propTypes = {
     setPreferences: PropTypes.func.isRequired,
+    resetPreferences: PropTypes.func.isRequired,
     saveConsent: PropTypes.func.isRequired,
     destinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     newDestinations: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -76,7 +77,7 @@ export default class Container extends PureComponent {
           )}
         {isDialogOpen && (
           <Dialog
-            onCancel={this.closeDialog}
+            onCancel={this.handleCancel}
             onSave={this.handleSave}
             onChange={this.handleCategoryChange}
             marketingDestinations={marketingDestinations}
@@ -166,8 +167,13 @@ export default class Container extends PureComponent {
     const {saveConsent} = this.props
 
     saveConsent()
-    this.setState({
-      isDialogOpen: false
-    })
+    this.closeDialog()
+  }
+
+  handleCancel = () => {
+    const {resetPreferences} = this.props
+
+    resetPreferences()
+    this.closeDialog()
   }
 }

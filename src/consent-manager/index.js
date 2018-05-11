@@ -64,6 +64,7 @@ export default class ConsentManager extends PureComponent {
           preferences,
           isConsentRequired,
           setPreferences,
+          resetPreferences,
           saveConsent
         }) => (
           <Container
@@ -72,6 +73,7 @@ export default class ConsentManager extends PureComponent {
             preferences={preferences}
             isConsentRequired={isConsentRequired}
             setPreferences={setPreferences}
+            resetPreferences={resetPreferences}
             saveConsent={saveConsent}
             implyConsentOnInteraction={implyConsentOnInteraction}
             bannerContent={bannerContent}
