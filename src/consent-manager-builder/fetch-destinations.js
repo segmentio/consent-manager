@@ -32,6 +32,8 @@ export default async function fetchDestinations(writeKeys) {
   }
 
   let destinations = flatten(await Promise.all(destinationsRequests))
+  // Remove the dummy Repeater destination
+  destinations = destinations.filter(d => d.id !== 'Repeater')
   destinations = sortBy(destinations, ['id'])
   destinations = sortedUniqBy(destinations, 'id')
 
