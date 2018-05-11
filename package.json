@@ -23,7 +23,8 @@
     "dev": "start-storybook -p 9009",
     "build-commonjs": "BABEL_ENV=commonjs babel src --out-dir commonjs --source-maps inline",
     "build-esm": "BABEL_ENV=esm babel src --out-dir esm --source-maps inline",
-    "build": "yarn run build-commonjs && yarn run build-esm"
+    "build": "yarn clean && yarn run build-commonjs && yarn run build-esm",
+    "clean": "rm -rf {commonjs,esm}"
   },
   "engines": {
     "node": ">=8"
