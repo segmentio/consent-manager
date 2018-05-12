@@ -8,16 +8,16 @@ export * from '.'
 const dataset = document.currentScript && document.currentScript.dataset
 
 let props = {}
-if (window.consentManagerOptions) {
+if (window.consentManagerConfig) {
   // Allow using global variable
-  if (typeof window.consentManagerOptions === 'function') {
-    props = window.consentManagerOptions({
+  if (typeof window.consentManagerConfig === 'function') {
+    props = window.consentManagerConfig({
       React,
       openConsentManager,
       doNotTrack
     })
   } else {
-    props = window.consentManagerOptions
+    props = window.consentManagerConfig
   }
 } else if (dataset) {
   // Allow using data attributes on the script tag
