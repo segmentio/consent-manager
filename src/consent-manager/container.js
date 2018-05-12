@@ -112,7 +112,7 @@ export default class Container extends PureComponent {
   allowAllTracking = () => {
     const {saveConsent} = this.props
 
-    saveConsent(true)
+    saveConsent()
     this.setState({
       isDialogOpen: false
     })
