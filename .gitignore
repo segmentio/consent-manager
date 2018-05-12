@@ -1,3 +1,4 @@
 /node_modules/
 /commonjs/
 /esm/
+/consent-manager.js*
