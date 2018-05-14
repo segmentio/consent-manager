@@ -1,9 +1,11 @@
+const path = require('path')
+
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
   entry: './src/standalone.js',
   output: {
-    path: __dirname,
+    path: path.join(__dirname, 'standalone'),
     filename: 'consent-manager.js',
     library: 'consentManager'
   },

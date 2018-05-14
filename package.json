@@ -14,7 +14,8 @@
   "sideEffects": false,
   "files": [
     "commonjs",
-    "esm"
+    "esm",
+    "standalone"
   ],
   "scripts": {
     "test": "xo && ava",
@@ -25,7 +26,7 @@
     "build-esm": "BABEL_ENV=esm babel src --out-dir esm --source-maps inline",
     "build-standalone": "BABEL_ENV=esm webpack",
     "build": "concurrently --names 'commonjs,esm,standalone' 'yarn run build-commonjs' 'yarn run build-esm' 'yarn run build-standalone'",
-    "clean": "rm -rf {commonjs,esm,consent-manager.js*}"
+    "clean": "rm -rf {commonjs,esm,standalone}"
   },
   "engines": {
     "node": ">=8"
