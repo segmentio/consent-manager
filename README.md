@@ -12,7 +12,7 @@ They can opt out entirely of being tracked, or selectively opt out of tools in w
 ### Features
 
 * Give users the ability to opt-in or opt-out to tracking
-* Fine grained control tools or categories used for tracking
+* Fine grained control of tools or categories used for tracking
 * 30s setup with a drop in script tag
 * or fully customizable UI/UX through React components
 * EU traffic detection through `@segment/in-eu`
@@ -56,7 +56,7 @@ import inEU from '@segment/in-eu' // For conditional consenting for EU visitors
   dialogTitle={dialogTitle}
   dialogContent={dialogContent}
   {/* Your own consent preferences */}
-  shouldRequireConsent={inEU()}
+  shouldRequireConsent={inEU}
   {/* Custom logic for implying consent */}
   implyConsentOnInteraction={false}
 />
@@ -72,7 +72,6 @@ Build your own custom UI and consent logic using our React Provider and React re
 
 ```javascript
 import { ConsentManagerBuilder, openConsentManager } from '@segment/consent-manager'
-import inEU from '@segment/in-eu' // For conditional consenting for EU visitors
 
 <ConsentManagerBuilder writeKey="<your-segment-write-key>">
   {({ destinations, newDestinations, preferences, setPreferences, saveConsent }) => {
