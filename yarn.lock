@@ -187,6 +187,12 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@segment/in-eu@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@segment/in-eu/-/in-eu-0.1.1.tgz#3d4d3ce9d4487382788bf715f63790e9b029bb94"
+  dependencies:
+    jstz "^2.0.0"
+
 "@segment/top-domain@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@segment/top-domain/-/top-domain-3.0.0.tgz#02e5a5a4fd42a9f6cf886b05e82f104012a3c3a7"
@@ -6270,6 +6276,10 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
+
+jstz@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/jstz/-/jstz-2.0.0.tgz#fd02f4ebdc7843c83e7ad1f157aecf46bf1f7647"
 
 jsx-ast-utils@^2.0.1:
   version "2.0.1"

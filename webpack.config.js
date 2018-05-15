@@ -1,4 +1,6 @@
 const path = require('path')
+const webpack = require('webpack')
+const pkg = require('./package.json')
 
 module.exports = {
   mode: 'production',
@@ -29,5 +31,13 @@ module.exports = {
         loader: 'babel-loader'
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+        VERSION: JSON.stringify(pkg.version)
+      }
+    })
+  ]
 }

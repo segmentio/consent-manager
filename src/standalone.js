@@ -4,6 +4,8 @@ import {ConsentManager, openConsentManager, doNotTrack} from '.'
 
 export React from 'react'
 export * from '.'
+export {default as inEU} from '@segment/in-eu'
+export const version = process.env.VERSION
 
 const dataset = document.currentScript && document.currentScript.dataset
 
