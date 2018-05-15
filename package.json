@@ -117,7 +117,7 @@
     },
     {
       "path": "standalone/consent-manager.js",
-      "limit": "53 KB"
+      "limit": "57 KB"
     }
   ]
 }
