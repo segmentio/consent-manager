@@ -91,7 +91,7 @@ const HeaderCancelButton = styled('button')`
 const Content = styled('div')`
   overflow-y: auto;
   padding: 16px;
-  padding-bottom: 0;
+  padding-bottom: 1px; /* Fixes a bug where the bottom table border disappears */
   min-height: 0;
   font-size: 14px;
   line-height: 1.3;
