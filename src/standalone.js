@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import inEU from '@segment/in-eu'
 import {ConsentManager, openConsentManager, doNotTrack} from '.'
 
-export React from 'react'
-export * from '.'
-export {default as inEU} from '@segment/in-eu'
 export const version = process.env.VERSION
+export {openConsentManager, doNotTrack, inEU}
 
 const dataset = document.currentScript && document.currentScript.dataset
 
@@ -15,8 +14,10 @@ if (window.consentManagerConfig) {
   if (typeof window.consentManagerConfig === 'function') {
     props = window.consentManagerConfig({
       React,
+      version,
       openConsentManager,
-      doNotTrack
+      doNotTrack,
+      inEU
     })
   } else {
     props = window.consentManagerConfig
