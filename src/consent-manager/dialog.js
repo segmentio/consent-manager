@@ -61,7 +61,7 @@ const Root = styled('section')`
 `
 
 const Header = styled('div')`
-  flex: 1 0;
+  flex: 1 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
