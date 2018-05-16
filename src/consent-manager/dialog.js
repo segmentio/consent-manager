@@ -42,7 +42,7 @@ const openAnimation = keyframes`
   }
 `
 
-const Root = styled('section')`
+const Root = styled('form')`
   ${fontStyles};
   display: flex;
   flex-direction: column;
@@ -120,6 +120,7 @@ export default class Dialog extends PureComponent {
   static propTypes = {
     innerRef: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
     title: PropTypes.node.isRequired,
     children: PropTypes.node.isRequired,
     buttons: PropTypes.node.isRequired
@@ -136,7 +137,7 @@ export default class Dialog extends PureComponent {
   }
 
   render() {
-    const {onCancel, title, children, buttons} = this.props
+    const {onCancel, onSubmit, title, children, buttons} = this.props
 
     const dialog = (
       <Overlay onClick={this.handleOverlayClick}>
@@ -145,6 +146,7 @@ export default class Dialog extends PureComponent {
           role="dialog"
           aria-modal
           aria-labelledby={this.titleId}
+          onSubmit={onSubmit}
         >
           <Header>
             <Title id={this.titleId}>{title}</Title>

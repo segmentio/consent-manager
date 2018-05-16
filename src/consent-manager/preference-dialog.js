@@ -21,10 +21,11 @@ const Table = styled('table')`
 `
 
 const ColumnHeading = styled('th')`
-  background: #435a6f0a;
+  background: #f7f8fa;
   color: #1f4160;
   font-weight: 600;
   text-align: left;
+  border-width: 2px;
 `
 
 const RowHeading = styled('th')`
@@ -35,15 +36,22 @@ const RowHeading = styled('th')`
 const Row = styled('tr')`
   th,
   td {
+    vertical-align: top;
     padding: 8px 12px;
-    border: 1px solid #435a6f14;
+    border: 1px solid rgba(67, 90, 111, 0.114);
     border-top: none;
-    border-left: none;
   }
 `
 
-const CheckboxCell = styled('td')`
-  text-align: center;
+const InputCell = styled('td')`
+  input {
+    vertical-align: middle;
+  }
+  label {
+    display: block;
+    margin-bottom: 4px;
+    white-space: nowrap;
+  }
 `
 
 export default class PreferenceDialog extends PureComponent {
@@ -69,24 +77,38 @@ export default class PreferenceDialog extends PureComponent {
         name: PropTypes.string.isRequired
       })
     ).isRequired,
-    marketingAndAnalytics: PropTypes.bool.isRequired,
-    advertising: PropTypes.bool.isRequired,
-    functional: PropTypes.bool.isRequired,
+    heatmappingDestinations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired
+      })
+    ).isRequired,
+    marketingAndAnalytics: PropTypes.bool,
+    advertising: PropTypes.bool,
+    functional: PropTypes.bool,
+    heatmapping: PropTypes.bool,
     title: PropTypes.node.isRequired,
     content: PropTypes.node.isRequired
+  }
+
+  static defaultProps = {
+    marketingAndAnalytics: null,
+    advertising: null,
+    functional: null,
+    heatmapping: null
   }
 
   render() {
     const {
       innerRef,
       onCancel,
-      onSave,
       marketingDestinations,
       advertisingDestinations,
       functionalDestinations,
+      heatmappingDestinations,
       marketingAndAnalytics,
       advertising,
       functional,
+      heatmapping,
       title,
       content
     } = this.props
@@ -96,9 +118,7 @@ export default class PreferenceDialog extends PureComponent {
         <DefaultButton type="button" onClick={onCancel}>
           Cancel
         </DefaultButton>
-        <GreenButton type="button" onClick={onSave}>
-          Save
-        </GreenButton>
+        <GreenButton type="submit">Save</GreenButton>
       </div>
     )
 
@@ -108,6 +128,7 @@ export default class PreferenceDialog extends PureComponent {
         title={title}
         buttons={buttons}
         onCancel={onCancel}
+        onSubmit={this.handleSubmit}
       >
         {content}
 
@@ -126,25 +147,85 @@ export default class PreferenceDialog extends PureComponent {
 
             <tbody>
               <Row>
-                <CheckboxCell>
-                  <input
-                    type="checkbox"
-                    name="marketingAndAnalytics"
-                    checked={marketingAndAnalytics}
-                    onChange={this.handleChange}
-                    aria-label="Allow marketing and analytics tracking"
-                  />
-                </CheckboxCell>
+                <InputCell>
+                  <label>
+                    <input
+                      type="radio"
+                      name="functional"
+                      value="true"
+                      checked={functional === true}
+                      onChange={this.handleChange}
+                      aria-label="Allow functional tracking"
+                      required
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="functional"
+                      value="false"
+                      checked={functional === false}
+                      onChange={this.handleChange}
+                      aria-label="Disallow functional tracking"
+                      required
+                    />{' '}
+                    No
+                  </label>
+                </InputCell>
+                <RowHeading scope="row">Functional</RowHeading>
+                <td>
+                  <p>
+                    To monitor the performance of our site and to enhance your
+                    browsing experience.
+                  </p>
+                  <p className={hideOnMobile}>
+                    For example, these tools enable you to communicate with us
+                    via live chat.
+                  </p>
+                </td>
+                <td className={hideOnMobile}>
+                  {functionalDestinations.map(d => d.name).join(', ')}
+                </td>
+              </Row>
+
+              <Row>
+                <InputCell>
+                  <label>
+                    <input
+                      type="radio"
+                      name="marketingAndAnalytics"
+                      value="true"
+                      checked={marketingAndAnalytics === true}
+                      onChange={this.handleChange}
+                      aria-label="Allow marketing and analytics tracking"
+                      required
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="marketingAndAnalytics"
+                      value="false"
+                      checked={marketingAndAnalytics === false}
+                      onChange={this.handleChange}
+                      aria-label="Disallow marketing and analytics tracking"
+                      required
+                    />{' '}
+                    No
+                  </label>
+                </InputCell>
                 <RowHeading scope="row">Marketing and Analytics</RowHeading>
                 <td>
                   <p>
-                    We use these tools to understand user behavior in order to
-                    provide you with a more relevant browsing experience.
+                    To understand user behavior in order to provide you with a
+                    more relevant browsing experience or personalize the content
+                    on our site.
                   </p>
                   <p className={hideOnMobile}>
                     For example, we collect information about which pages you
-                    visit to help us present information that you find relevant
-                    when you visit our site.
+                    visit to help us present more relevant information.
                   </p>
                 </td>
                 <td className={hideOnMobile}>
@@ -153,25 +234,41 @@ export default class PreferenceDialog extends PureComponent {
               </Row>
 
               <Row>
-                <CheckboxCell>
-                  <input
-                    type="checkbox"
-                    name="advertising"
-                    checked={advertising}
-                    onChange={this.handleChange}
-                    aria-label="Allow advertising tracking"
-                  />
-                </CheckboxCell>
+                <InputCell>
+                  <label>
+                    <input
+                      type="radio"
+                      name="advertising"
+                      value="true"
+                      checked={advertising === true}
+                      onChange={this.handleChange}
+                      aria-label="Allow advertising tracking"
+                      required
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="advertising"
+                      value="false"
+                      checked={advertising === false}
+                      onChange={this.handleChange}
+                      aria-label="Disallow advertising tracking"
+                      required
+                    />{' '}
+                    No
+                  </label>
+                </InputCell>
                 <RowHeading scope="row">Advertising</RowHeading>
                 <td>
                   <p>
-                    We use these tools to personalize and measure the
-                    effectiveness of our advertising.
+                    To personalize and measure the effectiveness of advertising
+                    on our site and other websites.
                   </p>
                   <p className={hideOnMobile}>
                     For example, we may serve you a personalized ad based on the
-                    pages you visit on our site. This information may also be
-                    used to ensure we do not repeatedly serve you the same ad.
+                    pages you visit on our site.
                   </p>
                 </td>
                 <td className={hideOnMobile}>
@@ -180,30 +277,65 @@ export default class PreferenceDialog extends PureComponent {
               </Row>
 
               <Row>
-                <CheckboxCell>
-                  <input
-                    type="checkbox"
-                    name="functional"
-                    checked={functional}
-                    onChange={this.handleChange}
-                    aria-label="Allow functional tracking"
-                  />
-                </CheckboxCell>
-                <RowHeading scope="row">Functional</RowHeading>
+                <InputCell>
+                  <label>
+                    <input
+                      type="radio"
+                      name="heatmapping"
+                      value="true"
+                      checked={heatmapping === true}
+                      onChange={this.handleChange}
+                      aria-label="Allow heatmapping tracking"
+                      required
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="heatmapping"
+                      value="false"
+                      checked={heatmapping === false}
+                      onChange={this.handleChange}
+                      aria-label="Disallow heatmapping tracking"
+                      required
+                    />{' '}
+                    No
+                  </label>
+                </InputCell>
+                <RowHeading scope="row">Heatmapping</RowHeading>
                 <td>
                   <p>
-                    We use these tools to monitor the performance of our site
-                    and to enhance your browsing experience.
+                    To get a clearer understanding of how you interact with our
+                    site, including details on links clicked, mouse movements,
+                    and non-sensitive text entered into fields.
                   </p>
                   <p className={hideOnMobile}>
-                    For example, these tools enable you to communicate with us
-                    via live chat if you have any questions while you’re on our
-                    site.
+                    For example, we may use this information to improve our
+                    site’s navigation or functionality.
                   </p>
                 </td>
                 <td className={hideOnMobile}>
-                  {functionalDestinations.map(d => d.name).join(', ')}
+                  {heatmappingDestinations.map(d => d.name).join(', ')}
                 </td>
+              </Row>
+
+              <Row>
+                <InputCell />
+                <RowHeading scope="row">Essential</RowHeading>
+                <td>
+                  <p>
+                    Segment uses browser cookies that are necessary for the site
+                    to work as intended.
+                  </p>
+                  <p>
+                    For example, we store your website data collection
+                    preferences so we can honor them if you return to our site.
+                    You can disable these cookies in your browser settings but
+                    if you do the site may not work as intended.
+                  </p>
+                </td>
+                <td className={hideOnMobile} />
               </Row>
             </tbody>
           </Table>
@@ -215,6 +347,31 @@ export default class PreferenceDialog extends PureComponent {
   handleChange = e => {
     const {onChange} = this.props
 
-    onChange(e.target.name, e.target.checked)
+    onChange(e.target.name, e.target.value === 'true')
+  }
+
+  handleSubmit = e => {
+    const {
+      onSave,
+      marketingAndAnalytics,
+      advertising,
+      functional,
+      heatmapping
+    } = this.props
+
+    e.preventDefault()
+
+    // Safe guard against browsers that don't prevent the
+    // submission of invalid forms (Safari < 10.1)
+    if (
+      marketingAndAnalytics === null ||
+      advertising === null ||
+      functional === null ||
+      heatmapping === null
+    ) {
+      return
+    }
+
+    onSave()
   }
 }
