@@ -38,6 +38,14 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
         VERSION: JSON.stringify(pkg.version)
       }
-    })
+    }),
+    new webpack.BannerPlugin(
+      `
+Consent Manager v${pkg.version}
+https://github.com/segmentio/consent-manager
+Released under the MIT license
+Copyright © 2018, Segment.io, Inc
+    `.trim()
+    )
   ]
 }
