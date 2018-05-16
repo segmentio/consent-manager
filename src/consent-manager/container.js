@@ -2,7 +2,7 @@ import EventEmitter from 'events'
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import Banner from './banner'
-import Dialog from './dialog'
+import PreferenceDialog from './preference-dialog'
 import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
 
 const emitter = new EventEmitter()
@@ -76,7 +76,7 @@ export default class Container extends PureComponent {
             />
           )}
         {isDialogOpen && (
-          <Dialog
+          <PreferenceDialog
             onCancel={this.handleCancel}
             onSave={this.handleSave}
             onChange={this.handleCategoryChange}
