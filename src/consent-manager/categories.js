@@ -11,7 +11,7 @@ export const MARKETING_CATEGORIES = [
   'Surveys'
 ]
 
-export const ADVERTISING_CATEGORIES = ['Advertising', 'Tag Manager']
+export const ADVERTISING_CATEGORIES = ['Advertising', 'Tag Managers']
 
 export const FUNCTIONAL_CATEGORIES = [
   'CRM',
