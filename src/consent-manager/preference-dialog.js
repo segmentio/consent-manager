@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import styled, {css} from 'react-emotion'
 import Dialog from './dialog'
+import {DefaultButton, GreenButton} from './buttons'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -12,7 +13,6 @@ const hideOnMobile = css`
 const TableScroll = styled('div')`
   overflow-x: auto;
   margin-top: 16px;
-  margin-bottom: 1px; /* Fixes a bug where the bottom table border disappears */
 `
 
 const Table = styled('table')`
@@ -44,74 +44,6 @@ const Row = styled('tr')`
 
 const CheckboxCell = styled('td')`
   text-align: center;
-`
-
-const buttonBaseStyles = css`
-  height: 32px;
-  padding: 0 16px;
-  border: none;
-  border-radius: 4px;
-  color: inherit;
-  font: inherit;
-  font-size: 12px;
-  line-height: 1;
-  cursor: pointer;
-  outline: none;
-  transition: box-shadow 80ms ease-in-out;
-`
-
-const CancelButton = styled('button')`
-  ${buttonBaseStyles};
-  margin-right: 8px;
-  background-color: #fff;
-  background-image: linear-gradient(
-    to top,
-    rgba(67, 90, 111, 0.041),
-    rgba(255, 255, 255, 0.041)
-  );
-  box-shadow: inset 0 0 0 1px rgba(67, 90, 111, 0.146),
-    inset 0 -1px 1px 0 rgba(67, 90, 111, 0.079);
-  &:hover {
-    background-image: linear-gradient(
-      to top,
-      rgba(67, 90, 111, 0.057),
-      rgba(67, 90, 111, 0.025)
-    );
-    box-shadow: inset 0 0 0 1px rgba(67, 90, 111, 0.255),
-      inset 0 -1px 1px 0 rgba(67, 90, 111, 0.114);
-  }
-  &:focus {
-    box-shadow: 0 0 0 3px rgba(1, 108, 209, 0.146),
-      inset 0 0 0 1px rgba(67, 90, 111, 0.38),
-      inset 0 -1px 1px 0 rgba(67, 90, 111, 0.079);
-  }
-  &:active {
-    background: rgba(1, 108, 209, 0.079);
-    box-shadow: inset 0 0 0 1px rgba(67, 90, 111, 0.146),
-      inset 0 -1px 1px 0 rgba(67, 90, 111, 0.079);
-  }
-`
-
-const SaveButton = styled('button')`
-  ${buttonBaseStyles};
-  background-color: #47b881;
-  background-image: linear-gradient(to top, #3faf77, #47b881);
-  box-shadow: inset 0 0 0 1px rgba(67, 90, 111, 0.204),
-    inset 0 -1px 1px 0 rgba(67, 90, 111, 0.204);
-  color: #fff;
-  &:hover {
-    background-image: linear-gradient(to top, #37a56d, #3faf77);
-  }
-  &:focus {
-    box-shadow: 0 0 0 3px rgba(71, 184, 129, 0.477),
-      inset 0 0 0 1px rgba(71, 184, 129, 0.204),
-      inset 0 -1px 1px 0 rgba(71, 184, 129, 0.204);
-  }
-  &:active {
-    background-image: linear-gradient(to top, #2d9760, #248953);
-    box-shadow: inset 0 0 0 1px rgba(71, 184, 129, 0.204),
-      inset 0 -1px 1px 0 rgba(71, 184, 129, 0.204);
-  }
 `
 
 export default class PreferenceDialog extends PureComponent {
@@ -161,12 +93,12 @@ export default class PreferenceDialog extends PureComponent {
 
     const buttons = (
       <div>
-        <CancelButton type="button" onClick={onCancel}>
+        <DefaultButton type="button" onClick={onCancel}>
           Cancel
-        </CancelButton>
-        <SaveButton type="button" onClick={onSave}>
+        </DefaultButton>
+        <GreenButton type="button" onClick={onSave}>
           Save
-        </SaveButton>
+        </GreenButton>
       </div>
     )
 
