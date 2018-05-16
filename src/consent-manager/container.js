@@ -64,10 +64,11 @@ export default class Container extends PureComponent {
 
     // TODO: add state for banner so it doesn't disappear on implicit consent (which is annoying UX)
     return (
-      <div ref={this.handleRootRef}>
+      <div>
         {isConsentRequired &&
           newDestinations.length > 0 && (
             <Banner
+              innerRef={this.handleBannerRef}
               onAccept={this.allowAllTracking}
               onChangePreferences={this.openDialog}
               content={bannerContent}
@@ -77,6 +78,7 @@ export default class Container extends PureComponent {
           )}
         {isDialogOpen && (
           <PreferenceDialog
+            innerRef={this.handlePreferenceDialogRef}
             onCancel={this.handleCancel}
             onSave={this.handleSave}
             onChange={this.handleCategoryChange}
@@ -130,8 +132,12 @@ export default class Container extends PureComponent {
     })
   }
 
-  handleRootRef = node => {
-    this.root = node
+  handleBannerRef = node => {
+    this.banner = node
+  }
+
+  handlePreferenceDialogRef = node => {
+    this.preferenceDialog = node
   }
 
   handleBodyClick = e => {
@@ -142,7 +148,10 @@ export default class Container extends PureComponent {
       implyConsentOnInteraction
     } = this.props
 
-    if (this.root.contains(e.target)) {
+    if (
+      (this.banner && this.banner.contains(e.target)) ||
+      (this.preferenceDialog && this.preferenceDialog.contains(e.target))
+    ) {
       return
     }
 

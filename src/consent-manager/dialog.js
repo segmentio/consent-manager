@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import styled, {keyframes} from 'react-emotion'
 import nanoid from 'nanoid'
@@ -117,6 +118,7 @@ export default class Dialog extends PureComponent {
   static displayName = 'Dialog'
 
   static propTypes = {
+    innerRef: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     title: PropTypes.node.isRequired,
     children: PropTypes.node.isRequired,
@@ -125,13 +127,18 @@ export default class Dialog extends PureComponent {
 
   constructor() {
     super()
+
     this.titleId = nanoid()
+
+    this.container = document.createElement('div')
+    this.container.setAttribute('data-consent-manager-dialog', '')
+    document.body.appendChild(this.container)
   }
 
   render() {
     const {onCancel, title, children, buttons} = this.props
 
-    return (
+    const dialog = (
       <Overlay onClick={this.handleOverlayClick}>
         <Root
           innerRef={this.handleRootRef}
@@ -156,17 +163,28 @@ export default class Dialog extends PureComponent {
         </Root>
       </Overlay>
     )
+
+    return ReactDOM.createPortal(dialog, this.container)
   }
 
   componentDidMount() {
+    const {innerRef} = this.props
+
     this.content.querySelector('input,button').focus()
     document.body.addEventListener('keydown', this.handleEsc, false)
     document.body.style.overflow = 'hidden'
+
+    innerRef(this.container)
   }
 
   componentWillUnmount() {
+    const {innerRef} = this.props
+
     document.body.removeEventListener('keydown', this.handleEsc, false)
     document.body.style.overflow = ''
+
+    document.body.removeChild(this.container)
+    innerRef(null)
   }
 
   handleRootRef = node => {

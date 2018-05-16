@@ -118,6 +118,7 @@ export default class PreferenceDialog extends PureComponent {
   static displayName = 'PreferenceDialog'
 
   static propTypes = {
+    innerRef: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -145,6 +146,7 @@ export default class PreferenceDialog extends PureComponent {
 
   render() {
     const {
+      innerRef,
       onCancel,
       onSave,
       marketingDestinations,
@@ -169,7 +171,12 @@ export default class PreferenceDialog extends PureComponent {
     )
 
     return (
-      <Dialog title={title} buttons={buttons} onCancel={onCancel}>
+      <Dialog
+        innerRef={innerRef}
+        title={title}
+        buttons={buttons}
+        onCancel={onCancel}
+      >
         {content}
 
         <TableScroll>

@@ -55,6 +55,7 @@ export default class Banner extends PureComponent {
   static displayName = 'Banner'
 
   static propTypes = {
+    innerRef: PropTypes.func.isRequired,
     onAccept: PropTypes.func.isRequired,
     onChangePreferences: PropTypes.func.isRequired,
     content: PropTypes.node.isRequired,
@@ -64,6 +65,7 @@ export default class Banner extends PureComponent {
 
   render() {
     const {
+      innerRef,
       onAccept,
       onChangePreferences,
       content,
@@ -72,7 +74,11 @@ export default class Banner extends PureComponent {
     } = this.props
 
     return (
-      <Root backgroundColor={backgroundColor} textColor={textColor}>
+      <Root
+        innerRef={innerRef}
+        backgroundColor={backgroundColor}
+        textColor={textColor}
+      >
         <Content>
           <P>{content}</P>
           <P>
