@@ -1,6 +1,6 @@
 {
   "name": "@segment/consent-manager",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "The Segment user tracking consent manager",
   "keywords": [
     "gdpr",
