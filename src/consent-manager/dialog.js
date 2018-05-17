@@ -8,15 +8,6 @@ import fontStyles from './font-styles'
 const ANIMATION_DURATION = '200ms'
 const ANIMATION_EASING = 'cubic-bezier(0.0, 0.0, 0.2, 1)'
 
-const fadeInAnimation = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`
-
 const Overlay = styled('div')`
   position: fixed;
   left: 0;
@@ -28,7 +19,6 @@ const Overlay = styled('div')`
   align-items: center;
   justify-content: center;
   background: rgba(67, 90, 111, 0.699);
-  animation: ${fadeInAnimation} ${ANIMATION_DURATION} ${ANIMATION_EASING} both;
 `
 
 const openAnimation = keyframes`
@@ -48,7 +38,7 @@ const Root = styled('section')`
   flex-direction: column;
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 16px);
-  width: 750px;
+  width: ${props => props.width};
   margin: 8px;
   background: #fff;
   border-radius: 8px;
@@ -128,11 +118,13 @@ export default class Dialog extends PureComponent {
     onSubmit: PropTypes.func.isRequired,
     title: PropTypes.node.isRequired,
     children: PropTypes.node.isRequired,
-    buttons: PropTypes.node.isRequired
+    buttons: PropTypes.node.isRequired,
+    width: PropTypes.string
   }
 
   static defaultProps = {
-    onCancel: undefined
+    onCancel: undefined,
+    width: '750px'
   }
 
   constructor() {
@@ -146,7 +138,7 @@ export default class Dialog extends PureComponent {
   }
 
   render() {
-    const {onCancel, onSubmit, title, children, buttons} = this.props
+    const {onCancel, onSubmit, title, children, buttons, width} = this.props
 
     const dialog = (
       <Overlay onClick={this.handleOverlayClick}>
@@ -155,6 +147,7 @@ export default class Dialog extends PureComponent {
           role="dialog"
           aria-modal
           aria-labelledby={this.titleId}
+          width={width}
         >
           <Header>
             <Title id={this.titleId}>{title}</Title>
@@ -212,6 +205,7 @@ export default class Dialog extends PureComponent {
   handleOverlayClick = e => {
     const {onCancel} = this.props
 
+    // Ignore propogated clicks from inside the dialog
     if (onCancel && !this.root.contains(e.target)) {
       onCancel()
     }

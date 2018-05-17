@@ -3,6 +3,7 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import Banner from './banner'
 import PreferenceDialog from './preference-dialog'
+import CancelDialog from './cancel-dialog'
 import {
   ADVERTISING_CATEGORIES,
   FUNCTIONAL_CATEGORIES,
@@ -35,7 +36,8 @@ export default class Container extends PureComponent {
   }
 
   state = {
-    isDialogOpen: false
+    isDialogOpen: false,
+    isCancelling: false
   }
 
   render() {
@@ -50,7 +52,7 @@ export default class Container extends PureComponent {
       dialogTitle,
       dialogContent
     } = this.props
-    const {isDialogOpen} = this.state
+    const {isDialogOpen, isCancelling} = this.state
     const marketingDestinations = []
     const advertisingDestinations = []
     const functionalDestinations = []
@@ -76,7 +78,7 @@ export default class Container extends PureComponent {
           newDestinations.length > 0 && (
             <Banner
               innerRef={this.handleBannerRef}
-              onAccept={this.allowAllTracking}
+              onAccept={this.handleBannerAccept}
               onChangePreferences={this.openDialog}
               content={bannerContent}
               textColor={bannerTextColor}
@@ -101,6 +103,13 @@ export default class Container extends PureComponent {
             content={dialogContent}
           />
         )}
+        {isCancelling && (
+          <CancelDialog
+            innerRef={this.handleCancelDialogRef}
+            onBack={this.handleCancelBack}
+            onConfirm={this.handleCancelConfirm}
+          />
+        )}
       </div>
     )
   }
@@ -118,15 +127,6 @@ export default class Container extends PureComponent {
   componentWillUnmount() {
     emitter.removeListener('openDialog', this.openDialog)
     document.body.removeEventListener('click', this.handleBodyClick, false)
-  }
-
-  allowAllTracking = () => {
-    const {saveConsent} = this.props
-
-    saveConsent()
-    this.setState({
-      isDialogOpen: false
-    })
   }
 
   openDialog = () => {
@@ -149,6 +149,16 @@ export default class Container extends PureComponent {
     this.preferenceDialog = node
   }
 
+  handleCancelDialogRef = node => {
+    this.cancelDialog = node
+  }
+
+  handleBannerAccept = () => {
+    const {saveConsent} = this.props
+
+    saveConsent()
+  }
+
   handleBodyClick = e => {
     const {
       newDestinations,
@@ -157,20 +167,25 @@ export default class Container extends PureComponent {
       implyConsentOnInteraction
     } = this.props
 
+    // Do nothing if no new implicit consent needs to be saved
     if (
-      (this.banner && this.banner.contains(e.target)) ||
-      (this.preferenceDialog && this.preferenceDialog.contains(e.target))
+      !isConsentRequired ||
+      !implyConsentOnInteraction ||
+      newDestinations.length === 0
     ) {
       return
     }
 
+    // Ignore propogated clicks from inside the consent manager
     if (
-      isConsentRequired &&
-      implyConsentOnInteraction &&
-      newDestinations.length > 0
+      (this.banner && this.banner.contains(e.target)) ||
+      (this.preferenceDialog && this.preferenceDialog.contains(e.target)) ||
+      (this.cancelDialog && this.cancelDialog.contains(e.target))
     ) {
-      saveConsent(undefined, false)
+      return
     }
+
+    saveConsent(undefined, false)
   }
 
   handleCategoryChange = (category, value) => {
@@ -184,14 +199,42 @@ export default class Container extends PureComponent {
   handleSave = () => {
     const {saveConsent} = this.props
 
+    this.setState({
+      isDialogOpen: false
+    })
     saveConsent()
-    this.closeDialog()
   }
 
   handleCancel = () => {
+    const {resetPreferences, newDestinations} = this.props
+
+    this.setState({
+      isDialogOpen: false
+    })
+
+    // Only show the cancel confirmation if there's unconsented destinations
+    if (newDestinations.length > 0) {
+      this.setState({
+        isCancelling: true
+      })
+    } else {
+      resetPreferences()
+    }
+  }
+
+  handleCancelBack = () => {
+    this.setState({
+      isDialogOpen: true,
+      isCancelling: false
+    })
+  }
+
+  handleCancelConfirm = () => {
     const {resetPreferences} = this.props
 
+    this.setState({
+      isCancelling: false
+    })
     resetPreferences()
-    this.closeDialog()
   }
 }
