@@ -45,6 +45,7 @@ const openAnimation = keyframes`
 const Root = styled('section')`
   ${fontStyles};
   display: flex;
+  flex-direction: column;
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 16px);
   width: 750px;
@@ -151,19 +152,19 @@ export default class Dialog extends PureComponent {
           aria-modal
           aria-labelledby={this.titleId}
         >
-          <Form onSubmit={onSubmit}>
-            <Header>
-              <Title id={this.titleId}>{title}</Title>
-              <HeaderCancelButton
-                onClick={onCancel}
-                title="Cancel"
-                aria-label="Cancel"
-              >
-                ✕
-              </HeaderCancelButton>
-            </Header>
+          <Header>
+            <Title id={this.titleId}>{title}</Title>
+            <HeaderCancelButton
+              onClick={onCancel}
+              title="Cancel"
+              aria-label="Cancel"
+            >
+              ✕
+            </HeaderCancelButton>
+          </Header>
 
-            <Content innerRef={this.handleContentRef}>{children}</Content>
+          <Form innerRef={this.handleFormRef} onSubmit={onSubmit}>
+            <Content>{children}</Content>
 
             <Buttons>{buttons}</Buttons>
           </Form>
@@ -177,7 +178,7 @@ export default class Dialog extends PureComponent {
   componentDidMount() {
     const {innerRef} = this.props
 
-    this.content.querySelector('input,button').focus()
+    this.form.querySelector('input,button').focus()
     document.body.addEventListener('keydown', this.handleEsc, false)
     document.body.style.overflow = 'hidden'
 
@@ -198,8 +199,8 @@ export default class Dialog extends PureComponent {
     this.root = node
   }
 
-  handleContentRef = node => {
-    this.content = node
+  handleFormRef = node => {
+    this.form = node
   }
 
   handleOverlayClick = e => {
