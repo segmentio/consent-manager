@@ -321,7 +321,7 @@ export default class PreferenceDialog extends PureComponent {
               </Row>
 
               <Row>
-                <InputCell />
+                <td>N/A</td>
                 <RowHeading scope="row">Essential</RowHeading>
                 <td>
                   <p>
