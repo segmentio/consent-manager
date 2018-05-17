@@ -42,10 +42,9 @@ const openAnimation = keyframes`
   }
 `
 
-const Root = styled('form')`
+const Root = styled('section')`
   ${fontStyles};
   display: flex;
-  flex-direction: column;
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 16px);
   width: 700px;
@@ -53,6 +52,11 @@ const Root = styled('form')`
   background: #fff;
   border-radius: 8px;
   animation: ${openAnimation} ${ANIMATION_DURATION} ${ANIMATION_EASING} both;
+`
+
+const Form = styled('form')`
+  display: flex;
+  flex-direction: column;
 `
 
 const Header = styled('div')`
@@ -146,22 +150,23 @@ export default class Dialog extends PureComponent {
           role="dialog"
           aria-modal
           aria-labelledby={this.titleId}
-          onSubmit={onSubmit}
         >
-          <Header>
-            <Title id={this.titleId}>{title}</Title>
-            <HeaderCancelButton
-              onClick={onCancel}
-              title="Cancel"
-              aria-label="Cancel"
-            >
-              ✕
-            </HeaderCancelButton>
-          </Header>
+          <Form onSubmit={onSubmit}>
+            <Header>
+              <Title id={this.titleId}>{title}</Title>
+              <HeaderCancelButton
+                onClick={onCancel}
+                title="Cancel"
+                aria-label="Cancel"
+              >
+                ✕
+              </HeaderCancelButton>
+            </Header>
 
-          <Content innerRef={this.handleContentRef}>{children}</Content>
+            <Content innerRef={this.handleContentRef}>{children}</Content>
 
-          <Buttons>{buttons}</Buttons>
+            <Buttons>{buttons}</Buttons>
+          </Form>
         </Root>
       </Overlay>
     )
