@@ -94,21 +94,32 @@ export default class ConsentManager extends PureComponent {
 
   handleMapCustomPreferences = ({destinations, preferences}) => {
     const destinationPreferences = {}
+    const customPreferences = {}
 
-    for (const destination of destinations) {
-      if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
-        destinationPreferences[destination.id] = preferences.advertising
-      } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
-        destinationPreferences[destination.id] = preferences.functional
-      } else if (HEATMAPPING_CATEGORIES.find(c => c === destination.category)) {
-        destinationPreferences[destination.id] = preferences.heatmapping
+    // Default null preferences to true (for implicit consent)
+    for (const preferenceName of Object.keys(preferences)) {
+      const value = preferences[preferenceName]
+      if (value === null) {
+        customPreferences[preferenceName] = true
       } else {
-        // Fallback to marketing
-        destinationPreferences[destination.id] =
-          preferences.marketingAndAnalytics
+        customPreferences[preferenceName] = value
       }
     }
 
-    return {destinationPreferences, customPreferences: preferences}
+    for (const destination of destinations) {
+      if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
+        destinationPreferences[destination.id] = customPreferences.advertising
+      } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
+        destinationPreferences[destination.id] = customPreferences.functional
+      } else if (HEATMAPPING_CATEGORIES.find(c => c === destination.category)) {
+        destinationPreferences[destination.id] = customPreferences.heatmapping
+      } else {
+        // Fallback to marketing
+        destinationPreferences[destination.id] =
+          customPreferences.marketingAndAnalytics
+      }
+    }
+
+    return {destinationPreferences, customPreferences}
   }
 }
