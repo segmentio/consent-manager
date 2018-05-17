@@ -124,11 +124,15 @@ export default class Dialog extends PureComponent {
 
   static propTypes = {
     innerRef: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
+    onCancel: PropTypes.func,
     onSubmit: PropTypes.func.isRequired,
     title: PropTypes.node.isRequired,
     children: PropTypes.node.isRequired,
     buttons: PropTypes.node.isRequired
+  }
+
+  static defaultProps = {
+    onCancel: undefined
   }
 
   constructor() {
@@ -154,13 +158,15 @@ export default class Dialog extends PureComponent {
         >
           <Header>
             <Title id={this.titleId}>{title}</Title>
-            <HeaderCancelButton
-              onClick={onCancel}
-              title="Cancel"
-              aria-label="Cancel"
-            >
-              ✕
-            </HeaderCancelButton>
+            {onCancel && (
+              <HeaderCancelButton
+                onClick={onCancel}
+                title="Cancel"
+                aria-label="Cancel"
+              >
+                ✕
+              </HeaderCancelButton>
+            )}
           </Header>
 
           <Form innerRef={this.handleFormRef} onSubmit={onSubmit}>
@@ -206,18 +212,16 @@ export default class Dialog extends PureComponent {
   handleOverlayClick = e => {
     const {onCancel} = this.props
 
-    if (this.root.contains(e.target)) {
-      return
+    if (onCancel && !this.root.contains(e.target)) {
+      onCancel()
     }
-
-    onCancel()
   }
 
   handleEsc = e => {
     const {onCancel} = this.props
 
     // Esc key
-    if (e.keyCode === 27) {
+    if (onCancel && e.keyCode === 27) {
       onCancel()
     }
   }
