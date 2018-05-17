@@ -32,7 +32,7 @@ const Content = styled('div')`
 const P = styled('p')`
   margin: 0;
   &:not(:last-child) {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
 `
 

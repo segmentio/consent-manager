@@ -94,31 +94,32 @@ storiesOf('ConsentManagerBuilder', module).add(`example`, () => (
 storiesOf('ConsentManager', module).add(`example`, () => {
   const bannerContent = (
     <span>
-      We collect data and use cookies to improve your experience on our site. By
-      using our website, you’re agreeing to the collection of data and use of
-      cookies as described in our{' '}
-      <a href="/docs/legal/privacy/" target="_blank">
-        privacy policy
+      We use cookies (and other similar technologies) to collect data to improve
+      your experience on our site. By using our website, you’re agreeing to the
+      collection of data as described in our{' '}
+      <a href="/docs/legal/website-data-collection-policy/" target="_blank">
+        Website Data Collection Policy
       </a>.
     </span>
   )
-  const dialogTitle = 'Segment Data Collection and Cookie Preferences'
+  const dialogTitle = 'Website Data Collection Preferences'
   const dialogContent = (
     <div>
       <p>
-        Segment collects data and uses cookies or other similar technologies to
-        improve your browsing experience, analyze our site traffic, send
-        tailored messages, and increase the overall performance of our site. By
-        using our website, you’re agreeing to the collection of data and use of
-        cookies as described in our{' '}
-        <a href="/docs/legal/privacy/" target="_blank">
-          privacy policy
-        </a>. You can change your preferences at any time.
+        Segment uses data collected by cookies and javascript libraries to
+        improve your browsing experience, analyze site traffic, deliver
+        personalized advertisements, and increase the overall performance of our
+        site.
       </p>
       <p>
-        We collect data and/or use cookies for the following categories of
-        tools. To opt out of any category, uncheck the box and save your
-        preferences.
+        By using our website, you’re agreeing to our{' '}
+        <a href="/docs/legal/website-data-collection-policy/" target="_blank">
+          Website Data Collection Policy
+        </a>.
+      </p>
+      <p>
+        The table below outlines how we use this data by category. To opt out of
+        a category of data collection, select “No” and save your preferences.
       </p>
     </div>
   )
