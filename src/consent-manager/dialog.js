@@ -47,7 +47,7 @@ const Root = styled('section')`
   display: flex;
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 16px);
-  width: 700px;
+  width: 750px;
   margin: 8px;
   background: #fff;
   border-radius: 8px;
