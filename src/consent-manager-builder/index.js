@@ -25,7 +25,7 @@ export default class ConsentManagerBuilder extends Component {
   static displayName = 'ConsentManagerBuilder'
 
   static propTypes = {
-    /* 
+    /*
       Render prop you can use to customize your design
     */
     children: PropTypes.func.isRequired,
@@ -191,7 +191,7 @@ export default class ConsentManagerBuilder extends Component {
         isConsentRequired
       } = prevState
 
-      const preferences = this.mergePreferences({
+      let preferences = this.mergePreferences({
         destinations,
         newPreferences,
         existingPreferences
@@ -204,6 +204,13 @@ export default class ConsentManagerBuilder extends Component {
           destinations,
           preferences
         }))
+        if (customPreferences) {
+          // Allow the customPreferences to be updated from mapCustomPreferences
+          preferences = customPreferences
+        } else {
+          // Make returning the customPreferences from mapCustomPreferences optional
+          customPreferences = preferences
+        }
       } else {
         destinationPreferences = preferences
       }
