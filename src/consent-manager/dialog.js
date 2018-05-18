@@ -48,6 +48,7 @@ const Root = styled('section')`
 const Form = styled('form')`
   display: flex;
   flex-direction: column;
+  min-height: 0;
 `
 
 const Header = styled('div')`
