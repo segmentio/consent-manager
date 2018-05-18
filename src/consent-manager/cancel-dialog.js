@@ -9,11 +9,13 @@ export default class CancelDialog extends PureComponent {
   static propTypes = {
     innerRef: PropTypes.func.isRequired,
     onBack: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func.isRequired
+    onConfirm: PropTypes.func.isRequired,
+    title: PropTypes.node.isRequired,
+    content: PropTypes.node.isRequired
   }
 
   render() {
-    const {innerRef, onBack} = this.props
+    const {innerRef, onBack, title, content} = this.props
 
     const buttons = (
       <div>
@@ -27,16 +29,12 @@ export default class CancelDialog extends PureComponent {
     return (
       <Dialog
         innerRef={innerRef}
-        title="Are you sure you want to cancel?"
+        title={title}
         buttons={buttons}
         onSubmit={this.handleSubmit}
         width="500px"
       >
-        Your preferences have not been saved. By continuing to use our website,
-        you’re agreeing to our{' '}
-        <a href="/docs/legal/website-data-collection-policy/" target="_blank">
-          Website Data Collection Policy
-        </a>.
+        {content}
       </Dialog>
     )
   }

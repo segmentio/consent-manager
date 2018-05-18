@@ -102,8 +102,8 @@ storiesOf('ConsentManager', module).add(`example`, () => {
       </a>.
     </span>
   )
-  const dialogTitle = 'Website Data Collection Preferences'
-  const dialogContent = (
+  const preferencesDialogTitle = 'Website Data Collection Preferences'
+  const preferencesDialogContent = (
     <div>
       <p>
         Segment uses data collected by cookies and javascript libraries to
@@ -123,14 +123,26 @@ storiesOf('ConsentManager', module).add(`example`, () => {
       </p>
     </div>
   )
+  const cancelDialogTitle = 'Are you sure you want to cancel?'
+  const cancelDialogContent = (
+    <div>
+      Your preferences have not been saved. By continuing to use our website,
+      you’re agreeing to our{' '}
+      <a href="/docs/legal/website-data-collection-policy/" target="_blank">
+        Website Data Collection Policy
+      </a>.
+    </div>
+  )
   return (
     <Fragment>
       <ConsentManager
         writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
         bannerContent={bannerContent}
-        dialogTitle={dialogTitle}
-        dialogContent={dialogContent}
+        preferencesDialogTitle={preferencesDialogTitle}
+        preferencesDialogContent={preferencesDialogContent}
+        cancelDialogTitle={cancelDialogTitle}
+        cancelDialogContent={cancelDialogContent}
       />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus

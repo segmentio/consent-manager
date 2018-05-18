@@ -27,8 +27,10 @@ export default class Container extends PureComponent {
     bannerContent: PropTypes.node.isRequired,
     bannerTextColor: PropTypes.string.isRequired,
     bannerBackgroundColor: PropTypes.string.isRequired,
-    dialogTitle: PropTypes.node.isRequired,
-    dialogContent: PropTypes.node.isRequired
+    preferencesDialogTitle: PropTypes.node.isRequired,
+    preferencesDialogContent: PropTypes.node.isRequired,
+    cancelDialogTitle: PropTypes.node.isRequired,
+    cancelDialogContent: PropTypes.node.isRequired
   }
 
   state = {
@@ -45,8 +47,10 @@ export default class Container extends PureComponent {
       bannerContent,
       bannerTextColor,
       bannerBackgroundColor,
-      dialogTitle,
-      dialogContent
+      preferencesDialogTitle,
+      preferencesDialogContent,
+      cancelDialogTitle,
+      cancelDialogContent
     } = this.props
     const {isDialogOpen, isCancelling} = this.state
     const marketingDestinations = []
@@ -90,8 +94,8 @@ export default class Container extends PureComponent {
             marketingAndAnalytics={preferences.marketingAndAnalytics}
             advertising={preferences.advertising}
             functional={preferences.functional}
-            title={dialogTitle}
-            content={dialogContent}
+            title={preferencesDialogTitle}
+            content={preferencesDialogContent}
           />
         )}
         {isCancelling && (
@@ -99,6 +103,8 @@ export default class Container extends PureComponent {
             innerRef={this.handleCancelDialogRef}
             onBack={this.handleCancelBack}
             onConfirm={this.handleCancelConfirm}
+            title={cancelDialogTitle}
+            content={cancelDialogContent}
           />
         )}
       </div>

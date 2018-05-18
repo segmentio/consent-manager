@@ -22,8 +22,10 @@ export default class ConsentManager extends PureComponent {
     bannerContent: PropTypes.node.isRequired,
     bannerTextColor: PropTypes.string,
     bannerBackgroundColor: PropTypes.string,
-    dialogTitle: PropTypes.node.isRequired,
-    dialogContent: PropTypes.node.isRequired
+    preferencesDialogTitle: PropTypes.node,
+    preferencesDialogContent: PropTypes.node.isRequired,
+    cancelDialogTitle: PropTypes.node,
+    cancelDialogContent: PropTypes.node.isRequired
   }
 
   static defaultProps = {
@@ -32,7 +34,9 @@ export default class ConsentManager extends PureComponent {
     implyConsentOnInteraction: true,
     cookieDomain: undefined,
     bannerTextColor: '#fff',
-    bannerBackgroundColor: '#1f4160'
+    bannerBackgroundColor: '#1f4160',
+    preferencesDialogTitle: 'Website Data Collection Preferences',
+    cancelDialogTitle: 'Are you sure you want to cancel?'
   }
 
   render() {
@@ -45,8 +49,10 @@ export default class ConsentManager extends PureComponent {
       bannerContent,
       bannerTextColor,
       bannerBackgroundColor,
-      dialogTitle,
-      dialogContent
+      preferencesDialogTitle,
+      preferencesDialogContent,
+      cancelDialogTitle,
+      cancelDialogContent
     } = this.props
 
     return (
@@ -79,8 +85,10 @@ export default class ConsentManager extends PureComponent {
             bannerContent={bannerContent}
             bannerTextColor={bannerTextColor}
             bannerBackgroundColor={bannerBackgroundColor}
-            dialogTitle={dialogTitle}
-            dialogContent={dialogContent}
+            preferencesDialogTitle={preferencesDialogTitle}
+            preferencesDialogContent={preferencesDialogContent}
+            cancelDialogTitle={cancelDialogTitle}
+            cancelDialogContent={cancelDialogContent}
           />
         )}
       </ConsentManagerBuilder>
