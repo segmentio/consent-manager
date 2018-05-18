@@ -91,13 +91,13 @@ export default class ConsentManager extends PureComponent {
     const destinationPreferences = {}
     const customPreferences = {}
 
-    // Default null preferences to true (for implicit consent)
+    // Default unset preferences to true (for implicit consent)
     for (const preferenceName of Object.keys(preferences)) {
       const value = preferences[preferenceName]
-      if (value === null) {
-        customPreferences[preferenceName] = true
-      } else {
+      if (typeof value === 'boolean') {
         customPreferences[preferenceName] = value
+      } else {
+        customPreferences[preferenceName] = true
       }
     }
 
