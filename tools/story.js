@@ -106,7 +106,7 @@ storiesOf('ConsentManager', module).add(`example`, () => {
   const preferencesDialogContent = (
     <div>
       <p>
-        Segment uses data collected by cookies and javascript libraries to
+        Segment uses data collected by cookies and JavaScript libraries to
         improve your browsing experience, analyze site traffic, deliver
         personalized advertisements, and increase the overall performance of our
         site.
