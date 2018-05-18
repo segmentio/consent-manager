@@ -28,9 +28,6 @@
     "build": "concurrently --names 'commonjs,esm,standalone' 'yarn run build-commonjs' 'yarn run build-esm' 'yarn run build-standalone'",
     "clean": "rm -rf {commonjs,esm,standalone}"
   },
-  "engines": {
-    "node": ">=8"
-  },
   "dependencies": {
     "@segment/top-domain": "^3.0.0",
     "babel-runtime": "^6.26.0",
