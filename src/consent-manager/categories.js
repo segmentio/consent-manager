@@ -4,6 +4,7 @@ export const MARKETING_AND_ANALYTICS_CATEGORIES = [
   'Attribution',
   'Email',
   'Enrichment',
+  'Heatmaps & Recordings',
   'Raw Data',
   'Realtime Dashboards',
   'Referrals',
@@ -23,5 +24,3 @@ export const FUNCTIONAL_CATEGORIES = [
   'SMS & Push Notifications',
   'Security & Fraud'
 ]
-
-export const HEATMAPPING_CATEGORIES = ['Heatmaps & Recordings']

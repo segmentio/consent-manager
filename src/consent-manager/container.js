@@ -4,11 +4,7 @@ import PropTypes from 'prop-types'
 import Banner from './banner'
 import PreferenceDialog from './preference-dialog'
 import CancelDialog from './cancel-dialog'
-import {
-  ADVERTISING_CATEGORIES,
-  FUNCTIONAL_CATEGORIES,
-  HEATMAPPING_CATEGORIES
-} from './categories'
+import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
 
 const emitter = new EventEmitter()
 
@@ -56,15 +52,12 @@ export default class Container extends PureComponent {
     const marketingDestinations = []
     const advertisingDestinations = []
     const functionalDestinations = []
-    const heatmappingDestinations = []
 
     for (const destination of destinations) {
       if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
         advertisingDestinations.push(destination)
       } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
         functionalDestinations.push(destination)
-      } else if (HEATMAPPING_CATEGORIES.find(c => c === destination.category)) {
-        heatmappingDestinations.push(destination)
       } else {
         // Fallback to marketing
         marketingDestinations.push(destination)
@@ -94,11 +87,9 @@ export default class Container extends PureComponent {
             marketingDestinations={marketingDestinations}
             advertisingDestinations={advertisingDestinations}
             functionalDestinations={functionalDestinations}
-            heatmappingDestinations={heatmappingDestinations}
             marketingAndAnalytics={preferences.marketingAndAnalytics}
             advertising={preferences.advertising}
             functional={preferences.functional}
-            heatmapping={preferences.heatmapping}
             title={dialogTitle}
             content={dialogContent}
           />

@@ -2,17 +2,12 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
-import {
-  ADVERTISING_CATEGORIES,
-  FUNCTIONAL_CATEGORIES,
-  HEATMAPPING_CATEGORIES
-} from './categories'
+import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
 
 const initialPreferences = {
   marketingAndAnalytics: null,
   advertising: null,
-  functional: null,
-  heatmapping: null
+  functional: null
 }
 
 export default class ConsentManager extends PureComponent {
@@ -111,8 +106,6 @@ export default class ConsentManager extends PureComponent {
         destinationPreferences[destination.id] = customPreferences.advertising
       } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
         destinationPreferences[destination.id] = customPreferences.functional
-      } else if (HEATMAPPING_CATEGORIES.find(c => c === destination.category)) {
-        destinationPreferences[destination.id] = customPreferences.heatmapping
       } else {
         // Fallback to marketing
         destinationPreferences[destination.id] =

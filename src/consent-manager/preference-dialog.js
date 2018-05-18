@@ -77,15 +77,9 @@ export default class PreferenceDialog extends PureComponent {
         name: PropTypes.string.isRequired
       })
     ).isRequired,
-    heatmappingDestinations: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired
-      })
-    ).isRequired,
     marketingAndAnalytics: PropTypes.bool,
     advertising: PropTypes.bool,
     functional: PropTypes.bool,
-    heatmapping: PropTypes.bool,
     title: PropTypes.node.isRequired,
     content: PropTypes.node.isRequired
   }
@@ -93,8 +87,7 @@ export default class PreferenceDialog extends PureComponent {
   static defaultProps = {
     marketingAndAnalytics: null,
     advertising: null,
-    functional: null,
-    heatmapping: null
+    functional: null
   }
 
   render() {
@@ -104,11 +97,9 @@ export default class PreferenceDialog extends PureComponent {
       marketingDestinations,
       advertisingDestinations,
       functionalDestinations,
-      heatmappingDestinations,
       marketingAndAnalytics,
       advertising,
       functional,
-      heatmapping,
       title,
       content
     } = this.props
@@ -277,50 +268,6 @@ export default class PreferenceDialog extends PureComponent {
               </Row>
 
               <Row>
-                <InputCell>
-                  <label>
-                    <input
-                      type="radio"
-                      name="heatmapping"
-                      value="true"
-                      checked={heatmapping === true}
-                      onChange={this.handleChange}
-                      aria-label="Allow heatmapping tracking"
-                      required
-                    />{' '}
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="heatmapping"
-                      value="false"
-                      checked={heatmapping === false}
-                      onChange={this.handleChange}
-                      aria-label="Disallow heatmapping tracking"
-                      required
-                    />{' '}
-                    No
-                  </label>
-                </InputCell>
-                <RowHeading scope="row">Heatmapping</RowHeading>
-                <td>
-                  <p>
-                    To get a clearer understanding of how you interact with our
-                    site, including details on links clicked, mouse movements,
-                    and non-sensitive text entered into fields.
-                  </p>
-                  <p className={hideOnMobile}>
-                    For example, we may use this information to improve our
-                    site’s navigation or functionality.
-                  </p>
-                </td>
-                <td className={hideOnMobile}>
-                  {heatmappingDestinations.map(d => d.name).join(', ')}
-                </td>
-              </Row>
-
-              <Row>
                 <td>N/A</td>
                 <RowHeading scope="row">Essential</RowHeading>
                 <td>
@@ -351,13 +298,7 @@ export default class PreferenceDialog extends PureComponent {
   }
 
   handleSubmit = e => {
-    const {
-      onSave,
-      marketingAndAnalytics,
-      advertising,
-      functional,
-      heatmapping
-    } = this.props
+    const {onSave, marketingAndAnalytics, advertising, functional} = this.props
 
     e.preventDefault()
 
@@ -366,8 +307,7 @@ export default class PreferenceDialog extends PureComponent {
     if (
       marketingAndAnalytics === null ||
       advertising === null ||
-      functional === null ||
-      heatmapping === null
+      functional === null
     ) {
       return
     }
