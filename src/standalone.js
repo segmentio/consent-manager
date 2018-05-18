@@ -32,8 +32,10 @@ if (window.consentManagerConfig) {
   props.bannerContent = dataset.bannercontent
   props.bannerTextColor = dataset.bannertextcolor
   props.bannerBackgroundColor = dataset.bannerbackgroundcolor
-  props.dialogTitle = dataset.dialogtitle
-  props.dialogContent = dataset.dialogcontent
+  props.preferencesDialogTitle = dataset.preferencesdialogtitle
+  props.preferencesDialogContent = dataset.preferencesdialogcontent
+  props.cancelDialogTitle = dataset.canceldialogtitle
+  props.cancelDialogContent = dataset.canceldialogcontent
 }
 
 if (!props.container) {
@@ -48,12 +50,12 @@ if (!props.bannerContent) {
   throw new Error('ConsentManager: bannerContent is required')
 }
 
-if (!props.dialogTitle) {
-  throw new Error('ConsentManager: dialogTitle is required')
+if (!props.preferencesDialogContent) {
+  throw new Error('ConsentManager: preferencesDialogContent is required')
 }
 
-if (!props.dialogContent) {
-  throw new Error('ConsentManager: dialogContent is required')
+if (!props.cancelDialogContent) {
+  throw new Error('ConsentManager: cancelDialogContent is required')
 }
 
 if (typeof props.otherWriteKeys === 'string') {
