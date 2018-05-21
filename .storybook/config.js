@@ -6,7 +6,7 @@ setOptions({
 })
 
 function loadStories() {
-  require('../tools/story')
+  require('../tools/stories')
 }
 
 configure(loadStories, module)
