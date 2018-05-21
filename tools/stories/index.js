@@ -19,10 +19,10 @@ injectGlobal(`
   }
 `)
 
-storiesOf('ConsentManagerBuilder', module)
-  .add(`Tool Based`, () => <ToolBased />)
-  .add(`Category Based`, () => <CategoryBased />)
-
 storiesOf('ConsentManager', module).add(`Standalone React Component`, () => (
   <ConsentManagerExample />
 ))
+
+storiesOf('ConsentManagerBuilder', module)
+  .add(`Tool Based`, () => <ToolBased />)
+  .add(`Category Based`, () => <CategoryBased />)
