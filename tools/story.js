@@ -182,7 +182,7 @@ storiesOf('ConsentManager', module).add(`example`, () => {
       </p>
       <p>
         <button type="button" onClick={openConsentManager}>
-          Data Collection and Cookie Preferences
+          Website Data Collection Preferences
         </button>
       </p>
     </Fragment>

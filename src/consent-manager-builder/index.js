@@ -25,43 +25,12 @@ export default class ConsentManagerBuilder extends Component {
   static displayName = 'ConsentManagerBuilder'
 
   static propTypes = {
-    /*
-      Render prop you can use to customize your design
-    */
     children: PropTypes.func.isRequired,
-    /*
-      Your Segment write key
-    */
     writeKey: PropTypes.string.isRequired,
-    /*
-      Advanced: Any additional Segment write keys you would like to include
-      e.g. a ruby or java backend write key you would like to include in the list of destinations
-    */
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
-    /*
-      A function that defining whether or not the consent manager should require consent.
-      Useful for custom consent tracking logic. e.g. Only track visitors in Europe
-    */
     shouldRequireConsent: PropTypes.func,
-    /*
-      Initial category preferences.
-      e.g.
-      const initialPreferences = {
-        marketingAndAnalytics: true,
-        advertising: false, // Advertising will come unchecked by default
-        functional: true
-      }
-    */
     initialPreferences: PropTypes.object,
-    /*
-      Custom mapping function for transforming Default Segment Categories into your
-      own categories
-    */
     mapCustomPreferences: PropTypes.func,
-    /*
-      Custom domain for the consent preferences cookie.
-      defaults to `undefined`
-    */
     cookieDomain: PropTypes.string
   }
 
