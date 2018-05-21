@@ -1,11 +1,12 @@
 {
   "name": "@segment/consent-manager",
   "version": "1.0.1",
-  "description": "The Segment user tracking consent manager",
+  "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
     "gdpr",
     "tracking",
-    "analytics"
+    "analytics",
+    "analytics.js"
   ],
   "repository": "segmentio/consent-manager",
   "license": "MIT",

@@ -11,34 +11,98 @@ They can opt out entirely of being tracked, or selectively opt out of tools in w
 
 ### Features
 
-* Give users the ability to opt-in or opt-out to tracking
-* Fine grained control of tools or categories used for tracking
-* 30s setup with a drop in script tag
-* or fully customizable UI/UX through React components
-* EU traffic detection through `@segment/in-eu`
-* Ability for visitors to reconsent and change preferences
+- Give users the ability to opt-in or opt-out to tracking.
+- Fine grained control of tools or categories used for tracking.
+- 30s setup with a drop in script tag.
+- Or fully customizable UI/UX through React components.
+- EU traffic detection through [`@segment/in-eu`][inEU].
+- Ability for visitors to reconsent and change preferences.
 
 ## Usage
 
-The Segment Consent Manager can be used in multiple ways, depending on how custom you want your visitor's experience to be
+The Segment Consent Manager can be used in multiple ways, depending on how custom you want your visitor's experience to be.
+
+To get started, make sure you're using the latest version of the [analytics.js snippet][] and remove the `analytics.load("YOUR_WRITE_KEY");` call (so the consent manager can manage the loading process). Then continue onto one of the implementation methods below.
 
 ### Standalone Script
 
-Include the consent-manager script tag next to your analytic.js loading script and add your own custom copy.
+The standalone script is a prebuilt bundle that uses the `ConsentManager` React component with [Inferno][] (a lightweight React alternative). It's best for if you want to get up and running quickly or you don't have a preexisting React setup.
+
+Include the consent manager script tag after your analytic.js snippet and add your own custom copy. The standalone script can be configured in one of two ways, via data attributes for simple usage or via a global callback function for advanced usage.
+
+The following globals are also exposed:
+
+- `consentManager.version` - Version of the consent manager.
+- `consentManager.openConsentManager()` - Opens the consent manager preferences dialog.
+- `consentManager.doNotTrack()` - Utility function that returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
+- `consentManager.inEU()` - The [`@segment/in-eu`][inEU] `inEU()` function.
+
+#### Data Attributes
+
+All the options are supported as data attributes except for the `shouldRequireConsent` option. And the `otherWriteKeys` option should be a comma separated list.
+
+Note: the data attributes [won't work in Internet Explorer][currentScript] (Edge works fine though).
 
 ```html
-<button type="button" onclick="event.stopPropagation(); window.consentManager.openConsentManager()">
-  Data Collection and Cookie Preferences
-</button>
-
 <script
-  src="../consent-manager.js" <!-- TODO: CDN -->
-  async
+  src="https://unpkg.com/@segment/consent-manager@1.0.0/standalone/consent-manager.js"
+  integrity="sha256-MHkVI5+ed0OHx8SePNujzj1EqA1OyLsVFXXCGj4SAJ8="
+  crossorigin="anonymous"
+  defer
   data-container="#target-container"
   data-writeKey="<your-segment-write-key>"
-  data-bannerContent="We collect data and use cookies to improve your experience on our site."
-  data-dialogTitle="ACME Data Collection and Cookie Preferences"
-  data-dialogContent="ACME collects data and uses cookies or other similar technologies to improve your browsing experience, analyze our site traffic, send tailored messages, and increase the overall performance of our site."
+  data-bannerContent="We use cookies (and other similar technologies) to collect data to improve your experience on our site."
+  data-preferencesDialogTitle="Website Data Collection Preferences"
+  data-preferencesDialogContent="We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
+  data-cancelDialogTitle="Are you sure you want to cancel?"
+  data-cancelDialogContent="Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy."
+></script>
+```
+
+#### Callback Function
+
+All the options are supported by the callback function.
+
+```html
+<script>
+window.consentManagerConfig = function(exports) {
+  var React = exports.React
+
+  var bannerContent = React.createElement(
+    'span',
+    null,
+    'We use cookies (and other similar technologies) to collect data to improve your experience on our site. By using our website, you՚re agreeing to the collection of data as described in our',
+    ' ',
+    React.createElement(
+      'a',
+      {href: '/docs/legal/website-data-collection-policy/', target: '_blank'},
+      'Website Data Collection Policy'
+    ),
+    '.'
+  )
+  var preferencesDialogTitle = 'Website Data Collection Preferences'
+  var preferencesDialogContent =
+    'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
+  var cancelDialogTitle = 'Are you sure you want to cancel?'
+  var cancelDialogContent =
+    'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
+
+  return {
+    container: '#target-container',
+    writeKey: '<your-segment-write-key>',
+    bannerContent: bannerContent,
+    preferencesDialogTitle: preferencesDialogTitle,
+    preferencesDialogContent: preferencesDialogContent,
+    cancelDialogTitle: cancelDialogTitle,
+    cancelDialogContent: cancelDialogContent
+  }
+}
+</script>
+<script
+  src="https://unpkg.com/@segment/consent-manager@1.0.0/standalone/consent-manager.js"
+  integrity="sha256-MHkVI5+ed0OHx8SePNujzj1EqA1OyLsVFXXCGj4SAJ8="
+  crossorigin="anonymous"
+  defer
 ></script>
 ```
 
@@ -115,7 +179,7 @@ import { ConsentManagerBuilder, openConsentManager } from '@segment/consent-mana
 
 ```javascript
 ConsentManagerBuilder.propTypes = {
-  /* 
+  /*
     Render prop you can use to customize your design
   */
   children: PropTypes.func.isRequired,
@@ -156,6 +220,12 @@ ConsentManagerBuilder.propTypes = {
 }
 ```
 
+### Utility functions
+
+- `openConsentManager()` - Opens the `ConsentManager` preferences dialog.
+- `doNotTrack()` - Returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
+
+
 ## License
 
 ---
@@ -163,3 +233,9 @@ ConsentManagerBuilder.propTypes = {
 consent-manager is released under the MIT license.
 
 Copyright © 2018, Segment.io, Inc.
+
+
+[analytics.js snippet]: https://segment.com/docs/sources/website/analytics.js/quickstart/#step-1-copy-the-snippet
+[Inferno]: https://infernojs.org/
+[currentScript]: https://caniuse.com/#feat=document-currentscript
+[inEU]: https://github.com/segmentio/in-eu
