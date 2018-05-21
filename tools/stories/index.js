@@ -1,8 +1,8 @@
 import React from 'react'
 import {storiesOf} from '@storybook/react'
 import {injectGlobal} from 'emotion'
-import BuilderExample from './consent-manager-builder'
 import ToolBased from './tool-based'
+import CategoryBased from './category-based'
 import ConsentManagerExample from './consent-manager'
 
 if (window.localStorage) {
@@ -20,8 +20,8 @@ injectGlobal(`
 `)
 
 storiesOf('ConsentManagerBuilder', module)
-  .add(`Complex`, () => <BuilderExample />)
   .add(`Tool Based`, () => <ToolBased />)
+  .add(`Category Based`, () => <CategoryBased />)
 
 storiesOf('ConsentManager', module).add(`Standalone React Component`, () => (
   <ConsentManagerExample />

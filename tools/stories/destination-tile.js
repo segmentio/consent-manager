@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Li, Text, Link, Checkbox} from 'evergreen-ui'
+import {Li, Text, Link, Checkbox, Card} from 'evergreen-ui'
 
 export default function Destination({
   destination,
@@ -8,23 +8,25 @@ export default function Destination({
   setPreferences
 }) {
   return (
-    <Li maxWidth={300}>
-      <Checkbox
-        label={
-          <Link href={destination.website} target="_blank">
-            {destination.name}
-          </Link>
-        }
-        checked={Boolean(preferences[destination.id])}
-        onChange={() =>
-          setPreferences({
-            [destination.id]: !preferences[destination.id]
-          })
-        }
-      />
-      <Text display="block" size={300}>
-        {destination.description}
-      </Text>
+    <Li maxWidth={280} marginRight={20}>
+      <Card elevation={1} padding={20} paddingTop={8}>
+        <Checkbox
+          label={
+            <Link href={destination.website} target="_blank">
+              {destination.name}
+            </Link>
+          }
+          checked={Boolean(preferences[destination.id])}
+          onChange={() =>
+            setPreferences({
+              [destination.id]: !preferences[destination.id]
+            })
+          }
+        />
+        <Text display="block" size={300}>
+          {destination.description}
+        </Text>
+      </Card>
     </Li>
   )
 }
