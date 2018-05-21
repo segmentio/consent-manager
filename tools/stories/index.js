@@ -14,10 +14,10 @@ injectGlobal(`
   }
 `)
 
-storiesOf('ConsentManagerBuilder', module).add(`example`, () => (
+storiesOf('ConsentManagerBuilder', module).add(`Tool based`, () => (
   <BuilderExample />
 ))
 
-storiesOf('ConsentManager', module).add(`example`, () => (
+storiesOf('ConsentManager', module).add(`Standalone React Component`, () => (
   <ConsentManagerExample />
 ))

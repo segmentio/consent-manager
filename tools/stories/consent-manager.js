@@ -49,47 +49,14 @@ export default () => {
         writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
         bannerContent={bannerContent}
+        implyConsentOnInteraction={false}
         preferencesDialogTitle={preferencesDialogTitle}
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
       />
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
-        dignissimos porro omnis illo iusto non, unde veniam praesentium ut.
-        Veniam quidem odio nisi possimus minus quae ipsa rem voluptates
-        consequatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Temporibus dignissimos porro omnis illo iusto non, unde veniam
-        praesentium ut. Veniam quidem odio nisi possimus minus quae ipsa rem
-        voluptates consequatur. Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Temporibus dignissimos porro omnis illo iusto non,
-        unde veniam praesentium ut. Veniam quidem odio nisi possimus minus quae
-        ipsa rem voluptates consequatur.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
-        dignissimos porro omnis illo iusto non, unde veniam praesentium ut.
-        Veniam quidem odio nisi possimus minus quae ipsa rem voluptates
-        consequatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Temporibus dignissimos porro omnis illo iusto non, unde veniam
-        praesentium ut. Veniam quidem odio nisi possimus minus quae ipsa rem
-        voluptates consequatur. Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Temporibus dignissimos porro omnis illo iusto non,
-        unde veniam praesentium ut. Veniam quidem odio nisi possimus minus quae
-        ipsa rem voluptates consequatur.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
-        dignissimos porro omnis illo iusto non, unde veniam praesentium ut.
-        Veniam quidem odio nisi possimus minus quae ipsa rem voluptates
-        consequatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Temporibus dignissimos porro omnis illo iusto non, unde veniam
-        praesentium ut. Veniam quidem odio nisi possimus minus quae ipsa rem
-        voluptates consequatur. Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Temporibus dignissimos porro omnis illo iusto non,
-        unde veniam praesentium ut. Veniam quidem odio nisi possimus minus quae
-        ipsa rem voluptates consequatur.
-      </p>
+
+      <p> Your website content </p>
       <p>
         <button type="button" onClick={openConsentManager}>
           Data Collection and Cookie Preferences
