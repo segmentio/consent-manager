@@ -1,4 +1,6 @@
-import React, {Fragment} from 'react'
+import React from 'react'
+import cookies from 'js-cookie'
+import {Pane, Heading, Button} from 'evergreen-ui'
 import {ConsentManager, openConsentManager} from '../../src'
 
 const bannerContent = (
@@ -44,7 +46,7 @@ const cancelDialogContent = (
 
 export default () => {
   return (
-    <Fragment>
+    <Pane>
       <ConsentManager
         writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
@@ -56,12 +58,42 @@ export default () => {
         cancelDialogContent={cancelDialogContent}
       />
 
-      <p> Your website content </p>
-      <p>
-        <button type="button" onClick={openConsentManager}>
-          Data Collection and Cookie Preferences
-        </button>
-      </p>
-    </Fragment>
+      <Pane marginX={100} marginTop={20}>
+        <Heading> Your website content </Heading>
+        <Pane display="flex">
+          <iframe
+            src="https://giphy.com/embed/JIX9t2j0ZTN9S"
+            width="480"
+            height="480"
+            frameBorder="0"
+          />
+
+          <iframe
+            src="https://giphy.com/embed/yFQ0ywscgobJK"
+            width="398"
+            height="480"
+            frameBorder="0"
+          />
+        </Pane>
+
+        <p>
+          <Button onClick={openConsentManager}>
+            Data Collection and Cookie Preferences
+          </Button>
+        </p>
+
+        <p>
+          <Heading>to see the banner again:</Heading>
+          <Button
+            onClick={() => {
+              cookies.remove('tracking-preferences')
+              window.location.reload()
+            }}
+          >
+            Clear tracking preferences cookie
+          </Button>
+        </p>
+      </Pane>
+    </Pane>
   )
 }
