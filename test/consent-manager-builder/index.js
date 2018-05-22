@@ -177,11 +177,9 @@ test.todo('initialPreferences sets the initial preferences')
 
 test.todo('loads custom preferences')
 
-test.todo(
-  'resetPreferences() maps custom preferences to destination preferences'
-)
-
 test.todo('saveConsent() maps custom preferences to destination preferences')
+
+test.todo('mapCustomPreferences allows customPreferences to be updated')
 
 test.todo('saveConsent() saves custom preferences')
 
