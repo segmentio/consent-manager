@@ -20,14 +20,15 @@
   ],
   "scripts": {
     "test": "xo && ava",
-    "prepublishOnly": "yarn clean && yarn run build",
+    "prepublishOnly": "yarn clean && yarn run build && yarn run deploy-storybook",
     "precommit": "lint-staged",
     "dev": "start-storybook -p 9009",
     "build-commonjs": "BABEL_ENV=commonjs babel src --out-dir commonjs --source-maps inline",
     "build-esm": "BABEL_ENV=esm babel src --out-dir esm --source-maps inline",
     "build-standalone": "BABEL_ENV=esm webpack",
     "build": "concurrently --names 'commonjs,esm,standalone' 'yarn run build-commonjs' 'yarn run build-esm' 'yarn run build-standalone'",
-    "clean": "rm -rf {commonjs,esm,standalone}"
+    "clean": "rm -rf {commonjs,esm,standalone}",
+    "deploy-storybook": "storybook-to-ghpages"
   },
   "dependencies": {
     "@segment/top-domain": "^3.0.0",
@@ -44,6 +45,7 @@
     "@segment/in-eu": "^0.1.1",
     "@storybook/addon-options": "^3.4.1",
     "@storybook/react": "^3.4.0",
+    "@storybook/storybook-deployer": "^2.3.0",
     "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
