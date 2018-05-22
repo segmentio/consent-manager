@@ -369,6 +369,8 @@ Saves the preferences currently in state to a cookie called `tracking-preference
 
 #### Example
 
+For a more detailed/advanced example, checkout the [ConsentManager implementation][].
+
 ```javascript
 import React from 'react'
 import {ConsentManagerBuilder} from '@segment/consent-manager'
@@ -376,46 +378,39 @@ import {ConsentManagerBuilder} from '@segment/consent-manager'
 export default function() {
   return (
     <ConsentManagerBuilder writeKey="<your-segment-write-key>">
-      {({
-        destinations,
-        preferences,
-        setPreferences,
-        saveConsent
-      }) => {
-        return (
-          <form onSubmit={() => saveConsent()}>
-            <h2>Tracking tools</h2>
-            <ul>
-              {destinations.map(destination => (
-                <li key={destination.id}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={Boolean(preferences[destination.id])}
-                      onChange={() =>
-                        setPreferences({
-                          [destination.id]: !preferences[destination.id]
-                        })
-                      }
-                    />
-                    {destination.name}
-                  </label>
-                </li>
-              ))}
-            </ul>
+      {({destinations, preferences, setPreferences, saveConsent}) => (
+        <div>
+          <h2>Tracking tools</h2>
+          <ul>
+            {destinations.map(destination => (
+              <li key={destination.id}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={Boolean(preferences[destination.id])}
+                    onChange={() =>
+                      setPreferences({
+                        [destination.id]: !preferences[destination.id]
+                      })
+                    }
+                  />
+                  {destination.name}
+                </label>
+              </li>
+            ))}
+          </ul>
 
-            <button type="button" onClick={() => saveConsent()}>
-              Save
-            </button>
-            <button type="button" onClick={() => saveConsent(true)}>
-              Allow all
-            </button>
-            <button type="button" onClick={() => saveConsent(false)}>
-              Deny all
-            </button>
-          </form>
-        )
-      }}
+          <button type="button" onClick={() => saveConsent()}>
+            Save
+          </button>
+          <button type="button" onClick={() => saveConsent(true)}>
+            Allow all
+          </button>
+          <button type="button" onClick={() => saveConsent(false)}>
+            Deny all
+          </button>
+        </div>
+      )}
     </ConsentManagerBuilder>
   )
 }
@@ -445,3 +440,4 @@ Copyright © 2018, Segment.io, Inc.
 [shouldRequireConsent]: #shouldrequireconsent-1
 [preferences]: #preferences
 [setPreferences]: #setpreferences
+[ConsentManager implementation]: src/consent-manager
