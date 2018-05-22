@@ -2,6 +2,8 @@
 
 > Drop-in consent management plugin for analytics.js
 
+[StoryBook](https://segmentio.github.io/consent-manager/index.html)
+
 ## Segment Consent Manager
 
 The Segment Consent Manager is an analytics.js add-on with support to consent management.
