@@ -42,7 +42,7 @@
     "react-emotion": "^9.1.2"
   },
   "devDependencies": {
-    "@segment/in-eu": "^0.1.1",
+    "@segment/in-eu": "^0.2.0",
     "@storybook/addon-options": "^3.4.1",
     "@storybook/react": "^3.4.0",
     "@storybook/storybook-deployer": "^2.3.0",
