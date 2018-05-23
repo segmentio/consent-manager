@@ -61,8 +61,8 @@ The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` optio
 
 ```html
 <script
-  src="https://unpkg.com/@segment/consent-manager@1.0.0/standalone/consent-manager.js"
-  integrity="sha256-MHkVI5+ed0OHx8SePNujzj1EqA1OyLsVFXXCGj4SAJ8="
+  src="https://unpkg.com/@segment/consent-manager@1.1.0/standalone/consent-manager.js"
+  integrity="sha256-yRPOPV5tlN7TeNFvwD22tN4cZwEhz4rZtsp1dcfFt24="
   crossorigin="anonymous"
   defer
   data-container="#target-container"
@@ -121,8 +121,8 @@ All the options are supported. The callback function also receives these exports
   }
 </script>
 <script
-  src="https://unpkg.com/@segment/consent-manager@1.0.0/standalone/consent-manager.js"
-  integrity="sha256-MHkVI5+ed0OHx8SePNujzj1EqA1OyLsVFXXCGj4SAJ8="
+  src="https://unpkg.com/@segment/consent-manager@1.1.0/standalone/consent-manager.js"
+  integrity="sha256-yRPOPV5tlN7TeNFvwD22tN4cZwEhz4rZtsp1dcfFt24="
   crossorigin="anonymous"
   defer
 ></script>
