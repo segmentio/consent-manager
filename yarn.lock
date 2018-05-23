@@ -187,9 +187,9 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@segment/in-eu@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@segment/in-eu/-/in-eu-0.1.1.tgz#3d4d3ce9d4487382788bf715f63790e9b029bb94"
+"@segment/in-eu@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@segment/in-eu/-/in-eu-0.2.0.tgz#1ba8897305abe3cd9255f02f663f089dfa8f5bf3"
   dependencies:
     jstz "^2.0.0"
 
