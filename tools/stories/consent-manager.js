@@ -8,7 +8,11 @@ const bannerContent = (
     We use cookies (and other similar technologies) to collect data to improve
     your experience on our site. By using our website, you’re agreeing to the
     collection of data as described in our{' '}
-    <a href="/docs/legal/website-data-collection-policy/" target="_blank">
+    <a
+      href="https://segment.com/docs/legal/website-data-collection-policy/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       Website Data Collection Policy
     </a>.
   </span>
@@ -23,7 +27,11 @@ const preferencesDialogContent = (
     </p>
     <p>
       By using our website, you’re agreeing to our{' '}
-      <a href="/docs/legal/website-data-collection-policy/" target="_blank">
+      <a
+        href="https://segment.com/docs/legal/website-data-collection-policy/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Website Data Collection Policy
       </a>.
     </p>
@@ -38,7 +46,11 @@ const cancelDialogContent = (
   <div>
     Your preferences have not been saved. By continuing to use our website,
     you’re agreeing to our{' '}
-    <a href="/docs/legal/website-data-collection-policy/" target="_blank">
+    <a
+      href="https://segment.com/docs/legal/website-data-collection-policy/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       Website Data Collection Policy
     </a>.
   </div>
