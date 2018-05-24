@@ -38,11 +38,17 @@ Include the consent manager script tag after your analytic.js snippet and add yo
 
 All of the [ConsentManager][] options are supported with the addition of these options:
 
-##### container
+##### data-container
 
 Type: `string`
 
-CSS selector to the element that the consent banner should be rendered into.
+CSS selector to the element that the consent banner should be rendered into. 
+
+Note that a `div` must be created on the page to host the preferences modal, with an ID or class that matches the value of this `data-container` parameter. This div must be loaded before the script is executed. Make sure to style this the banner thanks to your CSS ID or class in order to position it on your page, eg:
+
+```html
+<div id="target-container" style="position: fixed; bottom: 0; left: 0; z-index: 100;"></div>
+```
 
 #### Globals
 
