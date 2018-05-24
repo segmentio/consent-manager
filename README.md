@@ -42,7 +42,23 @@ All of the [ConsentManager][] options are supported with the addition of these o
 
 Type: `string`
 
-CSS selector to the element that the consent banner should be rendered into.
+[CSS selector][] to the DOM element that will host the consent banner. It should be an empty DOM element (usually a `<div>`) because the consent manager will replace any existing DOM elements inside it. The element must also exist on the page before the script is executed.
+
+You can also control the positioning of the consent banner by applying styles to the container element (optional). E.g:
+
+```css
+#target-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+}
+```
+
+```html
+<div id="target-container"></div>
+```
 
 #### Globals
 
@@ -441,3 +457,4 @@ Copyright © 2018, Segment.io, Inc.
 [preferences]: #preferences
 [setPreferences]: #setpreferences
 [ConsentManager implementation]: src/consent-manager
+[CSS selector]: https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
