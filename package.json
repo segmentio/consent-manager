@@ -120,5 +120,10 @@
       "path": "standalone/consent-manager.js",
       "limit": "58 KB"
     }
-  ]
+  ],
+  "storybook-deployer": {
+    "gitUsername": "GitHub Pages Bot",
+    "gitEmail": "friends@segment.com",
+    "commitMessage": "Deploy Storybook to GitHub Pages [skip ci]"
+  }
 }
