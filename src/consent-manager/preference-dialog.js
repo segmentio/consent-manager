@@ -272,7 +272,7 @@ export default class PreferenceDialog extends PureComponent {
                 <RowHeading scope="row">Essential</RowHeading>
                 <td>
                   <p>
-                    Segment uses browser cookies that are necessary for the site
+                    We use browser cookies that are necessary for the site
                     to work as intended.
                   </p>
                   <p>
