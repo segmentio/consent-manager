@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "test": "xo && ava",
-    "prepublishOnly": "yarn clean && yarn run build",
+    "prepublishOnly": "yarn run clean && yarn run build",
     "postpublish": "yarn run deploy-storybook",
     "precommit": "lint-staged",
     "dev": "start-storybook -p 9009",
@@ -28,7 +28,7 @@
     "build-esm": "BABEL_ENV=esm babel src --out-dir esm --source-maps inline",
     "build-standalone": "BABEL_ENV=esm webpack",
     "build": "concurrently --names 'commonjs,esm,standalone' 'yarn run build-commonjs' 'yarn run build-esm' 'yarn run build-standalone'",
-    "clean": "rm -rf {commonjs,esm,standalone}",
+    "clean": "rm -rf commonjs esm standalone",
     "deploy-storybook": "storybook-to-ghpages"
   },
   "dependencies": {
