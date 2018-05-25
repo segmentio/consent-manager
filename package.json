@@ -20,7 +20,8 @@
   ],
   "scripts": {
     "test": "xo && ava",
-    "prepublishOnly": "yarn clean && yarn run build && yarn run deploy-storybook",
+    "prepublishOnly": "yarn clean && yarn run build",
+    "postpublish": "yarn run deploy-storybook",
     "precommit": "lint-staged",
     "dev": "start-storybook -p 9009",
     "build-commonjs": "BABEL_ENV=commonjs babel src --out-dir commonjs --source-maps inline",
