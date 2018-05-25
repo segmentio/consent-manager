@@ -85,7 +85,7 @@ const Content = styled('div')`
   padding-bottom: 0;
   min-height: 0;
   font-size: 14px;
-  line-height: 1.3;
+  line-height: 1.2;
 
   p {
     margin: 0;

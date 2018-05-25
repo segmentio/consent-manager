@@ -39,6 +39,8 @@ const Row = styled('tr')`
     vertical-align: top;
     padding: 8px 12px;
     border: 1px solid rgba(67, 90, 111, 0.114);
+  }
+  td {
     border-top: none;
   }
 `
