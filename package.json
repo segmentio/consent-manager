@@ -29,7 +29,8 @@
     "build-standalone": "BABEL_ENV=esm webpack",
     "build": "concurrently --names 'commonjs,esm,standalone' 'yarn run build-commonjs' 'yarn run build-esm' 'yarn run build-standalone'",
     "clean": "rm -rf commonjs esm standalone",
-    "deploy-storybook": "storybook-to-ghpages"
+    "deploy-storybook": "storybook-to-ghpages",
+    "standalone-hash": "shasum -b -a 256 standalone/consent-manager.js | xxd -r -p | base64"
   },
   "dependencies": {
     "@segment/top-domain": "^3.0.0",
