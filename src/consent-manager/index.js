@@ -4,7 +4,6 @@ import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
 
-
 export default class ConsentManager extends PureComponent {
   static displayName = 'ConsentManager'
 
