@@ -4,11 +4,6 @@ import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
 
-const initialPreferences = {
-  marketingAndAnalytics: null,
-  advertising: null,
-  functional: null
-}
 
 export default class ConsentManager extends PureComponent {
   static displayName = 'ConsentManager'
@@ -25,7 +20,8 @@ export default class ConsentManager extends PureComponent {
     preferencesDialogTitle: PropTypes.node,
     preferencesDialogContent: PropTypes.node.isRequired,
     cancelDialogTitle: PropTypes.node,
-    cancelDialogContent: PropTypes.node.isRequired
+    cancelDialogContent: PropTypes.node.isRequired,
+    initialPreferences: PropTypes.object
   }
 
   static defaultProps = {
@@ -36,7 +32,12 @@ export default class ConsentManager extends PureComponent {
     bannerTextColor: '#fff',
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
-    cancelDialogTitle: 'Are you sure you want to cancel?'
+    cancelDialogTitle: 'Are you sure you want to cancel?',
+    initialPreferences: {
+      marketingAndAnalytics: null,
+      advertising: null,
+      functional: null
+    }
   }
 
   render() {
@@ -52,7 +53,8 @@ export default class ConsentManager extends PureComponent {
       preferencesDialogTitle,
       preferencesDialogContent,
       cancelDialogTitle,
-      cancelDialogContent
+      cancelDialogContent,
+      initialPreferences
     } = this.props
 
     return (
