@@ -26,7 +26,7 @@ It works by taking control of the analytics.js load process to only load destina
 
 The Segment Consent Manager can be used in multiple ways, depending on how custom you want your visitor's experience to be.
 
-To get started, make sure you're using the latest version of the [analytics.js snippet][] and remove the `analytics.load("YOUR_WRITE_KEY");` call (so the consent manager can manage the loading process). Then continue onto one of the implementation methods below.
+To get started, make sure you're using the latest version of the [analytics.js snippet][] (4.1.0 or above) and remove the `analytics.load("YOUR_WRITE_KEY");` call (so the consent manager can manage the loading process). Then continue onto one of the implementation methods below.
 
 ### Standalone Script
 
