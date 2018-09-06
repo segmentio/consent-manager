@@ -20,7 +20,7 @@ export default class ConsentManager extends PureComponent {
     implyConsentOnInteraction: PropTypes.bool,
     cookieDomain: PropTypes.string,
     bannerContent: PropTypes.node.isRequired,
-    bannerSubContent: PropTypes.node.string,
+    bannerSubContent: PropTypes.string,
     bannerTextColor: PropTypes.string,
     bannerBackgroundColor: PropTypes.string,
     preferencesDialogTitle: PropTypes.node,
