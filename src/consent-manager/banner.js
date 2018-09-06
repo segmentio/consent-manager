@@ -59,6 +59,7 @@ export default class Banner extends PureComponent {
     onAccept: PropTypes.func.isRequired,
     onChangePreferences: PropTypes.func.isRequired,
     content: PropTypes.node.isRequired,
+    subContent: PropTypes.node.isRequired,
     backgroundColor: PropTypes.string.isRequired,
     textColor: PropTypes.string.isRequired
   }
@@ -69,6 +70,7 @@ export default class Banner extends PureComponent {
       onAccept,
       onChangePreferences,
       content,
+      subContent,
       backgroundColor,
       textColor
     } = this.props
@@ -82,11 +84,9 @@ export default class Banner extends PureComponent {
         <Content>
           <P>{content}</P>
           <P>
-            You can{' '}
             <button type="button" onClick={onChangePreferences}>
-              change your preferences
-            </button>{' '}
-            at any time.
+              {subContent}
+            </button>
           </P>
         </Content>
 
