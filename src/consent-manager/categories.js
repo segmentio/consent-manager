@@ -8,7 +8,8 @@ export const MARKETING_AND_ANALYTICS_CATEGORIES = [
   'Raw Data',
   'Realtime Dashboards',
   'Referrals',
-  'Surveys'
+  'Surveys',
+  'Video'
 ]
 
 export const ADVERTISING_CATEGORIES = ['Advertising', 'Tag Managers']
