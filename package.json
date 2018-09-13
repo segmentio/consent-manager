@@ -1,6 +1,6 @@
 {
   "name": "@segment/consent-manager",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
     "gdpr",
@@ -29,7 +29,8 @@
     "build-standalone": "BABEL_ENV=esm webpack",
     "build": "concurrently --names 'commonjs,esm,standalone' 'yarn run build-commonjs' 'yarn run build-esm' 'yarn run build-standalone'",
     "clean": "rm -rf commonjs esm standalone",
-    "deploy-storybook": "storybook-to-ghpages"
+    "deploy-storybook": "storybook-to-ghpages",
+    "standalone-hash": "shasum -b -a 256 standalone/consent-manager.js | xxd -r -p | base64"
   },
   "dependencies": {
     "@segment/top-domain": "^3.0.0",
@@ -43,7 +44,7 @@
     "react-emotion": "^9.1.2"
   },
   "devDependencies": {
-    "@segment/in-eu": "^0.2.0",
+    "@segment/in-eu": "^0.2.1",
     "@storybook/addon-options": "^3.4.1",
     "@storybook/react": "^3.4.0",
     "@storybook/storybook-deployer": "^2.3.0",

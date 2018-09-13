@@ -26,7 +26,7 @@ It works by taking control of the analytics.js load process to only load destina
 
 The Segment Consent Manager can be used in multiple ways, depending on how custom you want your visitor's experience to be.
 
-To get started, make sure you're using the latest version of the [analytics.js snippet][] and remove the `analytics.load("YOUR_WRITE_KEY");` call (so the consent manager can manage the loading process). Then continue onto one of the implementation methods below.
+To get started, make sure you're using the latest version of the [analytics.js snippet][] (4.1.0 or above) and remove the `analytics.load("YOUR_WRITE_KEY");` call (so the consent manager can manage the loading process). Then continue onto one of the implementation methods below.
 
 ### Standalone Script
 
@@ -77,13 +77,14 @@ The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` optio
 
 ```html
 <script
-  src="https://unpkg.com/@segment/consent-manager@1.1.0/standalone/consent-manager.js"
-  integrity="sha256-yRPOPV5tlN7TeNFvwD22tN4cZwEhz4rZtsp1dcfFt24="
+  src="https://unpkg.com/@segment/consent-manager@1.1.2/standalone/consent-manager.js"
+  integrity="sha256-N/iVJLiB/wdWBQrbxPZt5wj5N2d2wGDoqycQbkPOhGo="
   crossorigin="anonymous"
   defer
   data-container="#target-container"
   data-writeKey="<your-segment-write-key>"
   data-bannerContent="We use cookies (and other similar technologies) to collect data to improve your experience on our site."
+  data-bannerSubContent="You can change your preferences at any time."
   data-preferencesDialogTitle="Website Data Collection Preferences"
   data-preferencesDialogContent="We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
   data-cancelDialogTitle="Are you sure you want to cancel?"
@@ -119,6 +120,7 @@ All the options are supported. The callback function also receives these exports
       ),
       '.'
     )
+    var bannerSubContent = 'You can change your preferences at any time.'
     var preferencesDialogTitle = 'Website Data Collection Preferences'
     var preferencesDialogContent = 'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
     var cancelDialogTitle = 'Are you sure you want to cancel?'
@@ -129,6 +131,7 @@ All the options are supported. The callback function also receives these exports
       writeKey: '<your-segment-write-key>',
       shouldRequireConsent: inEU,
       bannerContent: bannerContent,
+      bannerSubContent: bannerSubContent,
       preferencesDialogTitle: preferencesDialogTitle,
       preferencesDialogContent: preferencesDialogContent,
       cancelDialogTitle: cancelDialogTitle,
@@ -137,8 +140,8 @@ All the options are supported. The callback function also receives these exports
   }
 </script>
 <script
-  src="https://unpkg.com/@segment/consent-manager@1.1.0/standalone/consent-manager.js"
-  integrity="sha256-yRPOPV5tlN7TeNFvwD22tN4cZwEhz4rZtsp1dcfFt24="
+  src="https://unpkg.com/@segment/consent-manager@1.1.2/standalone/consent-manager.js"
+  integrity="sha256-N/iVJLiB/wdWBQrbxPZt5wj5N2d2wGDoqycQbkPOhGo="
   crossorigin="anonymous"
   defer
 ></script>
@@ -189,6 +192,12 @@ The domain the `tracking-preferences` cookie should be scoped to.
 Type: `PropTypes.node`
 
 The consent of the consent banner.
+
+##### bannerSubContent
+
+Type: `PropTypes.node`
+
+The call to action under the content in the consent banner.
 
 ##### bannerTextColor
 
@@ -248,6 +257,7 @@ export default function() {
       </a>.
     </span>
   )
+  const bannerSubContent = 'You can change your preferences at any time.'
   const preferencesDialogTitle = 'Website Data Collection Preferences'
   const preferencesDialogContent = 'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
   const cancelDialogTitle = 'Are you sure you want to cancel?'
@@ -259,6 +269,7 @@ export default function() {
         writeKey="<your-segment-write-key>"
         shouldRequireConsent={inEU}
         bannerContent={bannerContent}
+        bannerSubContent={bannerSubContent}
         preferencesDialogTitle={preferencesDialogTitle}
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
