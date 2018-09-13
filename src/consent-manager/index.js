@@ -20,6 +20,7 @@ export default class ConsentManager extends PureComponent {
     implyConsentOnInteraction: PropTypes.bool,
     cookieDomain: PropTypes.string,
     bannerContent: PropTypes.node.isRequired,
+    bannerSubContent: PropTypes.string,
     bannerTextColor: PropTypes.string,
     bannerBackgroundColor: PropTypes.string,
     preferencesDialogTitle: PropTypes.node,
@@ -34,6 +35,7 @@ export default class ConsentManager extends PureComponent {
     implyConsentOnInteraction: true,
     cookieDomain: undefined,
     bannerTextColor: '#fff',
+    bannerSubContent: 'You can change your preferences at any time.',
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
     cancelDialogTitle: 'Are you sure you want to cancel?'
@@ -47,6 +49,7 @@ export default class ConsentManager extends PureComponent {
       implyConsentOnInteraction,
       cookieDomain,
       bannerContent,
+      bannerSubContent,
       bannerTextColor,
       bannerBackgroundColor,
       preferencesDialogTitle,
@@ -83,6 +86,7 @@ export default class ConsentManager extends PureComponent {
             saveConsent={saveConsent}
             implyConsentOnInteraction={implyConsentOnInteraction}
             bannerContent={bannerContent}
+            bannerSubContent={bannerSubContent}
             bannerTextColor={bannerTextColor}
             bannerBackgroundColor={bannerBackgroundColor}
             preferencesDialogTitle={preferencesDialogTitle}

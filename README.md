@@ -84,6 +84,7 @@ The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` optio
   data-container="#target-container"
   data-writeKey="<your-segment-write-key>"
   data-bannerContent="We use cookies (and other similar technologies) to collect data to improve your experience on our site."
+  data-bannerSubContent="You can change your preferences at any time."
   data-preferencesDialogTitle="Website Data Collection Preferences"
   data-preferencesDialogContent="We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
   data-cancelDialogTitle="Are you sure you want to cancel?"
@@ -119,6 +120,7 @@ All the options are supported. The callback function also receives these exports
       ),
       '.'
     )
+    var bannerSubContent = 'You can change your preferences at any time.'
     var preferencesDialogTitle = 'Website Data Collection Preferences'
     var preferencesDialogContent = 'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
     var cancelDialogTitle = 'Are you sure you want to cancel?'
@@ -129,6 +131,7 @@ All the options are supported. The callback function also receives these exports
       writeKey: '<your-segment-write-key>',
       shouldRequireConsent: inEU,
       bannerContent: bannerContent,
+      bannerSubContent: bannerSubContent,
       preferencesDialogTitle: preferencesDialogTitle,
       preferencesDialogContent: preferencesDialogContent,
       cancelDialogTitle: cancelDialogTitle,
@@ -190,6 +193,12 @@ Type: `PropTypes.node`
 
 The consent of the consent banner.
 
+##### bannerSubContent
+
+Type: `PropTypes.node`
+
+The call to action under the content in the consent banner.
+
 ##### bannerTextColor
 
 Type: `string`<br>
@@ -248,6 +257,7 @@ export default function() {
       </a>.
     </span>
   )
+  const bannerSubContent = 'You can change your preferences at any time.'
   const preferencesDialogTitle = 'Website Data Collection Preferences'
   const preferencesDialogContent = 'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
   const cancelDialogTitle = 'Are you sure you want to cancel?'
@@ -259,6 +269,7 @@ export default function() {
         writeKey="<your-segment-write-key>"
         shouldRequireConsent={inEU}
         bannerContent={bannerContent}
+        bannerSubContent={bannerSubContent}
         preferencesDialogTitle={preferencesDialogTitle}
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
