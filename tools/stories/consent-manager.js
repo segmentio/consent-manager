@@ -17,6 +17,7 @@ const bannerContent = (
     </a>.
   </span>
 )
+const bannerSubContent = 'You can manage your preferences here!'
 const preferencesDialogTitle = 'Website Data Collection Preferences'
 const preferencesDialogContent = (
   <div>
@@ -63,6 +64,7 @@ export default () => {
         writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
         bannerContent={bannerContent}
+        bannerSubContent={bannerSubContent}
         implyConsentOnInteraction={false}
         preferencesDialogTitle={preferencesDialogTitle}
         preferencesDialogContent={preferencesDialogContent}

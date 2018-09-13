@@ -25,6 +25,7 @@ export default class Container extends PureComponent {
     isConsentRequired: PropTypes.bool.isRequired,
     implyConsentOnInteraction: PropTypes.bool.isRequired,
     bannerContent: PropTypes.node.isRequired,
+    bannerSubContent: PropTypes.string.isRequired,
     bannerTextColor: PropTypes.string.isRequired,
     bannerBackgroundColor: PropTypes.string.isRequired,
     preferencesDialogTitle: PropTypes.node.isRequired,
@@ -45,6 +46,7 @@ export default class Container extends PureComponent {
       preferences,
       isConsentRequired,
       bannerContent,
+      bannerSubContent,
       bannerTextColor,
       bannerBackgroundColor,
       preferencesDialogTitle,
@@ -78,6 +80,7 @@ export default class Container extends PureComponent {
               onAccept={this.handleBannerAccept}
               onChangePreferences={this.openDialog}
               content={bannerContent}
+              subContent={bannerSubContent}
               textColor={bannerTextColor}
               backgroundColor={bannerBackgroundColor}
             />
