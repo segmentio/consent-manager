@@ -25,6 +25,7 @@ export default class ConsentManager extends PureComponent {
     bannerBackgroundColor: PropTypes.string,
     preferencesDialogTitle: PropTypes.node,
     preferencesDialogContent: PropTypes.node.isRequired,
+    onError: PropTypes.func,
     cancelDialogTitle: PropTypes.node,
     cancelDialogContent: PropTypes.node.isRequired
   }
@@ -33,6 +34,7 @@ export default class ConsentManager extends PureComponent {
     otherWriteKeys: [],
     shouldRequireConsent: () => true,
     implyConsentOnInteraction: true,
+    onError: undefined,
     cookieDomain: undefined,
     bannerTextColor: '#fff',
     bannerSubContent: 'You can change your preferences at any time.',
@@ -55,11 +57,13 @@ export default class ConsentManager extends PureComponent {
       preferencesDialogTitle,
       preferencesDialogContent,
       cancelDialogTitle,
-      cancelDialogContent
+      cancelDialogContent,
+      onError
     } = this.props
 
     return (
       <ConsentManagerBuilder
+        onError={onError}
         writeKey={writeKey}
         otherWriteKeys={otherWriteKeys}
         shouldRequireConsent={shouldRequireConsent}
