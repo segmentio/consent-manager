@@ -16,6 +16,7 @@ export default () => {
   return (
     <Pane maxWidth={1000} margin={30}>
       <ConsentManagerBuilder
+        onError={e => console.error('Error Handling', e)}
         writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
       >
