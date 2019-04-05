@@ -77,11 +77,16 @@ export default class ConsentManagerBuilder extends Component {
     })
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const {onError} = this.props
-    const intialize = this.initialise()
     if (onError && typeof onError === 'function') {
-      intialize.catch(e => onError(e))
+      try {
+        await this.initialise()
+      } catch (e) {
+        await onError(e)
+      }
+    } else {
+      this.initialise()
     }
   }
 
