@@ -26,6 +26,7 @@ export default class ConsentManagerBuilder extends Component {
 
   static propTypes = {
     children: PropTypes.func.isRequired,
+    onError: PropTypes.func,
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldRequireConsent: PropTypes.func,
@@ -36,6 +37,7 @@ export default class ConsentManagerBuilder extends Component {
 
   static defaultProps = {
     otherWriteKeys: [],
+    onError: undefined,
     shouldRequireConsent: () => true,
     initialPreferences: {},
     mapCustomPreferences: undefined,
@@ -75,9 +77,17 @@ export default class ConsentManagerBuilder extends Component {
     })
   }
 
-  componentDidMount() {
-    // TODO: handle errors properly
-    this.initialise()
+  async componentDidMount() {
+    const {onError} = this.props
+    if (onError && typeof onError === 'function') {
+      try {
+        await this.initialise()
+      } catch (e) {
+        await onError(e)
+      }
+    } else {
+      this.initialise()
+    }
   }
 
   initialise = async () => {
