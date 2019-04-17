@@ -7,6 +7,8 @@ export default {
     'ui.yes': 'Yes',
     'ui.no': 'No',
     'ui.not_available': 'N/A',
+    'ui.go_back': 'Go Back',
+    'ui.yes_cancel': 'Yes, Cancel',
     'ui.header.allow': 'Allow',
     'ui.header.category': 'Category',
     'ui.header.purpose': 'Purpose',

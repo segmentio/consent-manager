@@ -111,6 +111,7 @@ export default class Container extends PureComponent {
             onConfirm={this.handleCancelConfirm}
             title={cancelDialogTitle}
             content={cancelDialogContent}
+            translate={translate}
           />
         )}
       </div>
