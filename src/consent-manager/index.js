@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
+import defaultMessages from './default-messages'
 
 const initialPreferences = {
   marketingAndAnalytics: null,
@@ -27,7 +28,8 @@ export default class ConsentManager extends PureComponent {
     preferencesDialogContent: PropTypes.node.isRequired,
     onError: PropTypes.func,
     cancelDialogTitle: PropTypes.node,
-    cancelDialogContent: PropTypes.node.isRequired
+    cancelDialogContent: PropTypes.node.isRequired,
+    translationMessages: PropTypes.object
   }
 
   static defaultProps = {
@@ -40,7 +42,20 @@ export default class ConsentManager extends PureComponent {
     bannerSubContent: 'You can change your preferences at any time.',
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
-    cancelDialogTitle: 'Are you sure you want to cancel?'
+    cancelDialogTitle: 'Are you sure you want to cancel?',
+    translationMessages: {}
+  }
+
+  constructor(props) {
+    super(props)
+
+    let state = defaultMessages
+
+    if (this.props.translationMessages) {
+      state = Object.assign({}, defaultMessages, this.props.translationMessages)
+    }
+
+    this.state = state
   }
 
   render() {
@@ -97,10 +112,15 @@ export default class ConsentManager extends PureComponent {
             preferencesDialogContent={preferencesDialogContent}
             cancelDialogTitle={cancelDialogTitle}
             cancelDialogContent={cancelDialogContent}
+            translate={this.translate}
           />
         )}
       </ConsentManagerBuilder>
     )
+  }
+
+  translate = key => {
+    return this.state.translationMessages[key]
   }
 
   handleMapCustomPreferences = ({destinations, preferences}) => {
