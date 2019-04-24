@@ -49,13 +49,13 @@ export default class ConsentManager extends PureComponent {
   constructor(props) {
     super(props)
 
-    let state = defaultMessages
-
-    if (this.props.translationMessages) {
-      state = Object.assign({}, defaultMessages, this.props.translationMessages)
+    this.state = {
+      translationMessages: Object.assign(
+        {},
+        defaultMessages.translationMessages,
+        this.props.translationMessages
+      )
     }
-
-    this.state = state
   }
 
   render() {
