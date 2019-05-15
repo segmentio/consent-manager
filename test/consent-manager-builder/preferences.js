@@ -23,7 +23,7 @@ test.beforeEach(() => {
 
 test.serial('loadPreferences() returns preferences when cookie exists', t => {
   global.document.cookie =
-    'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}}'
+    'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}%2C%22isBannerVisible%22:true}'
 
   t.deepEqual(loadPreferences(), {
     destinationPreferences: {
@@ -31,7 +31,8 @@ test.serial('loadPreferences() returns preferences when cookie exists', t => {
     },
     customPreferences: {
       functional: true
-    }
+    },
+    isBannerVisible: true
   })
 })
 
@@ -48,7 +49,8 @@ test.serial('savePreferences() saves the preferences', t => {
 
   savePreferences({
     destinationPreferences,
-    customPreferences
+    customPreferences,
+    isBannerVisible: true
   })
 
   t.true(ajsIdentify.calledOnce)
@@ -59,7 +61,7 @@ test.serial('savePreferences() saves the preferences', t => {
 
   t.true(
     global.document.cookie.includes(
-      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}}'
+      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}%2C%22isBannerVisible%22:true}'
     )
   )
 })

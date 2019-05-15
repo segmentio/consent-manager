@@ -49,6 +49,7 @@ export default class ConsentManagerBuilder extends Component {
     destinations: [],
     newDestinations: [],
     preferences: {},
+    isBannerVisible: true,
     isConsentRequired: true
   }
 
@@ -59,6 +60,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       preferences,
       newDestinations,
+      isBannerVisible,
       isConsentRequired
     } = this.state
 
@@ -70,6 +72,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       newDestinations,
       preferences,
+      isBannerVisible,
       isConsentRequired,
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
@@ -99,7 +102,11 @@ export default class ConsentManagerBuilder extends Component {
       mapCustomPreferences
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
-    const {destinationPreferences, customPreferences} = loadPreferences()
+    const {
+      destinationPreferences,
+      customPreferences,
+      isBannerVisible
+    } = loadPreferences()
 
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),
@@ -130,6 +137,7 @@ export default class ConsentManagerBuilder extends Component {
       destinations,
       newDestinations,
       preferences,
+      isBannerVisible,
       isConsentRequired
     })
   }
@@ -160,7 +168,7 @@ export default class ConsentManagerBuilder extends Component {
     this.setState({preferences})
   }
 
-  handleSaveConsent = (newPreferences, shouldReload) => {
+  handleSaveConsent = (newPreferences, shouldReload, isBannerVisible) => {
     const {writeKey, cookieDomain, mapCustomPreferences} = this.props
 
     this.setState(prevState => {
@@ -199,7 +207,12 @@ export default class ConsentManagerBuilder extends Component {
         destinationPreferences
       )
 
-      savePreferences({destinationPreferences, customPreferences, cookieDomain})
+      savePreferences({
+        destinationPreferences,
+        customPreferences,
+        isBannerVisible,
+        cookieDomain
+      })
       conditionallyLoadAnalytics({
         writeKey,
         destinations,
@@ -208,7 +221,12 @@ export default class ConsentManagerBuilder extends Component {
         shouldReload
       })
 
-      return {destinationPreferences, preferences, newDestinations}
+      return {
+        destinationPreferences,
+        preferences,
+        newDestinations,
+        isBannerVisible
+      }
     })
   }
 

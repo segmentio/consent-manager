@@ -14,6 +14,7 @@ export function loadPreferences() {
   }
 
   return {
+    isBannerVisible: preferences.isBannerVisible,
     destinationPreferences: preferences.destinations,
     customPreferences: preferences.custom
   }
@@ -22,6 +23,7 @@ export function loadPreferences() {
 export function savePreferences({
   destinationPreferences,
   customPreferences,
+  isBannerVisible,
   cookieDomain
 }) {
   window.analytics.identify({
@@ -33,7 +35,8 @@ export function savePreferences({
   const value = {
     version: 1,
     destinations: destinationPreferences,
-    custom: customPreferences
+    custom: customPreferences,
+    isBannerVisible
   }
   cookies.set(COOKIE_KEY, value, {
     expires: COOKIE_EXPIRES,

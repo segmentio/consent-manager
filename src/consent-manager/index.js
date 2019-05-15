@@ -19,6 +19,7 @@ export default class ConsentManager extends PureComponent {
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldRequireConsent: PropTypes.func,
     implyConsentOnInteraction: PropTypes.bool,
+    implyConsentType: PropTypes.oneOf(['all', 'links']),
     cookieDomain: PropTypes.string,
     bannerContent: PropTypes.node.isRequired,
     bannerSubContent: PropTypes.string,
@@ -36,6 +37,7 @@ export default class ConsentManager extends PureComponent {
     otherWriteKeys: [],
     shouldRequireConsent: () => true,
     implyConsentOnInteraction: true,
+    implyConsentType: 'all',
     onError: undefined,
     cookieDomain: undefined,
     bannerTextColor: '#fff',
@@ -64,6 +66,7 @@ export default class ConsentManager extends PureComponent {
       otherWriteKeys,
       shouldRequireConsent,
       implyConsentOnInteraction,
+      implyConsentType,
       cookieDomain,
       bannerContent,
       bannerSubContent,
@@ -90,6 +93,7 @@ export default class ConsentManager extends PureComponent {
           destinations,
           newDestinations,
           preferences,
+          isBannerVisible,
           isConsentRequired,
           setPreferences,
           resetPreferences,
@@ -99,11 +103,13 @@ export default class ConsentManager extends PureComponent {
             destinations={destinations}
             newDestinations={newDestinations}
             preferences={preferences}
+            isBannerVisible={isBannerVisible}
             isConsentRequired={isConsentRequired}
             setPreferences={setPreferences}
             resetPreferences={resetPreferences}
             saveConsent={saveConsent}
             implyConsentOnInteraction={implyConsentOnInteraction}
+            implyConsentType={implyConsentType}
             bannerContent={bannerContent}
             bannerSubContent={bannerSubContent}
             bannerTextColor={bannerTextColor}

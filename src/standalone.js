@@ -28,6 +28,7 @@ if (window.consentManagerConfig) {
   props.writeKey = dataset.writekey
   props.otherWriteKeys = dataset.otherwritekeys
   props.implyConsentOnInteraction = dataset.implyconsentoninteraction
+  props.implyConsentType = dataset.implyconsenttype
   props.cookieDomain = dataset.cookiedomain
   props.bannerContent = dataset.bannercontent
   props.bannerTextColor = dataset.bannertextcolor
