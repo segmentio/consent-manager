@@ -164,7 +164,7 @@ export default class Dialog extends PureComponent {
           </Header>
 
           <Form innerRef={this.handleFormRef} onSubmit={onSubmit}>
-            <Content>{children}</Content>
+            <Content innerRef={this.handleContentRef}>{children}</Content>
 
             <Buttons>{buttons}</Buttons>
           </Form>
@@ -181,6 +181,11 @@ export default class Dialog extends PureComponent {
     this.form.querySelector('input,button').focus()
     document.body.addEventListener('keydown', this.handleEsc, false)
     document.body.style.overflow = 'hidden'
+
+    // After dialog is shown, content should be alwayws scrolled to top
+    if (this.content) {
+      this.content.scroll(0, 0)
+    }
 
     innerRef(this.container)
   }
@@ -201,6 +206,10 @@ export default class Dialog extends PureComponent {
 
   handleFormRef = node => {
     this.form = node
+  }
+
+  handleContentRef = node => {
+    this.content = node
   }
 
   handleOverlayClick = e => {
