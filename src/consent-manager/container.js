@@ -184,6 +184,19 @@ export default class Container extends PureComponent {
       return
     }
 
+    // We imply consent when user clicks on any link inside or
+    // outside of consent-manager
+    if (implyConsentType === 'links') {
+      const link = e.target.closest('a')
+
+      if (link === null || link.getAttribute('href') === null) {
+        return
+      }
+
+      saveConsent(undefined, false, true)
+      return
+    }
+
     // Ignore propogated clicks from inside the consent manager
     if (
       (this.banner && this.banner.contains(e.target)) ||
@@ -191,14 +204,6 @@ export default class Container extends PureComponent {
       (this.cancelDialog && this.cancelDialog.contains(e.target))
     ) {
       return
-    }
-
-    if (implyConsentType === 'links') {
-      const link = e.target.closest('a')
-
-      if (link === null || link.getAttribute('href') === null) {
-        return
-      }
     }
 
     saveConsent(undefined, false, true)
