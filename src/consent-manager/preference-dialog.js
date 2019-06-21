@@ -83,7 +83,8 @@ export default class PreferenceDialog extends PureComponent {
     advertising: PropTypes.bool,
     functional: PropTypes.bool,
     title: PropTypes.node.isRequired,
-    content: PropTypes.node.isRequired
+    content: PropTypes.node.isRequired,
+    translate: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -103,15 +104,16 @@ export default class PreferenceDialog extends PureComponent {
       advertising,
       functional,
       title,
-      content
+      content,
+      translate
     } = this.props
 
     const buttons = (
       <div>
         <DefaultButton type="button" onClick={onCancel}>
-          Cancel
+          {translate('ui.cancel')}
         </DefaultButton>
-        <GreenButton type="submit">Save</GreenButton>
+        <GreenButton type="submit">{translate('ui.save')}</GreenButton>
       </div>
     )
 
@@ -129,11 +131,17 @@ export default class PreferenceDialog extends PureComponent {
           <Table>
             <thead>
               <Row>
-                <ColumnHeading scope="col">Allow</ColumnHeading>
-                <ColumnHeading scope="col">Category</ColumnHeading>
-                <ColumnHeading scope="col">Purpose</ColumnHeading>
+                <ColumnHeading scope="col">
+                  {translate('ui.header.allow')}
+                </ColumnHeading>
+                <ColumnHeading scope="col">
+                  {translate('ui.header.category')}
+                </ColumnHeading>
+                <ColumnHeading scope="col">
+                  {translate('ui.header.purpose')}
+                </ColumnHeading>
                 <ColumnHeading scope="col" className={hideOnMobile}>
-                  Tools
+                  {translate('ui.header.tools')}
                 </ColumnHeading>
               </Row>
             </thead>
@@ -148,10 +156,10 @@ export default class PreferenceDialog extends PureComponent {
                       value="true"
                       checked={functional === true}
                       onChange={this.handleChange}
-                      aria-label="Allow functional tracking"
+                      aria-label={translate('aria.functional.allow')}
                       required
                     />{' '}
-                    Yes
+                    {translate('ui.yes')}
                   </label>
                   <label>
                     <input
@@ -160,23 +168,16 @@ export default class PreferenceDialog extends PureComponent {
                       value="false"
                       checked={functional === false}
                       onChange={this.handleChange}
-                      aria-label="Disallow functional tracking"
+                      aria-label={translate('aria.functional.disallow')}
                       required
                     />{' '}
-                    No
+                    {translate('ui.no')}
                   </label>
                 </InputCell>
-                <RowHeading scope="row">Functional</RowHeading>
-                <td>
-                  <p>
-                    To monitor the performance of our site and to enhance your
-                    browsing experience.
-                  </p>
-                  <p className={hideOnMobile}>
-                    For example, these tools enable you to communicate with us
-                    via live chat.
-                  </p>
-                </td>
+                <RowHeading scope="row">
+                  {translate('category.functional')}
+                </RowHeading>
+                <td>{translate('purpose.functional')}</td>
                 <td className={hideOnMobile}>
                   {functionalDestinations.map(d => d.name).join(', ')}
                 </td>
@@ -191,10 +192,10 @@ export default class PreferenceDialog extends PureComponent {
                       value="true"
                       checked={marketingAndAnalytics === true}
                       onChange={this.handleChange}
-                      aria-label="Allow marketing and analytics tracking"
+                      aria-label={translate('aria.marketing.allow')}
                       required
                     />{' '}
-                    Yes
+                    {translate('ui.yes')}
                   </label>
                   <label>
                     <input
@@ -203,24 +204,16 @@ export default class PreferenceDialog extends PureComponent {
                       value="false"
                       checked={marketingAndAnalytics === false}
                       onChange={this.handleChange}
-                      aria-label="Disallow marketing and analytics tracking"
+                      aria-label={translate('aria.marketing.disallow')}
                       required
                     />{' '}
-                    No
+                    {translate('ui.no')}
                   </label>
                 </InputCell>
-                <RowHeading scope="row">Marketing and Analytics</RowHeading>
-                <td>
-                  <p>
-                    To understand user behavior in order to provide you with a
-                    more relevant browsing experience or personalize the content
-                    on our site.
-                  </p>
-                  <p className={hideOnMobile}>
-                    For example, we collect information about which pages you
-                    visit to help us present more relevant information.
-                  </p>
-                </td>
+                <RowHeading scope="row">
+                  {translate('category.marketing')}
+                </RowHeading>
+                <td>{translate('purpose.marketing')}</td>
                 <td className={hideOnMobile}>
                   {marketingDestinations.map(d => d.name).join(', ')}
                 </td>
@@ -235,10 +228,10 @@ export default class PreferenceDialog extends PureComponent {
                       value="true"
                       checked={advertising === true}
                       onChange={this.handleChange}
-                      aria-label="Allow advertising tracking"
+                      aria-label={translate('aria.advertising.allow')}
                       required
                     />{' '}
-                    Yes
+                    {translate('ui.yes')}
                   </label>
                   <label>
                     <input
@@ -247,43 +240,27 @@ export default class PreferenceDialog extends PureComponent {
                       value="false"
                       checked={advertising === false}
                       onChange={this.handleChange}
-                      aria-label="Disallow advertising tracking"
+                      aria-label={translate('aria.advertising.disallow')}
                       required
                     />{' '}
-                    No
+                    {translate('ui.no')}
                   </label>
                 </InputCell>
-                <RowHeading scope="row">Advertising</RowHeading>
-                <td>
-                  <p>
-                    To personalize and measure the effectiveness of advertising
-                    on our site and other websites.
-                  </p>
-                  <p className={hideOnMobile}>
-                    For example, we may serve you a personalized ad based on the
-                    pages you visit on our site.
-                  </p>
-                </td>
+                <RowHeading scope="row">
+                  {translate('category.advertising')}
+                </RowHeading>
+                <td>{translate('purpose.advertising')}</td>
                 <td className={hideOnMobile}>
                   {advertisingDestinations.map(d => d.name).join(', ')}
                 </td>
               </Row>
 
               <Row>
-                <td>N/A</td>
-                <RowHeading scope="row">Essential</RowHeading>
-                <td>
-                  <p>
-                    We use browser cookies that are necessary for the site to
-                    work as intended.
-                  </p>
-                  <p>
-                    For example, we store your website data collection
-                    preferences so we can honor them if you return to our site.
-                    You can disable these cookies in your browser settings but
-                    if you do the site may not work as intended.
-                  </p>
-                </td>
+                <td>{translate('ui.not_available')}</td>
+                <RowHeading scope="row">
+                  {translate('category.essential')}
+                </RowHeading>
+                <td>{translate('purpose.essential')}</td>
                 <td className={hideOnMobile} />
               </Row>
             </tbody>

@@ -72,6 +72,7 @@ The following global variables are also exposed:
 #### Data Attributes
 
 The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` option should be a comma separated list.
+The `translationMessages` option isn't supported.
 
 *Note: the data attributes [won't work in Internet Explorer][currentScript] (Edge works fine though).*
 
@@ -89,6 +90,21 @@ The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` optio
   data-preferencesDialogContent="We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
   data-cancelDialogTitle="Are you sure you want to cancel?"
   data-cancelDialogContent="Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy."
+  data-translationMessages="{
+      'ui.save': 'Save',
+      'ui.cancel': 'Cancel',
+      'purpose.functional': [
+        React.createElement(
+          'p',
+          null,
+          'To monitor the performance of our site and to enhance your browsing experience.'
+        ),
+        React.createElement(
+          'p',
+          null,
+          'For example, these tools enable you to communicate with us via live chat.'
+        )
+      ]}"
 ></script>
 ```
 
@@ -126,6 +142,23 @@ All the options are supported. The callback function also receives these exports
     var cancelDialogTitle = 'Are you sure you want to cancel?'
     var cancelDialogContent = 'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
 
+    var translationMessages = {
+      'ui.save': 'Save',
+      'ui.cancel': 'Cancel',
+      'purpose.functional': [
+        React.createElement(
+          'p',
+          null,
+          'To monitor the performance of our site and to enhance your browsing experience.'
+        ),
+        React.createElement(
+          'p',
+          null,
+          'For example, these tools enable you to communicate with us via live chat.'
+        )
+      ]
+    }
+
     return {
       container: '#target-container',
       writeKey: '<your-segment-write-key>',
@@ -135,7 +168,8 @@ All the options are supported. The callback function also receives these exports
       preferencesDialogTitle: preferencesDialogTitle,
       preferencesDialogContent: preferencesDialogContent,
       cancelDialogTitle: cancelDialogTitle,
-      cancelDialogContent: cancelDialogContent
+      cancelDialogContent: cancelDialogContent,
+      translationMessages: translationMessages
     }
   }
 </script>
@@ -239,6 +273,12 @@ Type: `PropTypes.node`
 
 The content of the cancel dialog.
 
+##### translationMessages
+
+Type: `PropTypes.Object`
+
+Translation messages to customize any text in UI (works only with options passed as callback).
+
 #### Example
 
 ```javascript
@@ -262,6 +302,22 @@ export default function() {
   const preferencesDialogContent = 'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
   const cancelDialogTitle = 'Are you sure you want to cancel?'
   const cancelDialogContent = 'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
+  const translationMessages = {
+    'ui.save': 'Save',
+    'ui.cancel': 'Cancel',
+    'purpose.functional': [
+      React.createElement(
+        'p',
+        null,
+        'To monitor the performance of our site and to enhance your browsing experience.'
+      ),
+      React.createElement(
+        'p',
+        null,
+        'For example, these tools enable you to communicate with us via live chat.'
+      )
+    ]
+  }
 
   return (
     <div>
@@ -274,6 +330,7 @@ export default function() {
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
+        translationMessages={translationMessages}
       />
 
       <button type="button" onClick={openConsentManager}>

@@ -11,18 +11,19 @@ export default class CancelDialog extends PureComponent {
     onBack: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
     title: PropTypes.node.isRequired,
-    content: PropTypes.node.isRequired
+    content: PropTypes.node.isRequired,
+    translate: PropTypes.func.isRequired
   }
 
   render() {
-    const {innerRef, onBack, title, content} = this.props
+    const {innerRef, onBack, title, content, translate} = this.props
 
     const buttons = (
       <div>
         <DefaultButton type="button" onClick={onBack}>
-          Go Back
+          {translate('ui.go_back')}
         </DefaultButton>
-        <RedButton type="submit">Yes, Cancel</RedButton>
+        <RedButton type="submit">{translate('ui.yes_cancel')}</RedButton>
       </div>
     )
 

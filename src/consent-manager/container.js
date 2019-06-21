@@ -31,7 +31,8 @@ export default class Container extends PureComponent {
     preferencesDialogTitle: PropTypes.node.isRequired,
     preferencesDialogContent: PropTypes.node.isRequired,
     cancelDialogTitle: PropTypes.node.isRequired,
-    cancelDialogContent: PropTypes.node.isRequired
+    cancelDialogContent: PropTypes.node.isRequired,
+    translate: PropTypes.func.isRequired
   }
 
   state = {
@@ -52,7 +53,8 @@ export default class Container extends PureComponent {
       preferencesDialogTitle,
       preferencesDialogContent,
       cancelDialogTitle,
-      cancelDialogContent
+      cancelDialogContent,
+      translate
     } = this.props
     const {isDialogOpen, isCancelling} = this.state
     const marketingDestinations = []
@@ -99,6 +101,7 @@ export default class Container extends PureComponent {
             functional={preferences.functional}
             title={preferencesDialogTitle}
             content={preferencesDialogContent}
+            translate={translate}
           />
         )}
         {isCancelling && (
@@ -108,6 +111,7 @@ export default class Container extends PureComponent {
             onConfirm={this.handleCancelConfirm}
             title={cancelDialogTitle}
             content={cancelDialogContent}
+            translate={translate}
           />
         )}
       </div>

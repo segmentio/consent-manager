@@ -67,12 +67,46 @@
     }();
   </script>
 
-  <script src="https://unpkg.com/@segment/consent-manager@1.2.0/standalone/consent-manager.js" integrity="sha256-N/iVJLiB/wC00Ta5lCOuOSL3dT3NF9tb9roS8uxTPGQ2Iqe70cqo="
-    crossorigin="anonymous" defer data-container="#consent-manager" data-writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
-    data-otherWriteKeys="vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l" data-bannerContent="We use cookies (and other similar technologies) to collect data to improve your experience on our site."
-    data-bannerSubContent="You can change your preferences at any time." data-preferencesDialogTitle="Website Data Collection Preferences"
-    data-preferencesDialogContent="We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
-    data-cancelDialogTitle="Are you sure you want to cancel?" data-cancelDialogContent="Your preferences have not been saved. By continuing to use our website, you're agreeing to our Website Data Collection Policy"></script>
+  <script>
+    window.consentManagerConfig = function(exports) {
+      var React = exports.React
+      var inEU = exports.inEU
+
+      var bannerContent = React.createElement(
+      'span',
+      null,
+      'We use cookies (and other similar technologies) to collect data to improve your experience on our site.')
+      var bannerSubContent = 'You can change your preferences at any time.'
+      var preferencesDialogTitle = 'Website Data Collection Preferences'
+      var preferencesDialogContent = 'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
+      var cancelDialogTitle = 'Are you sure you want to cancel?'
+      var cancelDialogContent = 'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
+      
+      return {
+        container: '#consent-manager',
+        writeKey: 'mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7',
+        otherWriteKeys: 'vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l',
+        implyConsentOnInteraction: false,
+        shouldRequireConsent: inEU,
+        bannerContent: bannerContent,
+        bannerSubContent: bannerSubContent,
+        preferencesDialogTitle: preferencesDialogTitle,
+        preferencesDialogContent: preferencesDialogContent,
+        cancelDialogTitle: cancelDialogTitle,
+        cancelDialogContent: cancelDialogContent,
+        translationMessages: {
+          'ui.save': 'Save',
+          'ui.cancel': 'Cancel',
+          'purpose.functional': [
+            React.createElement('p', null, 'To monitor the performance of our site and to enhance your browsing experience.'),
+            React.createElement('p', null, 'For example, these tools enable you to communicate with us via live chat.')
+          ]
+        }
+      }
+    }
+  </script>
+
+  <script src="/standalone/consent-manager.js" crossorigin="anonymous" defer></script>
 </body>
 
 </html>
