@@ -72,6 +72,7 @@ The following global variables are also exposed:
 #### Data Attributes
 
 The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` option should be a comma separated list.
+The `translationMessages` option isn't supported.
 
 *Note: the data attributes [won't work in Internet Explorer][currentScript] (Edge works fine though).*
 
@@ -276,7 +277,7 @@ The content of the cancel dialog.
 
 Type: `PropTypes.Object`
 
-Translation messages to customize any text in UI.
+Translation messages to customize any text in UI (works only with options passed as callback).
 
 #### Example
 
