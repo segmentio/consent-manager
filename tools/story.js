@@ -169,6 +169,7 @@ storiesOf('ConsentManager', module).add(`example`, () => {
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
         bannerContent={bannerContent}
         bannerBackgroundColor={bannerBackgroundColor}
+        bannerWidth="500px"
         privacyPolicyContent={privacyPolicyContent}
       />
       <p>

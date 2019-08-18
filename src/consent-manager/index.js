@@ -24,6 +24,7 @@ export default class ConsentManager extends PureComponent {
     bannerBackgroundColor: PropTypes.string,
     bannerVerticalPosition: PropTypes.string,
     bannerHorizontalPosition: PropTypes.string,
+    bannerWidth: PropTypes.string,
     onError: PropTypes.func,
     privacyPolicyContent: PropTypes.node.isRequired
   }
@@ -37,7 +38,8 @@ export default class ConsentManager extends PureComponent {
     bannerSubContent: 'Privacy Policy',
     bannerBackgroundColor: '#1f4160',
     bannerVerticalPosition: 'bottom',
-    bannerHorizontalPosition: 'right'
+    bannerHorizontalPosition: 'right',
+    bannerWidth: null
   }
 
   render() {
@@ -52,6 +54,7 @@ export default class ConsentManager extends PureComponent {
       bannerBackgroundColor,
       bannerHorizontalPosition,
       bannerVerticalPosition,
+      bannerWidth,
       privacyPolicyContent,
       onError
     } = this.props
@@ -95,6 +98,7 @@ export default class ConsentManager extends PureComponent {
               privacyPolicyContent={privacyPolicyContent}
               bannerVerticalPosition={bannerVerticalPosition}
               bannerHorizontalPosition={bannerHorizontalPosition}
+              bannerWidth={bannerWidth}
             />
           )
         }}

@@ -35,7 +35,12 @@ export default class Container extends PureComponent {
     bannerBackgroundColor: PropTypes.string.isRequired,
     bannerHorizontalPosition: PropTypes.string.isRequired,
     bannerVerticalPosition: PropTypes.string.isRequired,
+    bannerWidth: PropTypes.string,
     privacyPolicyContent: PropTypes.node.isRequired
+  }
+
+  static defaultProps = {
+    bannerWidth: null
   }
 
   state = {
@@ -53,6 +58,7 @@ export default class Container extends PureComponent {
       bannerBackgroundColor,
       bannerHorizontalPosition,
       bannerVerticalPosition,
+      bannerWidth,
       privacyPolicyContent
     } = this.props
     const {shouldShowPrivacyPolicy} = this.state
@@ -71,6 +77,10 @@ export default class Container extends PureComponent {
       bannerStyle.top = 0
     } else {
       bannerStyle.bottom = 0
+    }
+
+    if (bannerWidth) {
+      bannerStyle.width = bannerWidth
     }
 
     for (const destination of destinations) {

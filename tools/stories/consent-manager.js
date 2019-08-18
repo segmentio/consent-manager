@@ -83,6 +83,7 @@ export default () => {
         bannerBackgroundColor="blue"
         bannerHorizontalPosition="right"
         bannerVerticalPosition="bottom"
+        bannerWidth="500px"
       />
 
       <Pane marginX={100} marginTop={20}>
