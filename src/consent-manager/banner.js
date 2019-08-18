@@ -7,7 +7,7 @@ const Root = styled('div')`
   ${fontStyles};
   position: relative;
   padding: 8px;
-  padding-right: 40px;
+  padding-left: 40px;
   background: ${props => props.backgroundColor};
   color: ${props => props.textColor};
   text-align: center;
@@ -38,8 +38,8 @@ const P = styled('p')`
 
 const CloseButton = styled('button')`
   position: absolute;
-  right: 8px;
-  top: 50%;
+  left: 8px;
+  top: 16px;
   transform: translateY(-50%);
   padding: 8px;
   border: none;
@@ -57,22 +57,22 @@ export default class Banner extends PureComponent {
   static propTypes = {
     innerRef: PropTypes.func.isRequired,
     onAccept: PropTypes.func.isRequired,
-    onChangePreferences: PropTypes.func.isRequired,
     content: PropTypes.node.isRequired,
     subContent: PropTypes.node.isRequired,
     backgroundColor: PropTypes.string.isRequired,
-    textColor: PropTypes.string.isRequired
+    textColor: PropTypes.string.isRequired,
+    onPrivacyPolicy: PropTypes.func.isRequired
   }
 
   render() {
     const {
       innerRef,
       onAccept,
-      onChangePreferences,
       content,
       subContent,
       backgroundColor,
-      textColor
+      textColor,
+      onPrivacyPolicy
     } = this.props
 
     return (
@@ -81,15 +81,6 @@ export default class Banner extends PureComponent {
         backgroundColor={backgroundColor}
         textColor={textColor}
       >
-        <Content>
-          <P>{content}</P>
-          <P>
-            <button type="button" onClick={onChangePreferences}>
-              {subContent}
-            </button>
-          </P>
-        </Content>
-
         <CloseButton
           type="button"
           title="Accept policy"
@@ -98,6 +89,14 @@ export default class Banner extends PureComponent {
         >
           ✕
         </CloseButton>
+        <Content>
+          <P>{content}</P>
+          <P>
+            <button type="button" onClick={onPrivacyPolicy}>
+              {subContent}
+            </button>
+          </P>
+        </Content>
       </Root>
     )
   }
