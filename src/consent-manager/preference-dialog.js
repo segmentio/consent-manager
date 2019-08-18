@@ -301,7 +301,6 @@ export default class PreferenceDialog extends PureComponent {
 
   handleSubmit = e => {
     const {onSave, marketingAndAnalytics, advertising, functional} = this.props
-
     e.preventDefault()
 
     // Safe guard against browsers that don't prevent the

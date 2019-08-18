@@ -1,14 +1,22 @@
 import EventEmitter from 'events'
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
+import styled from 'react-emotion'
 import Banner from './banner'
-import PreferenceDialog from './preference-dialog'
-import CancelDialog from './cancel-dialog'
+// Import PreferenceDialog from "./preference-dialog";
+// import CancelDialog from "./cancel-dialog";
+import PrivacyDialog from './privacy-dialog'
 import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
+
+const BannerWrapper = styled('div')`
+  position: fixed;
+  width: 300px;
+  max-width: 100%;
+`
 
 const emitter = new EventEmitter()
 
-export function openDialog() {
+export const openDialog = () => {
   emitter.emit('openDialog')
 }
 
@@ -16,48 +24,54 @@ export default class Container extends PureComponent {
   static displayName = 'Container'
 
   static propTypes = {
-    setPreferences: PropTypes.func.isRequired,
-    resetPreferences: PropTypes.func.isRequired,
     saveConsent: PropTypes.func.isRequired,
     destinations: PropTypes.arrayOf(PropTypes.object).isRequired,
     newDestinations: PropTypes.arrayOf(PropTypes.object).isRequired,
-    preferences: PropTypes.object.isRequired,
     isConsentRequired: PropTypes.bool.isRequired,
     implyConsentOnInteraction: PropTypes.bool.isRequired,
     bannerContent: PropTypes.node.isRequired,
     bannerSubContent: PropTypes.string.isRequired,
     bannerTextColor: PropTypes.string.isRequired,
     bannerBackgroundColor: PropTypes.string.isRequired,
-    preferencesDialogTitle: PropTypes.node.isRequired,
-    preferencesDialogContent: PropTypes.node.isRequired,
-    cancelDialogTitle: PropTypes.node.isRequired,
-    cancelDialogContent: PropTypes.node.isRequired
+    bannerHorizontalPosition: PropTypes.string.isRequired,
+    bannerVerticalPosition: PropTypes.string.isRequired,
+    privacyPolicyContent: PropTypes.node.isRequired
   }
 
   state = {
-    isDialogOpen: false,
-    isCancelling: false
+    shouldShowPrivacyPolicy: false
   }
 
   render() {
     const {
       destinations,
       newDestinations,
-      preferences,
       isConsentRequired,
       bannerContent,
       bannerSubContent,
       bannerTextColor,
       bannerBackgroundColor,
-      preferencesDialogTitle,
-      preferencesDialogContent,
-      cancelDialogTitle,
-      cancelDialogContent
+      bannerHorizontalPosition,
+      bannerVerticalPosition,
+      privacyPolicyContent
     } = this.props
-    const {isDialogOpen, isCancelling} = this.state
+    const {shouldShowPrivacyPolicy} = this.state
     const marketingDestinations = []
     const advertisingDestinations = []
     const functionalDestinations = []
+    const bannerStyle = {}
+
+    if (bannerHorizontalPosition === 'left') {
+      bannerStyle.left = 0
+    } else {
+      bannerStyle.right = 0
+    }
+
+    if (bannerVerticalPosition === 'top') {
+      bannerStyle.top = 0
+    } else {
+      bannerStyle.bottom = 0
+    }
 
     for (const destination of destinations) {
       if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
@@ -72,85 +86,54 @@ export default class Container extends PureComponent {
 
     // TODO: add state for banner so it doesn't disappear on implicit consent (which is annoying UX)
     return (
-      <div>
+      <BannerWrapper style={bannerStyle}>
         {isConsentRequired &&
           newDestinations.length > 0 && (
             <Banner
               innerRef={this.handleBannerRef}
               onAccept={this.handleBannerAccept}
-              onChangePreferences={this.openDialog}
+              onPrivacyPolicy={this.handlePrivacyDialog}
               content={bannerContent}
               subContent={bannerSubContent}
               textColor={bannerTextColor}
               backgroundColor={bannerBackgroundColor}
             />
           )}
-        {isDialogOpen && (
-          <PreferenceDialog
-            innerRef={this.handlePreferenceDialogRef}
-            onCancel={this.handleCancel}
-            onSave={this.handleSave}
-            onChange={this.handleCategoryChange}
-            marketingDestinations={marketingDestinations}
-            advertisingDestinations={advertisingDestinations}
-            functionalDestinations={functionalDestinations}
-            marketingAndAnalytics={preferences.marketingAndAnalytics}
-            advertising={preferences.advertising}
-            functional={preferences.functional}
-            title={preferencesDialogTitle}
-            content={preferencesDialogContent}
+        {shouldShowPrivacyPolicy && (
+          <PrivacyDialog
+            innerRef={this.handlePrivacyDialogRef}
+            title="Privacy Policy"
+            content={privacyPolicyContent}
+            onDismiss={this.handlePrivacyDismiss}
           />
         )}
-        {isCancelling && (
-          <CancelDialog
-            innerRef={this.handleCancelDialogRef}
-            onBack={this.handleCancelBack}
-            onConfirm={this.handleCancelConfirm}
-            title={cancelDialogTitle}
-            content={cancelDialogContent}
-          />
-        )}
-      </div>
+      </BannerWrapper>
     )
   }
 
   componentDidMount() {
     const {isConsentRequired, implyConsentOnInteraction} = this.props
 
-    emitter.on('openDialog', this.openDialog)
+    // Emitter.on("openDialog", this.openDialog);
 
     if (isConsentRequired && implyConsentOnInteraction) {
       document.body.addEventListener('click', this.handleBodyClick, false)
+      document.addEventListener('mousedown', this.handleBodyClick, false)
     }
   }
 
   componentWillUnmount() {
-    emitter.removeListener('openDialog', this.openDialog)
+    // Emitter.removeListener("openDialog", this.openDialog);
     document.body.removeEventListener('click', this.handleBodyClick, false)
-  }
-
-  openDialog = () => {
-    this.setState({
-      isDialogOpen: true
-    })
-  }
-
-  closeDialog = () => {
-    this.setState({
-      isDialogOpen: false
-    })
+    document.removeEventListener('mousedown', this.handleBodyClick, false)
   }
 
   handleBannerRef = node => {
     this.banner = node
   }
 
-  handlePreferenceDialogRef = node => {
-    this.preferenceDialog = node
-  }
-
-  handleCancelDialogRef = node => {
-    this.cancelDialog = node
+  handlePrivacyDialogRef = node => {
+    this.privacyDialog = node
   }
 
   handleBannerAccept = () => {
@@ -179,8 +162,7 @@ export default class Container extends PureComponent {
     // Ignore propogated clicks from inside the consent manager
     if (
       (this.banner && this.banner.contains(e.target)) ||
-      (this.preferenceDialog && this.preferenceDialog.contains(e.target)) ||
-      (this.cancelDialog && this.cancelDialog.contains(e.target))
+      (this.privacyDialog && this.privacyDialog.contains(e.target))
     ) {
       return
     }
@@ -188,53 +170,15 @@ export default class Container extends PureComponent {
     saveConsent(undefined, false)
   }
 
-  handleCategoryChange = (category, value) => {
-    const {setPreferences} = this.props
-
-    setPreferences({
-      [category]: value
+  handlePrivacyDialog = () => {
+    this.setState({
+      shouldShowPrivacyPolicy: true
     })
   }
 
-  handleSave = () => {
-    const {saveConsent} = this.props
-
+  handlePrivacyDismiss = () => {
     this.setState({
-      isDialogOpen: false
+      shouldShowPrivacyPolicy: false
     })
-    saveConsent()
-  }
-
-  handleCancel = () => {
-    const {resetPreferences, newDestinations} = this.props
-
-    this.setState({
-      isDialogOpen: false
-    })
-
-    // Only show the cancel confirmation if there's unconsented destinations
-    if (newDestinations.length > 0) {
-      this.setState({
-        isCancelling: true
-      })
-    } else {
-      resetPreferences()
-    }
-  }
-
-  handleCancelBack = () => {
-    this.setState({
-      isDialogOpen: true,
-      isCancelling: false
-    })
-  }
-
-  handleCancelConfirm = () => {
-    const {resetPreferences} = this.props
-
-    this.setState({
-      isCancelling: false
-    })
-    resetPreferences()
   }
 }

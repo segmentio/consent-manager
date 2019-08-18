@@ -18,7 +18,7 @@ It works by taking control of the analytics.js load process to only load destina
 - Fine grained control of tools or categories used for tracking.
 - 30s setup with a drop in script tag.
 - Or fully customizable UI/UX through React components.
-- EU traffic detection through [@segment/in-eu][inEU].
+- EU traffic detection through [@segment/in-eu][ineu].
 - Ability for visitors to reconsent and change preferences.
 - Automatically updates to reflect the destinations you have enabled in Segment.
 
@@ -67,13 +67,13 @@ The following global variables are also exposed:
 - `consentManager.version` - Version of the consent manager.
 - `consentManager.openConsentManager()` - Opens the consent manager preferences dialog.
 - `consentManager.doNotTrack()` - Utility function that returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
-- `consentManager.inEU()` - The [@segment/in-eu][inEU] `inEU()` function.
+- `consentManager.inEU()` - The [@segment/in-eu][ineu] `inEU()` function.
 
 #### Data Attributes
 
 The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` option should be a comma separated list.
 
-*Note: the data attributes [won't work in Internet Explorer][currentScript] (Edge works fine though).*
+_Note: the data attributes [won't work in Internet Explorer][currentscript] (Edge works fine though)._
 
 ```html
 <script
@@ -84,11 +84,8 @@ The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` optio
   data-container="#target-container"
   data-writeKey="<your-segment-write-key>"
   data-bannerContent="We use cookies (and other similar technologies) to collect data to improve your experience on our site."
-  data-bannerSubContent="You can change your preferences at any time."
-  data-preferencesDialogTitle="Website Data Collection Preferences"
-  data-preferencesDialogContent="We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
-  data-cancelDialogTitle="Are you sure you want to cancel?"
-  data-cancelDialogContent="Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy."
+  data-bannerSubContent="Privacy Policy"
+  data-privacyPolicyContent="<Privacy Policy Content>"
 ></script>
 ```
 
@@ -100,44 +97,41 @@ All the options are supported. The callback function also receives these exports
 - `version` - Version of the consent manager.
 - `openConsentManager()` - Opens the consent manager preferences dialog.
 - `doNotTrack()` - Utility function that returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
-- `inEU()` - The [@segment/in-eu][inEU] `inEU()` function.
+- `inEU()` - The [@segment/in-eu][ineu] `inEU()` function.
 
 ```html
 <script>
   window.consentManagerConfig = function(exports) {
-    var React = exports.React
-    var inEU = exports.inEU
+    var React = exports.React;
+    var inEU = exports.inEU;
 
     var bannerContent = React.createElement(
-      'span',
+      "span",
       null,
-      'We use cookies (and other similar technologies) to collect data to improve your experience on our site. By using our website, you՚re agreeing to the collection of data as described in our',
-      ' ',
+      "We use cookies (and other similar technologies) to collect data to improve your experience on our site. By using our website, you՚re agreeing to the collection of data as described in our",
+      " ",
       React.createElement(
-        'a',
-        {href: '/docs/legal/website-data-collection-policy/', target: '_blank'},
-        'Website Data Collection Policy'
+        "a",
+        {
+          href: "/docs/legal/website-data-collection-policy/",
+          target: "_blank"
+        },
+        "Website Data Collection Policy"
       ),
-      '.'
-    )
-    var bannerSubContent = 'You can change your preferences at any time.'
-    var preferencesDialogTitle = 'Website Data Collection Preferences'
-    var preferencesDialogContent = 'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
-    var cancelDialogTitle = 'Are you sure you want to cancel?'
-    var cancelDialogContent = 'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
+      "."
+    );
+    const privacyPolicyContent = <div>Privancy Plicy Content goes here.</div>;
+    var bannerSubContent = "Privacy Policy";
 
     return {
-      container: '#target-container',
-      writeKey: '<your-segment-write-key>',
+      container: "#target-container",
+      writeKey: "<your-segment-write-key>",
       shouldRequireConsent: inEU,
       bannerContent: bannerContent,
       bannerSubContent: bannerSubContent,
-      preferencesDialogTitle: preferencesDialogTitle,
-      preferencesDialogContent: preferencesDialogContent,
-      cancelDialogTitle: cancelDialogTitle,
-      cancelDialogContent: cancelDialogContent
-    }
-  }
+      privacyPolicyContent: privacyPolicyContent
+    };
+  };
 </script>
 <script
   src="https://unpkg.com/@segment/consent-manager@1.2.0/standalone/consent-manager.js"
@@ -164,7 +158,7 @@ The write key analytics.js should be loaded with.
 Type: `array<string>`<br>
 Default: `[]`
 
-Other write keys that you want to load destination information for. This is useful for including your server-side destinations in the consent manager, so that you can easily apply the user's tracking preferences to your server-side analytics too. *No data will be sent to these write keys.*
+Other write keys that you want to load destination information for. This is useful for including your server-side destinations in the consent manager, so that you can easily apply the user's tracking preferences to your server-side analytics too. _No data will be sent to these write keys._
 
 ##### shouldRequireConsent
 
@@ -197,7 +191,7 @@ The consent of the consent banner.
 
 Type: `PropTypes.node`
 
-The call to action under the content in the consent banner.
+Clicking on this content opens up Privacy Policy Dialog.
 
 ##### bannerTextColor
 
@@ -213,55 +207,47 @@ Default: `#1f4160`
 
 The color of the consent banner background.
 
-##### preferencesDialogTitle
+##### bannerHorizontalPosition
 
-Type: `PropTypes.node`<br>
-Default: `Website Data Collection Preferences`
+Type: `string`<br>
+Default: `right`
 
-The title of the preferences dialog.
+The horizontal position of the consent banner on the screen. Possible values are `left` or `right`
 
-##### preferencesDialogContent
+##### bannerVerticalPosition
 
-Type: `PropTypes.node`
+Type: `string`<br>
+Default: `bottom`
 
-The top descriptive content of the preferences dialog.
+The vertical position of the consent banner on the screen. Possible values are `top` or `bottom`
 
-##### cancelDialogTitle
-
-Type: `PropTypes.node`<br>
-Default: `Are you sure you want to cancel?`
-
-The title of the cancel dialog.
-
-##### cancelDialogContent
+##### privacyPolicyContent
 
 Type: `PropTypes.node`
 
-The content of the cancel dialog.
+The Privacy Policy content to show in Privacy Policy Dialog.
 
 #### Example
 
 ```javascript
-import React from 'react'
-import {ConsentManager, openConsentManager} from '@segment/consent-manager'
-import inEU from '@segment/in-eu'
+import React from "react";
+import { ConsentManager, openConsentManager } from "@segment/consent-manager";
+import inEU from "@segment/in-eu";
 
 export default function() {
   const bannerContent = (
     <span>
       We use cookies (and other similar technologies) to collect data to improve
       your experience on our site. By using our website, you’re agreeing to the
-      collection of data as described in our{' '}
+      collection of data as described in our{" "}
       <a href="/docs/legal/website-data-collection-policy/" target="_blank">
         Website Data Collection Policy
-      </a>.
+      </a>
+      .
     </span>
-  )
-  const bannerSubContent = 'You can change your preferences at any time.'
-  const preferencesDialogTitle = 'Website Data Collection Preferences'
-  const preferencesDialogContent = 'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
-  const cancelDialogTitle = 'Are you sure you want to cancel?'
-  const cancelDialogContent = 'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
+  );
+  const privacyPolicyContent = <div>Privancy Plicy Content goes here.</div>;
+  const bannerSubContent = "Click here to check Privacy Policy.";
 
   return (
     <div>
@@ -270,17 +256,14 @@ export default function() {
         shouldRequireConsent={inEU}
         bannerContent={bannerContent}
         bannerSubContent={bannerSubContent}
-        preferencesDialogTitle={preferencesDialogTitle}
-        preferencesDialogContent={preferencesDialogContent}
-        cancelDialogTitle={cancelDialogTitle}
-        cancelDialogContent={cancelDialogContent}
+        privacyPolicyContent={privacyPolicyContent}
       />
 
       <button type="button" onClick={openConsentManager}>
         Website Data Collection Preferences
       </button>
     </div>
-  )
+  );
 }
 ```
 
@@ -307,7 +290,7 @@ The write key analytics.js should be loaded with.
 Type: `array<string>`<br>
 Default: `[]`
 
-Other write keys that you want to load destination information for. This is useful for including your server-side destinations in the consent manager, so that you can easily apply the user's tracking preferences to your server-side analytics too. *No data will be sent to these write keys.*
+Other write keys that you want to load destination information for. This is useful for including your server-side destinations in the consent manager, so that you can easily apply the user's tracking preferences to your server-side analytics too. _No data will be sent to these write keys._
 
 ##### shouldRequireConsent
 
@@ -345,6 +328,7 @@ Type: `array<object>`<br>
 Default: `[]`
 
 Destinations enabled for the provided write keys. Each destination contains these properties:
+
 ```
 {
   id,
@@ -367,7 +351,7 @@ New destinations that have been enabled since the user last gave consent.
 Type: `object`<br>
 Default: `{}`
 
-The current preferences in state. By default if should be in the format of `{destinationId: true|false}`, but if you're using [mapCustomPreferences][] the object map can be in any format you want. *Note: this isn't the saved preferences.*
+The current preferences in state. By default if should be in the format of `{destinationId: true|false}`, but if you're using [mapCustomPreferences][] the object map can be in any format you want. _Note: this isn't the saved preferences._
 
 ##### isConsentRequired
 
@@ -399,13 +383,13 @@ Saves the preferences currently in state to a cookie called `tracking-preference
 For a more detailed/advanced example, checkout the [ConsentManager implementation][].
 
 ```javascript
-import React from 'react'
-import {ConsentManagerBuilder} from '@segment/consent-manager'
+import React from "react";
+import { ConsentManagerBuilder } from "@segment/consent-manager";
 
 export default function() {
   return (
     <ConsentManagerBuilder writeKey="<your-segment-write-key>">
-      {({destinations, preferences, setPreferences, saveConsent}) => (
+      {({ destinations, preferences, setPreferences, saveConsent }) => (
         <div>
           <h2>Tracking tools</h2>
           <ul>
@@ -439,7 +423,7 @@ export default function() {
         </div>
       )}
     </ConsentManagerBuilder>
-  )
+  );
 }
 ```
 
@@ -448,24 +432,22 @@ export default function() {
 - `openConsentManager()` - Opens the [ConsentManager][] preferences dialog.
 - `doNotTrack()` - Returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
 
-
 ## License
 
 consent-manager is released under the MIT license.
 
 Copyright © 2018, Segment.io, Inc.
 
-
 [analytics.js snippet]: https://segment.com/docs/sources/website/analytics.js/quickstart/#step-1-copy-the-snippet
-[Inferno]: https://infernojs.org/
-[currentScript]: https://caniuse.com/#feat=document-currentscript
-[inEU]: https://github.com/segmentio/in-eu
-[ConsentManager]: #consentmanager
-[ConsentManagerBuilder]: #consentmanagerbuilder
+[inferno]: https://infernojs.org/
+[currentscript]: https://caniuse.com/#feat=document-currentscript
+[ineu]: https://github.com/segmentio/in-eu
+[consentmanager]: #consentmanager
+[consentmanagerbuilder]: #consentmanagerbuilder
 [top-domain]: https://github.com/segmentio/top-domain
-[mapCustomPreferences]: #mapcustompreferences
-[shouldRequireConsent]: #shouldrequireconsent-1
+[mapcustompreferences]: #mapcustompreferences
+[shouldrequireconsent]: #shouldrequireconsent-1
 [preferences]: #preferences
-[setPreferences]: #setpreferences
-[ConsentManager implementation]: src/consent-manager
-[CSS selector]: https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
+[setpreferences]: #setpreferences
+[consentmanager implementation]: src/consent-manager
+[css selector]: https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector

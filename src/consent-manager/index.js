@@ -17,30 +17,27 @@ export default class ConsentManager extends PureComponent {
     writeKey: PropTypes.string.isRequired,
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldRequireConsent: PropTypes.func,
-    implyConsentOnInteraction: PropTypes.bool,
     cookieDomain: PropTypes.string,
     bannerContent: PropTypes.node.isRequired,
     bannerSubContent: PropTypes.string,
     bannerTextColor: PropTypes.string,
     bannerBackgroundColor: PropTypes.string,
-    preferencesDialogTitle: PropTypes.node,
-    preferencesDialogContent: PropTypes.node.isRequired,
+    bannerVerticalPosition: PropTypes.string,
+    bannerHorizontalPosition: PropTypes.string,
     onError: PropTypes.func,
-    cancelDialogTitle: PropTypes.node,
-    cancelDialogContent: PropTypes.node.isRequired
+    privacyPolicyContent: PropTypes.node.isRequired
   }
 
   static defaultProps = {
     otherWriteKeys: [],
     shouldRequireConsent: () => true,
-    implyConsentOnInteraction: true,
     onError: undefined,
     cookieDomain: undefined,
     bannerTextColor: '#fff',
-    bannerSubContent: 'You can change your preferences at any time.',
+    bannerSubContent: 'Privacy Policy',
     bannerBackgroundColor: '#1f4160',
-    preferencesDialogTitle: 'Website Data Collection Preferences',
-    cancelDialogTitle: 'Are you sure you want to cancel?'
+    bannerVerticalPosition: 'bottom',
+    bannerHorizontalPosition: 'right'
   }
 
   render() {
@@ -48,16 +45,14 @@ export default class ConsentManager extends PureComponent {
       writeKey,
       otherWriteKeys,
       shouldRequireConsent,
-      implyConsentOnInteraction,
       cookieDomain,
       bannerContent,
       bannerSubContent,
       bannerTextColor,
       bannerBackgroundColor,
-      preferencesDialogTitle,
-      preferencesDialogContent,
-      cancelDialogTitle,
-      cancelDialogContent,
+      bannerHorizontalPosition,
+      bannerVerticalPosition,
+      privacyPolicyContent,
       onError
     } = this.props
 
@@ -79,26 +74,30 @@ export default class ConsentManager extends PureComponent {
           setPreferences,
           resetPreferences,
           saveConsent
-        }) => (
-          <Container
-            destinations={destinations}
-            newDestinations={newDestinations}
-            preferences={preferences}
-            isConsentRequired={isConsentRequired}
-            setPreferences={setPreferences}
-            resetPreferences={resetPreferences}
-            saveConsent={saveConsent}
-            implyConsentOnInteraction={implyConsentOnInteraction}
-            bannerContent={bannerContent}
-            bannerSubContent={bannerSubContent}
-            bannerTextColor={bannerTextColor}
-            bannerBackgroundColor={bannerBackgroundColor}
-            preferencesDialogTitle={preferencesDialogTitle}
-            preferencesDialogContent={preferencesDialogContent}
-            cancelDialogTitle={cancelDialogTitle}
-            cancelDialogContent={cancelDialogContent}
-          />
-        )}
+        }) => {
+          Object.keys(preferences).forEach(key => {
+            preferences[key] = preferences[key] !== false
+          })
+          return (
+            <Container
+              destinations={destinations}
+              newDestinations={newDestinations}
+              preferences={preferences}
+              isConsentRequired={isConsentRequired}
+              setPreferences={setPreferences}
+              resetPreferences={resetPreferences}
+              saveConsent={saveConsent}
+              implyConsentOnInteraction
+              bannerContent={bannerContent}
+              bannerSubContent={bannerSubContent}
+              bannerTextColor={bannerTextColor}
+              bannerBackgroundColor={bannerBackgroundColor}
+              privacyPolicyContent={privacyPolicyContent}
+              bannerVerticalPosition={bannerVerticalPosition}
+              bannerHorizontalPosition={bannerHorizontalPosition}
+            />
+          )
+        }}
       </ConsentManagerBuilder>
     )
   }
