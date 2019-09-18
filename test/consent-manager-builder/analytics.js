@@ -8,7 +8,7 @@ test.beforeEach(() => {
 
 test.serial('loads analytics.js with preferences', t => {
   const ajsLoad = sinon.spy()
-  global.window.analytics = {load: ajsLoad}
+  const analyticsLibrary = {load: ajsLoad}
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = {
@@ -16,6 +16,7 @@ test.serial('loads analytics.js with preferences', t => {
   }
 
   conditionallyLoadAnalytics({
+    analyticsLibrary,
     writeKey,
     destinations,
     destinationPreferences,
@@ -35,12 +36,13 @@ test.serial('loads analytics.js with preferences', t => {
 
 test.serial('doesn՚t load analytics.js when there are no preferences', t => {
   const ajsLoad = sinon.spy()
-  global.window.analytics = {load: ajsLoad}
+  const analyticsLibrary = {load: ajsLoad}
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = null
 
   conditionallyLoadAnalytics({
+    analyticsLibrary,
     writeKey,
     destinations,
     destinationPreferences,
@@ -52,7 +54,7 @@ test.serial('doesn՚t load analytics.js when there are no preferences', t => {
 
 test.serial('doesn՚t load analytics.js when all preferences are false', t => {
   const ajsLoad = sinon.spy()
-  global.window.analytics = {load: ajsLoad}
+  const analyticsLibrary = {load: ajsLoad}
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = {
@@ -60,6 +62,7 @@ test.serial('doesn՚t load analytics.js when all preferences are false', t => {
   }
 
   conditionallyLoadAnalytics({
+    analyticsLibrary,
     writeKey,
     destinations,
     destinationPreferences,
@@ -73,7 +76,7 @@ test.serial(
   'reloads the page when analytics.js has already been initialised',
   t => {
     const reload = sinon.spy()
-    global.window.analytics = {
+    const analyticsLibrary = {
       load() {
         this.initialized = true
       }
@@ -86,12 +89,14 @@ test.serial(
     }
 
     conditionallyLoadAnalytics({
+      analyticsLibrary,
       writeKey,
       destinations,
       destinationPreferences,
       isConsentRequired: true
     })
     conditionallyLoadAnalytics({
+      analyticsLibrary,
       writeKey,
       destinations,
       destinationPreferences,
@@ -104,7 +109,7 @@ test.serial(
 
 test.serial('should allow the reload behvaiour to be disabled', t => {
   const reload = sinon.spy()
-  global.window.analytics = {
+  const analyticsLibrary = {
     load() {
       this.initialized = true
     }
@@ -117,12 +122,14 @@ test.serial('should allow the reload behvaiour to be disabled', t => {
   }
 
   conditionallyLoadAnalytics({
+    analyticsLibrary,
     writeKey,
     destinations,
     destinationPreferences,
     isConsentRequired: true
   })
   conditionallyLoadAnalytics({
+    analyticsLibrary,
     writeKey,
     destinations,
     destinationPreferences,
@@ -135,12 +142,13 @@ test.serial('should allow the reload behvaiour to be disabled', t => {
 
 test.serial('loads analytics.js normally when consent isn՚t required', t => {
   const ajsLoad = sinon.spy()
-  global.window.analytics = {load: ajsLoad}
+  const analyticsLibrary = {load: ajsLoad}
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = null
 
   conditionallyLoadAnalytics({
+    analyticsLibrary,
     writeKey,
     destinations,
     destinationPreferences,
@@ -154,7 +162,7 @@ test.serial('loads analytics.js normally when consent isn՚t required', t => {
 
 test.serial('still applies preferences when consent isn՚t required', t => {
   const ajsLoad = sinon.spy()
-  global.window.analytics = {load: ajsLoad}
+  const analyticsLibrary = {load: ajsLoad}
   const writeKey = '123'
   const destinations = [{id: 'Amplitude'}]
   const destinationPreferences = {
@@ -162,6 +170,7 @@ test.serial('still applies preferences when consent isn՚t required', t => {
   }
 
   conditionallyLoadAnalytics({
+    analyticsLibrary,
     writeKey,
     destinations,
     destinationPreferences,
