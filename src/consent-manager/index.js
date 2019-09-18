@@ -28,7 +28,7 @@ export default class ConsentManager extends PureComponent {
     onError: PropTypes.func,
     cancelDialogTitle: PropTypes.node,
     cancelDialogContent: PropTypes.node.isRequired,
-    analyticsLibrary: PropTypes.object,
+    analyticsLibrary: PropTypes.object
   }
 
   static defaultProps = {
@@ -42,7 +42,7 @@ export default class ConsentManager extends PureComponent {
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
     cancelDialogTitle: 'Are you sure you want to cancel?',
-    analyticsLibrary: window.analytics,
+    analyticsLibrary: window.analytics
   }
 
   render() {

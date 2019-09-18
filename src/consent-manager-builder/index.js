@@ -162,7 +162,12 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   handleSaveConsent = (newPreferences, shouldReload) => {
-    const {analyticsLibrary, writeKey, cookieDomain, mapCustomPreferences} = this.props
+    const {
+      analyticsLibrary,
+      writeKey,
+      cookieDomain,
+      mapCustomPreferences
+    } = this.props
 
     this.setState(prevState => {
       const {
@@ -200,7 +205,12 @@ export default class ConsentManagerBuilder extends Component {
         destinationPreferences
       )
 
-      savePreferences({analyticsLibrary, destinationPreferences, customPreferences, cookieDomain})
+      savePreferences({
+        analyticsLibrary,
+        destinationPreferences,
+        customPreferences,
+        cookieDomain
+      })
       conditionallyLoadAnalytics({
         analyticsLibrary,
         writeKey,
