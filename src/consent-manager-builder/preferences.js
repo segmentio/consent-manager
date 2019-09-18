@@ -20,11 +20,12 @@ export function loadPreferences() {
 }
 
 export function savePreferences({
+  analyticsLibrary,
   destinationPreferences,
   customPreferences,
   cookieDomain
 }) {
-  window.analytics.identify({
+  analyticsLibrary.identify({
     destinationTrackingPreferences: destinationPreferences,
     customTrackingPreferences: customPreferences
   })

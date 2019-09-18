@@ -31,6 +31,7 @@ export default class ConsentManagerBuilder extends Component {
     otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
     shouldRequireConsent: PropTypes.func,
     initialPreferences: PropTypes.object,
+    analyticsLibrary: PropTypes.object.isRequired,
     mapCustomPreferences: PropTypes.func,
     cookieDomain: PropTypes.string
   }
@@ -161,7 +162,7 @@ export default class ConsentManagerBuilder extends Component {
   }
 
   handleSaveConsent = (newPreferences, shouldReload) => {
-    const {writeKey, cookieDomain, mapCustomPreferences} = this.props
+    const {analyticsLibrary, writeKey, cookieDomain, mapCustomPreferences} = this.props
 
     this.setState(prevState => {
       const {
@@ -199,8 +200,9 @@ export default class ConsentManagerBuilder extends Component {
         destinationPreferences
       )
 
-      savePreferences({destinationPreferences, customPreferences, cookieDomain})
+      savePreferences({analyticsLibrary, destinationPreferences, customPreferences, cookieDomain})
       conditionallyLoadAnalytics({
+        analyticsLibrary,
         writeKey,
         destinations,
         destinationPreferences,
