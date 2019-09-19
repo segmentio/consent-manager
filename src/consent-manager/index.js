@@ -28,6 +28,7 @@ export default class ConsentManager extends PureComponent {
     onError: PropTypes.func,
     cancelDialogTitle: PropTypes.node,
     cancelDialogContent: PropTypes.node.isRequired,
+    // TODO default this to window.analytics?
     analyticsLibrary: PropTypes.object.isRequired
   }
 
