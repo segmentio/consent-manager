@@ -37,7 +37,7 @@ test.serial('loadPreferences() returns preferences when cookie exists', t => {
 
 test.serial('savePreferences() saves the preferences', t => {
   const ajsIdentify = sinon.spy()
-  global.window.analytics = {identify: ajsIdentify}
+  const analyticsLibrary = {identify: ajsIdentify}
   global.document.cookie = ''
   const destinationPreferences = {
     Amplitude: true
@@ -47,6 +47,7 @@ test.serial('savePreferences() saves the preferences', t => {
   }
 
   savePreferences({
+    analyticsLibrary,
     destinationPreferences,
     customPreferences
   })
@@ -66,13 +67,14 @@ test.serial('savePreferences() saves the preferences', t => {
 
 test.serial('savePreferences() sets the cookie domain', t => {
   const ajsIdentify = sinon.spy()
-  global.window.analytics = {identify: ajsIdentify}
+  const analyticsLibrary = {identify: ajsIdentify}
   global.document.cookie = ''
   const destinationPreferences = {
     Amplitude: true
   }
 
   savePreferences({
+    analyticsLibrary,
     destinationPreferences,
     cookieDomain: 'example.com'
   })

@@ -93,6 +93,7 @@ export default class ConsentManagerBuilder extends Component {
 
   initialise = async () => {
     const {
+      analyticsLibrary,
       writeKey,
       otherWriteKeys,
       shouldRequireConsent,
@@ -113,6 +114,7 @@ export default class ConsentManagerBuilder extends Component {
     )
 
     conditionallyLoadAnalytics({
+      analyticsLibrary,
       writeKey,
       destinations,
       destinationPreferences,

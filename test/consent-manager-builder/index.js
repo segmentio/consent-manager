@@ -59,7 +59,7 @@ test.cb.serial('provides a list of enabled destinations', t => {
 test.cb.serial('provides a list of newly added destinations', t => {
   global.document.cookie =
     'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
-  global.window.analytics = {load() {}}
+  const analyticsLibrary = {load() {}}
 
   nock('https://cdn.segment.com')
     .get('/v1/projects/123/integrations')
@@ -75,7 +75,7 @@ test.cb.serial('provides a list of newly added destinations', t => {
     ])
 
   shallow(
-    <ConsentManagerBuilder writeKey="123">
+    <ConsentManagerBuilder writeKey="123" analyticsLibrary={analyticsLibrary}>
       {({newDestinations}) => {
         t.deepEqual(newDestinations, [
           {
@@ -93,7 +93,7 @@ test.cb.serial('loads analytics.js with the user՚s preferences', t => {
   const ajsLoad = sinon.spy()
   global.document.cookie =
     'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
-  global.window.analytics = {load: ajsLoad}
+  const analyticsLibrary = {load: ajsLoad}
   const writeKey = '123'
 
   nock('https://cdn.segment.com')
@@ -106,7 +106,10 @@ test.cb.serial('loads analytics.js with the user՚s preferences', t => {
     ])
 
   shallow(
-    <ConsentManagerBuilder writeKey={writeKey}>
+    <ConsentManagerBuilder
+      writeKey={writeKey}
+      analyticsLibrary={analyticsLibrary}
+    >
       {() => {
         t.true(ajsLoad.calledOnce)
         t.is(ajsLoad.args[0][0], writeKey)
@@ -126,7 +129,7 @@ test.cb.serial('loads analytics.js with the user՚s preferences', t => {
 test.cb.serial('provides an object containing the WIP preferences', t => {
   global.document.cookie =
     'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
-  global.window.analytics = {load() {}}
+  const analyticsLibrary = {load() {}}
 
   nock('https://cdn.segment.com')
     .get('/v1/projects/123/integrations')
@@ -138,7 +141,7 @@ test.cb.serial('provides an object containing the WIP preferences', t => {
     ])
 
   shallow(
-    <ConsentManagerBuilder writeKey="123">
+    <ConsentManagerBuilder writeKey="123" analyticsLibrary={analyticsLibrary}>
       {({preferences}) => {
         t.deepEqual(preferences, {
           Amplitude: true
