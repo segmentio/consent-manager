@@ -77,8 +77,8 @@ The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` optio
 
 ```html
 <script
-  src="https://unpkg.com/@segment/consent-manager@1.2.0/standalone/consent-manager.js"
-  integrity="sha256-N/wC00Ta5lCOuOSL3dT3NF9tb9roS8uxTPGQ2Iqe70cqo="
+  src="https://unpkg.com/@segment/consent-manager@1.3.1/standalone/consent-manager.js"
+  integrity="sha256-N/EtCdljz/WL5dUhPxtur9KkD3XdbXDICIpQONh9uwDXA="
   crossorigin="anonymous"
   defer
   data-container="#target-container"
