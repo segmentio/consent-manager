@@ -2,6 +2,7 @@ import React from 'react'
 
 export default {
   translationMessages: {
+    'ui.accept_all': 'Accept All Cookies',
     'ui.save': 'Save',
     'ui.cancel': 'Cancel',
     'ui.yes': 'Yes',

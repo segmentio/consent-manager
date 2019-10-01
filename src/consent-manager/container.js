@@ -83,6 +83,7 @@ export default class Container extends PureComponent {
           <Banner
             innerRef={this.handleBannerRef}
             onAccept={this.handleBannerAccept}
+            translate={translate}
             onChangePreferences={this.openDialog}
             content={bannerContent}
             subContent={bannerSubContent}
