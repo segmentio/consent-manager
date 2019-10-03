@@ -36,12 +36,19 @@ const P = styled('p')`
   }
 `
 
-const AcceptAllButton = styled('button')`
+const CloseButton = styled('button')`
   position: absolute;
   right: 8px;
   top: 50%;
   transform: translateY(-50%);
   padding: 8px;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
 `
 
 export default class Banner extends PureComponent {
@@ -85,7 +92,7 @@ export default class Banner extends PureComponent {
           </P>
         </Content>
 
-        <AcceptAllButton
+        <CloseButton
           className="Button Button--primary"
           type="button"
           title={translate('ui.accept_all')}
@@ -93,7 +100,7 @@ export default class Banner extends PureComponent {
           onClick={onAccept}
         >
           {translate('ui.accept_all')}
-        </AcceptAllButton>
+        </CloseButton>
       </Root>
     )
   }
