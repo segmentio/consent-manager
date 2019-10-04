@@ -16,7 +16,8 @@ module.exports = {
       react: 'inferno-compat',
       'react-dom': 'inferno-compat',
       lodash: 'lodash-es'
-    }
+    },
+    extensions: [ '.tsx', '.ts', '.js' ]
   },
   module: {
     rules: [
@@ -29,7 +30,12 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
-      }
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader'
+      },
     ]
   },
   plugins: [

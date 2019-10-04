@@ -9,7 +9,6 @@
       "es2016",
       "es2017"
     ],
-    "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
