@@ -2,6 +2,7 @@
 /commonjs/
 /esm/
 /standalone/
+/build
 
 # IDE
 .vscode/
