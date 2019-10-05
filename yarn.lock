@@ -212,10 +212,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@segment/in-eu@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@segment/in-eu/-/in-eu-0.2.1.tgz#ee03e0126e0082b9abec9a33e6c2902fd3ad7f47"
-  integrity sha512-7JKBw/l3S9J0ldo/n6XPfd3sT89f300KOCvmZsd8sryVZOWlE4L2LMKT538I34bjRdaOd1aJ52TsOAZUOLqxiQ==
+"@segment/in-eu@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@segment/in-eu/-/in-eu-0.3.0.tgz#b7d452a2f7e3a29461c0774f4d1570c7e8448ca8"
+  integrity sha512-np6ves6pLi1nkKjQHXk3FBQJmu+C7Gs6n3UYM0TzHsIdZOz1Cfu636cuc+iidBRfE6S+3w0W8AD7F4hpicuUnw==
   dependencies:
     jstz "^2.0.0"
 
@@ -6897,9 +6897,9 @@ jsprim@^1.2.2:
     verror "1.10.0"
 
 jstz@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/jstz/-/jstz-2.0.0.tgz#fd02f4ebdc7843c83e7ad1f157aecf46bf1f7647"
-  integrity sha512-C686KzLJHe079zUwVDkCRkbq26w/vhznVEK1Ea4tiLfX3RvaXUxDFPy5whAe0Q/AhTtAmID0NPAadC/3ROU/DA==
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/jstz/-/jstz-2.1.1.tgz#fff3373a518fa7cce69299930466f5a2b980389d"
+  integrity sha512-8hfl5RD6P7rEeIbzStBz3h4f+BQHfq/ABtoU6gXKQv5OcZhnmrIpG7e1pYaZ8hS9e0mp+bxUj08fnDUbKctYyA==
 
 jsx-ast-utils@^2.0.1:
   version "2.0.1"
