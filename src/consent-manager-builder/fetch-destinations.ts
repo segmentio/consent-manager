@@ -1,7 +1,9 @@
 import fetch from 'isomorphic-fetch'
 import {flatten, sortedUniqBy, sortBy} from 'lodash'
 
-async function fetchDestinationForWriteKey(writeKey) {
+// TODO: Type destination
+
+async function fetchDestinationForWriteKey(writeKey: string) {
   const res = await fetch(
     `https://cdn.segment.com/v1/projects/${writeKey}/integrations`
   )
@@ -25,8 +27,8 @@ async function fetchDestinationForWriteKey(writeKey) {
   return destinations
 }
 
-export default async function fetchDestinations(writeKeys) {
-  const destinationsRequests = []
+export default async function fetchDestinations(writeKeys: string[]) {
+  const destinationsRequests: any[] = []
   for (const writeKey of writeKeys) {
     destinationsRequests.push(fetchDestinationForWriteKey(writeKey))
   }

@@ -5,9 +5,14 @@ export {openDialog as openConsentManager} from './consent-manager/container'
 export const ConsentManagerBuilder = CMB
 export const ConsentManager = CM
 
-export function doNotTrack() {
-  let doNotTrackValue =
-    navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack
+type Nav = Navigator & {
+  msDoNotTrack?: Navigator['doNotTrack']
+}
+
+export function doNotTrack(): boolean | null {
+  const nav = navigator as Nav
+
+  let doNotTrackValue = nav.doNotTrack || window.doNotTrack || nav.msDoNotTrack
 
   // Normalise Firefox < 32
   // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/doNotTrack
@@ -23,5 +28,6 @@ export function doNotTrack() {
   if (doNotTrackValue === '0') {
     return false
   }
+
   return null
 }

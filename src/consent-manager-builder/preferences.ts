@@ -5,8 +5,18 @@ import topDomain from '@segment/top-domain'
 const COOKIE_KEY = 'tracking-preferences'
 const COOKIE_EXPIRES = 365
 
+interface Preferences {
+  destinationPreferences?: object
+  customPreferences?: object
+}
+
+type WindowWithAJS = Window & {
+  // TODO: add AJS types
+  analytics?: any
+}
+
 // TODO: harden against invalid cookies
-export function loadPreferences() {
+export function loadPreferences(): Preferences {
   const preferences = cookies.getJSON(COOKIE_KEY)
 
   if (!preferences) {
@@ -19,15 +29,17 @@ export function loadPreferences() {
   }
 }
 
-export function savePreferences({
-  destinationPreferences,
-  customPreferences,
-  cookieDomain
-}) {
-  window.analytics.identify({
-    destinationTrackingPreferences: destinationPreferences,
-    customTrackingPreferences: customPreferences
-  })
+type SavePreferences = Preferences & { cookieDomain?:  string}
+
+export function savePreferences({ destinationPreferences, customPreferences, cookieDomain }: SavePreferences) {
+  const wd = window as WindowWithAJS
+
+  if (wd.analytics) {
+    wd.analytics.identify({
+      destinationTrackingPreferences: destinationPreferences,
+      customTrackingPreferences: customPreferences
+    })
+  }
 
   const domain = cookieDomain || topDomain(window.location.href)
   const value = {
@@ -35,6 +47,7 @@ export function savePreferences({
     destinations: destinationPreferences,
     custom: customPreferences
   }
+
   cookies.set(COOKIE_KEY, value, {
     expires: COOKIE_EXPIRES,
     domain
