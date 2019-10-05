@@ -1,14 +1,18 @@
 import sinon from 'sinon'
+import {WindowWithAJS} from '../../src/types'
 import conditionallyLoadAnalytics from '../../src/consent-manager-builder/analytics'
 
 describe('analytics', () => {
+  let wd
+
   beforeEach(() => {
-    window = {}
+    window = {} as WindowWithAJS
+    wd = window
   })
 
   test('loads analytics.js with preferences', () => {
     const ajsLoad = sinon.spy()
-    window.analytics = {load: ajsLoad}
+    wd.analytics = {load: ajsLoad}
     const writeKey = '123'
     const destinations = [{id: 'Amplitude'}]
     const destinationPreferences = {
@@ -35,7 +39,7 @@ describe('analytics', () => {
 
   test('doesn՚t load analytics.js when there are no preferences', () => {
     const ajsLoad = sinon.spy()
-    window.analytics = {load: ajsLoad}
+    wd.analytics = {load: ajsLoad}
     const writeKey = '123'
     const destinations = [{id: 'Amplitude'}]
     const destinationPreferences = null
@@ -52,7 +56,7 @@ describe('analytics', () => {
 
   test('doesn՚t load analytics.js when all preferences are false', () => {
     const ajsLoad = sinon.spy()
-    window.analytics = {load: ajsLoad}
+    wd.analytics = {load: ajsLoad}
     const writeKey = '123'
     const destinations = [{id: 'Amplitude'}]
     const destinationPreferences = {
@@ -70,7 +74,7 @@ describe('analytics', () => {
   })
 
   test('reloads the page when analytics.js has already been initialised', () => {
-      window.analytics = {
+      wd.analytics = {
         load() {
           this.initialized = true
         }
@@ -102,12 +106,12 @@ describe('analytics', () => {
 
   test('should allow the reload behvaiour to be disabled', () => {
     const reload = sinon.spy()
-    window.analytics = {
+    wd.analytics = {
       load() {
         this.initialized = true
       }
     }
-    window.location = {reload}
+    wd.location = {reload}
     const writeKey = '123'
     const destinations = [{id: 'Amplitude'}]
     const destinationPreferences = {
@@ -133,7 +137,7 @@ describe('analytics', () => {
 
   test('loads analytics.js normally when consent isn՚t required', () => {
     const ajsLoad = sinon.spy()
-    window.analytics = {load: ajsLoad}
+    wd.analytics = {load: ajsLoad}
     const writeKey = '123'
     const destinations = [{id: 'Amplitude'}]
     const destinationPreferences = null
@@ -152,7 +156,7 @@ describe('analytics', () => {
 
   test('still applies preferences when consent isn՚t required', () => {
     const ajsLoad = sinon.spy()
-    window.analytics = {load: ajsLoad}
+    wd.analytics = {load: ajsLoad}
     const writeKey = '123'
     const destinations = [{id: 'Amplitude'}]
     const destinationPreferences = {
