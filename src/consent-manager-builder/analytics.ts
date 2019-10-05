@@ -1,10 +1,21 @@
+import { WindowWithAJS } from "../types"
+
+interface AnalyticsParams {
+  writeKey: string
+  destinations: any[]
+  destinationPreferences: object
+  isConsentRequired: boolean
+  shouldReload?: boolean
+}
+
 export default function conditionallyLoadAnalytics({
   writeKey,
   destinations,
   destinationPreferences,
   isConsentRequired,
   shouldReload = true
-}) {
+}: AnalyticsParams) {
+  const wd = window as WindowWithAJS
   const integrations = {All: false, 'Segment.io': true}
   let isAnythingEnabled = false
 
@@ -14,8 +25,8 @@ export default function conditionallyLoadAnalytics({
     }
 
     // Load a.js normally when consent isn't required and there's no preferences
-    if (!window.analytics.initialized) {
-      window.analytics.load(writeKey)
+    if (!wd.analytics.initialized) {
+      wd.analytics.load(writeKey)
     }
     return
   }
@@ -30,7 +41,7 @@ export default function conditionallyLoadAnalytics({
 
   // Reload the page if the trackers have already been initialised so that
   // the user's new preferences can take affect
-  if (window.analytics.initialized) {
+  if (wd.analytics.initialized) {
     if (shouldReload) {
       window.location.reload()
     }
@@ -39,6 +50,6 @@ export default function conditionallyLoadAnalytics({
 
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
-    window.analytics.load(writeKey, {integrations})
+    wd.analytics.load(writeKey, {integrations})
   }
 }
