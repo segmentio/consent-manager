@@ -19,7 +19,7 @@
     "standalone"
   ],
   "scripts": {
-    "test": "ava",
+    "test": "jest",
     "prepublishOnly": "yarn run clean && yarn run build",
     "postpublish": "yarn run deploy-storybook",
     "dev": "start-storybook -p 9009",
@@ -58,7 +58,6 @@
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.1",
     "@types/sinon": "^7.5.0",
-    "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.2",
@@ -100,20 +99,6 @@
   "peerDependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
-  },
-  "ava": {
-    "compileEnhancements": false,
-    "extensions": [
-      "ts",
-      "js",
-      "tsx"
-    ],
-    "require": [
-      "ts-node/register",
-      "babel-register",
-      "./tools/enzyme-config"
-    ],
-    "babel": "inherit"
   },
   "jest": {
     "preset": "ts-jest/presets/js-with-ts",
