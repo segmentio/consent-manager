@@ -1,15 +1,11 @@
 // TODO: remove duplicate cookie library from bundle
 import cookies from 'js-cookie'
 import topDomain from '@segment/top-domain'
-import {WindowWithAJS} from '../types'
+import {WindowWithAJS, Preferences} from '../types'
 
 const COOKIE_KEY = 'tracking-preferences'
 const COOKIE_EXPIRES = 365
 
-interface Preferences {
-  destinationPreferences?: object
-  customPreferences?: object
-}
 
 
 // TODO: harden against invalid cookies

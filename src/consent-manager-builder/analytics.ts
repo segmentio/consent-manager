@@ -41,7 +41,7 @@ export default function conditionallyLoadAnalytics({
 
   // Reload the page if the trackers have already been initialised so that
   // the user's new preferences can take affect
-  if (wd.analytics.initialized) {
+  if (wd.analytics && wd.analytics.initialized) {
     if (shouldReload) {
       window.location.reload()
     }
