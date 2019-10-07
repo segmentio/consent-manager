@@ -1,9 +1,8 @@
 import React, {PureComponent} from 'react'
-import PropTypes from 'prop-types'
 import styled from 'react-emotion'
 import fontStyles from './font-styles'
 
-const Root = styled('div')`
+const Root = styled<{ backgroundColor: string, textColor: string }, "div">('div')`
   ${fontStyles};
   position: relative;
   padding: 8px;
@@ -51,18 +50,18 @@ const CloseButton = styled('button')`
   cursor: pointer;
 `
 
-export default class Banner extends PureComponent {
-  static displayName = 'Banner'
+interface Props {
+  innerRef: () => void
+  onAccept: () => void
+  onChangePreferences: () => void
+  content: React.ReactElement
+  subContent: React.ReactElement
+  backgroundColor: string
+  textColor: string
+}
 
-  static propTypes = {
-    innerRef: PropTypes.func.isRequired,
-    onAccept: PropTypes.func.isRequired,
-    onChangePreferences: PropTypes.func.isRequired,
-    content: PropTypes.node.isRequired,
-    subContent: PropTypes.node.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    textColor: PropTypes.string.isRequired
-  }
+export default class Banner extends PureComponent<Props> {
+  static displayName = 'Banner'
 
   render() {
     const {

@@ -1,18 +1,17 @@
 import React, {PureComponent} from 'react'
-import PropTypes from 'prop-types'
 import Dialog from './dialog'
 import {DefaultButton, RedButton} from './buttons'
 
-export default class CancelDialog extends PureComponent {
-  static displayName = 'CancelDialog'
+interface Props {
+  innerRef: () => void
+  onBack: () => void
+  onConfirm: () => void
+  title: React.ReactElement
+  content: React.ReactElement
+}
 
-  static propTypes = {
-    innerRef: PropTypes.func.isRequired,
-    onBack: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func.isRequired,
-    title: PropTypes.node.isRequired,
-    content: PropTypes.node.isRequired
-  }
+export default class CancelDialog extends PureComponent<Props> {
+  static displayName = 'CancelDialog'
 
   render() {
     const {innerRef, onBack, title, content} = this.props
@@ -54,7 +53,7 @@ export default class CancelDialog extends PureComponent {
     onConfirm()
   }
 
-  handleEsc = e => {
+  handleEsc = (e: KeyboardEvent) => {
     const {onConfirm} = this.props
 
     // Esc key
