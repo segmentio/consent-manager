@@ -57,6 +57,7 @@ export default class Banner extends PureComponent {
   static propTypes = {
     innerRef: PropTypes.func.isRequired,
     onAccept: PropTypes.func.isRequired,
+    translate: PropTypes.func.isRequired,
     onChangePreferences: PropTypes.func.isRequired,
     content: PropTypes.node.isRequired,
     subContent: PropTypes.node.isRequired,
@@ -68,6 +69,7 @@ export default class Banner extends PureComponent {
     const {
       innerRef,
       onAccept,
+      translate,
       onChangePreferences,
       content,
       subContent,
@@ -91,12 +93,13 @@ export default class Banner extends PureComponent {
         </Content>
 
         <CloseButton
+          className="Button Button--primary"
           type="button"
-          title="Accept policy"
-          aria-label="Accept policy"
+          title={translate('ui.accept_all')}
+          aria-label={translate('ui.accept_all')}
           onClick={onAccept}
         >
-          ✕
+          {translate('ui.accept_all')}
         </CloseButton>
       </Root>
     )
