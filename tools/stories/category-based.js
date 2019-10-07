@@ -1,7 +1,7 @@
 import React from 'react'
-import {groupBy} from 'lodash'
-import {Pane, Heading, SubHeading, Ul, Code, Button} from 'evergreen-ui'
-import {ConsentManagerBuilder} from '../../src'
+import { groupBy } from 'lodash'
+import { Pane, Heading, SubHeading, Ul, Code, Button } from 'evergreen-ui'
+import { ConsentManagerBuilder } from '../../commonjs'
 import DestinationTile from './destination-tile'
 
 function Section(props) {
@@ -20,7 +20,7 @@ export default () => {
         writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
       >
-        {({destinations, preferences, setPreferences, saveConsent}) => {
+        {({ destinations, preferences, setPreferences, saveConsent }) => {
           function handleSubmit(e) {
             e.preventDefault()
             saveConsent()
@@ -31,9 +31,7 @@ export default () => {
           return (
             <form onSubmit={handleSubmit}>
               <Section>
-                <Heading>
-                  ACME Would like to track you with the following tools:
-                </Heading>
+                <Heading>ACME Would like to track you with the following tools:</Heading>
 
                 {Object.keys(categories).map(cat => {
                   const destinationsForCategory = categories[cat]
@@ -64,11 +62,7 @@ export default () => {
                 Save
               </Button>
 
-              <Button
-                type="button"
-                onClick={() => saveConsent(true)}
-                marginRight={8}
-              >
+              <Button type="button" onClick={() => saveConsent(true)} marginRight={8}>
                 Allow all
               </Button>
 

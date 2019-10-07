@@ -1,12 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Li, Text, Link, Checkbox, Card} from 'evergreen-ui'
+import { Li, Text, Link, Checkbox, Card } from 'evergreen-ui'
 
-export default function Destination({
-  destination,
-  preferences,
-  setPreferences
-}) {
+export default function Destination({ destination, preferences, setPreferences }) {
   return (
     <Li maxWidth={280} marginRight={20}>
       <Card elevation={1} padding={20} paddingTop={8}>

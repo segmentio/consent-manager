@@ -1,6 +1,6 @@
 import React from 'react'
-import {storiesOf} from '@storybook/react'
-import {injectGlobal} from 'emotion'
+import { storiesOf } from '@storybook/react'
+import { injectGlobal } from 'emotion'
 import ToolBased from './tool-based'
 import CategoryBased from './category-based'
 import ConsentManagerExample from './consent-manager'
