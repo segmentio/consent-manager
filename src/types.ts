@@ -5,8 +5,12 @@ export type WindowWithAJS = Window &
   }
 
 export interface Preferences {
-  destinationPreferences?: object
-  customPreferences?: object
+  destinationPreferences?: CategoryPreferences
+  customPreferences?: CategoryPreferences
 }
 
 export type Destination = any
+
+export interface CategoryPreferences {
+  [category: string]: boolean | null
+}

@@ -4,15 +4,11 @@ import Banner from './banner'
 import PreferenceDialog from './preference-dialog'
 import CancelDialog from './cancel-dialog'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
-import { Destination } from '../types'
+import { Destination, CategoryPreferences } from '../types'
 
 const emitter = new EventEmitter()
 export function openDialog() {
   emitter.emit('openDialog')
-}
-
-interface CategoryPreferences {
-  [category: string]: boolean
 }
 
 interface ContainerProps {
@@ -107,9 +103,9 @@ export default class Container extends PureComponent<ContainerProps, ContainerSt
             marketingDestinations={marketingDestinations}
             advertisingDestinations={advertisingDestinations}
             functionalDestinations={functionalDestinations}
-            marketingAndAnalytics={preferences.marketingAndAnalytics}
-            advertising={preferences.advertising}
-            functional={preferences.functional}
+            marketingAndAnalytics={preferences.marketingAndAnalytics!}
+            advertising={preferences.advertising!}
+            functional={preferences.functional!}
             title={preferencesDialogTitle}
             content={preferencesDialogContent}
           />

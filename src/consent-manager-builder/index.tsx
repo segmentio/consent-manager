@@ -2,7 +2,7 @@ import { Component } from 'react'
 import { loadPreferences, savePreferences } from './preferences'
 import fetchDestinations from './fetch-destinations'
 import conditionallyLoadAnalytics from './analytics'
-import { Preferences, Destination } from '../types'
+import { Preferences, Destination, CategoryPreferences } from '../types'
 
 function getNewDestinations(destinations: Destination[], preferences: Preferences) {
   const newDestinations: Destination[] = []
@@ -26,20 +26,20 @@ interface Props {
   writeKey: string
   otherWriteKeys?: string[]
   shouldRequireConsent?: () => boolean
-  initialPreferences?: Preferences
+  initialPreferences?: CategoryPreferences
   cookieDomain?: string
   children: (props: RenderProps) => React.ReactElement
 
   mapCustomPreferences?: (args: {
     destinations: Destination[]
-    preferences: Preferences
-  }) => { destinationPreferences: Preferences; customPreferences: Preferences }
+    preferences: CategoryPreferences
+  }) => { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
 }
 
 interface RenderProps {
   destinations: Destination[]
   newDestinations: Destination[]
-  preferences: Preferences
+  preferences: CategoryPreferences
   isConsentRequired: boolean
   setPreferences
   resetPreferences
@@ -50,7 +50,7 @@ interface State {
   isLoading: boolean
   destinations: Destination[]
   newDestinations: Destination[]
-  preferences?: Preferences
+  preferences?: CategoryPreferences
   isConsentRequired: boolean
 }
 
@@ -129,7 +129,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       isConsentRequired
     })
 
-    let preferences: Preferences | undefined
+    let preferences: CategoryPreferences | undefined
     if (mapCustomPreferences) {
       preferences = customPreferences || initialPreferences
     } else {
@@ -145,7 +145,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     })
   }
 
-  handleSetPreferences = (newPreferences: Preferences) => {
+  handleSetPreferences = (newPreferences: CategoryPreferences) => {
     this.setState(prevState => {
       const { destinations, preferences: existingPreferences } = prevState
       const preferences = this.mergePreferences({
@@ -153,7 +153,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         newPreferences,
         existingPreferences
       })
-      return { preferences }
+      return { ...prevState, preferences }
     })
   }
 
@@ -161,7 +161,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     const { initialPreferences, mapCustomPreferences } = this.props
     const { destinationPreferences, customPreferences } = loadPreferences()
 
-    let preferences: Preferences | undefined
+    let preferences: CategoryPreferences | undefined
     if (mapCustomPreferences) {
       preferences = customPreferences || initialPreferences
     } else {
@@ -171,7 +171,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     this.setState({ preferences })
   }
 
-  handleSaveConsent = (newPreferences: Preferences | undefined, shouldReload: boolean) => {
+  handleSaveConsent = (newPreferences: CategoryPreferences | undefined, shouldReload: boolean) => {
     const { writeKey, cookieDomain, mapCustomPreferences } = this.props
 
     this.setState(prevState => {
@@ -183,8 +183,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         existingPreferences
       })
 
-      let destinationPreferences: Preferences
-      let customPreferences: Preferences | undefined
+      let destinationPreferences: CategoryPreferences
+      let customPreferences: CategoryPreferences | undefined
 
       if (mapCustomPreferences) {
         const custom = mapCustomPreferences({
@@ -222,12 +222,12 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
   mergePreferences = (args: {
     destinations: Destination[]
-    existingPreferences?: Preferences
-    newPreferences?: Preferences
+    existingPreferences?: CategoryPreferences
+    newPreferences?: CategoryPreferences
   }) => {
     const { destinations, existingPreferences, newPreferences } = args
 
-    let preferences: Preferences
+    let preferences: CategoryPreferences
 
     if (typeof newPreferences === 'boolean') {
       const destinationPreferences = {}

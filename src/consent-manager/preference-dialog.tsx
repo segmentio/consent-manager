@@ -277,7 +277,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
     onChange(e.target.name, e.target.value === 'true')
   }
 
-  handleSubmit = (e: HTMLFormElement) => {
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const { onSave, marketingAndAnalytics, advertising, functional } = this.props
     e.preventDefault()
     // Safe guard against browsers that don't prevent the

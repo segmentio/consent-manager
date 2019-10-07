@@ -1,7 +1,7 @@
 // TODO: remove duplicate cookie library from bundle
 import cookies from 'js-cookie'
 import topDomain from '@segment/top-domain'
-import { WindowWithAJS, Preferences } from '../types'
+import { WindowWithAJS, Preferences, CategoryPreferences } from '../types'
 
 const COOKIE_KEY = 'tracking-preferences'
 const COOKIE_EXPIRES = 365
@@ -15,8 +15,8 @@ export function loadPreferences(): Preferences {
   }
 
   return {
-    destinationPreferences: preferences.destinations,
-    customPreferences: preferences.custom
+    destinationPreferences: preferences.destinations as CategoryPreferences,
+    customPreferences: preferences.custom as CategoryPreferences
   }
 }
 

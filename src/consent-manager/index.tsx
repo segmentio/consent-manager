@@ -1,34 +1,34 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
+import { CategoryPreferences, Destination } from '../types'
 
-const initialPreferences = {
+const initialPreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
   advertising: null,
   functional: null
 }
 
-export default class ConsentManager extends PureComponent {
-  static displayName = 'ConsentManager'
+interface ConsentManagerProps {
+  writeKey: string
+  otherWriteKeys?: string[]
+  shouldRequireConsent?: (...args: any[]) => any
+  implyConsentOnInteraction?: boolean
+  cookieDomain?: string
+  bannerContent: React.ReactNode
+  bannerSubContent?: string
+  bannerTextColor?: string
+  bannerBackgroundColor?: string
+  preferencesDialogTitle?: React.ReactNode
+  preferencesDialogContent: React.ReactNode
+  onError?: (...args: any[]) => any
+  cancelDialogTitle?: React.ReactNode
+  cancelDialogContent: React.ReactNode
+}
 
-  static propTypes = {
-    writeKey: PropTypes.string.isRequired,
-    otherWriteKeys: PropTypes.arrayOf(PropTypes.string),
-    shouldRequireConsent: PropTypes.func,
-    implyConsentOnInteraction: PropTypes.bool,
-    cookieDomain: PropTypes.string,
-    bannerContent: PropTypes.node.isRequired,
-    bannerSubContent: PropTypes.string,
-    bannerTextColor: PropTypes.string,
-    bannerBackgroundColor: PropTypes.string,
-    preferencesDialogTitle: PropTypes.node,
-    preferencesDialogContent: PropTypes.node.isRequired,
-    onError: PropTypes.func,
-    cancelDialogTitle: PropTypes.node,
-    cancelDialogContent: PropTypes.node.isRequired
-  }
+export default class ConsentManager extends PureComponent<ConsentManagerProps, {}> {
+  static displayName = 'ConsentManager'
 
   static defaultProps = {
     otherWriteKeys: [],
@@ -88,24 +88,30 @@ export default class ConsentManager extends PureComponent {
             setPreferences={setPreferences}
             resetPreferences={resetPreferences}
             saveConsent={saveConsent}
-            implyConsentOnInteraction={implyConsentOnInteraction}
-            bannerContent={bannerContent}
-            bannerSubContent={bannerSubContent}
-            bannerTextColor={bannerTextColor}
-            bannerBackgroundColor={bannerBackgroundColor}
-            preferencesDialogTitle={preferencesDialogTitle}
-            preferencesDialogContent={preferencesDialogContent}
-            cancelDialogTitle={cancelDialogTitle}
-            cancelDialogContent={cancelDialogContent}
+            implyConsentOnInteraction={implyConsentOnInteraction!}
+            bannerContent={bannerContent!}
+            bannerSubContent={bannerSubContent!}
+            bannerTextColor={bannerTextColor!}
+            bannerBackgroundColor={bannerBackgroundColor!}
+            preferencesDialogTitle={preferencesDialogTitle!}
+            preferencesDialogContent={preferencesDialogContent!}
+            cancelDialogTitle={cancelDialogTitle!}
+            cancelDialogContent={cancelDialogContent!}
           />
         )}
       </ConsentManagerBuilder>
     )
   }
 
-  handleMapCustomPreferences = ({ destinations, preferences }) => {
+  handleMapCustomPreferences = ({
+    destinations,
+    preferences
+  }: {
+    destinations: Destination[]
+    preferences: CategoryPreferences
+  }) => {
     const destinationPreferences = {}
-    const customPreferences = {}
+    const customPreferences: CategoryPreferences = {}
 
     // Default unset preferences to true (for implicit consent)
     for (const preferenceName of Object.keys(preferences)) {
