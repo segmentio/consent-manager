@@ -2,6 +2,7 @@ import React from 'react'
 import cookies from 'js-cookie'
 import { Pane, Heading, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager } from '../src'
+import { storiesOf } from '@storybook/react'
 
 const bannerContent = (
   <span>
@@ -58,7 +59,7 @@ const cancelDialogContent = (
   </div>
 )
 
-export default () => {
+const ConsentManagerExample = () => {
   return (
     <Pane>
       <ConsentManager
@@ -110,3 +111,7 @@ export default () => {
     </Pane>
   )
 }
+
+storiesOf('ConsentManager', module).add(`Standalone React Component`, () => (
+  <ConsentManagerExample />
+))
