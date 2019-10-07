@@ -1,16 +1,22 @@
 import React from 'react'
+import { groupBy } from 'lodash'
 import { Pane, Heading, SubHeading, Ul, Code, Button } from 'evergreen-ui'
-import { ConsentManagerBuilder } from '../../commonjs'
+import { ConsentManagerBuilder } from '../commonjs'
 import DestinationTile from './destination-tile'
 
 function Section(props) {
   return <Pane is="section" marginBottom={24} {...props} />
 }
 
+function byCategory(destinations) {
+  return groupBy(destinations, 'category')
+}
+
 export default () => {
   return (
     <Pane maxWidth={1000} margin={30}>
       <ConsentManagerBuilder
+        onError={e => console.error('Error Handling', e)}
         writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
       >
@@ -20,24 +26,35 @@ export default () => {
             saveConsent()
           }
 
+          const categories = byCategory(destinations)
+
           return (
             <form onSubmit={handleSubmit}>
               <Section>
                 <Heading>ACME Would like to track you with the following tools:</Heading>
-                <Ul display="flex" flexWrap="wrap">
-                  {destinations.map(d => (
-                    <DestinationTile
-                      key={d.id}
-                      destination={d}
-                      setPreferences={setPreferences}
-                      preferences={preferences}
-                    />
-                  ))}
-                </Ul>
+
+                {Object.keys(categories).map(cat => {
+                  const destinationsForCategory = categories[cat]
+                  return (
+                    <Pane key={cat} marginTop={20}>
+                      <SubHeading>{cat}</SubHeading>
+                      <Ul display="flex" flexWrap="wrap">
+                        {destinationsForCategory.map(d => (
+                          <DestinationTile
+                            key={d.id}
+                            destination={d}
+                            setPreferences={setPreferences}
+                            preferences={preferences}
+                          />
+                        ))}
+                      </Ul>
+                    </Pane>
+                  )
+                })}
               </Section>
 
               <Section>
-                <SubHeading>Preferences</SubHeading>
+                <Heading>Preferences</Heading>
                 <Code>{JSON.stringify(preferences)}</Code>
               </Section>
 

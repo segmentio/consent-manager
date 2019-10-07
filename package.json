@@ -29,7 +29,9 @@
     "build": "concurrently --names 'commonjs,esm,standalone' 'yarn run build-commonjs' 'yarn run build-esm' 'yarn run build-standalone'",
     "clean": "rm -rf commonjs esm standalone",
     "deploy-storybook": "storybook-to-ghpages",
-    "standalone-hash": "shasum -b -a 256 standalone/consent-manager.js | xxd -r -p | base64"
+    "standalone-hash": "shasum -b -a 256 standalone/consent-manager.js | xxd -r -p | base64",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@segment/top-domain": "^3.0.0",
@@ -44,8 +46,11 @@
   },
   "devDependencies": {
     "@segment/in-eu": "^0.3.0",
+    "@storybook/addon-actions": "^5.2.3",
+    "@storybook/addon-links": "^5.2.3",
     "@storybook/addon-options": "^3.4.1",
-    "@storybook/react": "^3.4.0",
+    "@storybook/addons": "^5.2.3",
+    "@storybook/react": "^5.2.3",
     "@storybook/storybook-deployer": "^2.3.0",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
