@@ -2,17 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import inEU from '@segment/in-eu'
 import { ConsentManager, openConsentManager, doNotTrack } from '.'
+import { ConsentManagerProps, WindowWithConsentManagerConfig } from './types'
 
 export const version = process.env.VERSION
 export { openConsentManager, doNotTrack, inEU }
 
 const dataset = document.currentScript && document.currentScript.dataset
+let props: Partial<ConsentManagerProps> = {}
+let containerRef: string | undefined
 
-let props = {}
-if (window.consentManagerConfig) {
+const localWindow = window as WindowWithConsentManagerConfig
+
+if (localWindow.consentManagerConfig) {
   // Allow using global variable
-  if (typeof window.consentManagerConfig === 'function') {
-    props = window.consentManagerConfig({
+  if (typeof localWindow.consentManagerConfig === 'function') {
+    props = localWindow.consentManagerConfig({
       React,
       version,
       openConsentManager,
@@ -20,14 +24,14 @@ if (window.consentManagerConfig) {
       inEU
     })
   } else {
-    props = window.consentManagerConfig
+    props = localWindow.consentManagerConfig
   }
 } else if (dataset) {
   // Allow using data attributes on the script tag
-  props.container = dataset.container
+  containerRef = dataset.container
   props.writeKey = dataset.writekey
-  props.otherWriteKeys = dataset.otherwritekeys
-  props.implyConsentOnInteraction = dataset.implyconsentoninteraction
+  props.otherWriteKeys = dataset.otherwritekeys as string[] | undefined
+  props.implyConsentOnInteraction = dataset.implyconsentoninteraction as boolean | undefined
   props.cookieDomain = dataset.cookiedomain
   props.bannerContent = dataset.bannercontent
   props.bannerTextColor = dataset.bannertextcolor
@@ -38,7 +42,7 @@ if (window.consentManagerConfig) {
   props.cancelDialogContent = dataset.canceldialogcontent
 }
 
-if (!props.container) {
+if (!containerRef) {
   throw new Error('ConsentManager: container is required')
 }
 
@@ -66,10 +70,9 @@ if (typeof props.implyConsentOnInteraction === 'string') {
   props.implyConsentOnInteraction = props.implyConsentOnInteraction === 'true'
 }
 
-const container = document.querySelector(props.container)
-
+const container = document.querySelector(containerRef)
 if (!container) {
   throw new Error('ConsentManager: container not found')
 }
 
-ReactDOM.render(<ConsentManager {...props} />, container)
+ReactDOM.render(<ConsentManager {...(props as ConsentManagerProps)} />, container)

@@ -2,29 +2,12 @@ import React, { PureComponent } from 'react'
 import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
-import { CategoryPreferences, Destination } from '../types'
+import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
 
 const initialPreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
   advertising: null,
   functional: null
-}
-
-interface ConsentManagerProps {
-  writeKey: string
-  otherWriteKeys?: string[]
-  shouldRequireConsent?: (...args: any[]) => any
-  implyConsentOnInteraction?: boolean
-  cookieDomain?: string
-  bannerContent: React.ReactNode
-  bannerSubContent?: string
-  bannerTextColor?: string
-  bannerBackgroundColor?: string
-  preferencesDialogTitle?: React.ReactNode
-  preferencesDialogContent: React.ReactNode
-  onError?: (...args: any[]) => any
-  cancelDialogTitle?: React.ReactNode
-  cancelDialogContent: React.ReactNode
 }
 
 export default class ConsentManager extends PureComponent<ConsentManagerProps, {}> {
@@ -111,7 +94,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     preferences: CategoryPreferences
   }) => {
     const destinationPreferences = {}
-    const customPreferences: CategoryPreferences = {}
+    const customPreferences = {}
 
     // Default unset preferences to true (for implicit consent)
     for (const preferenceName of Object.keys(preferences)) {
@@ -123,14 +106,16 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       }
     }
 
+    const customPrefs = customPreferences as CategoryPreferences
+
     for (const destination of destinations) {
       if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
-        destinationPreferences[destination.id] = customPreferences.advertising
+        destinationPreferences[destination.id] = customPrefs.advertising
       } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
-        destinationPreferences[destination.id] = customPreferences.functional
+        destinationPreferences[destination.id] = customPrefs.functional
       } else {
         // Fallback to marketing
-        destinationPreferences[destination.id] = customPreferences.marketingAndAnalytics
+        destinationPreferences[destination.id] = customPrefs.marketingAndAnalytics
       }
     }
 

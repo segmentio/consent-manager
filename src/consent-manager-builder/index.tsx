@@ -2,9 +2,9 @@ import { Component } from 'react'
 import { loadPreferences, savePreferences } from './preferences'
 import fetchDestinations from './fetch-destinations'
 import conditionallyLoadAnalytics from './analytics'
-import { Preferences, Destination, CategoryPreferences } from '../types'
+import { Destination, CategoryPreferences } from '../types'
 
-function getNewDestinations(destinations: Destination[], preferences: Preferences) {
+function getNewDestinations(destinations: Destination[], preferences: CategoryPreferences) {
   const newDestinations: Destination[] = []
 
   // If there are no preferences then all destinations are new
