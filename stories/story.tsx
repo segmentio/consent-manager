@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { storiesOf } from '@storybook/react'
 import { Pane, Button, Heading, Ul, Li, Code, Checkbox } from 'evergreen-ui'
 import { injectGlobal } from 'emotion'
-import { ConsentManagerBuilder, ConsentManager, openConsentManager } from '../commonjs'
+import { ConsentManagerBuilder, ConsentManager, openConsentManager } from '../src'
 
 if (window.localStorage) {
   window.localStorage.setItem('debug', 'analytics.js')

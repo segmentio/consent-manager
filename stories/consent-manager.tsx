@@ -1,7 +1,7 @@
 import React from 'react'
 import cookies from 'js-cookie'
 import { Pane, Heading, Button } from 'evergreen-ui'
-import { ConsentManager, openConsentManager } from '../commonjs'
+import { ConsentManager, openConsentManager } from '../src'
 
 const bannerContent = (
   <span>

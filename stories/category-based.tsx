@@ -1,7 +1,7 @@
 import React from 'react'
 import { groupBy } from 'lodash'
 import { Pane, Heading, SubHeading, Ul, Code, Button } from 'evergreen-ui'
-import { ConsentManagerBuilder } from '../commonjs'
+import { ConsentManagerBuilder } from '../src'
 import DestinationTile from './destination-tile'
 
 function Section(props) {
