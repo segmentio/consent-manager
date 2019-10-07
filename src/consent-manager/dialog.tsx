@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import styled, { keyframes } from 'react-emotion'
 import nanoid from 'nanoid'
 import fontStyles from './font-styles'
@@ -32,7 +31,7 @@ const openAnimation = keyframes`
   }
 `
 
-const Root = styled('section')`
+const Root = styled<{ width: number | string | undefined }, 'section'>('section')`
   ${fontStyles};
   display: flex;
   flex-direction: column;
@@ -110,31 +109,34 @@ const Buttons = styled('div')`
   text-align: right;
 `
 
-export default class Dialog extends PureComponent {
-  static displayName = 'Dialog'
+interface DialogProps {
+  innerRef: (element: HTMLElement | null) => void
+  onCancel?: () => void
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  title: React.ReactNode
+  buttons: React.ReactNode
+  width?: string
+}
 
-  static propTypes = {
-    innerRef: PropTypes.func.isRequired,
-    onCancel: PropTypes.func,
-    onSubmit: PropTypes.func.isRequired,
-    title: PropTypes.node.isRequired,
-    children: PropTypes.node.isRequired,
-    buttons: PropTypes.node.isRequired,
-    width: PropTypes.string
-  }
+export default class Dialog extends PureComponent<DialogProps, {}> {
+  static displayName = 'Dialog'
+  private titleId: string
+  private container: HTMLElement
+  private root: HTMLElement
+  private form: HTMLFormElement
 
   static defaultProps = {
     onCancel: undefined,
     width: '750px'
   }
 
-  constructor() {
-    super()
+  constructor(props: DialogProps) {
+    super(props)
 
     this.titleId = nanoid()
-
     this.container = document.createElement('div')
     this.container.setAttribute('data-consent-manager-dialog', '')
+
     document.body.appendChild(this.container)
   }
 
@@ -174,43 +176,44 @@ export default class Dialog extends PureComponent {
   componentDidMount() {
     const { innerRef } = this.props
 
-    this.form.querySelector('input,button').focus()
+    if (this.form) {
+      const input: HTMLInputElement | null = this.form.querySelector('input,button')
+      if (input) {
+        input.focus()
+      }
+    }
+
     document.body.addEventListener('keydown', this.handleEsc, false)
     document.body.style.overflow = 'hidden'
-
     innerRef(this.container)
   }
 
   componentWillUnmount() {
     const { innerRef } = this.props
-
     document.body.removeEventListener('keydown', this.handleEsc, false)
     document.body.style.overflow = ''
-
     document.body.removeChild(this.container)
     innerRef(null)
   }
 
-  handleRootRef = node => {
+  handleRootRef = (node: HTMLElement) => {
     this.root = node
   }
 
-  handleFormRef = node => {
+  handleFormRef = (node: HTMLFormElement) => {
     this.form = node
   }
 
   handleOverlayClick = e => {
     const { onCancel } = this.props
-
     // Ignore propogated clicks from inside the dialog
     if (onCancel && !this.root.contains(e.target)) {
       onCancel()
     }
   }
 
-  handleEsc = e => {
+  handleEsc = (e: KeyboardEvent) => {
     const { onCancel } = this.props
-
     // Esc key
     if (onCancel && e.keyCode === 27) {
       onCancel()

@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
 import { DefaultButton, GreenButton } from './buttons'
+import { Destination } from '../types'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -56,35 +56,23 @@ const InputCell = styled('td')`
   }
 `
 
-export default class PreferenceDialog extends PureComponent {
-  static displayName = 'PreferenceDialog'
+type PreferenceDialogProps = {
+  innerRef: () => void
+  onCancel: () => void
+  onSave: () => void
+  onChange: (name: string, value: boolean) => void
+  marketingDestinations: Destination[]
+  advertisingDestinations: Destination[]
+  functionalDestinations: Destination[]
+  marketingAndAnalytics?: boolean
+  advertising?: boolean
+  functional?: boolean
+  title: React.ReactNode
+  content: React.ReactNode
+}
 
-  static propTypes = {
-    innerRef: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-    marketingDestinations: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired
-      })
-    ).isRequired,
-    advertisingDestinations: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired
-      })
-    ).isRequired,
-    functionalDestinations: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired
-      })
-    ).isRequired,
-    marketingAndAnalytics: PropTypes.bool,
-    advertising: PropTypes.bool,
-    functional: PropTypes.bool,
-    title: PropTypes.node.isRequired,
-    content: PropTypes.node.isRequired
-  }
+export default class PreferenceDialog extends PureComponent<PreferenceDialogProps, {}> {
+  static displayName = 'PreferenceDialog'
 
   static defaultProps = {
     marketingAndAnalytics: null,
@@ -105,7 +93,6 @@ export default class PreferenceDialog extends PureComponent {
       title,
       content
     } = this.props
-
     const buttons = (
       <div>
         <DefaultButton type="button" onClick={onCancel}>
@@ -114,7 +101,6 @@ export default class PreferenceDialog extends PureComponent {
         <GreenButton type="submit">Save</GreenButton>
       </div>
     )
-
     return (
       <Dialog
         innerRef={innerRef}
@@ -288,21 +274,17 @@ export default class PreferenceDialog extends PureComponent {
 
   handleChange = e => {
     const { onChange } = this.props
-
     onChange(e.target.name, e.target.value === 'true')
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e: HTMLFormElement) => {
     const { onSave, marketingAndAnalytics, advertising, functional } = this.props
-
     e.preventDefault()
-
     // Safe guard against browsers that don't prevent the
     // submission of invalid forms (Safari < 10.1)
     if (marketingAndAnalytics === null || advertising === null || functional === null) {
       return
     }
-
     onSave()
   }
 }

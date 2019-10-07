@@ -1,9 +1,9 @@
-import { WindowWithAJS } from '../types'
+import { WindowWithAJS, Destination } from '../types'
 
 interface AnalyticsParams {
   writeKey: string
-  destinations: any[]
-  destinationPreferences: object
+  destinations: Destination[]
+  destinationPreferences: object | null
   isConsentRequired: boolean
   shouldReload?: boolean
 }
