@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import inEU from '@segment/in-eu'
-import {ConsentManager, openConsentManager, doNotTrack} from '.'
+import { ConsentManager, openConsentManager, doNotTrack } from '.'
 
 export const version = process.env.VERSION
-export {openConsentManager, doNotTrack, inEU}
+export { openConsentManager, doNotTrack, inEU }
 
 const dataset = document.currentScript && document.currentScript.dataset
 

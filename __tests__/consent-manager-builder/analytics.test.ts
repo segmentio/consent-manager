@@ -1,5 +1,5 @@
 import sinon from 'sinon'
-import {WindowWithAJS} from '../../src/types'
+import { WindowWithAJS } from '../../src/types'
 import conditionallyLoadAnalytics from '../../src/consent-manager-builder/analytics'
 
 describe('analytics', () => {
@@ -12,9 +12,9 @@ describe('analytics', () => {
 
   test('loads analytics.js with preferences', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = {load: ajsLoad}
+    wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{id: 'Amplitude'}]
+    const destinations = [{ id: 'Amplitude' }]
     const destinationPreferences = {
       Amplitude: true
     }
@@ -39,9 +39,9 @@ describe('analytics', () => {
 
   test('doesn՚t load analytics.js when there are no preferences', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = {load: ajsLoad}
+    wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{id: 'Amplitude'}]
+    const destinations = [{ id: 'Amplitude' }]
     const destinationPreferences = null
 
     conditionallyLoadAnalytics({
@@ -56,9 +56,9 @@ describe('analytics', () => {
 
   test('doesn՚t load analytics.js when all preferences are false', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = {load: ajsLoad}
+    wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{id: 'Amplitude'}]
+    const destinations = [{ id: 'Amplitude' }]
     const destinationPreferences = {
       Amplitude: false
     }
@@ -74,35 +74,34 @@ describe('analytics', () => {
   })
 
   test('reloads the page when analytics.js has already been initialised', () => {
-      wd.analytics = {
-        load() {
-          this.initialized = true
-        }
+    wd.analytics = {
+      load() {
+        this.initialized = true
       }
-      jest.spyOn(window.location, 'reload')
-
-      const writeKey = '123'
-      const destinations = [{id: 'Amplitude'}]
-      const destinationPreferences = {
-        Amplitude: true
-      }
-
-      conditionallyLoadAnalytics({
-        writeKey,
-        destinations,
-        destinationPreferences,
-        isConsentRequired: true
-      })
-      conditionallyLoadAnalytics({
-        writeKey,
-        destinations,
-        destinationPreferences,
-        isConsentRequired: true
-      })
-
-      expect(window.location.reload).toHaveBeenCalled()
     }
-  )
+    jest.spyOn(window.location, 'reload')
+
+    const writeKey = '123'
+    const destinations = [{ id: 'Amplitude' }]
+    const destinationPreferences = {
+      Amplitude: true
+    }
+
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isConsentRequired: true
+    })
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isConsentRequired: true
+    })
+
+    expect(window.location.reload).toHaveBeenCalled()
+  })
 
   test('should allow the reload behvaiour to be disabled', () => {
     const reload = sinon.spy()
@@ -111,9 +110,9 @@ describe('analytics', () => {
         this.initialized = true
       }
     }
-    wd.location = {reload}
+    wd.location = { reload }
     const writeKey = '123'
-    const destinations = [{id: 'Amplitude'}]
+    const destinations = [{ id: 'Amplitude' }]
     const destinationPreferences = {
       Amplitude: true
     }
@@ -137,9 +136,9 @@ describe('analytics', () => {
 
   test('loads analytics.js normally when consent isn՚t required', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = {load: ajsLoad}
+    wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{id: 'Amplitude'}]
+    const destinations = [{ id: 'Amplitude' }]
     const destinationPreferences = null
 
     conditionallyLoadAnalytics({
@@ -156,9 +155,9 @@ describe('analytics', () => {
 
   test('still applies preferences when consent isn՚t required', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = {load: ajsLoad}
+    wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{id: 'Amplitude'}]
+    const destinations = [{ id: 'Amplitude' }]
     const destinationPreferences = {
       Amplitude: true
     }

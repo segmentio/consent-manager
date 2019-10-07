@@ -1,4 +1,4 @@
-import {doNotTrack} from '../src'
+import { doNotTrack } from '../src'
 
 describe('doNotTrack', () => {
   beforeEach(() => {

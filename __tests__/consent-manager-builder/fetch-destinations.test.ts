@@ -2,7 +2,6 @@ import nock from 'nock'
 import fetchDestinations from '../../src/consent-manager-builder/fetch-destinations'
 
 describe('fetchDestinations', () => {
-
   test('Returns destinations for a writekey', async () => {
     nock('https://cdn.segment.com')
       .get('/v1/projects/123/integrations')

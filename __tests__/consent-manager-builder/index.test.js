@@ -1,5 +1,5 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import { shallow } from 'enzyme'
 import nock from 'nock'
 import sinon from 'sinon'
 import ConsentManagerBuilder from '../../src/consent-manager-builder'
@@ -12,7 +12,7 @@ describe('ConsentManagerBuilder', () => {
 
   test.todo('doesn՚t load analytics.js when consent is required')
 
-  test('provides a list of enabled destinations', (done) => {
+  test('provides a list of enabled destinations', done => {
     nock('https://cdn.segment.com')
       .get('/v1/projects/123/integrations')
       .reply(200, [
@@ -35,7 +35,7 @@ describe('ConsentManagerBuilder', () => {
 
     shallow(
       <ConsentManagerBuilder writeKey="123" otherWriteKeys={['abc']}>
-        {({destinations}) => {
+        {({ destinations }) => {
           expect(destinations).toMatchObject([
             {
               id: 'Amplitude',
@@ -59,7 +59,7 @@ describe('ConsentManagerBuilder', () => {
   test('provides a list of newly added destinations', done => {
     document.cookie =
       'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
-    window.analytics = {load() {}}
+    window.analytics = { load() {} }
 
     nock('https://cdn.segment.com')
       .get('/v1/projects/123/integrations')
@@ -76,7 +76,7 @@ describe('ConsentManagerBuilder', () => {
 
     shallow(
       <ConsentManagerBuilder writeKey="123">
-        {({newDestinations}) => {
+        {({ newDestinations }) => {
           expect(newDestinations).toMatchObject([
             {
               name: 'Google Analytics',
@@ -93,7 +93,7 @@ describe('ConsentManagerBuilder', () => {
     const ajsLoad = sinon.spy()
     document.cookie =
       'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
-    window.analytics = {load: ajsLoad}
+    window.analytics = { load: ajsLoad }
     const writeKey = '123'
 
     nock('https://cdn.segment.com')
@@ -126,7 +126,7 @@ describe('ConsentManagerBuilder', () => {
   test('provides an object containing the WIP preferences', done => {
     document.cookie =
       'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
-    window.analytics = {load() {}}
+    window.analytics = { load() {} }
 
     nock('https://cdn.segment.com')
       .get('/v1/projects/123/integrations')
@@ -139,7 +139,7 @@ describe('ConsentManagerBuilder', () => {
 
     shallow(
       <ConsentManagerBuilder writeKey="123">
-        {({preferences}) => {
+        {({ preferences }) => {
           expect(preferences).toMatchObject({
             Amplitude: true
           })
@@ -154,7 +154,9 @@ describe('ConsentManagerBuilder', () => {
   test.todo('provides a setPreferences() function for setting the preferences')
   test.todo('setPreferences() function can be passed a boolean to set all preferences')
   test.todo('provides a resetPreferences() function for resetting the preferences')
-  test.todo('provides a saveConsent() function for persisting the preferences and loading analytics.js')
+  test.todo(
+    'provides a saveConsent() function for persisting the preferences and loading analytics.js'
+  )
   test.todo('saveConsent() can be passed additional preferences to persist')
   test.todo('saveConsent() can be passed a boolean to set all preferences')
   test.todo('saveConsent() fills in missing preferences')

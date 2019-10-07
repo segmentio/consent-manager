@@ -1,8 +1,8 @@
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import styled, {css} from 'react-emotion'
+import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
-import {DefaultButton, GreenButton} from './buttons'
+import { DefaultButton, GreenButton } from './buttons'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -169,12 +169,10 @@ export default class PreferenceDialog extends PureComponent {
                 <RowHeading scope="row">Functional</RowHeading>
                 <td>
                   <p>
-                    To monitor the performance of our site and to enhance your
-                    browsing experience.
+                    To monitor the performance of our site and to enhance your browsing experience.
                   </p>
                   <p className={hideOnMobile}>
-                    For example, these tools enable you to communicate with us
-                    via live chat.
+                    For example, these tools enable you to communicate with us via live chat.
                   </p>
                 </td>
                 <td className={hideOnMobile}>
@@ -212,13 +210,12 @@ export default class PreferenceDialog extends PureComponent {
                 <RowHeading scope="row">Marketing and Analytics</RowHeading>
                 <td>
                   <p>
-                    To understand user behavior in order to provide you with a
-                    more relevant browsing experience or personalize the content
-                    on our site.
+                    To understand user behavior in order to provide you with a more relevant
+                    browsing experience or personalize the content on our site.
                   </p>
                   <p className={hideOnMobile}>
-                    For example, we collect information about which pages you
-                    visit to help us present more relevant information.
+                    For example, we collect information about which pages you visit to help us
+                    present more relevant information.
                   </p>
                 </td>
                 <td className={hideOnMobile}>
@@ -256,12 +253,12 @@ export default class PreferenceDialog extends PureComponent {
                 <RowHeading scope="row">Advertising</RowHeading>
                 <td>
                   <p>
-                    To personalize and measure the effectiveness of advertising
-                    on our site and other websites.
+                    To personalize and measure the effectiveness of advertising on our site and
+                    other websites.
                   </p>
                   <p className={hideOnMobile}>
-                    For example, we may serve you a personalized ad based on the
-                    pages you visit on our site.
+                    For example, we may serve you a personalized ad based on the pages you visit on
+                    our site.
                   </p>
                 </td>
                 <td className={hideOnMobile}>
@@ -273,15 +270,11 @@ export default class PreferenceDialog extends PureComponent {
                 <td>N/A</td>
                 <RowHeading scope="row">Essential</RowHeading>
                 <td>
+                  <p>We use browser cookies that are necessary for the site to work as intended.</p>
                   <p>
-                    We use browser cookies that are necessary for the site to
-                    work as intended.
-                  </p>
-                  <p>
-                    For example, we store your website data collection
-                    preferences so we can honor them if you return to our site.
-                    You can disable these cookies in your browser settings but
-                    if you do the site may not work as intended.
+                    For example, we store your website data collection preferences so we can honor
+                    them if you return to our site. You can disable these cookies in your browser
+                    settings but if you do the site may not work as intended.
                   </p>
                 </td>
                 <td className={hideOnMobile} />
@@ -294,23 +287,19 @@ export default class PreferenceDialog extends PureComponent {
   }
 
   handleChange = e => {
-    const {onChange} = this.props
+    const { onChange } = this.props
 
     onChange(e.target.name, e.target.value === 'true')
   }
 
   handleSubmit = e => {
-    const {onSave, marketingAndAnalytics, advertising, functional} = this.props
+    const { onSave, marketingAndAnalytics, advertising, functional } = this.props
 
     e.preventDefault()
 
     // Safe guard against browsers that don't prevent the
     // submission of invalid forms (Safari < 10.1)
-    if (
-      marketingAndAnalytics === null ||
-      advertising === null ||
-      functional === null
-    ) {
+    if (marketingAndAnalytics === null || advertising === null || functional === null) {
       return
     }
 

@@ -1,9 +1,6 @@
-import {URL} from 'url'
+import { URL } from 'url'
 import sinon from 'sinon'
-import {
-  loadPreferences,
-  savePreferences
-} from '../../src/consent-manager-builder/preferences'
+import { loadPreferences, savePreferences } from '../../src/consent-manager-builder/preferences'
 
 describe('preferences', () => {
   beforeEach(() => {
@@ -42,7 +39,7 @@ describe('preferences', () => {
     const ajsIdentify = sinon.spy()
 
     // @ts-ignore
-    window.analytics = {identify: ajsIdentify}
+    window.analytics = { identify: ajsIdentify }
     document.cookie = ''
 
     const destinationPreferences = {
@@ -64,15 +61,17 @@ describe('preferences', () => {
       customTrackingPreferences: customPreferences
     })
 
-    expect(document.cookie.includes(
-      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}}'
-    )).toBe(true)
+    expect(
+      document.cookie.includes(
+        'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}}'
+      )
+    ).toBe(true)
   })
 
   test('savePreferences() sets the cookie domain', () => {
     const ajsIdentify = sinon.spy()
     // @ts-ignore
-    window.analytics = {identify: ajsIdentify}
+    window.analytics = { identify: ajsIdentify }
     document.cookie = ''
 
     const destinationPreferences = {

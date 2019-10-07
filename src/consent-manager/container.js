@@ -1,10 +1,10 @@
 import EventEmitter from 'events'
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Banner from './banner'
 import PreferenceDialog from './preference-dialog'
 import CancelDialog from './cancel-dialog'
-import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
+import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
 
 const emitter = new EventEmitter()
 
@@ -54,7 +54,7 @@ export default class Container extends PureComponent {
       cancelDialogTitle,
       cancelDialogContent
     } = this.props
-    const {isDialogOpen, isCancelling} = this.state
+    const { isDialogOpen, isCancelling } = this.state
     const marketingDestinations = []
     const advertisingDestinations = []
     const functionalDestinations = []
@@ -73,18 +73,17 @@ export default class Container extends PureComponent {
     // TODO: add state for banner so it doesn't disappear on implicit consent (which is annoying UX)
     return (
       <div>
-        {isConsentRequired &&
-          newDestinations.length > 0 && (
-            <Banner
-              innerRef={this.handleBannerRef}
-              onAccept={this.handleBannerAccept}
-              onChangePreferences={this.openDialog}
-              content={bannerContent}
-              subContent={bannerSubContent}
-              textColor={bannerTextColor}
-              backgroundColor={bannerBackgroundColor}
-            />
-          )}
+        {isConsentRequired && newDestinations.length > 0 && (
+          <Banner
+            innerRef={this.handleBannerRef}
+            onAccept={this.handleBannerAccept}
+            onChangePreferences={this.openDialog}
+            content={bannerContent}
+            subContent={bannerSubContent}
+            textColor={bannerTextColor}
+            backgroundColor={bannerBackgroundColor}
+          />
+        )}
         {isDialogOpen && (
           <PreferenceDialog
             innerRef={this.handlePreferenceDialogRef}
@@ -115,7 +114,7 @@ export default class Container extends PureComponent {
   }
 
   componentDidMount() {
-    const {isConsentRequired, implyConsentOnInteraction} = this.props
+    const { isConsentRequired, implyConsentOnInteraction } = this.props
 
     emitter.on('openDialog', this.openDialog)
 
@@ -154,7 +153,7 @@ export default class Container extends PureComponent {
   }
 
   handleBannerAccept = () => {
-    const {saveConsent} = this.props
+    const { saveConsent } = this.props
 
     saveConsent()
   }
@@ -168,11 +167,7 @@ export default class Container extends PureComponent {
     } = this.props
 
     // Do nothing if no new implicit consent needs to be saved
-    if (
-      !isConsentRequired ||
-      !implyConsentOnInteraction ||
-      newDestinations.length === 0
-    ) {
+    if (!isConsentRequired || !implyConsentOnInteraction || newDestinations.length === 0) {
       return
     }
 
@@ -189,7 +184,7 @@ export default class Container extends PureComponent {
   }
 
   handleCategoryChange = (category, value) => {
-    const {setPreferences} = this.props
+    const { setPreferences } = this.props
 
     setPreferences({
       [category]: value
@@ -197,7 +192,7 @@ export default class Container extends PureComponent {
   }
 
   handleSave = () => {
-    const {saveConsent} = this.props
+    const { saveConsent } = this.props
 
     this.setState({
       isDialogOpen: false
@@ -206,7 +201,7 @@ export default class Container extends PureComponent {
   }
 
   handleCancel = () => {
-    const {resetPreferences, newDestinations} = this.props
+    const { resetPreferences, newDestinations } = this.props
 
     this.setState({
       isDialogOpen: false
@@ -230,7 +225,7 @@ export default class Container extends PureComponent {
   }
 
   handleCancelConfirm = () => {
-    const {resetPreferences} = this.props
+    const { resetPreferences } = this.props
 
     this.setState({
       isCancelling: false

@@ -1,4 +1,4 @@
-import { WindowWithAJS } from "../types"
+import { WindowWithAJS } from '../types'
 
 interface AnalyticsParams {
   writeKey: string
@@ -16,7 +16,7 @@ export default function conditionallyLoadAnalytics({
   shouldReload = true
 }: AnalyticsParams) {
   const wd = window as WindowWithAJS
-  const integrations = {All: false, 'Segment.io': true}
+  const integrations = { All: false, 'Segment.io': true }
   let isAnythingEnabled = false
 
   if (!destinationPreferences) {
@@ -50,6 +50,6 @@ export default function conditionallyLoadAnalytics({
 
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
-    wd.analytics.load(writeKey, {integrations})
+    wd.analytics.load(writeKey, { integrations })
   }
 }

@@ -1,19 +1,15 @@
 import fetch from 'isomorphic-fetch'
-import {flatten, sortedUniqBy, sortBy} from 'lodash'
+import { flatten, sortedUniqBy, sortBy } from 'lodash'
 import { Destination } from '../types'
 
 // TODO: Type destination
 
 async function fetchDestinationForWriteKey(writeKey: string): Promise<Destination[]> {
-  const res = await fetch(
-    `https://cdn.segment.com/v1/projects/${writeKey}/integrations`
-  )
+  const res = await fetch(`https://cdn.segment.com/v1/projects/${writeKey}/integrations`)
 
   if (!res.ok) {
     throw new Error(
-      `Failed to fetch integrations for write key ${writeKey}: HTTP ${
-        res.status
-      } ${res.statusText}`
+      `Failed to fetch integrations for write key ${writeKey}: HTTP ${res.status} ${res.statusText}`
     )
   }
 

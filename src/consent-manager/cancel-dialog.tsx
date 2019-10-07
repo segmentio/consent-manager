@@ -1,6 +1,6 @@
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import Dialog from './dialog'
-import {DefaultButton, RedButton} from './buttons'
+import { DefaultButton, RedButton } from './buttons'
 
 interface Props {
   innerRef: () => void
@@ -14,7 +14,7 @@ export default class CancelDialog extends PureComponent<Props> {
   static displayName = 'CancelDialog'
 
   render() {
-    const {innerRef, onBack, title, content} = this.props
+    const { innerRef, onBack, title, content } = this.props
 
     const buttons = (
       <div>
@@ -47,14 +47,14 @@ export default class CancelDialog extends PureComponent<Props> {
   }
 
   handleSubmit = e => {
-    const {onConfirm} = this.props
+    const { onConfirm } = this.props
 
     e.preventDefault()
     onConfirm()
   }
 
   handleEsc = (e: KeyboardEvent) => {
-    const {onConfirm} = this.props
+    const { onConfirm } = this.props
 
     // Esc key
     if (e.keyCode === 27) {

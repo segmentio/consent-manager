@@ -1,7 +1,7 @@
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import styled, {keyframes} from 'react-emotion'
+import styled, { keyframes } from 'react-emotion'
 import nanoid from 'nanoid'
 import fontStyles from './font-styles'
 
@@ -139,7 +139,7 @@ export default class Dialog extends PureComponent {
   }
 
   render() {
-    const {onCancel, onSubmit, title, children, buttons, width} = this.props
+    const { onCancel, onSubmit, title, children, buttons, width } = this.props
 
     const dialog = (
       <Overlay onClick={this.handleOverlayClick}>
@@ -153,11 +153,7 @@ export default class Dialog extends PureComponent {
           <Header>
             <Title id={this.titleId}>{title}</Title>
             {onCancel && (
-              <HeaderCancelButton
-                onClick={onCancel}
-                title="Cancel"
-                aria-label="Cancel"
-              >
+              <HeaderCancelButton onClick={onCancel} title="Cancel" aria-label="Cancel">
                 ✕
               </HeaderCancelButton>
             )}
@@ -176,7 +172,7 @@ export default class Dialog extends PureComponent {
   }
 
   componentDidMount() {
-    const {innerRef} = this.props
+    const { innerRef } = this.props
 
     this.form.querySelector('input,button').focus()
     document.body.addEventListener('keydown', this.handleEsc, false)
@@ -186,7 +182,7 @@ export default class Dialog extends PureComponent {
   }
 
   componentWillUnmount() {
-    const {innerRef} = this.props
+    const { innerRef } = this.props
 
     document.body.removeEventListener('keydown', this.handleEsc, false)
     document.body.style.overflow = ''
@@ -204,7 +200,7 @@ export default class Dialog extends PureComponent {
   }
 
   handleOverlayClick = e => {
-    const {onCancel} = this.props
+    const { onCancel } = this.props
 
     // Ignore propogated clicks from inside the dialog
     if (onCancel && !this.root.contains(e.target)) {
@@ -213,7 +209,7 @@ export default class Dialog extends PureComponent {
   }
 
   handleEsc = e => {
-    const {onCancel} = this.props
+    const { onCancel } = this.props
 
     // Esc key
     if (onCancel && e.keyCode === 27) {

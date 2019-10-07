@@ -1,7 +1,7 @@
 import CMB from './consent-manager-builder'
 import CM from './consent-manager'
 
-export {openDialog as openConsentManager} from './consent-manager/container'
+export { openDialog as openConsentManager } from './consent-manager/container'
 export const ConsentManagerBuilder = CMB
 export const ConsentManager = CM
 

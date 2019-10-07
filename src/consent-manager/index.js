@@ -1,8 +1,8 @@
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
-import {ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES} from './categories'
+import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
 
 const initialPreferences = {
   marketingAndAnalytics: null,
@@ -103,7 +103,7 @@ export default class ConsentManager extends PureComponent {
     )
   }
 
-  handleMapCustomPreferences = ({destinations, preferences}) => {
+  handleMapCustomPreferences = ({ destinations, preferences }) => {
     const destinationPreferences = {}
     const customPreferences = {}
 
@@ -124,11 +124,10 @@ export default class ConsentManager extends PureComponent {
         destinationPreferences[destination.id] = customPreferences.functional
       } else {
         // Fallback to marketing
-        destinationPreferences[destination.id] =
-          customPreferences.marketingAndAnalytics
+        destinationPreferences[destination.id] = customPreferences.marketingAndAnalytics
       }
     }
 
-    return {destinationPreferences, customPreferences}
+    return { destinationPreferences, customPreferences }
   }
 }
