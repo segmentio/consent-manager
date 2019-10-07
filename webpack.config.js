@@ -13,8 +13,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      react: 'inferno-compat',
-      'react-dom': 'inferno-compat',
+      react: 'preact-compat',
+      'react-dom': 'preact-compat',
       lodash: 'lodash-es'
     },
     extensions: ['.tsx', '.ts', '.js']
