@@ -3,11 +3,11 @@ import Dialog from './dialog'
 import { DefaultButton, RedButton } from './buttons'
 
 interface Props {
-  innerRef: () => void
+  innerRef: (node: HTMLElement) => void
   onBack: () => void
   onConfirm: () => void
-  title: React.ReactElement
-  content: React.ReactElement
+  title: React.ReactNode
+  content: React.ReactNode
 }
 
 export default class CancelDialog extends PureComponent<Props> {

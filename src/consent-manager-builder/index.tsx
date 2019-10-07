@@ -171,7 +171,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     this.setState({ preferences })
   }
 
-  handleSaveConsent = (newPreferences: Preferences, shouldReload: boolean) => {
+  handleSaveConsent = (newPreferences: Preferences | undefined, shouldReload: boolean) => {
     const { writeKey, cookieDomain, mapCustomPreferences } = this.props
 
     this.setState(prevState => {

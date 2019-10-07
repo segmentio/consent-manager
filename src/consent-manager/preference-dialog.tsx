@@ -56,8 +56,8 @@ const InputCell = styled('td')`
   }
 `
 
-type PreferenceDialogProps = {
-  innerRef: () => void
+interface PreferenceDialogProps {
+  innerRef: (element: HTMLElement | null) => void
   onCancel: () => void
   onSave: () => void
   onChange: (name: string, value: boolean) => void

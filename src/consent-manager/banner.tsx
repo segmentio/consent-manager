@@ -51,11 +51,11 @@ const CloseButton = styled('button')`
 `
 
 interface Props {
-  innerRef: () => void
+  innerRef: (node: HTMLElement) => void
   onAccept: () => void
   onChangePreferences: () => void
-  content: React.ReactElement
-  subContent: React.ReactElement
+  content: React.ReactNode
+  subContent: React.ReactNode
   backgroundColor: string
   textColor: string
 }

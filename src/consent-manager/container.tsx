@@ -1,38 +1,50 @@
 import EventEmitter from 'events'
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import Banner from './banner'
 import PreferenceDialog from './preference-dialog'
 import CancelDialog from './cancel-dialog'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
+import { Destination } from '../types'
 
 const emitter = new EventEmitter()
-
 export function openDialog() {
   emitter.emit('openDialog')
 }
 
-export default class Container extends PureComponent {
+interface CategoryPreferences {
+  [category: string]: boolean
+}
+
+interface ContainerProps {
+  setPreferences: (prefs: CategoryPreferences) => void
+  resetPreferences: () => void
+  saveConsent: (newPreferences?: CategoryPreferences, shouldReload?: boolean) => void
+  destinations: Destination[]
+  newDestinations: Destination[]
+  preferences: CategoryPreferences
+  isConsentRequired: boolean
+  implyConsentOnInteraction: boolean
+  bannerContent: React.ReactNode
+  bannerSubContent: React.ReactNode
+  bannerTextColor: string
+  bannerBackgroundColor: string
+  preferencesDialogTitle: React.ReactNode
+  preferencesDialogContent: React.ReactNode
+  cancelDialogTitle: React.ReactNode
+  cancelDialogContent: React.ReactNode
+}
+
+type ContainerState = {
+  isDialogOpen: boolean
+  isCancelling: boolean
+}
+
+export default class Container extends PureComponent<ContainerProps, ContainerState> {
   static displayName = 'Container'
 
-  static propTypes = {
-    setPreferences: PropTypes.func.isRequired,
-    resetPreferences: PropTypes.func.isRequired,
-    saveConsent: PropTypes.func.isRequired,
-    destinations: PropTypes.arrayOf(PropTypes.object).isRequired,
-    newDestinations: PropTypes.arrayOf(PropTypes.object).isRequired,
-    preferences: PropTypes.object.isRequired,
-    isConsentRequired: PropTypes.bool.isRequired,
-    implyConsentOnInteraction: PropTypes.bool.isRequired,
-    bannerContent: PropTypes.node.isRequired,
-    bannerSubContent: PropTypes.string.isRequired,
-    bannerTextColor: PropTypes.string.isRequired,
-    bannerBackgroundColor: PropTypes.string.isRequired,
-    preferencesDialogTitle: PropTypes.node.isRequired,
-    preferencesDialogContent: PropTypes.node.isRequired,
-    cancelDialogTitle: PropTypes.node.isRequired,
-    cancelDialogContent: PropTypes.node.isRequired
-  }
+  private banner: HTMLElement
+  private preferenceDialog: HTMLElement
+  private cancelDialog: HTMLElement
 
   state = {
     isDialogOpen: false,
@@ -54,10 +66,11 @@ export default class Container extends PureComponent {
       cancelDialogTitle,
       cancelDialogContent
     } = this.props
+
     const { isDialogOpen, isCancelling } = this.state
-    const marketingDestinations = []
-    const advertisingDestinations = []
-    const functionalDestinations = []
+    const marketingDestinations: Destination[] = []
+    const advertisingDestinations: Destination[] = []
+    const functionalDestinations: Destination[] = []
 
     for (const destination of destinations) {
       if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
@@ -84,6 +97,7 @@ export default class Container extends PureComponent {
             backgroundColor={bannerBackgroundColor}
           />
         )}
+
         {isDialogOpen && (
           <PreferenceDialog
             innerRef={this.handlePreferenceDialogRef}
@@ -100,6 +114,7 @@ export default class Container extends PureComponent {
             content={preferencesDialogContent}
           />
         )}
+
         {isCancelling && (
           <CancelDialog
             innerRef={this.handleCancelDialogRef}
@@ -115,9 +130,7 @@ export default class Container extends PureComponent {
 
   componentDidMount() {
     const { isConsentRequired, implyConsentOnInteraction } = this.props
-
     emitter.on('openDialog', this.openDialog)
-
     if (isConsentRequired && implyConsentOnInteraction) {
       document.body.addEventListener('click', this.handleBodyClick, false)
     }
@@ -140,21 +153,20 @@ export default class Container extends PureComponent {
     })
   }
 
-  handleBannerRef = node => {
+  handleBannerRef = (node: HTMLElement) => {
     this.banner = node
   }
 
-  handlePreferenceDialogRef = node => {
+  handlePreferenceDialogRef = (node: HTMLElement) => {
     this.preferenceDialog = node
   }
 
-  handleCancelDialogRef = node => {
+  handleCancelDialogRef = (node: HTMLElement) => {
     this.cancelDialog = node
   }
 
   handleBannerAccept = () => {
     const { saveConsent } = this.props
-
     saveConsent()
   }
 
@@ -183,9 +195,8 @@ export default class Container extends PureComponent {
     saveConsent(undefined, false)
   }
 
-  handleCategoryChange = (category, value) => {
+  handleCategoryChange = (category: string, value: boolean) => {
     const { setPreferences } = this.props
-
     setPreferences({
       [category]: value
     })
@@ -193,7 +204,6 @@ export default class Container extends PureComponent {
 
   handleSave = () => {
     const { saveConsent } = this.props
-
     this.setState({
       isDialogOpen: false
     })
@@ -230,6 +240,7 @@ export default class Container extends PureComponent {
     this.setState({
       isCancelling: false
     })
+
     resetPreferences()
   }
 }
