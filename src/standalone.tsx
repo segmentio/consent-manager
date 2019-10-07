@@ -30,7 +30,8 @@ if (localWindow.consentManagerConfig) {
   // Allow using data attributes on the script tag
   containerRef = dataset.container
   props.writeKey = dataset.writekey
-  props.otherWriteKeys = dataset.otherwritekeys as string[] | undefined
+  // @ts-ignore
+  props.otherWriteKeys = dataset.otherwritekeys
   props.implyConsentOnInteraction = dataset.implyconsentoninteraction as boolean | undefined
   props.cookieDomain = dataset.cookiedomain
   props.bannerContent = dataset.bannercontent
@@ -63,7 +64,7 @@ if (!props.cancelDialogContent) {
 }
 
 if (typeof props.otherWriteKeys === 'string') {
-  props.otherWriteKeys = props.otherWriteKeys.split(',')
+  props.otherWriteKeys = (props.otherWriteKeys as string).split(',')
 }
 
 if (typeof props.implyConsentOnInteraction === 'string') {
