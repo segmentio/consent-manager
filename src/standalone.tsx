@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom'
 import inEU from '@segment/in-eu'
 import { ConsentManager, openConsentManager, doNotTrack } from '.'
 import { ConsentManagerProps, WindowWithConsentManagerConfig, ConsentManagerInput } from './types'
+import { CloseBehavior } from './consent-manager/container'
 
 export const version = process.env.VERSION
 export { openConsentManager, doNotTrack, inEU }
 
 const dataset = document.currentScript && document.currentScript.dataset
+// TODO: define string based input type that can be parsed to `ConsentManagerInput`
 let props: Partial<ConsentManagerInput> = {}
 let containerRef: string | undefined
 
@@ -42,6 +44,8 @@ if (localWindow.consentManagerConfig) {
   props.preferencesDialogContent = dataset.preferencesdialogcontent
   props.cancelDialogTitle = dataset.canceldialogtitle
   props.cancelDialogContent = dataset.canceldialogcontent
+  // @ts-ignore
+  props.closeBehavior = dataset.closebehavior
 }
 
 if (!containerRef) {
@@ -70,6 +74,17 @@ if (typeof props.otherWriteKeys === 'string') {
 
 if (typeof props.implyConsentOnInteraction === 'string') {
   props.implyConsentOnInteraction = props.implyConsentOnInteraction === 'true'
+}
+
+if (props.closeBehavior !== undefined && typeof props.closeBehavior === 'string') {
+  const options = [
+    CloseBehavior.ACCEPT.toString(),
+    CloseBehavior.DENY.toString(),
+    CloseBehavior.DISMISS.toString()
+  ]
+  if (!options.includes(props.closeBehavior)) {
+    throw new Error(`ConsentManager: closeBehavior should be one of ${options}`)
+  }
 }
 
 const container = document.querySelector(containerRef)

@@ -16,7 +16,7 @@ export type WindowWithConsentManagerConfig = Window &
     ) => Partial<ConsentManagerInput> | Partial<ConsentManagerInput>
   }
 
-export interface ConsentManagerInput extends ConsentManagerProps {
+export type ConsentManagerInput = ConsentManagerProps & {
   container: string
 }
 
