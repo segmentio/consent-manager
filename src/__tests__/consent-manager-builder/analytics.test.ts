@@ -1,5 +1,5 @@
 import sinon from 'sinon'
-import { WindowWithAJS } from '../../types'
+import { WindowWithAJS, Destination } from '../../types'
 import conditionallyLoadAnalytics from '../../consent-manager-builder/analytics'
 
 describe('analytics', () => {
@@ -14,7 +14,7 @@ describe('analytics', () => {
     const ajsLoad = sinon.spy()
     wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{ id: 'Amplitude' }]
+    const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = {
       Amplitude: true
     }
@@ -41,7 +41,7 @@ describe('analytics', () => {
     const ajsLoad = sinon.spy()
     wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{ id: 'Amplitude' }]
+    const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = null
 
     conditionallyLoadAnalytics({
@@ -58,7 +58,7 @@ describe('analytics', () => {
     const ajsLoad = sinon.spy()
     wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{ id: 'Amplitude' }]
+    const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = {
       Amplitude: false
     }
@@ -82,7 +82,7 @@ describe('analytics', () => {
     jest.spyOn(window.location, 'reload')
 
     const writeKey = '123'
-    const destinations = [{ id: 'Amplitude' }]
+    const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = {
       Amplitude: true
     }
@@ -112,7 +112,7 @@ describe('analytics', () => {
     }
     wd.location = { reload }
     const writeKey = '123'
-    const destinations = [{ id: 'Amplitude' }]
+    const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = {
       Amplitude: true
     }
@@ -138,7 +138,7 @@ describe('analytics', () => {
     const ajsLoad = sinon.spy()
     wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{ id: 'Amplitude' }]
+    const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = null
 
     conditionallyLoadAnalytics({
@@ -157,7 +157,7 @@ describe('analytics', () => {
     const ajsLoad = sinon.spy()
     wd.analytics = { load: ajsLoad }
     const writeKey = '123'
-    const destinations = [{ id: 'Amplitude' }]
+    const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = {
       Amplitude: true
     }

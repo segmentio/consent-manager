@@ -1,7 +1,10 @@
+type AJS = SegmentAnalytics.AnalyticsJS & {
+  initialized: boolean
+}
+
 export type WindowWithAJS = Window &
   typeof globalThis & {
-    // TODO: add AJS types
-    analytics?: any
+    analytics?: AJS
   }
 
 export type WindowWithConsentManagerConfig = Window &
@@ -24,7 +27,14 @@ export interface Preferences {
   customPreferences?: CategoryPreferences
 }
 
-export type Destination = any
+export interface Destination {
+  id: string
+  name: string
+  creationName: string
+  description: string
+  website: string
+  category: string
+}
 
 export interface CategoryPreferences {
   functional?: boolean | null | undefined
