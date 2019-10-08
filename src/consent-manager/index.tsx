@@ -71,15 +71,19 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
             setPreferences={setPreferences}
             resetPreferences={resetPreferences}
             saveConsent={saveConsent}
-            implyConsentOnInteraction={implyConsentOnInteraction!}
-            bannerContent={bannerContent!}
-            bannerSubContent={bannerSubContent!}
-            bannerTextColor={bannerTextColor!}
-            bannerBackgroundColor={bannerBackgroundColor!}
-            preferencesDialogTitle={preferencesDialogTitle!}
-            preferencesDialogContent={preferencesDialogContent!}
-            cancelDialogTitle={cancelDialogTitle!}
-            cancelDialogContent={cancelDialogContent!}
+            implyConsentOnInteraction={
+              implyConsentOnInteraction || ConsentManager.defaultProps.implyConsentOnInteraction
+            }
+            bannerContent={bannerContent}
+            bannerSubContent={bannerSubContent}
+            bannerTextColor={bannerTextColor || ConsentManager.defaultProps.bannerTextColor}
+            bannerBackgroundColor={
+              bannerBackgroundColor || ConsentManager.defaultProps.bannerBackgroundColor
+            }
+            preferencesDialogTitle={preferencesDialogTitle}
+            preferencesDialogContent={preferencesDialogContent}
+            cancelDialogTitle={cancelDialogTitle}
+            cancelDialogContent={cancelDialogContent}
           />
         )}
       </ConsentManagerBuilder>

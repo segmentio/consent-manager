@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import nock from 'nock'
 import sinon from 'sinon'
-import ConsentManagerBuilder from '../../src/consent-manager-builder'
+import ConsentManagerBuilder from '../../consent-manager-builder'
 
 describe('ConsentManagerBuilder', () => {
   beforeEach(() => {

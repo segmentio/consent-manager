@@ -64,9 +64,9 @@ interface PreferenceDialogProps {
   marketingDestinations: Destination[]
   advertisingDestinations: Destination[]
   functionalDestinations: Destination[]
-  marketingAndAnalytics?: boolean
-  advertising?: boolean
-  functional?: boolean
+  marketingAndAnalytics?: boolean | null
+  advertising?: boolean | null
+  functional?: boolean | null
   title: React.ReactNode
   content: React.ReactNode
 }

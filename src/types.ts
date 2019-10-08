@@ -12,7 +12,7 @@ export type WindowWithConsentManagerConfig = Window &
   }
 
 interface StandaloneConsentManagerParams {
-  React: any
+  React: unknown
   version?: string
   openConsentManager: () => void
   doNotTrack: () => boolean | null
@@ -45,7 +45,7 @@ export interface ConsentManagerProps {
   bannerBackgroundColor?: string
   preferencesDialogTitle?: React.ReactNode
   preferencesDialogContent: React.ReactNode
-  onError?: (...args: any[]) => any
+  onError?: (error: Error | undefined) => void
   cancelDialogTitle?: React.ReactNode
   cancelDialogContent: React.ReactNode
 }

@@ -1,5 +1,5 @@
 import nock from 'nock'
-import fetchDestinations from '../../src/consent-manager-builder/fetch-destinations'
+import fetchDestinations from '../../consent-manager-builder/fetch-destinations'
 
 describe('fetchDestinations', () => {
   test('Returns destinations for a writekey', async () => {

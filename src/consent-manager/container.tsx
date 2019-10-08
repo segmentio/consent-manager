@@ -103,9 +103,9 @@ export default class Container extends PureComponent<ContainerProps, ContainerSt
             marketingDestinations={marketingDestinations}
             advertisingDestinations={advertisingDestinations}
             functionalDestinations={functionalDestinations}
-            marketingAndAnalytics={preferences.marketingAndAnalytics!}
-            advertising={preferences.advertising!}
-            functional={preferences.functional!}
+            marketingAndAnalytics={preferences.marketingAndAnalytics}
+            advertising={preferences.advertising}
+            functional={preferences.functional}
             title={preferencesDialogTitle}
             content={preferencesDialogContent}
           />

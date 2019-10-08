@@ -1,6 +1,6 @@
 import { URL } from 'url'
 import sinon from 'sinon'
-import { loadPreferences, savePreferences } from '../../src/consent-manager-builder/preferences'
+import { loadPreferences, savePreferences } from '../../consent-manager-builder/preferences'
 
 describe('preferences', () => {
   beforeEach(() => {

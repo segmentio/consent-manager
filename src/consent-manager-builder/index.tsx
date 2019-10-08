@@ -100,7 +100,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         await onError(e)
       }
     } else {
-      this.initialise()
+      await this.initialise()
     }
   }
 
