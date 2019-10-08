@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
@@ -13,6 +13,7 @@ jobs:
           paths:
             - ./node_modules
       - run: yarn build
+      - run: yarn lint
       - run: yarn test
       - run: yarn size-limit
 

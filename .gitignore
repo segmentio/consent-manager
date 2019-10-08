@@ -2,6 +2,8 @@
 /commonjs/
 /esm/
 /standalone/
+/build
+/storybook-static
 
 # IDE
 .vscode/

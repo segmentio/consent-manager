@@ -5,7 +5,7 @@ const pkg = require('./package.json')
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
-  entry: './src/standalone.js',
+  entry: './src/standalone.tsx',
   output: {
     path: path.join(__dirname, 'standalone'),
     filename: 'consent-manager.js',
@@ -13,22 +13,18 @@ module.exports = {
   },
   resolve: {
     alias: {
-      react: 'inferno-compat',
-      'react-dom': 'inferno-compat',
+      react: 'preact/compat',
+      'react-dom': 'preact/compat',
       lodash: 'lodash-es'
-    }
+    },
+    extensions: ['.tsx', '.ts', '.js']
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        loader: 'source-map-loader',
-        enforce: 'pre'
-      },
-      {
-        test: /\.js$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'ts-loader'
       }
     ]
   },

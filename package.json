@@ -1,6 +1,6 @@
 {
   "name": "@segment/consent-manager",
-  "version": "1.3.1",
+  "version": "2.4.0--alpha.2",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
     "gdpr",
@@ -19,22 +19,22 @@
     "standalone"
   ],
   "scripts": {
-    "test": "xo && ava",
+    "test": "jest src/__tests__",
     "prepublishOnly": "yarn run clean && yarn run build",
-    "postpublish": "yarn run deploy-storybook",
-    "precommit": "lint-staged",
-    "dev": "start-storybook -p 9009",
-    "build-commonjs": "BABEL_ENV=commonjs babel src --out-dir commonjs --source-maps inline",
-    "build-esm": "BABEL_ENV=esm babel src --out-dir esm --source-maps inline",
-    "build-standalone": "BABEL_ENV=esm webpack",
+    "postpublish": "yarn build-storybook && yarn deploy-storybook -- --existing-output-dir=storybook-static",
+    "dev": "yarn build-standalone && start-storybook -s ./ -p 9009",
+    "build-commonjs": "tsc --outDir commonjs --inlineSourceMap",
+    "build-esm": "tsc --module es2015 --outDir esm --inlineSourceMap",
+    "build-standalone": "webpack",
     "build": "concurrently --names 'commonjs,esm,standalone' 'yarn run build-commonjs' 'yarn run build-esm' 'yarn run build-standalone'",
-    "clean": "rm -rf commonjs esm standalone",
+    "clean": "rm -rf commonjs esm standalone storybook-static",
     "deploy-storybook": "storybook-to-ghpages",
-    "standalone-hash": "shasum -b -a 256 standalone/consent-manager.js | xxd -r -p | base64"
+    "standalone-hash": "shasum -b -a 256 standalone/consent-manager.js | xxd -r -p | base64",
+    "build-storybook": "yarn build-standalone && build-storybook && cp -r ./standalone ./storybook-static/standalone",
+    "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
     "@segment/top-domain": "^3.0.0",
-    "babel-runtime": "^6.26.0",
     "emotion": "^9.1.2",
     "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^2.2.0",
@@ -44,84 +44,99 @@
     "react-emotion": "^9.1.2"
   },
   "devDependencies": {
-    "@segment/in-eu": "^0.2.1",
+    "@babel/core": "^7.6.2",
+    "@segment/in-eu": "^0.3.0",
+    "@storybook/addon-actions": "^5.2.3",
+    "@storybook/addon-info": "^5.2.3",
+    "@storybook/addon-links": "^5.2.3",
     "@storybook/addon-options": "^3.4.1",
-    "@storybook/react": "^3.4.0",
-    "@storybook/storybook-deployer": "^2.3.0",
-    "ava": "^0.25.0",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.2",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-emotion": "^9.1.2",
-    "babel-plugin-lodash": "^3.3.2",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.26.0",
+    "@storybook/addon-storysource": "^5.2.3",
+    "@storybook/addons": "^5.2.3",
+    "@storybook/react": "^5.2.3",
+    "@storybook/storybook-deployer": "^2.8.1",
+    "@types/enzyme": "^3.10.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/isomorphic-fetch": "^0.0.35",
+    "@types/jest": "^24.0.18",
+    "@types/js-cookie": "^2.2.2",
+    "@types/lodash": "^4.14.141",
+    "@types/nanoid": "^2.1.0",
+    "@types/nock": "^11.1.0",
+    "@types/node": "^12.7.11",
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "^16.9.1",
+    "@types/segment-analytics": "^0.0.32",
+    "@types/sinon": "^7.5.0",
+    "@types/storybook__react": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
+    "babel-loader": "^8.0.6",
     "concurrently": "^3.5.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint-config-xo-react": "^0.16.0",
-    "eslint-plugin-react": "^7.7.0",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
     "evergreen-ui": "^3.0.0",
-    "husky": "^0.14.3",
-    "inferno": "^5.0.4",
-    "inferno-clone-vnode": "^5.0.4",
-    "inferno-compat": "^5.0.4",
-    "inferno-create-class": "^5.0.4",
-    "inferno-create-element": "^5.0.4",
+    "file-loader": "^4.2.0",
+    "husky": "^3.0.8",
+    "jest": "^24.9.0",
     "lint-staged": "^7.0.4",
     "lodash-es": "^4.17.10",
     "nock": "^9.2.5",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "preact": "^10.0.0",
+    "prettier": "1.18.2",
+    "pretty-quick": "^1.11.1",
+    "prismjs": "^1.17.1",
+    "raw-loader": "^3.1.0",
+    "react": "^16.10.2",
+    "react-docgen-typescript-loader": "^3.3.0",
+    "react-dom": "^16.10.2",
+    "react-simple-code-editor": "^0.10.0",
+    "react-syntax-highlighter": "^11.0.2",
     "sinon": "^5.0.7",
     "size-limit": "^0.17.0",
-    "source-map-loader": "^0.2.3",
+    "ts-jest": "^24.1.0",
+    "ts-loader": "^6.2.0",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.7.0-beta",
     "webpack": "^4.8.2",
-    "webpack-cli": "^2.1.3",
-    "xo": "^0.21.0"
+    "webpack-cli": "^2.1.3"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^16.10.0",
+    "react-dom": "^16.10.0"
   },
-  "xo": {
-    "parser": "babel-eslint",
-    "extends": "xo-react",
-    "envs": [
-      "node",
-      "browser"
-    ],
-    "prettier": true,
-    "space": true,
-    "semicolon": false
-  },
-  "lint-staged": {
-    "*.js": [
-      "xo --fix",
-      "git add"
+  "jest": {
+    "preset": "ts-jest/presets/js-with-ts",
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "./test/setupTests.ts"
     ]
-  },
-  "ava": {
-    "require": [
-      "babel-register",
-      "./tools/enzyme-config"
-    ],
-    "babel": "inherit"
   },
   "size-limit": [
     {
       "path": "esm/index.js",
-      "limit": "44 KB"
+      "limit": "48 KB"
     },
     {
       "path": "standalone/consent-manager.js",
-      "limit": "58 KB"
+      "limit": "44 KB"
     }
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100
+  },
   "storybook-deployer": {
     "gitUsername": "GitHub Pages Bot",
     "gitEmail": "friends@segment.com",
