@@ -1,5 +1,5 @@
 import EventEmitter from 'events'
-import React, { PureComponent } from 'react'
+import React from 'react'
 import Banner from './banner'
 import PreferenceDialog from './preference-dialog'
 import CancelDialog from './cancel-dialog'
@@ -30,213 +30,150 @@ interface ContainerProps {
   cancelDialogContent: React.ReactNode
 }
 
-type ContainerState = {
-  isDialogOpen: boolean
-  isCancelling: boolean
+function normalizeDestinations(destinations: Destination[]) {
+  const marketingDestinations: Destination[] = []
+  const advertisingDestinations: Destination[] = []
+  const functionalDestinations: Destination[] = []
+
+  for (const destination of destinations) {
+    if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
+      advertisingDestinations.push(destination)
+    } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
+      functionalDestinations.push(destination)
+    } else {
+      // Fallback to marketing
+      marketingDestinations.push(destination)
+    }
+  }
+
+  return { marketingDestinations, advertisingDestinations, functionalDestinations }
 }
 
-export default class Container extends PureComponent<ContainerProps, ContainerState> {
-  static displayName = 'Container'
+const Container: React.FC<ContainerProps> = props => {
+  const [isDialogOpen, toggleDialog] = React.useState(false)
+  const [isCancelling, toggleCancel] = React.useState(false)
 
-  private banner: HTMLElement
-  private preferenceDialog: HTMLElement
-  private cancelDialog: HTMLElement
+  let banner = React.useRef<HTMLElement>(null)
+  let preferenceDialog = React.useRef<HTMLElement>(null)
+  let cancelDialog = React.useRef<HTMLElement>(null)
 
-  state = {
-    isDialogOpen: false,
-    isCancelling: false
-  }
+  const {
+    marketingDestinations,
+    advertisingDestinations,
+    functionalDestinations
+  } = normalizeDestinations(props.destinations)
 
-  render() {
-    const {
-      destinations,
-      newDestinations,
-      preferences,
-      isConsentRequired,
-      bannerContent,
-      bannerSubContent,
-      bannerTextColor,
-      bannerBackgroundColor,
-      preferencesDialogTitle,
-      preferencesDialogContent,
-      cancelDialogTitle,
-      cancelDialogContent
-    } = this.props
-
-    const { isDialogOpen, isCancelling } = this.state
-    const marketingDestinations: Destination[] = []
-    const advertisingDestinations: Destination[] = []
-    const functionalDestinations: Destination[] = []
-
-    for (const destination of destinations) {
-      if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
-        advertisingDestinations.push(destination)
-      } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
-        functionalDestinations.push(destination)
-      } else {
-        // Fallback to marketing
-        marketingDestinations.push(destination)
-      }
-    }
-
-    // TODO: add state for banner so it doesn't disappear on implicit consent (which is annoying UX)
-    return (
-      <div>
-        {isConsentRequired && newDestinations.length > 0 && (
-          <Banner
-            innerRef={this.handleBannerRef}
-            onAccept={this.handleBannerAccept}
-            onChangePreferences={this.openDialog}
-            content={bannerContent}
-            subContent={bannerSubContent}
-            textColor={bannerTextColor}
-            backgroundColor={bannerBackgroundColor}
-          />
-        )}
-
-        {isDialogOpen && (
-          <PreferenceDialog
-            innerRef={this.handlePreferenceDialogRef}
-            onCancel={this.handleCancel}
-            onSave={this.handleSave}
-            onChange={this.handleCategoryChange}
-            marketingDestinations={marketingDestinations}
-            advertisingDestinations={advertisingDestinations}
-            functionalDestinations={functionalDestinations}
-            marketingAndAnalytics={preferences.marketingAndAnalytics}
-            advertising={preferences.advertising}
-            functional={preferences.functional}
-            title={preferencesDialogTitle}
-            content={preferencesDialogContent}
-          />
-        )}
-
-        {isCancelling && (
-          <CancelDialog
-            innerRef={this.handleCancelDialogRef}
-            onBack={this.handleCancelBack}
-            onConfirm={this.handleCancelConfirm}
-            title={cancelDialogTitle}
-            content={cancelDialogContent}
-          />
-        )}
-      </div>
-    )
-  }
-
-  componentDidMount() {
-    const { isConsentRequired, implyConsentOnInteraction } = this.props
-    emitter.on('openDialog', this.openDialog)
-    if (isConsentRequired && implyConsentOnInteraction) {
-      document.body.addEventListener('click', this.handleBodyClick, false)
-    }
-  }
-
-  componentWillUnmount() {
-    emitter.removeListener('openDialog', this.openDialog)
-    document.body.removeEventListener('click', this.handleBodyClick, false)
-  }
-
-  openDialog = () => {
-    this.setState({
-      isDialogOpen: true
-    })
-  }
-
-  closeDialog = () => {
-    this.setState({
-      isDialogOpen: false
-    })
-  }
-
-  handleBannerRef = (node: HTMLElement) => {
-    this.banner = node
-  }
-
-  handlePreferenceDialogRef = (node: HTMLElement) => {
-    this.preferenceDialog = node
-  }
-
-  handleCancelDialogRef = (node: HTMLElement) => {
-    this.cancelDialog = node
-  }
-
-  handleBannerAccept = () => {
-    const { saveConsent } = this.props
-    saveConsent()
-  }
-
-  handleBodyClick = e => {
-    const {
-      newDestinations,
-      saveConsent,
-      isConsentRequired,
-      implyConsentOnInteraction
-    } = this.props
-
+  const handleBodyClick = e => {
     // Do nothing if no new implicit consent needs to be saved
-    if (!isConsentRequired || !implyConsentOnInteraction || newDestinations.length === 0) {
+    if (
+      !props.isConsentRequired ||
+      !props.implyConsentOnInteraction ||
+      props.newDestinations.length === 0
+    ) {
       return
     }
 
     // Ignore propogated clicks from inside the consent manager
     if (
-      (this.banner && this.banner.contains(e.target)) ||
-      (this.preferenceDialog && this.preferenceDialog.contains(e.target)) ||
-      (this.cancelDialog && this.cancelDialog.contains(e.target))
+      (banner.current && banner.current.contains(e.target)) ||
+      (preferenceDialog.current && preferenceDialog.current.contains(e.target)) ||
+      (cancelDialog.current && cancelDialog.current.contains(e.target))
     ) {
       return
     }
 
-    saveConsent(undefined, false)
+    props.saveConsent(undefined, false)
   }
 
-  handleCategoryChange = (category: string, value: boolean) => {
-    const { setPreferences } = this.props
-    setPreferences({
+  React.useEffect(() => {
+    emitter.on('openDialog', openDialog)
+    if (props.isConsentRequired && props.implyConsentOnInteraction) {
+      document.body.addEventListener('click', handleBodyClick, false)
+    }
+
+    return () => {
+      emitter.removeListener('openDialog', openDialog)
+      document.body.removeEventListener('click', handleBodyClick, false)
+    }
+  })
+
+  const handleCategoryChange = (category: string, value: boolean) => {
+    props.setPreferences({
       [category]: value
     })
   }
 
-  handleSave = () => {
-    const { saveConsent } = this.props
-    this.setState({
-      isDialogOpen: false
-    })
-    saveConsent()
+  const handleSave = () => {
+    toggleDialog(false)
+    props.saveConsent()
   }
 
-  handleCancel = () => {
-    const { resetPreferences, newDestinations } = this.props
-
-    this.setState({
-      isDialogOpen: false
-    })
-
+  const handleCancel = () => {
+    toggleDialog(false)
     // Only show the cancel confirmation if there's unconsented destinations
-    if (newDestinations.length > 0) {
-      this.setState({
-        isCancelling: true
-      })
+    if (props.newDestinations.length > 0) {
+      toggleCancel(true)
     } else {
-      resetPreferences()
+      props.resetPreferences()
     }
   }
 
-  handleCancelBack = () => {
-    this.setState({
-      isDialogOpen: true,
-      isCancelling: false
-    })
+  const handleCancelBack = () => {
+    toggleDialog(true)
+    toggleCancel(false)
   }
 
-  handleCancelConfirm = () => {
-    const { resetPreferences } = this.props
-
-    this.setState({
-      isCancelling: false
-    })
-
-    resetPreferences()
+  const handleCancelConfirm = () => {
+    toggleCancel(false)
+    props.resetPreferences()
   }
+
+  const handleBannerClose = () => {
+    props.saveConsent()
+  }
+
+  return (
+    <div>
+      {props.isConsentRequired && props.newDestinations.length > 0 && (
+        <Banner
+          innerRef={current => (banner = { current })}
+          onClose={handleBannerClose}
+          onChangePreferences={() => toggleDialog(true)}
+          content={props.bannerContent}
+          subContent={props.bannerSubContent}
+          textColor={props.bannerTextColor}
+          backgroundColor={props.bannerBackgroundColor}
+        />
+      )}
+
+      {isDialogOpen && (
+        <PreferenceDialog
+          innerRef={current => (preferenceDialog = { current })}
+          onCancel={handleCancel}
+          onSave={handleSave}
+          onChange={handleCategoryChange}
+          marketingDestinations={marketingDestinations}
+          advertisingDestinations={advertisingDestinations}
+          functionalDestinations={functionalDestinations}
+          marketingAndAnalytics={props.preferences.marketingAndAnalytics}
+          advertising={props.preferences.advertising}
+          functional={props.preferences.functional}
+          title={props.preferencesDialogTitle}
+          content={props.preferencesDialogContent}
+        />
+      )}
+
+      {isCancelling && (
+        <CancelDialog
+          innerRef={current => (cancelDialog = { current })}
+          onBack={handleCancelBack}
+          onConfirm={handleCancelConfirm}
+          title={props.cancelDialogTitle}
+          content={props.cancelDialogContent}
+        />
+      )}
+    </div>
+  )
 }
+
+export default Container
