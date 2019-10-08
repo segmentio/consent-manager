@@ -21,16 +21,16 @@
   "scripts": {
     "test": "jest",
     "prepublishOnly": "yarn run clean && yarn run build",
-    "postpublish": "yarn run deploy-storybook",
+    "postpublish": "yarn deploy-storybook",
     "dev": "yarn build-standalone && start-storybook -s ./ -p 9009",
     "build-commonjs": "tsc --outDir commonjs --inlineSourceMap",
     "build-esm": "tsc --module es2015 --outDir esm --inlineSourceMap",
     "build-standalone": "webpack",
     "build": "concurrently --names 'commonjs,esm,standalone' 'yarn run build-commonjs' 'yarn run build-esm' 'yarn run build-standalone'",
-    "clean": "rm -rf commonjs esm standalone",
+    "clean": "rm -rf commonjs esm standalone storybook-static",
     "deploy-storybook": "storybook-to-ghpages",
     "standalone-hash": "shasum -b -a 256 standalone/consent-manager.js | xxd -r -p | base64",
-    "build-storybook": "build-storybook",
+    "build-storybook": "yarn clean && yarn build-standalone && build-storybook && cp -r ./standalone ./storybook-static/standalone",
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
@@ -53,7 +53,7 @@
     "@storybook/addon-storysource": "^5.2.3",
     "@storybook/addons": "^5.2.3",
     "@storybook/react": "^5.2.3",
-    "@storybook/storybook-deployer": "^2.3.0",
+    "@storybook/storybook-deployer": "^2.8.1",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/isomorphic-fetch": "^0.0.35",
