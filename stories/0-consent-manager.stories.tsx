@@ -3,6 +3,7 @@ import cookies from 'js-cookie'
 import { Pane, Heading, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager } from '../src'
 import { storiesOf } from '@storybook/react'
+import { ImplyConsentOnInteraction } from './ImplyConsentOnInteraction'
 
 const bannerContent = (
   <span>
@@ -111,6 +112,6 @@ const ConsentManagerExample = () => {
   )
 }
 
-storiesOf('React ConsentManager', module).add(`Basic React Component`, () => (
-  <ConsentManagerExample />
-))
+storiesOf('React ConsentManager', module)
+  .add(`Basic React Component`, () => <ConsentManagerExample />)
+  .add(`Basic React Component with implied consent`, () => <ImplyConsentOnInteraction />)
