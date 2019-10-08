@@ -5,7 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
 // @ts-ignore
-import contents from 'raw-loader!./standalone.html'
+import contents from 'raw-loader!./standalone-custom.html'
 
 const StandaloneConsentManagerExample = () => {
   return (
@@ -24,6 +24,6 @@ const StandaloneConsentManagerExample = () => {
   )
 }
 
-storiesOf('Script Tag', module).add(`Standalone Script Tag`, () => (
+storiesOf('Script Tag', module).add(`Standalone Script Tag with Customization`, () => (
   <StandaloneConsentManagerExample />
 ))

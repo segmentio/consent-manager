@@ -2,13 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import inEU from '@segment/in-eu'
 import { ConsentManager, openConsentManager, doNotTrack } from '.'
-import { ConsentManagerProps, WindowWithConsentManagerConfig } from './types'
+import { ConsentManagerProps, WindowWithConsentManagerConfig, ConsentManagerInput } from './types'
 
 export const version = process.env.VERSION
 export { openConsentManager, doNotTrack, inEU }
 
 const dataset = document.currentScript && document.currentScript.dataset
-let props: Partial<ConsentManagerProps> = {}
+let props: Partial<ConsentManagerInput> = {}
 let containerRef: string | undefined
 
 const localWindow = window as WindowWithConsentManagerConfig
@@ -26,6 +26,7 @@ if (localWindow.consentManagerConfig) {
   } else {
     props = localWindow.consentManagerConfig
   }
+  containerRef = props.container
 } else if (dataset) {
   // Allow using data attributes on the script tag
   containerRef = dataset.container

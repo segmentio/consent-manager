@@ -1,7 +1,9 @@
 <html lang="en">
   <body>
     <div id="consent-manager"></div>
-    <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" />
+    <div>
+      <img src="http://giphygifs.s3.amazonaws.com/media/13HBDT4QSTpveU/giphy.gif" />
+    </div>
 
     <button
       type="button"
@@ -10,22 +12,45 @@
       Data Collection and Cookie Preferences
     </button>
 
-    <!-- Setup the Segment Consent Manager tag -->
-    <script
-      src="./standalone/consent-manager.js"
-      crossorigin="anonymous"
-      defer
-      implyConsentOnInteraction="false"
-      data-container="#consent-manager"
-      data-writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
-      data-otherWriteKeys="vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l"
-      data-bannerContent="We use cookies (and other similar technologies) to collect data to improve your experience on our site."
-      data-bannerSubContent="You can change your preferences at any time."
-      data-preferencesDialogTitle="Website Data Collection Preferences"
-      data-preferencesDialogContent="We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
-      data-cancelDialogTitle="Are you sure you want to cancel?"
-      data-cancelDialogContent="Your preferences have not been saved. By continuing to use our website, you're agreeing to our Website Data Collection Policy"
-    ></script>
+    <script type="application/javascript">
+      window.consentManagerConfig = function(exports) {
+        const h = exports.React.createElement
+        const bannerContent = h(
+          'span',
+          null,
+          '🍪We like cookies 🍪',
+          ' ',
+          h(
+            'a',
+            { href: '/docs/legal/website-data-collection-policy/', target: '_blank' },
+            'Data Collection Policy 📖'
+          ),
+          '.'
+        )
+        const bannerSubContent = 'Change your preferences 👻'
+        const preferencesDialogTitle = 'Website Data Collection'
+        const preferencesDialogContent =
+          'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
+        const cancelDialogTitle = 'Are you sure you want to cancel?'
+        const cancelDialogContent =
+          'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
+
+        return {
+          container: '#consent-manager',
+          writeKey: 'mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7',
+          shouldRequireConsent: () => true,
+          implyConsentOnInteraction: false,
+          bannerContent,
+          bannerSubContent,
+          preferencesDialogTitle,
+          preferencesDialogContent,
+          cancelDialogTitle,
+          cancelDialogContent
+        }
+      }
+    </script>
+
+    <script src="./standalone/consent-manager.js" defer></script>
 
     <!-- Load analytics.js -->
     <script>

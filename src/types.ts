@@ -11,8 +11,12 @@ export type WindowWithConsentManagerConfig = Window &
   typeof globalThis & {
     consentManagerConfig?: (
       args: StandaloneConsentManagerParams
-    ) => Partial<ConsentManagerProps> | Partial<ConsentManagerProps>
+    ) => Partial<ConsentManagerInput> | Partial<ConsentManagerInput>
   }
+
+export interface ConsentManagerInput extends ConsentManagerProps {
+  container: string
+}
 
 interface StandaloneConsentManagerParams {
   React: unknown

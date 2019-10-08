@@ -207,7 +207,7 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
   handleOverlayClick = e => {
     const { onCancel } = this.props
     // Ignore propogated clicks from inside the dialog
-    if (onCancel && !this.root.contains(e.target)) {
+    if (onCancel && this.root && !this.root.contains(e.target)) {
       onCancel()
     }
   }
