@@ -112,6 +112,4 @@ const ConsentManagerExample = () => {
   )
 }
 
-storiesOf('ConsentManager', module).add(`Standalone React Component`, () => (
-  <ConsentManagerExample />
-))
+storiesOf('ConsentManager', module).add(`Basic React Component`, () => <ConsentManagerExample />)
