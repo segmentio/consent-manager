@@ -16,7 +16,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
   static defaultProps = {
     otherWriteKeys: [],
     shouldRequireConsent: () => true,
-    implyConsentOnInteraction: true,
+    implyConsentOnInteraction: false,
     onError: undefined,
     cookieDomain: undefined,
     bannerTextColor: '#fff',
@@ -62,8 +62,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           setPreferences,
           resetPreferences,
           saveConsent
-        }) => (
-          <Container
+        }) => {
+          return <Container
             destinations={destinations}
             newDestinations={newDestinations}
             preferences={preferences}
@@ -71,9 +71,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
             setPreferences={setPreferences}
             resetPreferences={resetPreferences}
             saveConsent={saveConsent}
-            implyConsentOnInteraction={
-              implyConsentOnInteraction || ConsentManager.defaultProps.implyConsentOnInteraction
-            }
+            implyConsentOnInteraction={implyConsentOnInteraction ?? ConsentManager.defaultProps.implyConsentOnInteraction}
             bannerContent={bannerContent}
             bannerSubContent={bannerSubContent}
             bannerTextColor={bannerTextColor || ConsentManager.defaultProps.bannerTextColor}
@@ -85,7 +83,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
             cancelDialogTitle={cancelDialogTitle}
             cancelDialogContent={cancelDialogContent}
           />
-        )}
+        }}
       </ConsentManagerBuilder>
     )
   }
