@@ -1,11 +1,12 @@
 import React from 'react'
 import cookies from 'js-cookie'
 import { Pane, Heading, Button } from 'evergreen-ui'
-import { ConsentManager, openConsentManager, loadPreferences } from '../src'
+import { ConsentManager, openConsentManager, loadPreferences, onPreferencesSaved } from '../src'
 import { storiesOf } from '@storybook/react'
 import { CloseBehavior } from '../src/consent-manager/container'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
+import { Preferences } from '../src/types'
 
 const bannerContent = (
   <span>
@@ -63,6 +64,18 @@ const cancelDialogContent = (
 )
 
 const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
+  const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
+
+  const cleanup = onPreferencesSaved(preferences => {
+    updatePrefs(preferences)
+  })
+
+  React.useEffect(() => {
+    return () => {
+      cleanup()
+    }
+  })
+
   return (
     <Pane>
       <ConsentManager
@@ -99,7 +112,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
           <div>
             <Heading>Current Preferences</Heading>
             <SyntaxHighlighter language="json" style={docco}>
-              {JSON.stringify(loadPreferences(), null, 2)}
+              {JSON.stringify(prefs, null, 2)}
             </SyntaxHighlighter>
           </div>
           <Button marginRight={20} onClick={openConsentManager}>
