@@ -13,7 +13,13 @@ module.exports = {
         loaders: [
           {
             loader: require.resolve('@storybook/source-loader'),
-            options: { parser: 'typescript' }
+            options: {
+              parser: 'typescript',
+              prettierConfig: {
+                printWidth: 100,
+                singleQuote: false
+              }
+            }
           }
         ],
         enforce: 'pre'
