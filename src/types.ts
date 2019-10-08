@@ -46,7 +46,7 @@ export interface CategoryPreferences {
 export interface ConsentManagerProps {
   writeKey: string
   otherWriteKeys?: string[]
-  shouldRequireConsent?: (...args: any[]) => any
+  shouldRequireConsent?: () => Promise<boolean> | boolean
   implyConsentOnInteraction?: boolean
   cookieDomain?: string
   bannerContent: React.ReactNode

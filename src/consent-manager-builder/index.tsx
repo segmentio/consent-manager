@@ -25,7 +25,7 @@ interface Props {
   onError?: (err: Error) => void | Promise<void>
   writeKey: string
   otherWriteKeys?: string[]
-  shouldRequireConsent?: () => boolean
+  shouldRequireConsent?: () => Promise<boolean> | boolean
   initialPreferences?: CategoryPreferences
   cookieDomain?: string
   children: (props: RenderProps) => React.ReactElement
@@ -41,9 +41,9 @@ interface RenderProps {
   newDestinations: Destination[]
   preferences: CategoryPreferences
   isConsentRequired: boolean
-  setPreferences
-  resetPreferences
-  saveConsent
+  setPreferences: (newPreferences: CategoryPreferences) => void
+  resetPreferences: () => void
+  saveConsent: (newPreferences?: CategoryPreferences | boolean, shouldReload?: boolean) => void
 }
 
 interface State {
@@ -107,8 +107,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
   initialise = async () => {
     const {
       writeKey,
-      otherWriteKeys = [],
-      shouldRequireConsent = () => true,
+      otherWriteKeys = ConsentManagerBuilder.defaultProps.otherWriteKeys,
+      shouldRequireConsent = ConsentManagerBuilder.defaultProps.shouldRequireConsent,
       initialPreferences,
       mapCustomPreferences
     } = this.props
