@@ -149,6 +149,26 @@ describe('ConsentManagerBuilder', () => {
     )
   })
 
+  test('does not imply consent on interacation', done => {
+    nock('https://cdn.segment.com')
+      .get('/v1/projects/123/integrations')
+      .reply(200, [
+        {
+          name: 'Amplitude',
+          creationName: 'Amplitude'
+        }
+      ])
+
+    shallow(
+      <ConsentManagerBuilder writeKey="123">
+        {({ preferences }) => {
+          expect(preferences).toMatchObject({})
+          done()
+        }}
+      </ConsentManagerBuilder>
+    )
+  })
+
   test.todo('loads analytics.js normally when consent isn՚t required')
   test.todo('still applies preferences when consent isn՚t required')
   test.todo('provides a setPreferences() function for setting the preferences')

@@ -177,7 +177,7 @@ Callback function that determines if consent is required before tracking can beg
 ##### implyConsentOnInteraction
 
 Type: `boolean`<br>
-Default: `true`
+Default: `false`
 
 Whether or not consent should be implied if the user interacts with the website (clicks anywhere outside the consent manager banner or dialogs).
 
