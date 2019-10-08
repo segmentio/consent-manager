@@ -19,7 +19,7 @@
     "standalone"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "jest src/__tests__",
     "prepublishOnly": "yarn run clean && yarn run build",
     "postpublish": "yarn build-storybook && yarn deploy-storybook -- --existing-output-dir=storybook-static",
     "dev": "yarn build-standalone && start-storybook -s ./ -p 9009",
