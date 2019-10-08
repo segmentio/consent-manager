@@ -77,8 +77,7 @@ _Note: the data attributes [won't work in Internet Explorer][currentscript] (Edg
 
 ```html
 <script
-  src="https://unpkg.com/@segment/consent-manager@1.3.1/standalone/consent-manager.js"
-  crossorigin="anonymous"
+  src="https://unpkg.com/@segment/consent-manager@3.0.0/standalone/consent-manager.js"
   defer
   data-container="#target-container"
   data-writeKey="<your-segment-write-key>"
@@ -141,8 +140,7 @@ All the options are supported. The callback function also receives these exports
   }
 </script>
 <script
-  src="https://unpkg.com/@segment/consent-manager@1.2.0/standalone/consent-manager.js"
-  integrity="sha256-N/iVJLiB/wC00Ta5lCOuOSL3dT3NF9tb9roS8uxTPGQ2Iqe70cqo="
+  src="https://unpkg.com/@segment/consent-manager@3.0.0/standalone/consent-manager.js"
   crossorigin="anonymous"
   defer
 ></script>
@@ -176,8 +174,10 @@ Callback function that determines if consent is required before tracking can beg
 
 ##### implyConsentOnInteraction
 
+**_ Breaking Change _** (versions < 3.0.0 will default this option `true`)
+
 Type: `boolean`<br>
-Default: `false`
+Default: `false` (as of 3.0.0)
 
 Whether or not consent should be implied if the user interacts with the website (clicks anywhere outside the consent manager banner or dialogs).
 
