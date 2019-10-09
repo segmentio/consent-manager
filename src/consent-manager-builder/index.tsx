@@ -22,18 +22,41 @@ function getNewDestinations(destinations: Destination[], preferences: CategoryPr
 }
 
 interface Props {
-  onError?: (err: Error) => void | Promise<void>
+  /** Your Segment Write key for your website */
   writeKey: string
+
+  /** A list of other write keys you may want to provide */
   otherWriteKeys?: string[]
-  shouldRequireConsent?: () => Promise<boolean> | boolean
-  initialPreferences?: CategoryPreferences
+
   cookieDomain?: string
+
+  /**
+   * An initial selection of Preferences
+   */
+  initialPreferences?: CategoryPreferences
+
+  /**
+   * Provide a function to define whether or not consent should be required
+   */
+  shouldRequireConsent?: () => Promise<boolean> | boolean
+
+  /**
+   * Render props for the Consent Manager builder
+   */
   children: (props: RenderProps) => React.ReactElement
 
+  /**
+   * Allows for customizing how to show different categories of consent.
+   */
   mapCustomPreferences?: (args: {
     destinations: Destination[]
     preferences: CategoryPreferences
   }) => { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
+
+  /**
+   * A callback for dealing with errors in the Consent Manager
+   */
+  onError?: (err: Error) => void | Promise<void>
 }
 
 interface RenderProps {
