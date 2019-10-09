@@ -71,6 +71,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
             setPreferences={setPreferences}
             resetPreferences={resetPreferences}
             saveConsent={saveConsent}
+            closeBehavior={this.props.closeBehavior}
             implyConsentOnInteraction={implyConsentOnInteraction ?? ConsentManager.defaultProps.implyConsentOnInteraction}
             bannerContent={bannerContent}
             bannerSubContent={bannerSubContent}

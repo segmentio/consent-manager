@@ -172,6 +172,19 @@ Default: `() => true`
 
 Callback function that determines if consent is required before tracking can begin. Return `true` to show the consent banner and wait for consent (if no consent has been given yet). Return `false` to not show the consent banner and start tracking immediately (unless the user has opted out). The function can return a `Promise` that resolves to a boolean.
 
+##### closeBehavior
+
+Type: `enum|string`<br>
+Default: `dismiss`
+
+An option to determine what should be the default behavior for the `x` button on the consent manager banner.
+
+Options:
+
+- `dismiss` (default) - Dismisses the banner, but don't save or change any preferences. Analytics.js won't be loaded until explicit consent is given.
+- `accept` - Assume consent across every category.
+- `deny` - Denies consent across every category.
+
 ##### implyConsentOnInteraction
 
 **_ Breaking Change _** (versions < 3.0.0 will default this option `true`)

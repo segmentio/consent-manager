@@ -1,3 +1,5 @@
+import { CloseBehavior } from './consent-manager/container'
+
 type AJS = SegmentAnalytics.AnalyticsJS & {
   initialized: boolean
 }
@@ -14,7 +16,7 @@ export type WindowWithConsentManagerConfig = Window &
     ) => Partial<ConsentManagerInput> | Partial<ConsentManagerInput>
   }
 
-export interface ConsentManagerInput extends ConsentManagerProps {
+export type ConsentManagerInput = ConsentManagerProps & {
   container: string
 }
 
@@ -62,4 +64,5 @@ export interface ConsentManagerProps {
   onError?: (error: Error | undefined) => void
   cancelDialogTitle?: React.ReactNode
   cancelDialogContent: React.ReactNode
+  closeBehavior?: CloseBehavior
 }

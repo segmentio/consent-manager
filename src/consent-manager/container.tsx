@@ -11,10 +11,17 @@ export function openDialog() {
   emitter.emit('openDialog')
 }
 
+export const enum CloseBehavior {
+  ACCEPT = 'accept',
+  DENY = 'deny',
+  DISMISS = 'dismiss'
+}
+
 interface ContainerProps {
   setPreferences: (prefs: CategoryPreferences) => void
-  resetPreferences: () => void
   saveConsent: (newPreferences?: CategoryPreferences, shouldReload?: boolean) => void
+  resetPreferences: () => void
+  closeBehavior?: CloseBehavior
   destinations: Destination[]
   newDestinations: Destination[]
   preferences: CategoryPreferences
@@ -51,6 +58,7 @@ function normalizeDestinations(destinations: Destination[]) {
 
 const Container: React.FC<ContainerProps> = props => {
   const [isDialogOpen, toggleDialog] = React.useState(false)
+  const [showBanner, toggleBanner] = React.useState(true)
   const [isCancelling, toggleCancel] = React.useState(false)
 
   let banner = React.useRef<HTMLElement>(null)
@@ -85,17 +93,38 @@ const Container: React.FC<ContainerProps> = props => {
     props.saveConsent(undefined, false)
   }
 
+  const showDialog = () => toggleDialog(true)
+
   React.useEffect(() => {
-    emitter.on('openDialog', openDialog)
+    emitter.on('openDialog', showDialog)
     if (props.isConsentRequired && props.implyConsentOnInteraction) {
       document.body.addEventListener('click', handleBodyClick, false)
     }
 
     return () => {
-      emitter.removeListener('openDialog', openDialog)
+      emitter.removeListener('openDialog', showDialog)
       document.body.removeEventListener('click', handleBodyClick, false)
     }
   })
+
+  const onClose = () => {
+    if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
+      return toggleBanner(false)
+    }
+
+    if (props.closeBehavior === CloseBehavior.ACCEPT) {
+      return props.saveConsent()
+    }
+
+    if (props.closeBehavior === CloseBehavior.DENY) {
+      props.setPreferences({
+        advertising: false,
+        functional: false,
+        marketingAndAnalytics: false
+      })
+      return props.saveConsent()
+    }
+  }
 
   const handleCategoryChange = (category: string, value: boolean) => {
     props.setPreferences({
@@ -128,16 +157,12 @@ const Container: React.FC<ContainerProps> = props => {
     props.resetPreferences()
   }
 
-  const handleBannerClose = () => {
-    props.saveConsent()
-  }
-
   return (
     <div>
-      {props.isConsentRequired && props.newDestinations.length > 0 && (
+      {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
         <Banner
           innerRef={current => (banner = { current })}
-          onClose={handleBannerClose}
+          onClose={onClose}
           onChangePreferences={() => toggleDialog(true)}
           content={props.bannerContent}
           subContent={props.bannerSubContent}
