@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.1(Oct 10, 2019)
+
+### Fixed
+
+- Fix commonJS bundle
+
 ## 4.0.0(Oct 10, 2019)
 
 ### Breaking
