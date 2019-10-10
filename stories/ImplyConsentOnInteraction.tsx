@@ -9,13 +9,13 @@ import {
   preferencesDialogTitle,
   cancelDialogContent,
   cancelDialogTitle
-} from './common-react'
+} from './components/common-react'
 
 export const ImplyConsentOnInteraction = () => {
   return (
     <Pane>
       <ConsentManager
-        writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
+        writeKey="tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
         bannerContent={bannerContent}
         bannerSubContent={bannerSubContent}

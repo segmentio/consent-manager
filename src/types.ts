@@ -13,7 +13,7 @@ export type WindowWithConsentManagerConfig = Window &
   typeof globalThis & {
     consentManagerConfig?: (
       args: StandaloneConsentManagerParams
-    ) => Partial<ConsentManagerInput> | Partial<ConsentManagerInput>
+    ) => ConsentManagerInput | ConsentManagerInput
   }
 
 export type ConsentManagerInput = ConsentManagerProps & {
@@ -65,4 +65,5 @@ export interface ConsentManagerProps {
   cancelDialogTitle?: React.ReactNode
   cancelDialogContent: React.ReactNode
   closeBehavior?: CloseBehavior
+  initialPreferences?: CategoryPreferences
 }

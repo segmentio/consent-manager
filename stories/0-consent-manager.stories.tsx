@@ -7,6 +7,7 @@ import { CloseBehavior } from '../src/consent-manager/container'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { Preferences } from '../src/types'
+import CookieView from './components/CookieView'
 
 const bannerContent = (
   <span>
@@ -79,7 +80,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
   return (
     <Pane>
       <ConsentManager
-        writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
+        writeKey="tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
         bannerContent={bannerContent}
         bannerSubContent={bannerSubContent}
@@ -128,6 +129,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
           </Button>
         </p>
       </Pane>
+      <CookieView />
     </Pane>
   )
 }

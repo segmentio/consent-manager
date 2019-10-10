@@ -4,6 +4,7 @@ import { Pane, Heading, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager } from '../src'
 import { storiesOf } from '@storybook/react'
 import { ImplyConsentOnInteraction } from './ImplyConsentOnInteraction'
+import CookieView from './components/CookieView'
 
 const bannerContent = (
   <span>
@@ -64,7 +65,7 @@ const ConsentManagerExample = () => {
   return (
     <Pane>
       <ConsentManager
-        writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
+        writeKey="tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
         bannerContent={bannerContent}
         bannerSubContent={bannerSubContent}
@@ -108,6 +109,8 @@ const ConsentManagerExample = () => {
           </Button>
         </p>
       </Pane>
+
+      <CookieView />
     </Pane>
   )
 }

@@ -22,18 +22,41 @@ function getNewDestinations(destinations: Destination[], preferences: CategoryPr
 }
 
 interface Props {
-  onError?: (err: Error) => void | Promise<void>
+  /** Your Segment Write key for your website */
   writeKey: string
+
+  /** A list of other write keys you may want to provide */
   otherWriteKeys?: string[]
-  shouldRequireConsent?: () => Promise<boolean> | boolean
-  initialPreferences?: CategoryPreferences
+
   cookieDomain?: string
+
+  /**
+   * An initial selection of Preferences
+   */
+  initialPreferences?: CategoryPreferences
+
+  /**
+   * Provide a function to define whether or not consent should be required
+   */
+  shouldRequireConsent?: () => Promise<boolean> | boolean
+
+  /**
+   * Render props for the Consent Manager builder
+   */
   children: (props: RenderProps) => React.ReactElement
 
-  mapCustomPreferences?: (args: {
-    destinations: Destination[]
+  /**
+   * Allows for customizing how to show different categories of consent.
+   */
+  mapCustomPreferences?: (
+    destinations: Destination[],
     preferences: CategoryPreferences
-  }) => { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
+  ) => { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
+
+  /**
+   * A callback for dealing with errors in the Consent Manager
+   */
+  onError?: (err: Error) => void | Promise<void>
 }
 
 interface RenderProps {
@@ -113,7 +136,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       mapCustomPreferences
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
-    const { destinationPreferences = {}, customPreferences } = loadPreferences()
+    let { destinationPreferences = {}, customPreferences } = loadPreferences()
 
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),
@@ -122,19 +145,30 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
     const newDestinations = getNewDestinations(destinations, destinationPreferences)
 
+    let preferences: CategoryPreferences | undefined
+    if (mapCustomPreferences) {
+      preferences = customPreferences || initialPreferences || {}
+
+      const hasInitialPreferenceToTrue = Object.values(initialPreferences || {}).some(Boolean)
+      const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
+        v => v === null || v === undefined
+      )
+
+      if (hasInitialPreferenceToTrue && emptyCustomPreferecences) {
+        const mapped = mapCustomPreferences(destinations, preferences)
+        destinationPreferences = mapped.destinationPreferences
+        customPreferences = mapped.customPreferences
+      }
+    } else {
+      preferences = destinationPreferences || initialPreferences
+    }
+
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
       destinationPreferences,
       isConsentRequired
     })
-
-    let preferences: CategoryPreferences | undefined
-    if (mapCustomPreferences) {
-      preferences = customPreferences || initialPreferences
-    } else {
-      preferences = destinationPreferences || initialPreferences
-    }
 
     this.setState({
       isLoading: false,
@@ -187,10 +221,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       let customPreferences: CategoryPreferences | undefined
 
       if (mapCustomPreferences) {
-        const custom = mapCustomPreferences({
-          destinations,
-          preferences
-        })
+        const custom = mapCustomPreferences(destinations, preferences)
         destinationPreferences = custom.destinationPreferences
         customPreferences = custom.customPreferences
 
