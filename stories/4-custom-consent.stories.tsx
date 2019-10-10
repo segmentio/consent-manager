@@ -35,7 +35,7 @@ const Custom = () => {
   return (
     <Pane maxWidth={1000} margin={30}>
       <ConsentManager
-        writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
+        writeKey="tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0"
         initialPreferences={initialPreferences}
         shouldRequireConsent={() => true}
         {...common}
