@@ -1,6 +1,6 @@
 {
   "name": "@segment/consent-manager",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
     "gdpr",
@@ -22,7 +22,7 @@
     "test": "jest src/__tests__",
     "prepublishOnly": "yarn run clean && yarn run build",
     "postpublish": "yarn build-storybook && yarn deploy-storybook -- --existing-output-dir=storybook-static",
-    "dev": "yarn build-standalone && start-storybook -s ./ -p 9009",
+    "dev": "concurrently 'yarn build-standalone --watch' 'yarn start-storybook -s ./ -p 9009'",
     "build-commonjs": "tsc --outDir commonjs --inlineSourceMap",
     "build-esm": "tsc --module es2015 --outDir esm --inlineSourceMap",
     "build-standalone": "webpack",
@@ -119,7 +119,7 @@
   "size-limit": [
     {
       "path": "esm/index.js",
-      "limit": "48 KB"
+      "limit": "50 KB"
     },
     {
       "path": "standalone/consent-manager.js",

@@ -1,0 +1,30 @@
+# Changelog
+
+## 4.0.0(Oct 10, 2019)
+
+### Breaking
+
+- [#51](https://github.com/segmentio/consent-manager/pull/51) Deprecate data attributes and dataset
+
+### Added
+
+- [#48](https://github.com/segmentio/consent-manager/pull/48) Add new `closeBehavior` option
+- [#49](https://github.com/segmentio/consent-manager/pull/49) Initial Preferences override
+- [#52](https://github.com/segmentio/consent-manager/pull/52) Expose preferences manager
+
+## 3.0.0(Oct 8, 2019)
+
+### Breaking
+
+## 2.0.0
+
+### Added
+
+- [#46](https://github.com/segmentio/consent-manager/pull/46) ⚡️ Modernize
+- [#47](https://github.com/segmentio/consent-manager/pull/47) 🙅🏻‍♀️No longer imply consent on interaction
+
+## 1.3.1(Sep 24, 2019)
+
+### Fixed
+
+- [86387e6](https://github.com/segmentio/consent-manager/commit/86387e63f259fff9f34ee511b2fa6218341dfa17) Fix integrity hash

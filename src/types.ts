@@ -1,3 +1,6 @@
+import { CloseBehavior } from './consent-manager/container'
+import { PreferencesManager } from './consent-manager-builder/preferences'
+
 type AJS = SegmentAnalytics.AnalyticsJS & {
   initialized: boolean
 }
@@ -11,10 +14,10 @@ export type WindowWithConsentManagerConfig = Window &
   typeof globalThis & {
     consentManagerConfig?: (
       args: StandaloneConsentManagerParams
-    ) => Partial<ConsentManagerInput> | Partial<ConsentManagerInput>
+    ) => ConsentManagerInput | ConsentManagerInput
   }
 
-export interface ConsentManagerInput extends ConsentManagerProps {
+export type ConsentManagerInput = ConsentManagerProps & {
   container: string
 }
 
@@ -24,6 +27,7 @@ interface StandaloneConsentManagerParams {
   openConsentManager: () => void
   doNotTrack: () => boolean | null
   inEU: () => boolean
+  preferences: PreferencesManager
 }
 
 export interface Preferences {
@@ -62,4 +66,6 @@ export interface ConsentManagerProps {
   onError?: (error: Error | undefined) => void
   cancelDialogTitle?: React.ReactNode
   cancelDialogContent: React.ReactNode
+  closeBehavior?: CloseBehavior
+  initialPreferences?: CategoryPreferences
 }

@@ -1,8 +1,9 @@
 import React from 'react'
 import { Pane, Heading, SubHeading, Ul, Code, Button } from 'evergreen-ui'
 import { ConsentManagerBuilder } from '../src'
-import DestinationTile from './destination-tile'
+import DestinationTile from './components/destination-tile'
 import { storiesOf } from '@storybook/react'
+import CookieView from './components/CookieView'
 
 function Section(props) {
   return <Pane is="section" marginBottom={24} {...props} />
@@ -12,7 +13,7 @@ const ToolBased = () => {
   return (
     <Pane maxWidth={1000} margin={30}>
       <ConsentManagerBuilder
-        writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
+        writeKey="tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
       >
         {({ destinations, preferences, setPreferences, saveConsent }) => {
@@ -57,6 +58,8 @@ const ToolBased = () => {
           )
         }}
       </ConsentManagerBuilder>
+
+      <CookieView />
     </Pane>
   )
 }

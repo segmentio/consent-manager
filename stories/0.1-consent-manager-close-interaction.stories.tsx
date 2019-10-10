@@ -1,12 +1,9 @@
 import React from 'react'
 import cookies from 'js-cookie'
 import { Pane, Heading, Button } from 'evergreen-ui'
-import { ConsentManager, openConsentManager, loadPreferences, onPreferencesSaved } from '../src'
+import { ConsentManager, openConsentManager } from '../src'
 import { storiesOf } from '@storybook/react'
-import { CloseBehavior } from '../src/consent-manager/container'
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import SyntaxHighlighter from 'react-syntax-highlighter'
-import { Preferences } from '../src/types'
+import { ImplyConsentOnInteraction } from './ImplyConsentOnInteraction'
 import CookieView from './components/CookieView'
 
 const bannerContent = (
@@ -64,19 +61,7 @@ const cancelDialogContent = (
   </div>
 )
 
-const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
-  const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
-
-  const cleanup = onPreferencesSaved(preferences => {
-    updatePrefs(preferences)
-  })
-
-  React.useEffect(() => {
-    return () => {
-      cleanup()
-    }
-  })
-
+const ConsentManagerExample = () => {
   return (
     <Pane>
       <ConsentManager
@@ -88,7 +73,6 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
-        closeBehavior={props.closeBehavior}
       />
 
       <Pane marginX={100} marginTop={20}>
@@ -110,31 +94,27 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
         </Pane>
 
         <p>
-          <div>
-            <Heading>Current Preferences</Heading>
-            <SyntaxHighlighter language="json" style={docco}>
-              {JSON.stringify(prefs, null, 2)}
-            </SyntaxHighlighter>
-          </div>
-          <Button marginRight={20} onClick={openConsentManager}>
-            Change Cookie Preferences
-          </Button>
+          <Button onClick={openConsentManager}>Data Collection and Cookie Preferences</Button>
+        </p>
+
+        <p>
+          <Heading>to see the banner again:</Heading>
           <Button
             onClick={() => {
               cookies.remove('tracking-preferences')
               window.location.reload()
             }}
           >
-            Clear
+            Clear tracking preferences cookie
           </Button>
         </p>
       </Pane>
+
       <CookieView />
     </Pane>
   )
 }
 
-storiesOf('React Component / OnClose interactions', module)
-  .add(`Dismiss`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DISMISS} />)
-  .add(`Accept`, () => <ConsentManagerExample closeBehavior={CloseBehavior.ACCEPT} />)
-  .add(`Deny`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DENY} />)
+storiesOf('React Component / Basics', module)
+  .add(`Basic React Component`, () => <ConsentManagerExample />)
+  .add(`Basic React Component with implied consent`, () => <ImplyConsentOnInteraction />)

@@ -68,27 +68,10 @@ The following global variables are also exposed:
 - `consentManager.openConsentManager()` - Opens the consent manager preferences dialog.
 - `consentManager.doNotTrack()` - Utility function that returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
 - `consentManager.inEU()` - The [@segment/in-eu][ineu] `inEU()` function.
-
-#### Data Attributes
-
-The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` option should be a comma separated list.
-
-_Note: the data attributes [won't work in Internet Explorer][currentscript] (Edge works fine though)._
-
-```html
-<script
-  src="https://unpkg.com/@segment/consent-manager@3.0.0/standalone/consent-manager.js"
-  defer
-  data-container="#target-container"
-  data-writeKey="<your-segment-write-key>"
-  data-bannerContent="We use cookies (and other similar technologies) to collect data to improve your experience on our site."
-  data-bannerSubContent="You can change your preferences at any time."
-  data-preferencesDialogTitle="Website Data Collection Preferences"
-  data-preferencesDialogContent="We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
-  data-cancelDialogTitle="Are you sure you want to cancel?"
-  data-cancelDialogContent="Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy."
-></script>
-```
+- `consentManager.preferences` - Returns an instance of `PreferencesManager` with the following helper functions:
+  - `loadPreferences` - returns the cookie value for consent preferences
+  - `savePreferences` - allows for managing the consent cookie programatically (useful if you want to re-hydrate consent from your own database or prefill consent options)
+  - `onPreferencesSaved(callback)` - allows for subscribing to changes in preferences.
 
 #### Callback Function
 
@@ -99,6 +82,10 @@ All the options are supported. The callback function also receives these exports
 - `openConsentManager()` - Opens the consent manager preferences dialog.
 - `doNotTrack()` - Utility function that returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
 - `inEU()` - The [@segment/in-eu][ineu] `inEU()` function.
+- `consentManager.preferences` - Returns an instance of `PreferencesManager` with the following helper functions:
+  - `loadPreferences` - returns the cookie value for consent preferences
+  - `savePreferences` - allows for managing the consent cookie programatically (useful if you want to re-hydrate consent from your own database or prefill consent options)
+  - `onPreferencesSaved(callback)` - allows for subscribing to changes in preferences.
 
 ```html
 <script>
@@ -139,9 +126,9 @@ All the options are supported. The callback function also receives these exports
     }
   }
 </script>
+
 <script
-  src="https://unpkg.com/@segment/consent-manager@3.0.0/standalone/consent-manager.js"
-  crossorigin="anonymous"
+  src="https://unpkg.com/@segment/consent-manager@4.0.0/standalone/consent-manager.js"
   defer
 ></script>
 ```
@@ -171,6 +158,19 @@ Type: `function`<br>
 Default: `() => true`
 
 Callback function that determines if consent is required before tracking can begin. Return `true` to show the consent banner and wait for consent (if no consent has been given yet). Return `false` to not show the consent banner and start tracking immediately (unless the user has opted out). The function can return a `Promise` that resolves to a boolean.
+
+##### closeBehavior
+
+Type: `enum|string`<br>
+Default: `dismiss`
+
+An option to determine what should be the default behavior for the `x` button on the consent manager banner.
+
+Options:
+
+- `dismiss` (default) - Dismisses the banner, but don't save or change any preferences. Analytics.js won't be loaded until explicit consent is given.
+- `accept` - Assume consent across every category.
+- `deny` - Denies consent across every category.
 
 ##### implyConsentOnInteraction
 
@@ -331,7 +331,7 @@ The initial value of the preferences. By default it should be an object map of `
 Type: `function`<br>
 Default: `undefined`
 
-Callback function allows you to use a custom preferences format (e.g: categories) instead of the default destination based one. The function gets called during the consent saving process and gets passed `{destinations, preferences}`. The function should return `{destinationPreferences, customPreferences}` where `destinationPreferences` is your custom preferences mapped to the destinations format (`{destiantionId: true|false}`) and `customPreferences` is your custom preferences if you changed them in the callback (optional).
+Callback function allows you to use a custom preferences format (e.g: categories) instead of the default destination based one. The function gets called during the consent saving process and gets passed `(destinations, preferences)`. The function should return `{destinationPreferences, customPreferences}` where `destinationPreferences` is your custom preferences mapped to the destinations format (`{destiantionId: true|false}`) and `customPreferences` is your custom preferences if you changed them in the callback (optional).
 
 ##### cookieDomain
 

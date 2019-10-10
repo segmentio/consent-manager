@@ -6,24 +6,28 @@ import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
 // @ts-ignore
 import contents from 'raw-loader!./standalone-custom.html'
+import CookieView from './components/CookieView'
 
 const StandaloneConsentManagerExample = () => {
   return (
-    <Pane display="flex" height="calc(100vh - 10px)">
-      <iframe
-        frameBorder="0"
-        style={{ overflow: 'hidden', height: '100%', width: '100%' }}
-        height="100%"
-        width="100%"
-        srcDoc={contents}
-      ></iframe>
-      <SyntaxHighlighter language="html" style={docco}>
-        {contents}
-      </SyntaxHighlighter>
-    </Pane>
+    <>
+      <Pane display="flex" height="calc(100vh - 10px)">
+        <iframe
+          frameBorder="0"
+          style={{ overflow: 'hidden', height: '100%', width: '550px', flex: 1 }}
+          height="100%"
+          width="550"
+          srcDoc={contents}
+        ></iframe>
+        <SyntaxHighlighter language="html" style={docco} customStyle={{ flex: 1 }}>
+          {contents}
+        </SyntaxHighlighter>
+      </Pane>
+      <CookieView />
+    </>
   )
 }
 
-storiesOf('Script Tag', module).add(`Standalone Script Tag with Customization`, () => (
+storiesOf('Standalone / Javascript', module).add(`with Customization`, () => (
   <StandaloneConsentManagerExample />
 ))

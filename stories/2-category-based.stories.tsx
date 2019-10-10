@@ -2,8 +2,9 @@ import React from 'react'
 import { groupBy } from 'lodash'
 import { Pane, Heading, SubHeading, Ul, Code, Button } from 'evergreen-ui'
 import { ConsentManagerBuilder } from '../src'
-import DestinationTile from './destination-tile'
+import DestinationTile from './components/destination-tile'
 import { storiesOf } from '@storybook/react'
+import CookieView from './components/CookieView'
 
 function Section(props) {
   return <Pane is="section" marginBottom={24} {...props} />
@@ -18,7 +19,7 @@ const CategoryBased = () => {
     <Pane maxWidth={1000} margin={30}>
       <ConsentManagerBuilder
         onError={e => console.error('Error Handling', e)}
-        writeKey="mA3XTMcavCUOQo5DL56VIHWcJMsyhAI7"
+        writeKey="tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
       >
         {({ destinations, preferences, setPreferences, saveConsent }) => {
@@ -74,6 +75,8 @@ const CategoryBased = () => {
           )
         }}
       </ConsentManagerBuilder>
+
+      <CookieView />
     </Pane>
   )
 }

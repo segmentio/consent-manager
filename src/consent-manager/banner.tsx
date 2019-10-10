@@ -52,7 +52,7 @@ const CloseButton = styled('button')`
 
 interface Props {
   innerRef: (node: HTMLElement | null) => void
-  onAccept: () => void
+  onClose: () => void
   onChangePreferences: () => void
   content: React.ReactNode
   subContent: React.ReactNode
@@ -66,7 +66,7 @@ export default class Banner extends PureComponent<Props> {
   render() {
     const {
       innerRef,
-      onAccept,
+      onClose,
       onChangePreferences,
       content,
       subContent,
@@ -85,12 +85,7 @@ export default class Banner extends PureComponent<Props> {
           </P>
         </Content>
 
-        <CloseButton
-          type="button"
-          title="Accept policy"
-          aria-label="Accept policy"
-          onClick={onAccept}
-        >
+        <CloseButton type="button" title="Close" aria-label="Close" onClick={onClose}>
           ✕
         </CloseButton>
       </Root>

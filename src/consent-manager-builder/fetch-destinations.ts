@@ -23,7 +23,7 @@ async function fetchDestinationForWriteKey(writeKey: string): Promise<Destinatio
 }
 
 export default async function fetchDestinations(writeKeys: string[]): Promise<Destination[]> {
-  const destinationsRequests: any[] = []
+  const destinationsRequests: Promise<Destination[]>[] = []
   for (const writeKey of writeKeys) {
     destinationsRequests.push(fetchDestinationForWriteKey(writeKey))
   }

@@ -3,45 +3,29 @@ import ReactDOM from 'react-dom'
 import inEU from '@segment/in-eu'
 import { ConsentManager, openConsentManager, doNotTrack } from '.'
 import { ConsentManagerProps, WindowWithConsentManagerConfig, ConsentManagerInput } from './types'
+import { CloseBehavior } from './consent-manager/container'
+import * as preferences from './consent-manager-builder/preferences'
 
 export const version = process.env.VERSION
-export { openConsentManager, doNotTrack, inEU }
+export { openConsentManager, doNotTrack, inEU, preferences }
 
-const dataset = document.currentScript && document.currentScript.dataset
 let props: Partial<ConsentManagerInput> = {}
 let containerRef: string | undefined
 
 const localWindow = window as WindowWithConsentManagerConfig
 
-if (localWindow.consentManagerConfig) {
-  // Allow using global variable
-  if (typeof localWindow.consentManagerConfig === 'function') {
-    props = localWindow.consentManagerConfig({
-      React,
-      version,
-      openConsentManager,
-      doNotTrack,
-      inEU
-    })
-  } else {
-    props = localWindow.consentManagerConfig
-  }
+if (localWindow.consentManagerConfig && typeof localWindow.consentManagerConfig === 'function') {
+  props = localWindow.consentManagerConfig({
+    React,
+    version,
+    openConsentManager,
+    doNotTrack,
+    inEU,
+    preferences
+  })
   containerRef = props.container
-} else if (dataset) {
-  // Allow using data attributes on the script tag
-  containerRef = dataset.container
-  props.writeKey = dataset.writekey
-  // @ts-ignore
-  props.otherWriteKeys = dataset.otherwritekeys
-  props.implyConsentOnInteraction = dataset.implyconsentoninteraction as boolean | undefined
-  props.cookieDomain = dataset.cookiedomain
-  props.bannerContent = dataset.bannercontent
-  props.bannerTextColor = dataset.bannertextcolor
-  props.bannerBackgroundColor = dataset.bannerbackgroundcolor
-  props.preferencesDialogTitle = dataset.preferencesdialogtitle
-  props.preferencesDialogContent = dataset.preferencesdialogcontent
-  props.cancelDialogTitle = dataset.canceldialogtitle
-  props.cancelDialogContent = dataset.canceldialogcontent
+} else {
+  throw new Error(`window.consentManagerConfig should be a function`)
 }
 
 if (!containerRef) {
@@ -64,12 +48,20 @@ if (!props.cancelDialogContent) {
   throw new Error('ConsentManager: cancelDialogContent is required')
 }
 
-if (typeof props.otherWriteKeys === 'string') {
-  props.otherWriteKeys = (props.otherWriteKeys as string).split(',')
-}
-
 if (typeof props.implyConsentOnInteraction === 'string') {
   props.implyConsentOnInteraction = props.implyConsentOnInteraction === 'true'
+}
+
+if (props.closeBehavior !== undefined && typeof props.closeBehavior === 'string') {
+  const options = [
+    CloseBehavior.ACCEPT.toString(),
+    CloseBehavior.DENY.toString(),
+    CloseBehavior.DISMISS.toString()
+  ]
+
+  if (!options.includes(props.closeBehavior)) {
+    throw new Error(`ConsentManager: closeBehavior should be one of ${options}`)
+  }
 }
 
 const container = document.querySelector(containerRef)

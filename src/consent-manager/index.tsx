@@ -4,7 +4,7 @@ import Container from './container'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
 import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
 
-const initialPreferences: CategoryPreferences = {
+const zeroValuePreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
   advertising: null,
   functional: null
@@ -41,6 +41,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       preferencesDialogContent,
       cancelDialogTitle,
       cancelDialogContent,
+      initialPreferences,
       onError
     } = this.props
 
@@ -51,7 +52,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         otherWriteKeys={otherWriteKeys}
         shouldRequireConsent={shouldRequireConsent}
         cookieDomain={cookieDomain}
-        initialPreferences={initialPreferences}
+        initialPreferences={initialPreferences || zeroValuePreferences}
         mapCustomPreferences={this.handleMapCustomPreferences}
       >
         {({
@@ -71,6 +72,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
             setPreferences={setPreferences}
             resetPreferences={resetPreferences}
             saveConsent={saveConsent}
+            closeBehavior={this.props.closeBehavior}
             implyConsentOnInteraction={implyConsentOnInteraction ?? ConsentManager.defaultProps.implyConsentOnInteraction}
             bannerContent={bannerContent}
             bannerSubContent={bannerSubContent}
@@ -88,13 +90,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     )
   }
 
-  handleMapCustomPreferences = ({
-    destinations,
-    preferences
-  }: {
-    destinations: Destination[]
-    preferences: CategoryPreferences
-  }) => {
+  handleMapCustomPreferences = (destinations: Destination[], preferences: CategoryPreferences) => {
     const destinationPreferences = {}
     const customPreferences = {}
 
