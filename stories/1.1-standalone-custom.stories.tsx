@@ -12,18 +12,18 @@ const StandaloneConsentManagerExample = () => {
     <Pane display="flex" height="calc(100vh - 10px)">
       <iframe
         frameBorder="0"
-        style={{ overflow: 'hidden', height: '100%', width: '100%' }}
+        style={{ overflow: 'hidden', height: '100%', width: '550px', flex: 1 }}
         height="100%"
-        width="100%"
+        width="550"
         srcDoc={contents}
       ></iframe>
-      <SyntaxHighlighter language="html" style={docco}>
+      <SyntaxHighlighter language="html" style={docco} customStyle={{ flex: 1 }}>
         {contents}
       </SyntaxHighlighter>
     </Pane>
   )
 }
 
-storiesOf('Script Tag', module).add(`Standalone Script Tag with Customization`, () => (
+storiesOf('Standalone / Javascript', module).add(`with Customization`, () => (
   <StandaloneConsentManagerExample />
 ))

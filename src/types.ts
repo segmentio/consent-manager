@@ -13,7 +13,7 @@ export type WindowWithConsentManagerConfig = Window &
   typeof globalThis & {
     consentManagerConfig?: (
       args: StandaloneConsentManagerParams
-    ) => Partial<ConsentManagerInput> | Partial<ConsentManagerInput>
+    ) => ConsentManagerInput | ConsentManagerInput
   }
 
 export type ConsentManagerInput = ConsentManagerProps & {

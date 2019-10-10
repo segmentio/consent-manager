@@ -90,8 +90,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     )
   }
 
-  handleMapCustomPreferences = (args: { destinations: Destination[], preferences: CategoryPreferences }) => {
-    const { preferences, destinations } = args
+  handleMapCustomPreferences = (destinations: Destination[], preferences: CategoryPreferences) => {
     const destinationPreferences = {}
     const customPreferences = {}
 

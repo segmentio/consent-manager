@@ -48,10 +48,10 @@ interface Props {
   /**
    * Allows for customizing how to show different categories of consent.
    */
-  mapCustomPreferences?: (args: {
-    destinations: Destination[]
+  mapCustomPreferences?: (
+    destinations: Destination[],
     preferences: CategoryPreferences
-  }) => { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
+  ) => { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
 
   /**
    * A callback for dealing with errors in the Consent Manager
@@ -153,7 +153,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         Object.keys(destinationPreferences).length === 0 ||
         Object.keys(customPreferences || {}).length === 0
       ) {
-        const mapped = mapCustomPreferences({ destinations, preferences })
+        const mapped = mapCustomPreferences(destinations, preferences)
         destinationPreferences = mapped.destinationPreferences
         customPreferences = mapped.customPreferences
       }
@@ -219,10 +219,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       let customPreferences: CategoryPreferences | undefined
 
       if (mapCustomPreferences) {
-        const custom = mapCustomPreferences({
-          destinations,
-          preferences
-        })
+        const custom = mapCustomPreferences(destinations, preferences)
         destinationPreferences = custom.destinationPreferences
         customPreferences = custom.customPreferences
 
