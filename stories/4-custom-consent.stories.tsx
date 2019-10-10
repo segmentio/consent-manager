@@ -1,34 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import cookies from 'js-cookie'
+import React from 'react'
 import { Pane, Button } from 'evergreen-ui'
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { storiesOf } from '@storybook/react'
-import SyntaxHighlighter from 'react-syntax-highlighter'
 import ConsentManager from '../src/consent-manager'
-import * as common from './common-react'
+import * as common from './components/common-react'
 import { openConsentManager } from '../src'
+import CookieView from './components/CookieView'
 
 const initialPreferences = {
   advertising: false,
   marketingAndAnalytics: true,
   functional: true
-}
-
-const CookieView = () => {
-  const [cookieVal, updateCookieVal] = useState(cookies.getJSON())
-
-  useEffect(() => {
-    const clear = setInterval(() => {
-      updateCookieVal(cookies.getJSON())
-    }, 1000)
-    return () => clearInterval(clear)
-  })
-
-  return (
-    <SyntaxHighlighter language="json" style={docco}>
-      {JSON.stringify(cookieVal, null, 2)}
-    </SyntaxHighlighter>
-  )
 }
 
 const Custom = () => {
@@ -40,22 +21,12 @@ const Custom = () => {
         shouldRequireConsent={() => true}
         {...common}
       />
-      <CookieView />
 
       <Button marginRight={20} onClick={openConsentManager}>
         Change Cookie Preferences
       </Button>
-      <Button
-        onClick={() => {
-          const allCookies = cookies.getJSON()
-          Object.keys(allCookies).forEach(key => {
-            cookies.remove(key)
-          })
-          window.location.reload()
-        }}
-      >
-        Clear
-      </Button>
+
+      <CookieView />
     </Pane>
   )
 }

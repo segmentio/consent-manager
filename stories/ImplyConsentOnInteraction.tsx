@@ -9,7 +9,7 @@ import {
   preferencesDialogTitle,
   cancelDialogContent,
   cancelDialogTitle
-} from './common-react'
+} from './components/common-react'
 
 export const ImplyConsentOnInteraction = () => {
   return (

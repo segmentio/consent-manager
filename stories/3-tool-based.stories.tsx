@@ -1,8 +1,9 @@
 import React from 'react'
 import { Pane, Heading, SubHeading, Ul, Code, Button } from 'evergreen-ui'
 import { ConsentManagerBuilder } from '../src'
-import DestinationTile from './destination-tile'
+import DestinationTile from './components/destination-tile'
 import { storiesOf } from '@storybook/react'
+import CookieView from './components/CookieView'
 
 function Section(props) {
   return <Pane is="section" marginBottom={24} {...props} />
@@ -57,6 +58,8 @@ const ToolBased = () => {
           )
         }}
       </ConsentManagerBuilder>
+
+      <CookieView />
     </Pane>
   )
 }
