@@ -69,27 +69,6 @@ The following global variables are also exposed:
 - `consentManager.doNotTrack()` - Utility function that returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
 - `consentManager.inEU()` - The [@segment/in-eu][ineu] `inEU()` function.
 
-#### Data Attributes
-
-The `shouldRequireConsent` option isn't supported and the `otherWriteKeys` option should be a comma separated list.
-
-_Note: the data attributes [won't work in Internet Explorer][currentscript] (Edge works fine though)._
-
-```html
-<script
-  src="https://unpkg.com/@segment/consent-manager@3.0.0/standalone/consent-manager.js"
-  defer
-  data-container="#target-container"
-  data-writeKey="<your-segment-write-key>"
-  data-bannerContent="We use cookies (and other similar technologies) to collect data to improve your experience on our site."
-  data-bannerSubContent="You can change your preferences at any time."
-  data-preferencesDialogTitle="Website Data Collection Preferences"
-  data-preferencesDialogContent="We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
-  data-cancelDialogTitle="Are you sure you want to cancel?"
-  data-cancelDialogContent="Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy."
-></script>
-```
-
 #### Callback Function
 
 All the options are supported. The callback function also receives these exports:
@@ -139,9 +118,9 @@ All the options are supported. The callback function also receives these exports
     }
   }
 </script>
+
 <script
-  src="https://unpkg.com/@segment/consent-manager@3.0.0/standalone/consent-manager.js"
-  crossorigin="anonymous"
+  src="https://unpkg.com/@segment/consent-manager@4.0.0/standalone/consent-manager.js"
   defer
 ></script>
 ```
