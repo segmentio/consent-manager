@@ -22,6 +22,8 @@
 
 ### Breaking
 
+- [#47](https://github.com/segmentio/consent-manager/pull/47) No longer imply consent on interaction
+
 ## 2.0.0
 
 ### Added
