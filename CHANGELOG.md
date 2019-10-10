@@ -5,12 +5,12 @@
 ### Breaking
 
 - [#51](https://github.com/segmentio/consent-manager/pull/51) Deprecate data attributes and dataset
-- [#52](https://github.com/segmentio/consent-manager/pull/52) Expose preferences manager
 
 ### Added
 
 - [#48](https://github.com/segmentio/consent-manager/pull/48) Add new `closeBehavior` option
 - [#49](https://github.com/segmentio/consent-manager/pull/49) Initial Preferences override
+- [#52](https://github.com/segmentio/consent-manager/pull/52) Expose preferences manager
 
 ## 3.0.0(Oct 8, 2019)
 
