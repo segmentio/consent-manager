@@ -8,7 +8,6 @@ import { CloseBehavior } from './consent-manager/container'
 export const version = process.env.VERSION
 export { openConsentManager, doNotTrack, inEU }
 
-const dataset = document.currentScript && document.currentScript.dataset
 // TODO: define string based input type that can be parsed to `ConsentManagerInput`
 let props: Partial<ConsentManagerInput> = {}
 let containerRef: string | undefined
@@ -26,26 +25,10 @@ if (localWindow.consentManagerConfig) {
       inEU
     })
   } else {
-    props = localWindow.consentManagerConfig
+    throw new Error(`window.consentManagerConfig should be a function`)
   }
+
   containerRef = props.container
-} else if (dataset) {
-  // Allow using data attributes on the script tag
-  containerRef = dataset.container
-  props.writeKey = dataset.writekey
-  // @ts-ignore
-  props.otherWriteKeys = dataset.otherwritekeys
-  props.implyConsentOnInteraction = dataset.implyconsentoninteraction as boolean | undefined
-  props.cookieDomain = dataset.cookiedomain
-  props.bannerContent = dataset.bannercontent
-  props.bannerTextColor = dataset.bannertextcolor
-  props.bannerBackgroundColor = dataset.bannerbackgroundcolor
-  props.preferencesDialogTitle = dataset.preferencesdialogtitle
-  props.preferencesDialogContent = dataset.preferencesdialogcontent
-  props.cancelDialogTitle = dataset.canceldialogtitle
-  props.cancelDialogContent = dataset.canceldialogcontent
-  // @ts-ignore
-  props.closeBehavior = dataset.closebehavior
 }
 
 if (!containerRef) {
@@ -68,10 +51,6 @@ if (!props.cancelDialogContent) {
   throw new Error('ConsentManager: cancelDialogContent is required')
 }
 
-if (typeof props.otherWriteKeys === 'string') {
-  props.otherWriteKeys = (props.otherWriteKeys as string).split(',')
-}
-
 if (typeof props.implyConsentOnInteraction === 'string') {
   props.implyConsentOnInteraction = props.implyConsentOnInteraction === 'true'
 }
@@ -82,6 +61,7 @@ if (props.closeBehavior !== undefined && typeof props.closeBehavior === 'string'
     CloseBehavior.DENY.toString(),
     CloseBehavior.DISMISS.toString()
   ]
+
   if (!options.includes(props.closeBehavior)) {
     throw new Error(`ConsentManager: closeBehavior should be one of ${options}`)
   }
