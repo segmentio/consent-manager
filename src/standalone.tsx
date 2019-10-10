@@ -8,27 +8,22 @@ import { CloseBehavior } from './consent-manager/container'
 export const version = process.env.VERSION
 export { openConsentManager, doNotTrack, inEU }
 
-// TODO: define string based input type that can be parsed to `ConsentManagerInput`
 let props: Partial<ConsentManagerInput> = {}
 let containerRef: string | undefined
 
 const localWindow = window as WindowWithConsentManagerConfig
 
-if (localWindow.consentManagerConfig) {
-  // Allow using global variable
-  if (typeof localWindow.consentManagerConfig === 'function') {
-    props = localWindow.consentManagerConfig({
-      React,
-      version,
-      openConsentManager,
-      doNotTrack,
-      inEU
-    })
-  } else {
-    throw new Error(`window.consentManagerConfig should be a function`)
-  }
-
+if (localWindow.consentManagerConfig && typeof localWindow.consentManagerConfig === 'function') {
+  props = localWindow.consentManagerConfig({
+    React,
+    version,
+    openConsentManager,
+    doNotTrack,
+    inEU
+  })
   containerRef = props.container
+} else {
+  throw new Error(`window.consentManagerConfig should be a function`)
 }
 
 if (!containerRef) {
