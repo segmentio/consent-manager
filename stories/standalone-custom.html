@@ -2,6 +2,11 @@
   <body>
     <script type="application/javascript">
       window.consentManagerConfig = function(exports) {
+        exports.preferences.onPreferencesSaved(function(prefs) {
+          console.log('preferences changed!', prefs)
+          // could be used to store consent server side, or send it into an API
+        })
+
         return {
           container: '#consent-manager',
           writeKey: 'tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0',

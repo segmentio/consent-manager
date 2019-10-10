@@ -1,4 +1,5 @@
 import { CloseBehavior } from './consent-manager/container'
+import { PreferencesManager } from './consent-manager-builder/preferences'
 
 type AJS = SegmentAnalytics.AnalyticsJS & {
   initialized: boolean
@@ -26,6 +27,7 @@ interface StandaloneConsentManagerParams {
   openConsentManager: () => void
   doNotTrack: () => boolean | null
   inEU: () => boolean
+  preferences: PreferencesManager
 }
 
 export interface Preferences {
