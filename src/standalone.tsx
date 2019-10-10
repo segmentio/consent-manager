@@ -4,9 +4,10 @@ import inEU from '@segment/in-eu'
 import { ConsentManager, openConsentManager, doNotTrack } from '.'
 import { ConsentManagerProps, WindowWithConsentManagerConfig, ConsentManagerInput } from './types'
 import { CloseBehavior } from './consent-manager/container'
+import * as preferences from './consent-manager-builder/preferences'
 
 export const version = process.env.VERSION
-export { openConsentManager, doNotTrack, inEU }
+export { openConsentManager, doNotTrack, inEU, preferences }
 
 let props: Partial<ConsentManagerInput> = {}
 let containerRef: string | undefined
@@ -19,7 +20,8 @@ if (localWindow.consentManagerConfig && typeof localWindow.consentManagerConfig 
     version,
     openConsentManager,
     doNotTrack,
-    inEU
+    inEU,
+    preferences
   })
   containerRef = props.container
 } else {

@@ -8,6 +8,12 @@ const COOKIE_KEY = 'tracking-preferences'
 // TODO: Make cookie expiration configurable
 const COOKIE_EXPIRES = 365
 
+export interface PreferencesManager {
+  loadPreferences(): Preferences
+  onPreferencesSaved(listener: (prefs: Preferences) => void): void
+  savePreferences(prefs: SavePreferences): void
+}
+
 // TODO: harden against invalid cookies
 // TODO: harden against different versions of cookies
 export function loadPreferences(): Preferences {

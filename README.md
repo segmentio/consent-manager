@@ -68,6 +68,10 @@ The following global variables are also exposed:
 - `consentManager.openConsentManager()` - Opens the consent manager preferences dialog.
 - `consentManager.doNotTrack()` - Utility function that returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
 - `consentManager.inEU()` - The [@segment/in-eu][ineu] `inEU()` function.
+- `consentManager.preferences` - Returns an instance of `PreferencesManager` with the following helper functions:
+  - `loadPreferences` - returns the cookie value for consent preferences
+  - `savePreferences` - allows for managing the consent cookie programatically (useful if you want to re-hydrate consent from your own database or prefill consent options)
+  - `onPreferencesSaved(callback)` - allows for subscribing to changes in preferences.
 
 #### Callback Function
 
@@ -78,6 +82,10 @@ All the options are supported. The callback function also receives these exports
 - `openConsentManager()` - Opens the consent manager preferences dialog.
 - `doNotTrack()` - Utility function that returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
 - `inEU()` - The [@segment/in-eu][ineu] `inEU()` function.
+- `consentManager.preferences` - Returns an instance of `PreferencesManager` with the following helper functions:
+  - `loadPreferences` - returns the cookie value for consent preferences
+  - `savePreferences` - allows for managing the consent cookie programatically (useful if you want to re-hydrate consent from your own database or prefill consent options)
+  - `onPreferencesSaved(callback)` - allows for subscribing to changes in preferences.
 
 ```html
 <script>
