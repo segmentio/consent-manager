@@ -185,12 +185,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
   handleSetPreferences = (newPreferences: CategoryPreferences) => {
     this.setState(prevState => {
-      const { destinations, preferences: existingPreferences } = prevState
-      const preferences = this.mergePreferences({
-        destinations,
-        newPreferences,
-        existingPreferences
-      })
+      const { destinations, preferences: existingPreferences = {} } = prevState
+      const preferences = this.mergePreferences(destinations, existingPreferences, newPreferences)
       return { ...prevState, preferences }
     })
   }
@@ -209,17 +205,16 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     this.setState({ preferences })
   }
 
-  handleSaveConsent = (newPreferences: CategoryPreferences | undefined, shouldReload: boolean) => {
+  handleSaveConsent = (
+    newPreferences: CategoryPreferences | undefined | boolean,
+    shouldReload: boolean
+  ) => {
     const { writeKey, cookieDomain, mapCustomPreferences } = this.props
 
     this.setState(prevState => {
-      const { destinations, preferences: existingPreferences, isConsentRequired } = prevState
+      const { destinations, preferences: existingPreferences = {}, isConsentRequired } = prevState
 
-      let preferences = this.mergePreferences({
-        destinations,
-        newPreferences,
-        existingPreferences
-      })
+      let preferences = this.mergePreferences(destinations, existingPreferences, newPreferences)
 
       let destinationPreferences: CategoryPreferences
       let customPreferences: CategoryPreferences | undefined
@@ -255,30 +250,26 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     })
   }
 
-  mergePreferences = (args: {
-    destinations: Destination[]
-    existingPreferences?: CategoryPreferences
-    newPreferences?: CategoryPreferences
-  }) => {
-    const { destinations, existingPreferences, newPreferences } = args
-
+  mergePreferences = (
+    destinations: Destination[],
+    existingPreferences: CategoryPreferences,
+    newPreferences?: CategoryPreferences | boolean
+  ) => {
     let preferences: CategoryPreferences
 
     if (typeof newPreferences === 'boolean') {
-      const destinationPreferences = {}
-      for (const destination of destinations) {
-        destinationPreferences[destination.id] = newPreferences
-      }
-      preferences = destinationPreferences
-    } else if (newPreferences) {
+      preferences = destinations.reduce((prefs, destination) => {
+        return {
+          ...prefs,
+          [destination.id]: newPreferences
+        }
+      }, {})
+    } else {
       preferences = {
         ...existingPreferences,
-        ...newPreferences
+        ...(newPreferences || {})
       }
-    } else {
-      preferences = existingPreferences!
     }
-
     return preferences
   }
 }
