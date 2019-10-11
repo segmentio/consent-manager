@@ -4,21 +4,25 @@ import fetchDestinations from './fetch-destinations'
 import conditionallyLoadAnalytics from './analytics'
 import { Destination, CategoryPreferences } from '../types'
 
-function getNewDestinations(destinations: Destination[], preferences: CategoryPreferences) {
-  const newDestinations: Destination[] = []
-
-  // If there are no preferences then all destinations are new
-  if (!preferences) {
+/**
+ * Diffs the current consent preferences against the list of destinations
+ * returned for a given set of write keys.
+ *
+ * This is especially useful when newer destinations are added to a Source,
+ * forcing the consent manager to re-request consent for the new Destinations.
+ *
+ * @param destinations The list of destinations connected to a list of write keys
+ * @param destinationPreferences The user preferences
+ */
+function destinationsWithoutConsent(
+  destinations: Destination[],
+  destinationPreferences?: CategoryPreferences
+) {
+  if (!destinationPreferences) {
     return destinations
   }
 
-  for (const destination of destinations) {
-    if (preferences[destination.id] === undefined) {
-      newDestinations.push(destination)
-    }
-  }
-
-  return newDestinations
+  return destinations.filter(d => destinationPreferences[d.id] === undefined)
 }
 
 interface Props {
@@ -143,7 +147,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       fetchDestinations([writeKey, ...otherWriteKeys])
     ])
 
-    const newDestinations = getNewDestinations(destinations, destinationPreferences)
+    const newDestinations = destinationsWithoutConsent(destinations, destinationPreferences)
 
     let preferences: CategoryPreferences | undefined
     if (mapCustomPreferences) {
@@ -236,7 +240,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         destinationPreferences = preferences
       }
 
-      const newDestinations = getNewDestinations(destinations, destinationPreferences)
+      const newDestinations = destinationsWithoutConsent(destinations, destinationPreferences)
 
       savePreferences({ destinationPreferences, customPreferences, cookieDomain })
       conditionallyLoadAnalytics({
