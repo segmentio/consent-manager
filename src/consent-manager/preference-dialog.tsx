@@ -130,7 +130,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                       <label>
                         <input
                           type="radio"
-                          name={destinationCategory.name}
+                          name={destinationCategory.key}
                           value="true"
                           checked={preferences[destinationCategory.key] === true}
                           onChange={this.handleChange}
@@ -142,7 +142,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                       <label>
                         <input
                           type="radio"
-                          name={destinationCategory.name}
+                          name={destinationCategory.key}
                           value="false"
                           checked={preferences[destinationCategory.key] === false}
                           onChange={this.handleChange}
