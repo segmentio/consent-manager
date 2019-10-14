@@ -23,7 +23,7 @@ const Custom = () => {
       />
 
       <Button marginRight={20} onClick={openConsentManager}>
-        Change Cookie Preferences
+        Change Consent Preferences
       </Button>
 
       <CookieView />

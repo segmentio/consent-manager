@@ -1,5 +1,4 @@
 import React from 'react'
-import cookies from 'js-cookie'
 import { Pane, Heading, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager, loadPreferences, onPreferencesSaved } from '../src'
 import { storiesOf } from '@storybook/react'
@@ -118,14 +117,6 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
           </div>
           <Button marginRight={20} onClick={openConsentManager}>
             Change Cookie Preferences
-          </Button>
-          <Button
-            onClick={() => {
-              cookies.remove('tracking-preferences')
-              window.location.reload()
-            }}
-          >
-            Clear
           </Button>
         </p>
       </Pane>

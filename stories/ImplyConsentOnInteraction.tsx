@@ -1,5 +1,4 @@
 import React from 'react'
-import cookies from 'js-cookie'
 import { Pane, Heading, Button, Paragraph } from 'evergreen-ui'
 import { ConsentManager, openConsentManager } from '../src'
 import {
@@ -10,6 +9,7 @@ import {
   cancelDialogContent,
   cancelDialogTitle
 } from './components/common-react'
+import CookieView from './components/CookieView'
 
 export const ImplyConsentOnInteraction = () => {
   return (
@@ -44,19 +44,9 @@ export const ImplyConsentOnInteraction = () => {
         <div>
           <Button onClick={openConsentManager}>Data Collection and Cookie Preferences</Button>
         </div>
-
-        <div>
-          <Heading>to see the banner again:</Heading>
-          <Button
-            onClick={() => {
-              cookies.remove('tracking-preferences')
-              window.location.reload()
-            }}
-          >
-            Clear tracking preferences cookie
-          </Button>
-        </div>
       </Pane>
+
+      <CookieView />
     </Pane>
   )
 }
