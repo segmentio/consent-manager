@@ -157,6 +157,35 @@ const Container: React.FC<ContainerProps> = props => {
     props.resetPreferences()
   }
 
+  const destinations = [
+    {
+      name: 'Marketing',
+      key: 'marketingAndAnalytics',
+      destinations: marketingDestinations,
+      description:
+        'To understand user behavior in order to provide you with a more relevant browsing experience or personalize the content on our site.',
+      example:
+        'For example, we collect information about which pages you visit to help us present more relevant information.'
+    },
+    {
+      name: 'Advertising',
+      key: 'advertising',
+      destinations: advertisingDestinations,
+      description:
+        'To personalize and measure the effectiveness of advertising on our site and other websites.',
+      example:
+        'For example, we may serve you a personalized ad based on the pages you visit on our site.'
+    },
+    {
+      name: 'Functional',
+      key: 'functional',
+      destinations: functionalDestinations,
+      description:
+        'To monitor the performance of our site and to enhance your browsing experience.',
+      example: 'For example, these tools enable you to communicate with us via live chat.'
+    }
+  ]
+
   return (
     <div>
       {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
@@ -177,12 +206,8 @@ const Container: React.FC<ContainerProps> = props => {
           onCancel={handleCancel}
           onSave={handleSave}
           onChange={handleCategoryChange}
-          marketingDestinations={marketingDestinations}
-          advertisingDestinations={advertisingDestinations}
-          functionalDestinations={functionalDestinations}
-          marketingAndAnalytics={props.preferences.marketingAndAnalytics}
-          advertising={props.preferences.advertising}
-          functional={props.preferences.functional}
+          destinations={destinations}
+          preferences={props.preferences}
           title={props.preferencesDialogTitle}
           content={props.preferencesDialogContent}
         />
