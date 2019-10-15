@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
-import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
+import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES, categorize } from './categories'
 import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
 
 const zeroValuePreferences: CategoryPreferences = {
@@ -65,7 +65,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           saveConsent
         }) => {
           return <Container
-            destinations={destinations}
+            destinations={categorize(destinations)}
             newDestinations={newDestinations}
             preferences={preferences}
             isConsentRequired={isConsentRequired}

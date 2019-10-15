@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react'
 import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
 import { DefaultButton, GreenButton } from './buttons'
-import { Destination, CategoryPreferences } from '../types'
+import { CategoryPreferences } from '../types'
+import { DestinationCategory } from './categories'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -66,13 +67,7 @@ interface PreferenceDialogProps {
   /**
    * All destinations grouped by category
    */
-  destinations: Array<{
-    name: string
-    description: string
-    key: string,
-    example?: string
-    destinations: Destination[]
-  }>
+  destinations: DestinationCategory[]
   /**
    * The preferences to be shown in the dialog
    */
