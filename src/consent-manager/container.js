@@ -194,7 +194,7 @@ export default class Container extends PureComponent {
         return
       }
 
-      saveConsent(undefined, false, true)
+      saveConsent(undefined, false, false)
       return
     }
 
