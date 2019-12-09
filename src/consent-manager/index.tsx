@@ -126,9 +126,9 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
 
       if (customCategories) {
         // Mark custom categories 
-        Object.entries(customCategories).forEach(([categoryName, segmentDestinationCategories]) => {
+        Object.entries(customCategories).forEach(([categoryName, { segmentCategories }]) => {
           const consentAlreadySetToFalse = destinationPreferences[destination.id] === false
-          const shouldSetConsent = segmentDestinationCategories.includes(destination.category)
+          const shouldSetConsent = segmentCategories.includes(destination.category)
           if (shouldSetConsent && !consentAlreadySetToFalse) {
             destinationPreferences[destination.id] = customPrefs[categoryName]
           }

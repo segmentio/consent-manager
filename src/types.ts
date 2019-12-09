@@ -52,7 +52,10 @@ export interface CategoryPreferences {
 }
 
 export interface Categories {
-  [key: string]: string[]
+  [key: string]: {
+    segmentCategories: string[],
+    purpose: string
+  }
 }
 
 export interface ConsentManagerProps {
