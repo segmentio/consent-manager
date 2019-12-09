@@ -4,7 +4,7 @@ import Banner from './banner'
 import PreferenceDialog from './preference-dialog'
 import CancelDialog from './cancel-dialog'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
-import { Destination, CategoryPreferences, Categories } from '../types'
+import { Destination, CategoryPreferences, CustomCategories } from '../types'
 
 const emitter = new EventEmitter()
 export function openDialog() {
@@ -23,7 +23,7 @@ interface ContainerProps {
   resetPreferences: () => void
   closeBehavior?: CloseBehavior
   destinations: Destination[]
-  categories?: Categories | undefined
+  customCategories?: CustomCategories | undefined
   newDestinations: Destination[]
   preferences: CategoryPreferences
   isConsentRequired: boolean
@@ -174,7 +174,7 @@ const Container: React.FC<ContainerProps> = props => {
 
       {isDialogOpen && (
         <PreferenceDialog
-          categories={props.categories}
+          customCategories={props.customCategories}
           destinations={props.destinations}
           preferences={props.preferences}
           innerRef={current => (preferenceDialog = { current })}

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
 import { DefaultButton, GreenButton } from './buttons'
-import { Destination, Categories, CategoryPreferences } from '../types'
+import { Destination, CustomCategories, CategoryPreferences } from '../types'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -67,7 +67,7 @@ interface PreferenceDialogProps {
   marketingAndAnalytics?: boolean | null
   advertising?: boolean | null
   functional?: boolean | null
-  categories?: Categories
+  customCategories?: CustomCategories
   destinations: Destination[]
   preferences: CategoryPreferences
   title: React.ReactNode
@@ -93,7 +93,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
       marketingAndAnalytics,
       advertising,
       functional,
-      categories,
+      customCategories,
       destinations,
       title,
       content,
@@ -258,7 +258,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                 </td>
               </Row>
 
-              {categories && Object.entries(categories).map(([categoryName, { segmentCategories, purpose }]) => (
+              {customCategories && Object.entries(customCategories).map(([categoryName, { segmentCategories, purpose }]) => (
                 <Row>
                   <InputCell>
                     <label>

@@ -51,7 +51,7 @@ export interface CategoryPreferences {
   [category: string]: boolean | null | undefined
 }
 
-export interface Categories {
+export interface CustomCategories {
   [key: string]: {
     segmentCategories: string[],
     purpose: string
@@ -75,5 +75,5 @@ export interface ConsentManagerProps {
   cancelDialogContent: React.ReactNode
   closeBehavior?: CloseBehavior
   initialPreferences?: CategoryPreferences
-  categories?: Categories
+  customCategories?: CustomCategories
 }

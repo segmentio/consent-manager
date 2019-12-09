@@ -89,7 +89,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
         closeBehavior={props.closeBehavior}
-        categories={{ "Do Not Sell": { segmentCategories: ["Advertising"], purpose: "To give the right to opt out of the sale of personal data." } }}
+        customCategories={{ "Do Not Sell": { segmentCategories: ["Advertising"], purpose: "To give the right to opt out of the sale of personal data." } }}
       />
 
       <Pane marginX={100} marginTop={20}>

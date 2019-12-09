@@ -19,7 +19,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     implyConsentOnInteraction: false,
     onError: undefined,
     cookieDomain: undefined,
-    categories: undefined,
+    customCategories: undefined,
     bannerTextColor: '#fff',
     bannerSubContent: 'You can change your preferences at any time.',
     bannerBackgroundColor: '#1f4160',
@@ -43,7 +43,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       cancelDialogTitle,
       cancelDialogContent,
       initialPreferences,
-      categories,
+      customCategories,
       onError
     } = this.props
 
@@ -56,11 +56,11 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         cookieDomain={cookieDomain}
         initialPreferences={initialPreferences || zeroValuePreferences}
         mapCustomPreferences={this.handleMapCustomPreferences}
-        categories={categories}
+        customCategories={customCategories}
       >
         {({
           destinations,
-          categories,
+          customCategories,
           newDestinations,
           preferences,
           isConsentRequired,
@@ -69,7 +69,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           saveConsent
         }) => {
           return <Container
-            categories={categories}
+            customCategories={customCategories}
             destinations={destinations}
             newDestinations={newDestinations}
             preferences={preferences}
@@ -96,7 +96,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
   }
 
   handleMapCustomPreferences = (destinations: Destination[], preferences: CategoryPreferences) => {
-    const { categories: customCategories } = this.props
+    const { customCategories } = this.props
     const destinationPreferences = {}
     const customPreferences = {}
 
