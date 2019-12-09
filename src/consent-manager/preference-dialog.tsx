@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
 import { DefaultButton, GreenButton } from './buttons'
-import { Destination } from '../types'
+import { Destination, Categories, CategoryPreferences } from '../types'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -67,6 +67,9 @@ interface PreferenceDialogProps {
   marketingAndAnalytics?: boolean | null
   advertising?: boolean | null
   functional?: boolean | null
+  categories?: Categories
+  destinations: Destination[]
+  preferences: CategoryPreferences
   title: React.ReactNode
   content: React.ReactNode
 }
@@ -90,8 +93,11 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
       marketingAndAnalytics,
       advertising,
       functional,
+      categories,
+      destinations,
       title,
-      content
+      content,
+      preferences
     } = this.props
     const buttons = (
       <div>
@@ -251,6 +257,51 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                   {advertisingDestinations.map(d => d.name).join(', ')}
                 </td>
               </Row>
+
+              {categories && Object.entries(categories).map(([categoryName, segmentDestinationCategories]) => (
+                <Row>
+                  <InputCell>
+                    <label>
+                      <input
+                        type="radio"
+                        name={categoryName}
+                        value="true"
+                        checked={preferences[categoryName] === true}
+                        onChange={this.handleChange}
+                        aria-label={`Allow "${categoryName}" tracking`}
+                        required
+                      />{' '}
+                      Yes
+                  </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name={categoryName}
+                        value="false"
+                        checked={preferences[categoryName] === false}
+                        onChange={this.handleChange}
+                        aria-label={`Disallow "${categoryName}" tracking`}
+                        required
+                      />{' '}
+                      No
+                  </label>
+                  </InputCell>
+                  <RowHeading scope="row">{categoryName}</RowHeading>
+                  <td>
+                    <p>
+                      To personalize and measure the effectiveness of advertising on our site and
+                      other websites.
+                  </p>
+                    <p className={hideOnMobile}>
+                      For example, we may serve you a personalized ad based on the pages you visit on
+                      our site.
+                  </p>
+                  </td>
+                  <td className={hideOnMobile}>
+                    {destinations.filter(d => segmentDestinationCategories.includes(d.category)).map(d => d.name).join(', ')}
+                  </td>
+                </Row>
+              ))}
 
               <Row>
                 <td>N/A</td>

@@ -51,6 +51,10 @@ export interface CategoryPreferences {
   [category: string]: boolean | null | undefined
 }
 
+export interface Categories {
+  [key: string]: string[]
+}
+
 export interface ConsentManagerProps {
   writeKey: string
   otherWriteKeys?: string[]
@@ -68,4 +72,5 @@ export interface ConsentManagerProps {
   cancelDialogContent: React.ReactNode
   closeBehavior?: CloseBehavior
   initialPreferences?: CategoryPreferences
+  categories?: Categories
 }

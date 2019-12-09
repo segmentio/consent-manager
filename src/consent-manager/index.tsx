@@ -19,6 +19,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     implyConsentOnInteraction: false,
     onError: undefined,
     cookieDomain: undefined,
+    categories: undefined,
     bannerTextColor: '#fff',
     bannerSubContent: 'You can change your preferences at any time.',
     bannerBackgroundColor: '#1f4160',
@@ -42,6 +43,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       cancelDialogTitle,
       cancelDialogContent,
       initialPreferences,
+      categories,
       onError
     } = this.props
 
@@ -54,9 +56,11 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         cookieDomain={cookieDomain}
         initialPreferences={initialPreferences || zeroValuePreferences}
         mapCustomPreferences={this.handleMapCustomPreferences}
+        categories={categories}
       >
         {({
           destinations,
+          categories,
           newDestinations,
           preferences,
           isConsentRequired,
@@ -65,6 +69,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           saveConsent
         }) => {
           return <Container
+            categories={categories}
             destinations={destinations}
             newDestinations={newDestinations}
             preferences={preferences}
@@ -91,11 +96,13 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
   }
 
   handleMapCustomPreferences = (destinations: Destination[], preferences: CategoryPreferences) => {
+    const { categories } = this.props
     const destinationPreferences = {}
     const customPreferences = {}
 
+    const categoryNames = categories ? [...Object.keys(preferences), ...Object.keys(categories)] : Object.keys(preferences)
     // Default unset preferences to true (for implicit consent)
-    for (const preferenceName of Object.keys(preferences)) {
+    for (const preferenceName of categoryNames) {
       const value = preferences[preferenceName]
       if (typeof value === 'boolean') {
         customPreferences[preferenceName] = value
@@ -111,6 +118,12 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         destinationPreferences[destination.id] = customPrefs.advertising
       } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
         destinationPreferences[destination.id] = customPrefs.functional
+      } else if (categories) {
+        Object.entries(categories).forEach(([categoryName, segmentDestinationCategories]) => {
+          if (segmentDestinationCategories.includes(destination.category)) {
+            destinationPreferences[destination.id] = customPrefs[categoryName]
+          }
+        })
       } else {
         // Fallback to marketing
         destinationPreferences[destination.id] = customPrefs.marketingAndAnalytics

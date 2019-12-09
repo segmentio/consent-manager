@@ -2,13 +2,18 @@ import React, { PureComponent } from 'react'
 import styled from 'react-emotion'
 import fontStyles from './font-styles'
 
-const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div')`
+interface RootProps {
+  backgroundColor: string
+  textColor: string
+}
+
+const Root = styled('div')`
   ${fontStyles};
   position: relative;
   padding: 8px;
   padding-right: 40px;
-  background: ${props => props.backgroundColor};
-  color: ${props => props.textColor};
+  background: ${(props: RootProps) => props.backgroundColor};
+  color: ${(props: RootProps) => props.textColor};
   text-align: center;
   font-size: 12px;
   line-height: 1.3;
