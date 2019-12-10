@@ -31,13 +31,13 @@ const openAnimation = keyframes`
   }
 `
 
-const Root = styled('section')`
+const Root = styled<{ width: number | string | undefined }, 'section'>('section')`
   ${fontStyles};
   display: flex;
   flex-direction: column;
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 16px);
-  width: ${(props: { width: number | string | undefined }) => props.width};
+  width: ${props => props.width};
   margin: 8px;
   background: #fff;
   border-radius: 8px;
