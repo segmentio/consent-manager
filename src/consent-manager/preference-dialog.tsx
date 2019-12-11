@@ -131,7 +131,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
             </thead>
 
             <tbody>
-              {!customCategories &&
+              {!customCategories && (
                 <>
                   <Row>
                     <InputCell>
@@ -146,7 +146,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           required
                         />{' '}
                         Yes
-                  </label>
+                      </label>
                       <label>
                         <input
                           type="radio"
@@ -158,16 +158,17 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           required
                         />{' '}
                         No
-                  </label>
+                      </label>
                     </InputCell>
                     <RowHeading scope="row">Functional</RowHeading>
                     <td>
                       <p>
-                        To monitor the performance of our site and to enhance your browsing experience.
-                  </p>
+                        To monitor the performance of our site and to enhance your browsing
+                        experience.
+                      </p>
                       <p className={hideOnMobile}>
                         For example, these tools enable you to communicate with us via live chat.
-                  </p>
+                      </p>
                     </td>
                     <td className={hideOnMobile}>
                       {functionalDestinations.map(d => d.name).join(', ')}
@@ -187,7 +188,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           required
                         />{' '}
                         Yes
-                  </label>
+                      </label>
                       <label>
                         <input
                           type="radio"
@@ -199,18 +200,18 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           required
                         />{' '}
                         No
-                  </label>
+                      </label>
                     </InputCell>
                     <RowHeading scope="row">Marketing and Analytics</RowHeading>
                     <td>
                       <p>
                         To understand user behavior in order to provide you with a more relevant
                         browsing experience or personalize the content on our site.
-                  </p>
+                      </p>
                       <p className={hideOnMobile}>
                         For example, we collect information about which pages you visit to help us
                         present more relevant information.
-                  </p>
+                      </p>
                     </td>
                     <td className={hideOnMobile}>
                       {marketingDestinations.map(d => d.name).join(', ')}
@@ -230,7 +231,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           required
                         />{' '}
                         Yes
-                  </label>
+                      </label>
                       <label>
                         <input
                           type="radio"
@@ -242,65 +243,69 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           required
                         />{' '}
                         No
-                  </label>
+                      </label>
                     </InputCell>
                     <RowHeading scope="row">Advertising</RowHeading>
                     <td>
                       <p>
                         To personalize and measure the effectiveness of advertising on our site and
                         other websites.
-                  </p>
+                      </p>
                       <p className={hideOnMobile}>
-                        For example, we may serve you a personalized ad based on the pages you visit on
-                        our site.
-                  </p>
+                        For example, we may serve you a personalized ad based on the pages you visit
+                        on our site.
+                      </p>
                     </td>
                     <td className={hideOnMobile}>
                       {advertisingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
                 </>
-              }
+              )}
 
-              {customCategories && Object.entries(customCategories).map(([categoryName, { integrations, purpose }]) => (
-                <Row key={categoryName}>
-                  <InputCell>
-                    <label>
-                      <input
-                        type="radio"
-                        name={categoryName}
-                        value="true"
-                        checked={preferences[categoryName] === true}
-                        onChange={this.handleChange}
-                        aria-label={`Allow "${categoryName}" tracking`}
-                        required
-                      />{' '}
-                      Yes
-                  </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name={categoryName}
-                        value="false"
-                        checked={preferences[categoryName] === false}
-                        onChange={this.handleChange}
-                        aria-label={`Disallow "${categoryName}" tracking`}
-                        required
-                      />{' '}
-                      No
-                  </label>
-                  </InputCell>
-                  <RowHeading scope="row">{categoryName}</RowHeading>
-                  <td>
-                    <p>
-                      {purpose}
-                    </p>
-                  </td>
-                  <td className={hideOnMobile}>
-                    {destinations.filter(d => integrations.includes(d.name)).map(d => d.name).join(', ')}
-                  </td>
-                </Row>
-              ))}
+              {customCategories &&
+                Object.entries(customCategories).map(
+                  ([categoryName, { integrations, purpose }]) => (
+                    <Row key={categoryName}>
+                      <InputCell>
+                        <label>
+                          <input
+                            type="radio"
+                            name={categoryName}
+                            value="true"
+                            checked={preferences[categoryName] === true}
+                            onChange={this.handleChange}
+                            aria-label={`Allow "${categoryName}" tracking`}
+                            required
+                          />{' '}
+                          Yes
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name={categoryName}
+                            value="false"
+                            checked={preferences[categoryName] === false}
+                            onChange={this.handleChange}
+                            aria-label={`Disallow "${categoryName}" tracking`}
+                            required
+                          />{' '}
+                          No
+                        </label>
+                      </InputCell>
+                      <RowHeading scope="row">{categoryName}</RowHeading>
+                      <td>
+                        <p>{purpose}</p>
+                      </td>
+                      <td className={hideOnMobile}>
+                        {destinations
+                          .filter(d => integrations.includes(d.name))
+                          .map(d => d.name)
+                          .join(', ')}
+                      </td>
+                    </Row>
+                  )
+                )}
 
               <Row>
                 <td>N/A</td>
@@ -328,11 +333,29 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
   }
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const { onSave, marketingAndAnalytics, advertising, functional, customCategories } = this.props
+    const {
+      onSave,
+      preferences,
+      marketingAndAnalytics,
+      advertising,
+      functional,
+      customCategories
+    } = this.props
     e.preventDefault()
     // Safe guard against browsers that don't prevent the
     // submission of invalid forms (Safari < 10.1)
-    if (!customCategories && (marketingAndAnalytics === null || advertising === null || functional === null)) {
+    if (
+      !customCategories &&
+      (marketingAndAnalytics === null || advertising === null || functional === null)
+    ) {
+      return
+    }
+
+    // Safe guard against custom categories being null
+    if (
+      customCategories &&
+      Object.keys(customCategories).some(category => preferences[category] === null)
+    ) {
       return
     }
     onSave()
