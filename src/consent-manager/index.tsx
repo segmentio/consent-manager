@@ -42,7 +42,6 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       preferencesDialogContent,
       cancelDialogTitle,
       cancelDialogContent,
-      initialPreferences,
       customCategories,
       onError
     } = this.props
@@ -54,7 +53,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         otherWriteKeys={otherWriteKeys}
         shouldRequireConsent={shouldRequireConsent}
         cookieDomain={cookieDomain}
-        initialPreferences={initialPreferences || zeroValuePreferences}
+        initialPreferences={this.getInitialPreferences()}
         mapCustomPreferences={this.handleMapCustomPreferences}
         customCategories={customCategories}
       >
@@ -93,6 +92,24 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         }}
       </ConsentManagerBuilder>
     )
+  }
+
+  getInitialPreferences = () => {
+    const { initialPreferences, customCategories } = this.props
+    if (initialPreferences) {
+      return initialPreferences
+    }
+
+    if (!customCategories) {
+      return zeroValuePreferences
+    }
+
+    const initialCustomPreferences = {}
+    Object.keys(customCategories).forEach(category => {
+      initialCustomPreferences[category] = null
+    })
+
+    return initialCustomPreferences
   }
 
   handleMapCustomPreferences = (destinations: Destination[], preferences: CategoryPreferences) => {
