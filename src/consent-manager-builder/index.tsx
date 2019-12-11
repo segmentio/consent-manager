@@ -54,7 +54,7 @@ interface Props {
   ) => { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
 
   /**
-   * Allows for adding custom consent categories
+   * Allows for adding custom consent categories by mapping a custom category to Segment integrations
    */
   customCategories?: CustomCategories
 
