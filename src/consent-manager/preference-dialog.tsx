@@ -262,7 +262,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                 </>
               }
 
-              {customCategories && Object.entries(customCategories).map(([categoryName, { segmentCategories, purpose }]) => (
+              {customCategories && Object.entries(customCategories).map(([categoryName, { integrations, purpose }]) => (
                 <Row key={categoryName}>
                   <InputCell>
                     <label>
@@ -297,7 +297,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     </p>
                   </td>
                   <td className={hideOnMobile}>
-                    {destinations.filter(d => segmentCategories.includes(d.category)).map(d => d.name).join(', ')}
+                    {destinations.filter(d => integrations.includes(d.name)).map(d => d.name).join(', ')}
                   </td>
                 </Row>
               ))}

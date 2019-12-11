@@ -56,7 +56,7 @@ export interface CustomCategories {
 }
 
 interface CustomCategory {
-  segmentCategories: string[]
+  integrations: string[]
   purpose: string
 }
 
