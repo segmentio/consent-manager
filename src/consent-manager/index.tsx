@@ -100,9 +100,32 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     const destinationPreferences = {}
     const customPreferences = {}
 
-    const categoryNames = customCategories ? [...Object.keys(preferences), ...Object.keys(customCategories)] : Object.keys(preferences)
+    if (customCategories) {
+      for (const preferenceName of Object.keys(customCategories)) {
+        const value = preferences[preferenceName]
+        if (typeof value === 'boolean') {
+          customPreferences[preferenceName] = value
+        } else {
+          customPreferences[preferenceName] = true
+        }
+      }
+
+      destinations.forEach(destination => {
+        // Mark custom categories 
+        Object.entries(customCategories).forEach(([categoryName, { segmentCategories }]) => {
+          const consentAlreadySetToFalse = destinationPreferences[destination.id] === false
+          const shouldSetConsent = segmentCategories.includes(destination.category)
+          if (shouldSetConsent && !consentAlreadySetToFalse) {
+            destinationPreferences[destination.id] = customPreferences[categoryName]
+          }
+        })
+      })
+
+      return { destinationPreferences, customPreferences }
+    }
+
     // Default unset preferences to true (for implicit consent)
-    for (const preferenceName of categoryNames) {
+    for (const preferenceName of Object.keys(preferences)) {
       const value = preferences[preferenceName]
       if (typeof value === 'boolean') {
         customPreferences[preferenceName] = value
@@ -122,17 +145,6 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       // Mark function destinations
       if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category) && destinationPreferences[destination.id] !== false) {
         destinationPreferences[destination.id] = customPrefs.functional
-      }
-
-      if (customCategories) {
-        // Mark custom categories 
-        Object.entries(customCategories).forEach(([categoryName, { segmentCategories }]) => {
-          const consentAlreadySetToFalse = destinationPreferences[destination.id] === false
-          const shouldSetConsent = segmentCategories.includes(destination.category)
-          if (shouldSetConsent && !consentAlreadySetToFalse) {
-            destinationPreferences[destination.id] = customPrefs[categoryName]
-          }
-        })
       }
 
       // Fallback to marketing
