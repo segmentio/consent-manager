@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
 import { DefaultButton, GreenButton } from './buttons'
-import { Destination } from '../types'
+import { Destination, CustomCategories, CategoryPreferences } from '../types'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -67,6 +67,9 @@ interface PreferenceDialogProps {
   marketingAndAnalytics?: boolean | null
   advertising?: boolean | null
   functional?: boolean | null
+  customCategories?: CustomCategories
+  destinations: Destination[]
+  preferences: CategoryPreferences
   title: React.ReactNode
   content: React.ReactNode
 }
@@ -90,8 +93,11 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
       marketingAndAnalytics,
       advertising,
       functional,
+      customCategories,
+      destinations,
       title,
-      content
+      content,
+      preferences
     } = this.props
     const buttons = (
       <div>
@@ -125,132 +131,181 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
             </thead>
 
             <tbody>
-              <Row>
-                <InputCell>
-                  <label>
-                    <input
-                      type="radio"
-                      name="functional"
-                      value="true"
-                      checked={functional === true}
-                      onChange={this.handleChange}
-                      aria-label="Allow functional tracking"
-                      required
-                    />{' '}
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="functional"
-                      value="false"
-                      checked={functional === false}
-                      onChange={this.handleChange}
-                      aria-label="Disallow functional tracking"
-                      required
-                    />{' '}
-                    No
-                  </label>
-                </InputCell>
-                <RowHeading scope="row">Functional</RowHeading>
-                <td>
-                  <p>
-                    To monitor the performance of our site and to enhance your browsing experience.
-                  </p>
-                  <p className={hideOnMobile}>
-                    For example, these tools enable you to communicate with us via live chat.
-                  </p>
-                </td>
-                <td className={hideOnMobile}>
-                  {functionalDestinations.map(d => d.name).join(', ')}
-                </td>
-              </Row>
+              {!customCategories && (
+                <>
+                  <Row>
+                    <InputCell>
+                      <label>
+                        <input
+                          type="radio"
+                          name="functional"
+                          value="true"
+                          checked={functional === true}
+                          onChange={this.handleChange}
+                          aria-label="Allow functional tracking"
+                          required
+                        />{' '}
+                        Yes
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="functional"
+                          value="false"
+                          checked={functional === false}
+                          onChange={this.handleChange}
+                          aria-label="Disallow functional tracking"
+                          required
+                        />{' '}
+                        No
+                      </label>
+                    </InputCell>
+                    <RowHeading scope="row">Functional</RowHeading>
+                    <td>
+                      <p>
+                        To monitor the performance of our site and to enhance your browsing
+                        experience.
+                      </p>
+                      <p className={hideOnMobile}>
+                        For example, these tools enable you to communicate with us via live chat.
+                      </p>
+                    </td>
+                    <td className={hideOnMobile}>
+                      {functionalDestinations.map(d => d.name).join(', ')}
+                    </td>
+                  </Row>
 
-              <Row>
-                <InputCell>
-                  <label>
-                    <input
-                      type="radio"
-                      name="marketingAndAnalytics"
-                      value="true"
-                      checked={marketingAndAnalytics === true}
-                      onChange={this.handleChange}
-                      aria-label="Allow marketing and analytics tracking"
-                      required
-                    />{' '}
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="marketingAndAnalytics"
-                      value="false"
-                      checked={marketingAndAnalytics === false}
-                      onChange={this.handleChange}
-                      aria-label="Disallow marketing and analytics tracking"
-                      required
-                    />{' '}
-                    No
-                  </label>
-                </InputCell>
-                <RowHeading scope="row">Marketing and Analytics</RowHeading>
-                <td>
-                  <p>
-                    To understand user behavior in order to provide you with a more relevant
-                    browsing experience or personalize the content on our site.
-                  </p>
-                  <p className={hideOnMobile}>
-                    For example, we collect information about which pages you visit to help us
-                    present more relevant information.
-                  </p>
-                </td>
-                <td className={hideOnMobile}>
-                  {marketingDestinations.map(d => d.name).join(', ')}
-                </td>
-              </Row>
+                  <Row>
+                    <InputCell>
+                      <label>
+                        <input
+                          type="radio"
+                          name="marketingAndAnalytics"
+                          value="true"
+                          checked={marketingAndAnalytics === true}
+                          onChange={this.handleChange}
+                          aria-label="Allow marketing and analytics tracking"
+                          required
+                        />{' '}
+                        Yes
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="marketingAndAnalytics"
+                          value="false"
+                          checked={marketingAndAnalytics === false}
+                          onChange={this.handleChange}
+                          aria-label="Disallow marketing and analytics tracking"
+                          required
+                        />{' '}
+                        No
+                      </label>
+                    </InputCell>
+                    <RowHeading scope="row">Marketing and Analytics</RowHeading>
+                    <td>
+                      <p>
+                        To understand user behavior in order to provide you with a more relevant
+                        browsing experience or personalize the content on our site.
+                      </p>
+                      <p className={hideOnMobile}>
+                        For example, we collect information about which pages you visit to help us
+                        present more relevant information.
+                      </p>
+                    </td>
+                    <td className={hideOnMobile}>
+                      {marketingDestinations.map(d => d.name).join(', ')}
+                    </td>
+                  </Row>
 
-              <Row>
-                <InputCell>
-                  <label>
-                    <input
-                      type="radio"
-                      name="advertising"
-                      value="true"
-                      checked={advertising === true}
-                      onChange={this.handleChange}
-                      aria-label="Allow advertising tracking"
-                      required
-                    />{' '}
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="advertising"
-                      value="false"
-                      checked={advertising === false}
-                      onChange={this.handleChange}
-                      aria-label="Disallow advertising tracking"
-                      required
-                    />{' '}
-                    No
-                  </label>
-                </InputCell>
-                <RowHeading scope="row">Advertising</RowHeading>
-                <td>
-                  <p>
-                    To personalize and measure the effectiveness of advertising on our site and
-                    other websites.
-                  </p>
-                  <p className={hideOnMobile}>
-                    For example, we may serve you a personalized ad based on the pages you visit on
-                    our site.
-                  </p>
-                </td>
-                <td className={hideOnMobile}>
-                  {advertisingDestinations.map(d => d.name).join(', ')}
-                </td>
-              </Row>
+                  <Row>
+                    <InputCell>
+                      <label>
+                        <input
+                          type="radio"
+                          name="advertising"
+                          value="true"
+                          checked={advertising === true}
+                          onChange={this.handleChange}
+                          aria-label="Allow advertising tracking"
+                          required
+                        />{' '}
+                        Yes
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="advertising"
+                          value="false"
+                          checked={advertising === false}
+                          onChange={this.handleChange}
+                          aria-label="Disallow advertising tracking"
+                          required
+                        />{' '}
+                        No
+                      </label>
+                    </InputCell>
+                    <RowHeading scope="row">Advertising</RowHeading>
+                    <td>
+                      <p>
+                        To personalize and measure the effectiveness of advertising on our site and
+                        other websites.
+                      </p>
+                      <p className={hideOnMobile}>
+                        For example, we may serve you a personalized ad based on the pages you visit
+                        on our site.
+                      </p>
+                    </td>
+                    <td className={hideOnMobile}>
+                      {advertisingDestinations.map(d => d.name).join(', ')}
+                    </td>
+                  </Row>
+                </>
+              )}
+
+              {customCategories &&
+                Object.entries(customCategories).map(
+                  ([categoryName, { integrations, purpose }]) => (
+                    <Row key={categoryName}>
+                      <InputCell>
+                        <label>
+                          <input
+                            type="radio"
+                            name={categoryName}
+                            value="true"
+                            checked={preferences[categoryName] === true}
+                            onChange={this.handleChange}
+                            aria-label={`Allow "${categoryName}" tracking`}
+                            required
+                          />{' '}
+                          Yes
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name={categoryName}
+                            value="false"
+                            checked={preferences[categoryName] === false}
+                            onChange={this.handleChange}
+                            aria-label={`Disallow "${categoryName}" tracking`}
+                            required
+                          />{' '}
+                          No
+                        </label>
+                      </InputCell>
+                      <RowHeading scope="row">{categoryName}</RowHeading>
+                      <td>
+                        <p>{purpose}</p>
+                      </td>
+                      <td className={hideOnMobile}>
+                        {destinations
+                          .filter(d => integrations.includes(d.name))
+                          .map(d => d.name)
+                          .join(', ')}
+                      </td>
+                    </Row>
+                  )
+                )}
 
               <Row>
                 <td>N/A</td>
@@ -278,11 +333,29 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
   }
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const { onSave, marketingAndAnalytics, advertising, functional } = this.props
+    const {
+      onSave,
+      preferences,
+      marketingAndAnalytics,
+      advertising,
+      functional,
+      customCategories
+    } = this.props
     e.preventDefault()
     // Safe guard against browsers that don't prevent the
     // submission of invalid forms (Safari < 10.1)
-    if (marketingAndAnalytics === null || advertising === null || functional === null) {
+    if (
+      !customCategories &&
+      (marketingAndAnalytics === null || advertising === null || functional === null)
+    ) {
+      return
+    }
+
+    // Safe guard against custom categories being null
+    if (
+      customCategories &&
+      Object.keys(customCategories).some(category => preferences[category] === null)
+    ) {
       return
     }
     onSave()

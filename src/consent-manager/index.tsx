@@ -19,6 +19,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     implyConsentOnInteraction: false,
     onError: undefined,
     cookieDomain: undefined,
+    customCategories: undefined,
     bannerTextColor: '#fff',
     bannerSubContent: 'You can change your preferences at any time.',
     bannerBackgroundColor: '#1f4160',
@@ -41,7 +42,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       preferencesDialogContent,
       cancelDialogTitle,
       cancelDialogContent,
-      initialPreferences,
+      customCategories,
       onError
     } = this.props
 
@@ -52,11 +53,13 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         otherWriteKeys={otherWriteKeys}
         shouldRequireConsent={shouldRequireConsent}
         cookieDomain={cookieDomain}
-        initialPreferences={initialPreferences || zeroValuePreferences}
+        initialPreferences={this.getInitialPreferences()}
         mapCustomPreferences={this.handleMapCustomPreferences}
+        customCategories={customCategories}
       >
         {({
           destinations,
+          customCategories,
           newDestinations,
           preferences,
           isConsentRequired,
@@ -65,6 +68,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           saveConsent
         }) => {
           return <Container
+            customCategories={customCategories}
             destinations={destinations}
             newDestinations={newDestinations}
             preferences={preferences}
@@ -90,9 +94,52 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     )
   }
 
+  getInitialPreferences = () => {
+    const { initialPreferences, customCategories } = this.props
+    if (initialPreferences) {
+      return initialPreferences
+    }
+
+    if (!customCategories) {
+      return zeroValuePreferences
+    }
+
+    const initialCustomPreferences = {}
+    Object.keys(customCategories).forEach(category => {
+      initialCustomPreferences[category] = null
+    })
+
+    return initialCustomPreferences
+  }
+
   handleMapCustomPreferences = (destinations: Destination[], preferences: CategoryPreferences) => {
+    const { customCategories } = this.props
     const destinationPreferences = {}
     const customPreferences = {}
+
+    if (customCategories) {
+      for (const preferenceName of Object.keys(customCategories)) {
+        const value = preferences[preferenceName]
+        if (typeof value === 'boolean') {
+          customPreferences[preferenceName] = value
+        } else {
+          customPreferences[preferenceName] = true
+        }
+      }
+
+      destinations.forEach(destination => {
+        // Mark custom categories 
+        Object.entries(customCategories).forEach(([categoryName, { integrations }]) => {
+          const consentAlreadySetToFalse = destinationPreferences[destination.id] === false
+          const shouldSetConsent = integrations.includes(destination.name)
+          if (shouldSetConsent && !consentAlreadySetToFalse) {
+            destinationPreferences[destination.id] = customPreferences[categoryName]
+          }
+        })
+      })
+
+      return { destinationPreferences, customPreferences }
+    }
 
     // Default unset preferences to true (for implicit consent)
     for (const preferenceName of Object.keys(preferences)) {
@@ -107,12 +154,18 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     const customPrefs = customPreferences as CategoryPreferences
 
     for (const destination of destinations) {
-      if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
+      // Mark advertising destinations
+      if (ADVERTISING_CATEGORIES.find(c => c === destination.category) && destinationPreferences[destination.id] !== false) {
         destinationPreferences[destination.id] = customPrefs.advertising
-      } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
+      }
+
+      // Mark function destinations
+      if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category) && destinationPreferences[destination.id] !== false) {
         destinationPreferences[destination.id] = customPrefs.functional
-      } else {
-        // Fallback to marketing
+      }
+
+      // Fallback to marketing
+      if (!(destination.id in destinationPreferences)) {
         destinationPreferences[destination.id] = customPrefs.marketingAndAnalytics
       }
     }

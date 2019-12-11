@@ -2,7 +2,7 @@ import { Component } from 'react'
 import { loadPreferences, savePreferences } from './preferences'
 import fetchDestinations from './fetch-destinations'
 import conditionallyLoadAnalytics from './analytics'
-import { Destination, CategoryPreferences } from '../types'
+import { Destination, CategoryPreferences, CustomCategories } from '../types'
 
 function getNewDestinations(destinations: Destination[], preferences: CategoryPreferences) {
   const newDestinations: Destination[] = []
@@ -54,6 +54,11 @@ interface Props {
   ) => { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
 
   /**
+   * Allows for adding custom consent categories by mapping a custom category to Segment integrations
+   */
+  customCategories?: CustomCategories
+
+  /**
    * A callback for dealing with errors in the Consent Manager
    */
   onError?: (err: Error) => void | Promise<void>
@@ -64,6 +69,7 @@ interface RenderProps {
   newDestinations: Destination[]
   preferences: CategoryPreferences
   isConsentRequired: boolean
+  customCategories?: CustomCategories
   setPreferences: (newPreferences: CategoryPreferences) => void
   resetPreferences: () => void
   saveConsent: (newPreferences?: CategoryPreferences | boolean, shouldReload?: boolean) => void
@@ -96,7 +102,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
   }
 
   render() {
-    const { children } = this.props
+    const { children, customCategories } = this.props
     const { isLoading, destinations, preferences, newDestinations, isConsentRequired } = this.state
 
     if (isLoading) {
@@ -105,6 +111,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
     return children({
       destinations,
+      customCategories,
       newDestinations,
       preferences,
       isConsentRequired,
