@@ -174,7 +174,7 @@ Options:
 
 ##### implyConsentOnInteraction
 
-**_ Breaking Change _** (versions < 3.0.0 will default this option `true`)
+**_Breaking Change_** (versions < 3.0.0 will default this option `true`)
 
 Type: `boolean`<br>
 Default: `false` (as of 3.0.0)
@@ -239,6 +239,24 @@ The title of the cancel dialog.
 Type: `PropTypes.node`
 
 The content of the cancel dialog.
+
+##### customCategories
+
+Type: `PropTypes.object`<br>
+Default: `undefined`
+
+An object representing custom consent categories - mapping custom categories to Segment integrations, i.e:
+
+```javascript
+const customCategories = {
+  'New Category': {
+    purpose: 'A new consent category to capture more granular consent groupings',
+    integrations: ['Google Adwords (Classic)', 'Amplitude', 'Slack']
+  }
+}
+```
+
+The values for `integrations` should be an integration's name (`integration.name`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
 
 #### Example
 
