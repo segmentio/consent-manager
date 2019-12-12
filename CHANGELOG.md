@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.0(Dec 11, 2019)
+
+### Added
+
+- [#60](https://github.com/segmentio/consent-manager/pull/60) Add new `customCategories` option
+
 ## 4.0.1(Oct 10, 2019)
 
 ### Fixed
