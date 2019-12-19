@@ -1,4 +1,4 @@
-import { CloseBehavior } from './consent-manager/container'
+import { CloseBehavior, CloseBehaviorFunction } from './consent-manager/container'
 import { PreferencesManager } from './consent-manager-builder/preferences'
 
 type AJS = SegmentAnalytics.AnalyticsJS & {
@@ -75,7 +75,7 @@ export interface ConsentManagerProps {
   onError?: (error: Error | undefined) => void
   cancelDialogTitle?: React.ReactNode
   cancelDialogContent: React.ReactNode
-  closeBehavior?: CloseBehavior
+  closeBehavior?: CloseBehavior | CloseBehaviorFunction
   initialPreferences?: CategoryPreferences
   customCategories?: CustomCategories
 }
