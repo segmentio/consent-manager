@@ -109,6 +109,8 @@ const Container: React.FC<ContainerProps> = props => {
   })
 
   const onClose = () => {
+    console.log(props.preferences)
+
     if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
       return toggleBanner(false)
     }
@@ -118,11 +120,12 @@ const Container: React.FC<ContainerProps> = props => {
     }
 
     if (props.closeBehavior === CloseBehavior.DENY) {
-      props.setPreferences({
-        advertising: false,
-        functional: false,
-        marketingAndAnalytics: false
-      })
+      const falsePreferences = Object.keys(props.preferences).reduce((acc, category) => {
+        acc[category] = false
+        return acc
+      }, {})
+
+      props.setPreferences(falsePreferences)
       return props.saveConsent()
     }
   }
