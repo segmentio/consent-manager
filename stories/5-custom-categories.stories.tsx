@@ -91,7 +91,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
         closeBehavior={props.closeBehavior}
         customCategories={{
           'Do Not Sell': {
-            integrations: ['Google Ads (Classic)'],
+            integrations: ['AdWords'],
             purpose: 'To give the right to opt out of the sale of personal data.'
           }
         }}

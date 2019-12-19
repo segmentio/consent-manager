@@ -113,7 +113,6 @@ const Container: React.FC<ContainerProps> = props => {
   })
 
   const onClose = () => {
-    console.log(props.preferences)
     if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
       return toggleBanner(false)
     }
@@ -135,7 +134,8 @@ const Container: React.FC<ContainerProps> = props => {
     // closeBehavior is a custom function
     const customClosePreferences = props.closeBehavior(props.preferences)
     props.setPreferences(customClosePreferences)
-    return props.saveConsent()
+    props.saveConsent()
+    return toggleBanner(false)
   }
 
   const handleCategoryChange = (category: string, value: boolean) => {

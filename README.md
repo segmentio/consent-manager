@@ -256,7 +256,7 @@ const customCategories = {
 }
 ```
 
-The values for `integrations` should be an integration's name (`integration.name`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
+The values for `integrations` should be an integration's creationName (`integration.creationName`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
 
 #### Example
 
