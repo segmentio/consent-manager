@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react'
 import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
-import { DefaultButton, GreenButton } from './buttons'
 import { Destination, CustomCategories, CategoryPreferences } from '../types'
-// import { Button, GlobalStyles } from '@bigcommerce/big-design'
+import { Button } from '@bigcommerce/big-design'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -88,9 +87,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
     const {
       innerRef,
       onCancel,
-      marketingDestinations,
-      advertisingDestinations,
-      functionalDestinations,
+      // marketingDestinations,
+      // advertisingDestinations,
+      // functionalDestinations,
       marketingAndAnalytics,
       advertising,
       functional,
@@ -102,8 +101,14 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
     } = this.props
     const buttons = (
       <div>
-        <DefaultButton actionType="normal" onClick={onCancel}>Cancel</DefaultButton>
-        <DefaultButton type="variant">Save</DefaultButton>
+        <div>
+          <Button variant="subtle" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button variant="primary" type="submit">
+            Save
+          </Button>
+        </div>
       </div>
     )
     return (
@@ -159,11 +164,8 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     <RowHeading scope="row">Functional</RowHeading>
                     <td>
                       <p>
-                        To monitor the performance of our site and to enhance your browsing
-                        experience.
-                      </p>
-                      <p className={hideOnMobile}>
-                        For example, these tools enable you to communicate with us via live chat.
+                        Enables enhanced functionality, such as videos and live chat. If you do not
+                        allow these, then some or all of these functions may not work properly.
                       </p>
                     </td>
                   </Row>
@@ -195,15 +197,11 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                         No
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">Marketing and Analytics</RowHeading>
+                    <RowHeading scope="row">Analytics</RowHeading>
                     <td>
                       <p>
-                        To understand user behavior in order to provide you with a more relevant
-                        browsing experience or personalize the content on our site.
-                      </p>
-                      <p className={hideOnMobile}>
-                        For example, we collect information about which pages you visit to help us
-                        present more relevant information.
+                        Provide statistical information on site usage, e.g., web analytics so we can
+                        improve this website over time.
                       </p>
                     </td>
                   </Row>
@@ -235,15 +233,11 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                         No
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">Advertising</RowHeading>
+                    <RowHeading scope="row">Targeting; Advertising</RowHeading>
                     <td>
                       <p>
-                        To personalize and measure the effectiveness of advertising on our site and
-                        other websites.
-                      </p>
-                      <p className={hideOnMobile}>
-                        For example, we may serve you a personalized ad based on the pages you visit
-                        on our site.
+                        Used to create profiles or personalize content to enhance your shopping
+                        experience.
                       </p>
                     </td>
                   </Row>
@@ -298,14 +292,11 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                 <td>N/A</td>
                 <RowHeading scope="row">Essential</RowHeading>
                 <td>
-                  <p>We use browser cookies that are necessary for the site to work as intended.</p>
                   <p>
-                    For example, we store your website data collection preferences so we can honor
-                    them if you return to our site. You can disable these cookies in your browser
-                    settings but if you do the site may not work as intended.
+                    Essential for the site and any requested services to work, but do not perform
+                    any additional or secondary function.
                   </p>
                 </td>
-                <td className={hideOnMobile} />
               </Row>
             </tbody>
           </Table>

@@ -3,6 +3,7 @@ import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
 import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
+import { GlobalStyles } from '@bigcommerce/big-design'
 
 const zeroValuePreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
@@ -67,28 +68,36 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           resetPreferences,
           saveConsent
         }) => {
-          return <Container
-            customCategories={customCategories}
-            destinations={destinations}
-            newDestinations={newDestinations}
-            preferences={preferences}
-            isConsentRequired={isConsentRequired}
-            setPreferences={setPreferences}
-            resetPreferences={resetPreferences}
-            saveConsent={saveConsent}
-            closeBehavior={this.props.closeBehavior}
-            implyConsentOnInteraction={implyConsentOnInteraction ?? ConsentManager.defaultProps.implyConsentOnInteraction}
-            bannerContent={bannerContent}
-            bannerSubContent={bannerSubContent}
-            bannerTextColor={bannerTextColor || ConsentManager.defaultProps.bannerTextColor}
-            bannerBackgroundColor={
-              bannerBackgroundColor || ConsentManager.defaultProps.bannerBackgroundColor
-            }
-            preferencesDialogTitle={preferencesDialogTitle}
-            preferencesDialogContent={preferencesDialogContent}
-            cancelDialogTitle={cancelDialogTitle}
-            cancelDialogContent={cancelDialogContent}
-          />
+          return (
+            <Container
+              customCategories={customCategories}
+              destinations={destinations}
+              newDestinations={newDestinations}
+              preferences={preferences}
+              isConsentRequired={isConsentRequired}
+              setPreferences={setPreferences}
+              resetPreferences={resetPreferences}
+              saveConsent={saveConsent}
+              closeBehavior={this.props.closeBehavior}
+              implyConsentOnInteraction={
+                implyConsentOnInteraction === null || implyConsentOnInteraction === undefined
+                  ? ConsentManager.defaultProps.implyConsentOnInteraction
+                  : implyConsentOnInteraction
+              }
+              bannerContent={bannerContent}
+              bannerSubContent={bannerSubContent}
+              bannerTextColor={bannerTextColor || ConsentManager.defaultProps.bannerTextColor}
+              bannerBackgroundColor={
+                bannerBackgroundColor || ConsentManager.defaultProps.bannerBackgroundColor
+              }
+              preferencesDialogTitle={preferencesDialogTitle}
+              preferencesDialogContent={preferencesDialogContent}
+              cancelDialogTitle={cancelDialogTitle}
+              cancelDialogContent={cancelDialogContent}
+            >
+              <GlobalStyles />
+            </Container>
+          )
         }}
       </ConsentManagerBuilder>
     )
@@ -128,7 +137,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       }
 
       destinations.forEach(destination => {
-        // Mark custom categories 
+        // Mark custom categories
         Object.entries(customCategories).forEach(([categoryName, { integrations }]) => {
           const consentAlreadySetToFalse = destinationPreferences[destination.id] === false
           const shouldSetConsent = integrations.includes(destination.name)
@@ -155,12 +164,18 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
 
     for (const destination of destinations) {
       // Mark advertising destinations
-      if (ADVERTISING_CATEGORIES.find(c => c === destination.category) && destinationPreferences[destination.id] !== false) {
+      if (
+        ADVERTISING_CATEGORIES.find(c => c === destination.category) &&
+        destinationPreferences[destination.id] !== false
+      ) {
         destinationPreferences[destination.id] = customPrefs.advertising
       }
 
       // Mark function destinations
-      if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category) && destinationPreferences[destination.id] !== false) {
+      if (
+        FUNCTIONAL_CATEGORIES.find(c => c === destination.category) &&
+        destinationPreferences[destination.id] !== false
+      ) {
         destinationPreferences[destination.id] = customPrefs.functional
       }
 

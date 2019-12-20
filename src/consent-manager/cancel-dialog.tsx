@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import Dialog from './dialog'
-import { DefaultButton, RedButton } from './buttons'
+import { Button } from '@bigcommerce/big-design'
 
 interface Props {
   innerRef: (node: HTMLElement) => void
@@ -18,10 +18,10 @@ export default class CancelDialog extends PureComponent<Props> {
 
     const buttons = (
       <div>
-        <DefaultButton type="button" onClick={onBack}>
-          Go Back
-        </DefaultButton>
-        <RedButton type="submit">Yes, Cancel</RedButton>
+        <Button variant="subtle" onClick={onBack}>
+          Back to Preferences
+        </Button>
+        <Button variant="primary">Leave Page</Button>
       </div>
     )
 
