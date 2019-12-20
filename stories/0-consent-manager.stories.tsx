@@ -140,10 +140,9 @@ storiesOf('React Component / OnClose interactions', module)
   .add(`Deny`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DENY} />)
   .add(`Custom Close Behavior`, () => (
     <ConsentManagerExample
-      closeBehavior={_preferences => ({
-        advertising: false,
-        marketingAndAnalytics: true,
-        functional: true
+      closeBehavior={categories => ({
+        ...categories,
+        advertising: false
       })}
     />
   ))

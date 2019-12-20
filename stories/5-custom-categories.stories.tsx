@@ -146,7 +146,8 @@ storiesOf('Custom Categories - Do Not Sell', module)
   .add(`Deny`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DENY} />)
   .add(`Custom Close Behavior`, () => (
     <ConsentManagerExample
-      closeBehavior={_preferences => ({
+      closeBehavior={categories => ({
+        ...categories,
         'Do Not Sell': false
       })}
     />

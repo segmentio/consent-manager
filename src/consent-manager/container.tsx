@@ -18,7 +18,7 @@ export const enum CloseBehavior {
 }
 
 export interface CloseBehaviorFunction {
-  (preferences: CategoryPreferences): CategoryPreferences
+  (categories: CategoryPreferences): CategoryPreferences
 }
 
 interface ContainerProps {
