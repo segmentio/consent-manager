@@ -21,7 +21,7 @@ export default class CancelDialog extends PureComponent<Props> {
         <Button variant="subtle" onClick={onBack}>
           Back to Preferences
         </Button>
-        <Button variant="primary">Leave Page</Button>
+        <Button variant="primary">Close</Button>
       </div>
     )
 

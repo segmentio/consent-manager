@@ -6,7 +6,7 @@ import { EventEmitter } from 'events'
 
 const COOKIE_KEY = 'tracking-preferences'
 // TODO: Make cookie expiration configurable
-const COOKIE_EXPIRES = 365
+const COOKIE_EXPIRES = 730
 
 export interface PreferencesManager {
   loadPreferences(): Preferences
