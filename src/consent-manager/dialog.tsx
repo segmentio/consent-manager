@@ -56,7 +56,6 @@ const Header = styled('div')`
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(67, 90, 111, 0.079);
 `
 
 const Title = styled('h2')`

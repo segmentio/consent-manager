@@ -25,7 +25,9 @@ async function fetchDestinationForWriteKey(writeKey: string): Promise<Destinatio
 export default async function fetchDestinations(writeKeys: string[]): Promise<Destination[]> {
   const destinationsRequests: Promise<Destination[]>[] = []
   for (const writeKey of writeKeys) {
-    destinationsRequests.push(fetchDestinationForWriteKey(writeKey))
+    if (writeKey !== undefined) {
+      destinationsRequests.push(fetchDestinationForWriteKey(writeKey))
+    }
   }
 
   let destinations = flatten(await Promise.all(destinationsRequests))

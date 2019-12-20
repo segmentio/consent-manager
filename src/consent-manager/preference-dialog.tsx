@@ -3,6 +3,7 @@ import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
 import { DefaultButton, GreenButton } from './buttons'
 import { Destination, CustomCategories, CategoryPreferences } from '../types'
+// import { Button, GlobalStyles } from '@bigcommerce/big-design'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -101,10 +102,8 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
     } = this.props
     const buttons = (
       <div>
-        <DefaultButton type="button" onClick={onCancel}>
-          Cancel
-        </DefaultButton>
-        <GreenButton type="submit">Save</GreenButton>
+        <DefaultButton actionType="normal" onClick={onCancel}>Cancel</DefaultButton>
+        <DefaultButton type="variant">Save</DefaultButton>
       </div>
     )
     return (
@@ -115,7 +114,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
         onCancel={onCancel}
         onSubmit={this.handleSubmit}
       >
-        {content}
+        {content !== '' && content !== undefined ? content : ''}
 
         <TableScroll>
           <Table>
@@ -124,9 +123,6 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                 <ColumnHeading scope="col">Allow</ColumnHeading>
                 <ColumnHeading scope="col">Category</ColumnHeading>
                 <ColumnHeading scope="col">Purpose</ColumnHeading>
-                <ColumnHeading scope="col" className={hideOnMobile}>
-                  Tools
-                </ColumnHeading>
               </Row>
             </thead>
 
@@ -170,9 +166,6 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                         For example, these tools enable you to communicate with us via live chat.
                       </p>
                     </td>
-                    <td className={hideOnMobile}>
-                      {functionalDestinations.map(d => d.name).join(', ')}
-                    </td>
                   </Row>
 
                   <Row>
@@ -213,9 +206,6 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                         present more relevant information.
                       </p>
                     </td>
-                    <td className={hideOnMobile}>
-                      {marketingDestinations.map(d => d.name).join(', ')}
-                    </td>
                   </Row>
 
                   <Row>
@@ -255,9 +245,6 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                         For example, we may serve you a personalized ad based on the pages you visit
                         on our site.
                       </p>
-                    </td>
-                    <td className={hideOnMobile}>
-                      {advertisingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
                 </>

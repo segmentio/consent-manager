@@ -141,7 +141,7 @@ const Container: React.FC<ContainerProps> = props => {
   const handleCancel = () => {
     toggleDialog(false)
     // Only show the cancel confirmation if there's unconsented destinations
-    if (props.newDestinations.length > 0) {
+    if (props.newDestinations.length >= 0) {
       toggleCancel(true)
     } else {
       props.resetPreferences()
@@ -160,7 +160,7 @@ const Container: React.FC<ContainerProps> = props => {
 
   return (
     <div>
-      {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
+      {showBanner && props.isConsentRequired && props.newDestinations.length >= 0 && (
         <Banner
           innerRef={current => (banner = { current })}
           onClose={onClose}

@@ -38,7 +38,7 @@ module.exports = {
     new webpack.BannerPlugin(
       `
 Consent Manager v${pkg.version}
-https://github.com/segmentio/consent-manager
+https://github.com/bigcommerce/consent-manager
 Released under the MIT license
 Copyright © 2018, Segment.io, Inc
     `.trim()
