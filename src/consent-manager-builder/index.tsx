@@ -143,14 +143,14 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       mapCustomPreferences
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
-    let { destinationPreferences = {}, customPreferences } = loadPreferences()
+    let { destinationPreferences, customPreferences } = loadPreferences()
 
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),
       fetchDestinations([writeKey, ...otherWriteKeys])
     ])
 
-    const newDestinations = getNewDestinations(destinations, destinationPreferences)
+    const newDestinations = getNewDestinations(destinations, destinationPreferences || {})
 
     let preferences: CategoryPreferences | undefined
     if (mapCustomPreferences) {
