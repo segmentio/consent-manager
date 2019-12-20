@@ -3,7 +3,7 @@ import { WindowWithAJS, Destination } from '../types'
 interface AnalyticsParams {
   writeKey: string
   destinations: Destination[]
-  destinationPreferences: object | null
+  destinationPreferences: object | null | undefined
   isConsentRequired: boolean
   shouldReload?: boolean
 }
