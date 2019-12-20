@@ -161,7 +161,7 @@ Callback function that determines if consent is required before tracking can beg
 
 ##### closeBehavior
 
-Type: `enum|string`<br>
+Type: `enum|string` or `function`<br>
 Default: `dismiss`
 
 An option to determine what should be the default behavior for the `x` button on the consent manager banner.
@@ -171,6 +171,17 @@ Options:
 - `dismiss` (default) - Dismisses the banner, but don't save or change any preferences. Analytics.js won't be loaded until explicit consent is given.
 - `accept` - Assume consent across every category.
 - `deny` - Denies consent across every category.
+
+`closeBehavior` can also be customized - i.e. don't load some categories, but load everything else. For example, if you wanted to load everything _except_ advertising, you could pass the following as `closeBehavior`:
+
+```
+closeBehavior={
+  (categories) => ({
+    ...categories,
+    advertising: false
+  })
+}
+```
 
 ##### implyConsentOnInteraction
 
@@ -256,7 +267,7 @@ const customCategories = {
 }
 ```
 
-The values for `integrations` should be an integration's name (`integration.name`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
+The values for `integrations` should be an integration's creationName (`integration.creationName`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
 
 #### Example
 

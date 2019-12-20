@@ -33,6 +33,5 @@ export default async function fetchDestinations(writeKeys: string[]): Promise<De
   destinations = destinations.filter(d => d.id !== 'Repeater')
   destinations = sortBy(destinations, ['id'])
   destinations = sortedUniqBy(destinations, 'id')
-
   return destinations
 }

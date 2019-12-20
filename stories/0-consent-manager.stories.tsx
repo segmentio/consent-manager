@@ -3,7 +3,7 @@ import cookies from 'js-cookie'
 import { Pane, Heading, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager, loadPreferences, onPreferencesSaved } from '../src'
 import { storiesOf } from '@storybook/react'
-import { CloseBehavior } from '../src/consent-manager/container'
+import { CloseBehavior, CloseBehaviorFunction } from '../src/consent-manager/container'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { Preferences } from '../src/types'
@@ -64,7 +64,7 @@ const cancelDialogContent = (
   </div>
 )
 
-const ConsentManagerExample = (props: { closeBehavior: CloseBehavior }) => {
+const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBehaviorFunction }) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
 
   const cleanup = onPreferencesSaved(preferences => {
@@ -138,3 +138,11 @@ storiesOf('React Component / OnClose interactions', module)
   .add(`Dismiss`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DISMISS} />)
   .add(`Accept`, () => <ConsentManagerExample closeBehavior={CloseBehavior.ACCEPT} />)
   .add(`Deny`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DENY} />)
+  .add(`Custom Close Behavior`, () => (
+    <ConsentManagerExample
+      closeBehavior={categories => ({
+        ...categories,
+        advertising: false
+      })}
+    />
+  ))

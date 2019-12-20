@@ -17,11 +17,15 @@ export const enum CloseBehavior {
   DISMISS = 'dismiss'
 }
 
+export interface CloseBehaviorFunction {
+  (categories: CategoryPreferences): CategoryPreferences
+}
+
 interface ContainerProps {
   setPreferences: (prefs: CategoryPreferences) => void
   saveConsent: (newPreferences?: CategoryPreferences, shouldReload?: boolean) => void
   resetPreferences: () => void
-  closeBehavior?: CloseBehavior
+  closeBehavior?: CloseBehavior | CloseBehaviorFunction
   destinations: Destination[]
   customCategories?: CustomCategories | undefined
   newDestinations: Destination[]
@@ -118,13 +122,20 @@ const Container: React.FC<ContainerProps> = props => {
     }
 
     if (props.closeBehavior === CloseBehavior.DENY) {
-      props.setPreferences({
-        advertising: false,
-        functional: false,
-        marketingAndAnalytics: false
-      })
+      const falsePreferences = Object.keys(props.preferences).reduce((acc, category) => {
+        acc[category] = false
+        return acc
+      }, {})
+
+      props.setPreferences(falsePreferences)
       return props.saveConsent()
     }
+
+    // closeBehavior is a custom function
+    const customClosePreferences = props.closeBehavior(props.preferences)
+    props.setPreferences(customClosePreferences)
+    props.saveConsent()
+    return toggleBanner(false)
   }
 
   const handleCategoryChange = (category: string, value: boolean) => {
