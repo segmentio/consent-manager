@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import inEU from '@segment/in-eu'
+import inRegions from '@segment/in-regions'
 import { ConsentManager, openConsentManager, doNotTrack } from '.'
 import { ConsentManagerProps, WindowWithConsentManagerConfig, ConsentManagerInput } from './types'
 import { CloseBehavior } from './consent-manager/container'
@@ -21,7 +22,8 @@ if (localWindow.consentManagerConfig && typeof localWindow.consentManagerConfig 
     openConsentManager,
     doNotTrack,
     inEU,
-    preferences
+    preferences,
+    inRegions
   })
   containerRef = props.container
 } else {

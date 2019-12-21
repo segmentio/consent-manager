@@ -34,6 +34,7 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
+    "@segment/in-regions": "^1.2.0",
     "@segment/top-domain": "^3.0.0",
     "emotion": "^9.1.2",
     "isomorphic-fetch": "^2.2.1",
@@ -123,7 +124,7 @@
     },
     {
       "path": "standalone/consent-manager.js",
-      "limit": "44 KB"
+      "limit": "45 KB"
     }
   ],
   "husky": {
