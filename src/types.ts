@@ -28,6 +28,7 @@ interface StandaloneConsentManagerParams {
   doNotTrack: () => boolean | null
   inEU: () => boolean
   preferences: PreferencesManager
+  inRegions: (regions: string[]) => () => boolean
 }
 
 export interface Preferences {
