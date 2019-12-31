@@ -39,7 +39,7 @@
     "emotion": "^9.1.2",
     "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.11",
     "nanoid": "^1.0.2",
     "prop-types": "^15.6.1",
     "react-emotion": "^9.1.2"
