@@ -3,7 +3,6 @@ import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
 import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
-import { GlobalStyles } from '@bigcommerce/big-design'
 
 const zeroValuePreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
@@ -94,9 +93,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
               preferencesDialogContent={preferencesDialogContent}
               cancelDialogTitle={cancelDialogTitle}
               cancelDialogContent={cancelDialogContent}
-            >
-              <GlobalStyles />
-            </Container>
+            ></Container>
           )
         }}
       </ConsentManagerBuilder>

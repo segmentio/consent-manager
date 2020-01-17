@@ -106,8 +106,11 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     const { isLoading, destinations, preferences, newDestinations, isConsentRequired } = this.state
 
     if (isLoading) {
+      console.log('loading')
       return null
     }
+
+    console.log('done')
 
     return children({
       destinations,
@@ -156,10 +159,17 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     if (mapCustomPreferences) {
       preferences = customPreferences || initialPreferences || {}
 
-      const hasInitialPreferenceToTrue = Object.values(initialPreferences || {}).some(Boolean)
-      const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
-        v => v === null || v === undefined
-      )
+      let definedObject = function(obj: object | undefined) {
+        return obj == undefined ? {} : obj
+      }
+
+      const hasInitialPreferenceToTrue = Object.keys(definedObject(initialPreferences))
+        .map(e => definedObject(initialPreferences)[e])
+        .some(Boolean)
+
+      const emptyCustomPreferecences = Object.keys(definedObject(customPreferences))
+        .map(e => definedObject(customPreferences)[e])
+        .every(v => v === null || v === undefined)
 
       if (hasInitialPreferenceToTrue && emptyCustomPreferecences) {
         const mapped = mapCustomPreferences(destinations, preferences)

@@ -59,7 +59,7 @@ function normalizeDestinations(destinations: Destination[]) {
 
 const Container: React.FC<ContainerProps> = props => {
   const [isDialogOpen, toggleDialog] = React.useState(false)
-  const [showBanner, toggleBanner] = React.useState(true)
+  // const [showBanner, toggleBanner] = React.useState(true)
   const [isCancelling, toggleCancel] = React.useState(false)
 
   let banner = React.useRef<HTMLElement>(null)
@@ -108,24 +108,24 @@ const Container: React.FC<ContainerProps> = props => {
     }
   })
 
-  const onClose = () => {
-    if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
-      return toggleBanner(false)
-    }
+  // const onClose = () => {
+  //   if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
+  //     return toggleBanner(false)
+  //   }
 
-    if (props.closeBehavior === CloseBehavior.ACCEPT) {
-      return props.saveConsent()
-    }
+  //   if (props.closeBehavior === CloseBehavior.ACCEPT) {
+  //     return props.saveConsent()
+  //   }
 
-    if (props.closeBehavior === CloseBehavior.DENY) {
-      props.setPreferences({
-        advertising: false,
-        functional: false,
-        marketingAndAnalytics: false
-      })
-      return props.saveConsent()
-    }
-  }
+  //   if (props.closeBehavior === CloseBehavior.DENY) {
+  //     props.setPreferences({
+  //       advertising: false,
+  //       functional: false,
+  //       marketingAndAnalytics: false
+  //     })
+  //     return props.saveConsent()
+  //   }
+  // }
 
   const handleCategoryChange = (category: string, value: boolean) => {
     props.setPreferences({
@@ -158,15 +158,18 @@ const Container: React.FC<ContainerProps> = props => {
     props.resetPreferences()
   }
 
+  const handleAcceptAll = () => {
+    props.saveConsent()
+  }
+
   return (
     <div>
-      {showBanner && props.isConsentRequired && props.newDestinations.length >= 0 && (
+      {props.isConsentRequired && props.newDestinations.length >= 0 && (
         <Banner
           innerRef={current => (banner = { current })}
-          onClose={onClose}
           onChangePreferences={() => toggleDialog(true)}
+          onAcceptAll={() => handleAcceptAll()}
           content={props.bannerContent}
-          subContent={props.bannerSubContent}
           textColor={props.bannerTextColor}
           backgroundColor={props.bannerBackgroundColor}
         />

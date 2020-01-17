@@ -51,12 +51,13 @@ if (props.closeBehavior !== undefined && typeof props.closeBehavior === 'string'
     CloseBehavior.DISMISS.toString()
   ]
 
-  if (!options.includes(props.closeBehavior)) {
+  if (options.indexOf(props.closeBehavior) < 0) {
     throw new Error(`ConsentManager: closeBehavior should be one of ${options}`)
   }
 }
 
 const container = document.querySelector(containerRef)
+
 if (!container) {
   throw new Error('ConsentManager: container not found')
 }

@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Pane } from 'evergreen-ui'
-import SyntaxHighlighter from 'react-syntax-highlighter'
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+// import SyntaxHighlighter from 'react-syntax-highlighter'
+// import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
 // @ts-ignore
 import contents from 'raw-loader!./standalone.html'
@@ -19,9 +19,9 @@ const StandaloneConsentManagerExample = () => {
           width="550"
           srcDoc={contents}
         ></iframe>
-        <SyntaxHighlighter language="html" style={docco} customStyle={{ flex: 1 }}>
+        {/* <SyntaxHighlighter language="html" style={docco} customStyle={{ flex: 1 }}>
           {contents}
-        </SyntaxHighlighter>
+        </SyntaxHighlighter> */}
       </Pane>
 
       <CookieView />

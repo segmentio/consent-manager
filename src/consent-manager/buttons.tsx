@@ -14,6 +14,27 @@ const baseStyles = css`
   transition: box-shadow 80ms ease-in-out;
 `
 
+export const Button = styled('button')`
+  background: #ffffff;
+  height: 36px;
+  color: #454545;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  align-items: center;
+  appearance: none;
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  font-size: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+`
+
 export const DefaultButton = styled('button')`
   ${baseStyles};
   margin-right: 8px;

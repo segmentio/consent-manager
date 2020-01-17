@@ -35,6 +35,9 @@ module.exports = {
         VERSION: JSON.stringify(pkg.version)
       }
     }),
+    new webpack.ProvidePlugin({
+      Promise: 'es6-promise-promise'
+    }),
     new webpack.BannerPlugin(
       `
 Consent Manager v${pkg.version}
@@ -43,5 +46,8 @@ Released under the MIT license
 Copyright © 2018, Segment.io, Inc
     `.trim()
     )
-  ]
+  ],
+  optimization: {
+    usedExports: true
+  }
 }

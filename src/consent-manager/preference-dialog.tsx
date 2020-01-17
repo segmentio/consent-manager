@@ -2,11 +2,28 @@ import React, { PureComponent } from 'react'
 import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
 import { Destination, CustomCategories, CategoryPreferences } from '../types'
-import { Button } from '@bigcommerce/big-design'
+import { Button } from './buttons'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
     display: none;
+  }
+`
+
+const ContentContainer = styled('div')`
+  max-width: 95%;
+
+  margin-bottom: 8px;
+
+  a {
+    color: #454545;
+    display: inline;
+    padding: 0;
+    border: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
   }
 `
 
@@ -56,6 +73,18 @@ const InputCell = styled('td')`
   }
 `
 
+const CancelButton = styled(Button)`
+  background: none;
+  color: #454545;
+  border: none;
+`
+
+const SaveButton = styled(Button)`
+  background: #454545;
+  color: #ffffff;
+  margin-left: 8px;
+`
+
 interface PreferenceDialogProps {
   innerRef: (element: HTMLElement | null) => void
   onCancel: () => void
@@ -87,9 +116,6 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
     const {
       innerRef,
       onCancel,
-      // marketingDestinations,
-      // advertisingDestinations,
-      // functionalDestinations,
       marketingAndAnalytics,
       advertising,
       functional,
@@ -102,12 +128,8 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
     const buttons = (
       <div>
         <div>
-          <Button variant="subtle" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button variant="primary" type="submit">
-            Save
-          </Button>
+          <CancelButton onClick={onCancel}>Cancel</CancelButton>
+          <SaveButton type="submit">Save</SaveButton>
         </div>
       </div>
     )
@@ -119,7 +141,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
         onCancel={onCancel}
         onSubmit={this.handleSubmit}
       >
-        {content !== '' && content !== undefined ? content : ''}
+        <ContentContainer>
+          {content !== '' && content !== undefined ? content : ''}
+        </ContentContainer>
 
         <TableScroll>
           <Table>

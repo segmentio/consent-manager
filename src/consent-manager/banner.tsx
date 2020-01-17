@@ -2,19 +2,21 @@ import React, { PureComponent } from 'react'
 import styled from 'react-emotion'
 import fontStyles from './font-styles'
 
+import { Button } from './buttons'
+
 const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div')`
   ${fontStyles};
   position: relative;
-  padding: 8px;
-  padding-right: 40px;
+  padding: 14px;
   background: ${props => props.backgroundColor};
   color: ${props => props.textColor};
-  text-align: center;
+  text-align: left;
   font-size: 12px;
   line-height: 1.3;
 `
 
 const Content = styled('div')`
+  margin-top: 16px;
   a,
   button {
     display: inline;
@@ -29,33 +31,40 @@ const Content = styled('div')`
 `
 
 const P = styled('p')`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
   margin: 0;
-  &:not(:last-child) {
-    margin-bottom: 6px;
+`
+const ButtonContainer = styled('div')`
+  display: 'flex';
+  flexdirection: 'row';
+  justifycontent: 'flex-end';
+  flexwrap: 'nowrap';
+  margin: 0;
+  margin-top: 16px;
+`
+
+const SettingsButton = styled(Button)`
+  background: none;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+
+  @media only screen and (min-width: 719px) {
+    margin-left: 8px;
   }
 `
 
-const CloseButton = styled('button')`
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 8px;
-  border: none;
-  background: none;
-  color: inherit;
-  font: inherit;
-  font-size: 14px;
-  line-height: 1;
-  cursor: pointer;
+const AcceptButton = styled(Button)`
+  margin-left: 8px;
 `
 
 interface Props {
   innerRef: (node: HTMLElement | null) => void
-  onClose: () => void
   onChangePreferences: () => void
+  onAcceptAll: () => void
   content: React.ReactNode
-  subContent: React.ReactNode
   backgroundColor: string
   textColor: string
 }
@@ -66,28 +75,34 @@ export default class Banner extends PureComponent<Props> {
   render() {
     const {
       innerRef,
-      onClose,
       onChangePreferences,
+      onAcceptAll,
       content,
-      subContent,
       backgroundColor,
       textColor
     } = this.props
 
     return (
       <Root innerRef={innerRef} backgroundColor={backgroundColor} textColor={textColor}>
-        <Content>
-          <P>{content}</P>
-          <P>
-            <button type="button" onClick={onChangePreferences}>
-              {subContent}
-            </button>
-          </P>
-        </Content>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            alignItems: 'baseline',
+            marginTop: '-16px'
+          }}
+        >
+          <Content>
+            <P>{content}</P>
+          </Content>
 
-        <CloseButton type="button" title="Close" aria-label="Close" onClick={onClose}>
-          ✕
-        </CloseButton>
+          <ButtonContainer>
+            <SettingsButton onClick={onChangePreferences}>Settings</SettingsButton>
+            <AcceptButton onClick={onAcceptAll}>Accept All Cookies</AcceptButton>
+          </ButtonContainer>
+        </div>
       </Root>
     )
   }
