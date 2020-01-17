@@ -20,6 +20,7 @@ It works by taking control of the analytics.js load process to only load destina
 - Or fully customizable UI/UX through React components.
 - EU traffic detection through [@segment/in-eu][ineu].
 - Ability for visitors to reconsent and change preferences.
+- Automatically asks again for consent after 12 months (365 days).
 - Automatically updates to reflect the destinations you have enabled in Segment.
 
 ## Usage
