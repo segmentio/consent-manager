@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import styled, { keyframes } from 'react-emotion'
 import nanoid from 'nanoid'
 import fontStyles from './font-styles'
+import { CloseIcon } from '@bigcommerce/big-design-icons'
 
 const ANIMATION_DURATION = '200ms'
 const ANIMATION_EASING = 'cubic-bezier(0.0, 0.0, 0.2, 1)'
@@ -56,7 +57,6 @@ const Header = styled('div')`
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(67, 90, 111, 0.079);
 `
 
 const Title = styled('h2')`
@@ -156,7 +156,7 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
             <Title id={this.titleId}>{title}</Title>
             {onCancel && (
               <HeaderCancelButton onClick={onCancel} title="Cancel" aria-label="Cancel">
-                ✕
+                <CloseIcon />
               </HeaderCancelButton>
             )}
           </Header>

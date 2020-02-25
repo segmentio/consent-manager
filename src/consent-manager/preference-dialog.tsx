@@ -1,12 +1,29 @@
 import React, { PureComponent } from 'react'
 import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
-import { DefaultButton, GreenButton } from './buttons'
 import { Destination, CustomCategories, CategoryPreferences } from '../types'
+import { Button } from './buttons'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
     display: none;
+  }
+`
+
+const ContentContainer = styled('div')`
+  max-width: 95%;
+
+  margin-bottom: 8px;
+
+  a {
+    color: #454545;
+    display: inline;
+    padding: 0;
+    border: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
   }
 `
 
@@ -56,6 +73,18 @@ const InputCell = styled('td')`
   }
 `
 
+const CancelButton = styled(Button)`
+  background: none;
+  color: #454545;
+  border: none;
+`
+
+const SaveButton = styled(Button)`
+  background: #454545;
+  color: #ffffff;
+  margin-left: 8px;
+`
+
 interface PreferenceDialogProps {
   innerRef: (element: HTMLElement | null) => void
   onCancel: () => void
@@ -87,9 +116,6 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
     const {
       innerRef,
       onCancel,
-      marketingDestinations,
-      advertisingDestinations,
-      functionalDestinations,
       marketingAndAnalytics,
       advertising,
       functional,
@@ -101,10 +127,10 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
     } = this.props
     const buttons = (
       <div>
-        <DefaultButton type="button" onClick={onCancel}>
-          Cancel
-        </DefaultButton>
-        <GreenButton type="submit">Save</GreenButton>
+        <div>
+          <CancelButton onClick={onCancel}>Cancel</CancelButton>
+          <SaveButton type="submit">Save</SaveButton>
+        </div>
       </div>
     )
     return (
@@ -115,7 +141,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
         onCancel={onCancel}
         onSubmit={this.handleSubmit}
       >
-        {content}
+        <ContentContainer>
+          {content !== '' && content !== undefined ? content : ''}
+        </ContentContainer>
 
         <TableScroll>
           <Table>
@@ -124,9 +152,6 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                 <ColumnHeading scope="col">Allow</ColumnHeading>
                 <ColumnHeading scope="col">Category</ColumnHeading>
                 <ColumnHeading scope="col">Purpose</ColumnHeading>
-                <ColumnHeading scope="col" className={hideOnMobile}>
-                  Tools
-                </ColumnHeading>
               </Row>
             </thead>
 
@@ -163,15 +188,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     <RowHeading scope="row">Functional</RowHeading>
                     <td>
                       <p>
-                        To monitor the performance of our site and to enhance your browsing
-                        experience.
+                        Enables enhanced functionality, such as videos and live chat. If you do not
+                        allow these, then some or all of these functions may not work properly.
                       </p>
-                      <p className={hideOnMobile}>
-                        For example, these tools enable you to communicate with us via live chat.
-                      </p>
-                    </td>
-                    <td className={hideOnMobile}>
-                      {functionalDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
 
@@ -202,19 +221,12 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                         No
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">Marketing and Analytics</RowHeading>
+                    <RowHeading scope="row">Analytics</RowHeading>
                     <td>
                       <p>
-                        To understand user behavior in order to provide you with a more relevant
-                        browsing experience or personalize the content on our site.
+                        Provide statistical information on site usage, e.g., web analytics so we can
+                        improve this website over time.
                       </p>
-                      <p className={hideOnMobile}>
-                        For example, we collect information about which pages you visit to help us
-                        present more relevant information.
-                      </p>
-                    </td>
-                    <td className={hideOnMobile}>
-                      {marketingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
 
@@ -245,19 +257,12 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                         No
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">Advertising</RowHeading>
+                    <RowHeading scope="row">Targeting; Advertising</RowHeading>
                     <td>
                       <p>
-                        To personalize and measure the effectiveness of advertising on our site and
-                        other websites.
+                        Used to create profiles or personalize content to enhance your shopping
+                        experience.
                       </p>
-                      <p className={hideOnMobile}>
-                        For example, we may serve you a personalized ad based on the pages you visit
-                        on our site.
-                      </p>
-                    </td>
-                    <td className={hideOnMobile}>
-                      {advertisingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
                 </>
@@ -311,14 +316,11 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                 <td>N/A</td>
                 <RowHeading scope="row">Essential</RowHeading>
                 <td>
-                  <p>We use browser cookies that are necessary for the site to work as intended.</p>
                   <p>
-                    For example, we store your website data collection preferences so we can honor
-                    them if you return to our site. You can disable these cookies in your browser
-                    settings but if you do the site may not work as intended.
+                    Essential for the site and any requested services to work, but do not perform
+                    any additional or secondary function.
                   </p>
                 </td>
-                <td className={hideOnMobile} />
               </Row>
             </tbody>
           </Table>

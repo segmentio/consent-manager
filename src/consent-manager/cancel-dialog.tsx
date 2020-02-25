@@ -1,6 +1,19 @@
 import React, { PureComponent } from 'react'
 import Dialog from './dialog'
-import { DefaultButton, RedButton } from './buttons'
+import styled from 'react-emotion'
+import { Button } from './buttons'
+
+const BackButton = styled(Button)`
+  background: none;
+  color: #454545;
+  border: none;
+`
+
+const CloseButton = styled(Button)`
+  background: #454545;
+  color: #ffffff;
+  margin-left: 8px;
+`
 
 interface Props {
   innerRef: (node: HTMLElement) => void
@@ -18,10 +31,8 @@ export default class CancelDialog extends PureComponent<Props> {
 
     const buttons = (
       <div>
-        <DefaultButton type="button" onClick={onBack}>
-          Go Back
-        </DefaultButton>
-        <RedButton type="submit">Yes, Cancel</RedButton>
+        <BackButton onClick={onBack}>Back to Preferences</BackButton>
+        <CloseButton>Close</CloseButton>
       </div>
     )
 

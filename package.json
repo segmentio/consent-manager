@@ -1,5 +1,5 @@
 {
-  "name": "@segment/consent-manager",
+  "name": "@bigcommerce/consent-manager",
   "version": "4.1.0",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
@@ -23,6 +23,7 @@
     "prepublishOnly": "yarn run clean && yarn run build",
     "postpublish": "yarn build-storybook && yarn deploy-storybook -- --existing-output-dir=storybook-static",
     "dev": "concurrently 'yarn build-standalone --watch' 'yarn start-storybook -s ./ -p 9009'",
+    "dev:standalone": "concurrently 'yarn build-standalone --watch'",
     "build-commonjs": "tsc --outDir commonjs --module CommonJS --inlineSourceMap",
     "build-esm": "tsc --module es2015 --outDir esm --inlineSourceMap",
     "build-standalone": "webpack",
@@ -34,14 +35,17 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
+    "@bigcommerce/big-design": "^0.14.0",
     "@segment/top-domain": "^3.0.0",
     "emotion": "^9.1.2",
+    "es6-promise-promise": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.5",
     "nanoid": "^1.0.2",
     "prop-types": "^15.6.1",
-    "react-emotion": "^9.1.2"
+    "react-emotion": "^9.1.2",
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
