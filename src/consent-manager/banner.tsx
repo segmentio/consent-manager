@@ -5,18 +5,17 @@ import fontStyles from './font-styles'
 const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div')`
   ${fontStyles};
   position: relative;
-  padding: 8px;
-  padding-right: 40px;
+  padding: 15px;
   background: ${props => props.backgroundColor};
   color: ${props => props.textColor};
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.3;
+  overflow: hidden;
 `
 
 const Content = styled('div')`
-  a,
-  button {
+  a {
     display: inline;
     padding: 0;
     border: none;
@@ -29,25 +28,22 @@ const Content = styled('div')`
 `
 
 const P = styled('p')`
-  margin: 0;
-  &:not(:last-child) {
-    margin-bottom: 6px;
-  }
+  margin-bottom: 15px;
 `
 
 const CloseButton = styled('button')`
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 8px;
   border: none;
-  background: none;
-  color: inherit;
   font: inherit;
-  font-size: 14px;
-  line-height: 1;
+  line-height: 16px;
   cursor: pointer;
+  width: 150px;
+  height: 50px;
+  background: white;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 1px;
 `
 
 interface Props {
@@ -77,17 +73,13 @@ export default class Banner extends PureComponent<Props> {
     return (
       <Root innerRef={innerRef} backgroundColor={backgroundColor} textColor={textColor}>
         <Content>
-          <P>{content}</P>
           <P>
-            <button type="button" onClick={onChangePreferences}>
-              {subContent}
-            </button>
+            {content} <a onClick={onChangePreferences}>{subContent}</a>
           </P>
+          <CloseButton type="button" title="Close" aria-label="Close" onClick={onClose}>
+            Accept
+          </CloseButton>
         </Content>
-
-        <CloseButton type="button" title="Close" aria-label="Close" onClick={onClose}>
-          ✕
-        </CloseButton>
       </Root>
     )
   }
