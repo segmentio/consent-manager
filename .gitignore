@@ -7,3 +7,4 @@
 
 # IDE
 .vscode/
+*.iml

@@ -1,6 +1,6 @@
 import React from 'react'
 import { groupBy } from 'lodash'
-import { Pane, Heading, SubHeading, Ul, Code, Button } from 'evergreen-ui'
+import { Pane, Heading, Ul, Code, Button } from 'evergreen-ui'
 import { ConsentManagerBuilder } from '../src'
 import DestinationTile from './components/destination-tile'
 import { storiesOf } from '@storybook/react'
@@ -39,7 +39,7 @@ const CategoryBased = () => {
                   const destinationsForCategory = categories[cat]
                   return (
                     <Pane key={cat} marginTop={20}>
-                      <SubHeading>{cat}</SubHeading>
+                      <Heading size={100}>{cat}</Heading>
                       <Ul display="flex" flexWrap="wrap">
                         {destinationsForCategory.map(d => (
                           <DestinationTile

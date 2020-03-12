@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pane, Heading, SubHeading, Ul, Code, Button } from 'evergreen-ui'
+import { Pane, Heading, Ul, Code, Button } from 'evergreen-ui'
 import { ConsentManagerBuilder } from '../src'
 import DestinationTile from './components/destination-tile'
 import { storiesOf } from '@storybook/react'
@@ -39,7 +39,7 @@ const ToolBased = () => {
               </Section>
 
               <Section>
-                <SubHeading>Preferences</SubHeading>
+                <Heading size={100}>Preferences</Heading>
                 <Code>{JSON.stringify(preferences)}</Code>
               </Section>
 
