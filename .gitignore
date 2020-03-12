@@ -1,7 +1,4 @@
 /node_modules/
-/commonjs/
-/esm/
-/standalone/
 /build
 /storybook-static
 
