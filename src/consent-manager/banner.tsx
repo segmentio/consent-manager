@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import styled from 'react-emotion'
 import fontStyles from './font-styles'
 
-const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div')`
+const Root = styled('div')<{ backgroundColor: string; textColor: string }>`
   ${fontStyles};
   position: relative;
   padding: 8px;
