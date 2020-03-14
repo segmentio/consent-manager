@@ -9,6 +9,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
+            - run: npm config set '//npm.pkg.github.com/:_authToken' $GITHUB_AUTH_TOKEN
             - run: npm install
             - run: npm run build
             - run: npm run lint
