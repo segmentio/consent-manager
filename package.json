@@ -32,10 +32,7 @@
     "standalone-hash": "shasum -b -a 256 standalone/consent-manager.js | xxd -r -p | base64",
     "build-storybook": "npm run build-standalone && build-storybook && cp -r ./standalone ./storybook-static/standalone",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "storybook": "start-storybook",
-    "publishConfig": {
-      "registry": "https://npm.pkg.github.com/Iziwork"
-    }
+    "storybook": "start-storybook"
   },
   "dependencies": {
     "@segment/in-regions": "1.2.2",
