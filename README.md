@@ -128,7 +128,7 @@ All the options are supported. The callback function also receives these exports
 </script>
 
 <script
-  src="https://unpkg.com/@segment/consent-manager@4.0.0/standalone/consent-manager.js"
+  src="https://unpkg.com/@segment/consent-manager@4.3.0/standalone/consent-manager.js"
   defer
 ></script>
 ```
@@ -402,6 +402,15 @@ Default: `{}`
 
 The current preferences in state. By default if should be in the format of `{destinationId: true|false}`, but if you're using [mapCustomPreferences][] the object map can be in any format you want. _Note: this isn't the saved preferences._
 
+##### havePreferencesChanged
+
+Type: `boolean`<br>
+Default: `false`
+
+A boolean value representing whether or not the user has changed their preferences since opening the preferences modal. Will be set to `true` if the user interacts with the preferences modal by selecting "Yes" or "No" on any of the consent categories.
+
+This is used to not reload the page if no preferences have changed, as to not create a disruptive user experience.
+
 ##### isConsentRequired
 
 Type: `boolean`<br>
@@ -480,6 +489,25 @@ export default function() {
 
 - `openConsentManager()` - Opens the [ConsentManager][] preferences dialog.
 - `doNotTrack()` - Returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
+
+## Development
+
+To run our storybook locally, simply do:
+
+```
+$ yarn dev
+```
+
+and the storybook should be opened in your browser. We recommend adding a new story for new features, and testing against existing stories when making bug fixes.
+
+### Publishing New Version
+
+This package follows semantic versioning. To publish a new version:
+
+```
+$ npm version <new-version>
+$ npm publish
+```
 
 ## License
 

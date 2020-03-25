@@ -70,6 +70,7 @@ interface RenderProps {
   preferences: CategoryPreferences
   isConsentRequired: boolean
   customCategories?: CustomCategories
+  havePreferencesChanged: boolean
   setPreferences: (newPreferences: CategoryPreferences) => void
   resetPreferences: () => void
   saveConsent: (newPreferences?: CategoryPreferences | boolean, shouldReload?: boolean) => void
@@ -98,13 +99,20 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     destinations: [],
     newDestinations: [],
     preferences: {},
-    isConsentRequired: true
+    isConsentRequired: true,
+    havePreferencesChanged: false
   }
 
   render() {
     const { children, customCategories } = this.props
-    const { isLoading, destinations, preferences, newDestinations, isConsentRequired } = this.state
-
+    const {
+      isLoading,
+      destinations,
+      preferences,
+      newDestinations,
+      isConsentRequired,
+      havePreferencesChanged
+    } = this.state
     if (isLoading) {
       return null
     }
@@ -115,6 +123,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       newDestinations,
       preferences,
       isConsentRequired,
+      havePreferencesChanged,
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
       saveConsent: this.handleSaveConsent
@@ -194,7 +203,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         newPreferences,
         existingPreferences
       })
-      return { ...prevState, preferences }
+      return { ...prevState, preferences, havePreferencesChanged: true }
     })
   }
 
