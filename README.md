@@ -500,6 +500,15 @@ $ yarn dev
 
 and the storybook should be opened in your browser. We recommend adding a new story for new features, and testing against existing stories when making bug fixes.
 
+### Publishing New Version
+
+This package follows semantic versioning. To publish a new version:
+
+```
+$ npm version <new-version>
+$ npm publish
+```
+
 ## License
 
 consent-manager is released under the MIT license.
