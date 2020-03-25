@@ -402,6 +402,15 @@ Default: `{}`
 
 The current preferences in state. By default if should be in the format of `{destinationId: true|false}`, but if you're using [mapCustomPreferences][] the object map can be in any format you want. _Note: this isn't the saved preferences._
 
+##### havePreferencesChanged
+
+Type: `boolean`<br>
+Default: `false`
+
+A boolean value representing whether or not the user has changed their preferences since opening the preferences modal. Will be set to `true` if the user interacts with the preferences modal by selecting "Yes" or "No" on any of the consent categories.
+
+This is used to not reload the page if no preferences have changed, as to not create a disruptive user experience.
+
 ##### isConsentRequired
 
 Type: `boolean`<br>

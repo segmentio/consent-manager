@@ -30,6 +30,7 @@ interface ContainerProps {
   customCategories?: CustomCategories | undefined
   newDestinations: Destination[]
   preferences: CategoryPreferences
+  havePreferencesChanged: boolean
   isConsentRequired: boolean
   implyConsentOnInteraction: boolean
   bannerContent: React.ReactNode
@@ -146,6 +147,10 @@ const Container: React.FC<ContainerProps> = props => {
 
   const handleSave = () => {
     toggleDialog(false)
+    // If preferences haven't changed, don't reload the page as it's a disruptive experience for end-users
+    if (!props.havePreferencesChanged) {
+      return
+    }
     props.saveConsent()
   }
 

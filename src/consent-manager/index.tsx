@@ -65,7 +65,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           isConsentRequired,
           setPreferences,
           resetPreferences,
-          saveConsent
+          saveConsent,
+          havePreferencesChanged
         }) => {
           return <Container
             customCategories={customCategories}
@@ -88,6 +89,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
             preferencesDialogContent={preferencesDialogContent}
             cancelDialogTitle={cancelDialogTitle}
             cancelDialogContent={cancelDialogContent}
+            havePreferencesChanged={havePreferencesChanged}
           />
         }}
       </ConsentManagerBuilder>
