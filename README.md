@@ -490,6 +490,16 @@ export default function() {
 - `openConsentManager()` - Opens the [ConsentManager][] preferences dialog.
 - `doNotTrack()` - Returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
 
+## Development
+
+To run our storybook locally, simply do:
+
+```
+$ yarn dev
+```
+
+and the storybook should be opened in your browser. We recommend adding a new story for new features, and testing against existing stories when making bug fixes.
+
 ## License
 
 consent-manager is released under the MIT license.
