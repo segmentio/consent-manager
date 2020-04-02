@@ -3,11 +3,12 @@ import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
 import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
+import defaultMessages from './default-messages'
 
 const zeroValuePreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
   advertising: null,
-  functional: null
+  functional: null,
 }
 
 export default class ConsentManager extends PureComponent<ConsentManagerProps, {}> {
@@ -21,10 +22,9 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     cookieDomain: undefined,
     customCategories: undefined,
     bannerTextColor: '#fff',
-    bannerSubContent: 'You can change your preferences at any time.',
     bannerBackgroundColor: '#1f4160',
-    preferencesDialogTitle: 'Website Data Collection Preferences',
-    cancelDialogTitle: 'Are you sure you want to cancel?'
+    locale: 'en',
+    translations: defaultMessages,
   }
 
   render() {
@@ -43,9 +43,30 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       cancelDialogTitle,
       cancelDialogContent,
       customCategories,
-      onError
+      onError,
+      locale,
+      translations,
     } = this.props
 
+    // if (window && window.consentManagerConfig && window.consentManagerConfig.locales) {
+    //   const translatedMessages = Object.assign(window.consentManagerConfig.locales)
+    // }
+    const translate = (key) => {
+      let transDictionary
+      let lng
+      if (translations) {
+        transDictionary = Object.assign(ConsentManager.defaultProps.translations, translations)
+      } else {
+        transDictionary = ConsentManager.defaultProps.translations
+      }
+
+      if (locale && transDictionary[locale]) {
+        lng = locale
+      } else {
+        lng = ConsentManager.defaultProps.locale
+      }
+      return transDictionary[lng][key]
+    }
     return (
       <ConsentManagerBuilder
         onError={onError}
@@ -66,31 +87,38 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           setPreferences,
           resetPreferences,
           saveConsent,
-          havePreferencesChanged
+          havePreferencesChanged,
         }) => {
-          return <Container
-            customCategories={customCategories}
-            destinations={destinations}
-            newDestinations={newDestinations}
-            preferences={preferences}
-            isConsentRequired={isConsentRequired}
-            setPreferences={setPreferences}
-            resetPreferences={resetPreferences}
-            saveConsent={saveConsent}
-            closeBehavior={this.props.closeBehavior}
-            implyConsentOnInteraction={implyConsentOnInteraction ?? ConsentManager.defaultProps.implyConsentOnInteraction}
-            bannerContent={bannerContent}
-            bannerSubContent={bannerSubContent}
-            bannerTextColor={bannerTextColor || ConsentManager.defaultProps.bannerTextColor}
-            bannerBackgroundColor={
-              bannerBackgroundColor || ConsentManager.defaultProps.bannerBackgroundColor
-            }
-            preferencesDialogTitle={preferencesDialogTitle}
-            preferencesDialogContent={preferencesDialogContent}
-            cancelDialogTitle={cancelDialogTitle}
-            cancelDialogContent={cancelDialogContent}
-            havePreferencesChanged={havePreferencesChanged}
-          />
+          return (
+            <Container
+              customCategories={customCategories}
+              destinations={destinations}
+              newDestinations={newDestinations}
+              preferences={preferences}
+              isConsentRequired={isConsentRequired}
+              setPreferences={setPreferences}
+              resetPreferences={resetPreferences}
+              saveConsent={saveConsent}
+              closeBehavior={this.props.closeBehavior}
+              implyConsentOnInteraction={
+                implyConsentOnInteraction ?? ConsentManager.defaultProps.implyConsentOnInteraction
+              }
+              bannerContent={bannerContent || translate('ui.banner.content')}
+              bannerSubContent={bannerSubContent || translate('ui.banner.subContent')}
+              bannerTextColor={bannerTextColor || ConsentManager.defaultProps.bannerTextColor}
+              bannerBackgroundColor={
+                bannerBackgroundColor || ConsentManager.defaultProps.bannerBackgroundColor
+              }
+              preferencesDialogTitle={preferencesDialogTitle || translate('ui.preferences.title')}
+              preferencesDialogContent={
+                preferencesDialogContent || translate('ui.preferences.content')
+              }
+              cancelDialogTitle={cancelDialogTitle || translate('ui.cancel.title')}
+              cancelDialogContent={cancelDialogContent || translate('ui.cancel.content')}
+              havePreferencesChanged={havePreferencesChanged}
+              translate={translate}
+            />
+          )
         }}
       </ConsentManagerBuilder>
     )
@@ -107,7 +135,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     }
 
     const initialCustomPreferences = {}
-    Object.keys(customCategories).forEach(category => {
+    Object.keys(customCategories).forEach((category) => {
       initialCustomPreferences[category] = null
     })
 
@@ -129,8 +157,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         }
       }
 
-      destinations.forEach(destination => {
-        // Mark custom categories 
+      destinations.forEach((destination) => {
+        // Mark custom categories
         Object.entries(customCategories).forEach(([categoryName, { integrations }]) => {
           const consentAlreadySetToFalse = destinationPreferences[destination.id] === false
           const shouldSetConsent = integrations.includes(destination.id)
@@ -157,12 +185,18 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
 
     for (const destination of destinations) {
       // Mark advertising destinations
-      if (ADVERTISING_CATEGORIES.find(c => c === destination.category) && destinationPreferences[destination.id] !== false) {
+      if (
+        ADVERTISING_CATEGORIES.find((c) => c === destination.category) &&
+        destinationPreferences[destination.id] !== false
+      ) {
         destinationPreferences[destination.id] = customPrefs.advertising
       }
 
       // Mark function destinations
-      if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category) && destinationPreferences[destination.id] !== false) {
+      if (
+        FUNCTIONAL_CATEGORIES.find((c) => c === destination.category) &&
+        destinationPreferences[destination.id] !== false
+      ) {
         destinationPreferences[destination.id] = customPrefs.functional
       }
 

@@ -89,7 +89,7 @@ All the options are supported. The callback function also receives these exports
 
 ```html
 <script>
-  window.consentManagerConfig = function(exports) {
+  window.consentManagerConfig = function (exports) {
     var React = exports.React
     var inEU = exports.inEU
 
@@ -122,7 +122,7 @@ All the options are supported. The callback function also receives these exports
       preferencesDialogTitle: preferencesDialogTitle,
       preferencesDialogContent: preferencesDialogContent,
       cancelDialogTitle: cancelDialogTitle,
-      cancelDialogContent: cancelDialogContent
+      cancelDialogContent: cancelDialogContent,
     }
   }
 </script>
@@ -262,8 +262,9 @@ An object representing custom consent categories - mapping custom categories to 
 const customCategories = {
   'New Category': {
     purpose: 'A new consent category to capture more granular consent groupings',
-    integrations: ['Google Adwords (Classic)', 'Amplitude', 'Slack']
-  }
+    example: 'For example, we use these to alert our developers if something goes wrong',
+    integrations: ['Google Adwords (Classic)', 'Amplitude', 'Slack'],
+  },
 }
 ```
 
@@ -276,7 +277,7 @@ import React from 'react'
 import { ConsentManager, openConsentManager } from '@segment/consent-manager'
 import inEU from '@segment/in-eu'
 
-export default function() {
+export default function () {
   const bannerContent = (
     <span>
       We use cookies (and other similar technologies) to collect data to improve your experience on
@@ -444,14 +445,14 @@ For a more detailed/advanced example, checkout the [ConsentManager implementatio
 import React from 'react'
 import { ConsentManagerBuilder } from '@segment/consent-manager'
 
-export default function() {
+export default function () {
   return (
     <ConsentManagerBuilder writeKey="<your-segment-write-key>">
       {({ destinations, preferences, setPreferences, saveConsent }) => (
         <div>
           <h2>Tracking tools</h2>
           <ul>
-            {destinations.map(destination => (
+            {destinations.map((destination) => (
               <li key={destination.id}>
                 <label>
                   <input
@@ -459,7 +460,7 @@ export default function() {
                     checked={Boolean(preferences[destination.id])}
                     onChange={() =>
                       setPreferences({
-                        [destination.id]: !preferences[destination.id]
+                        [destination.id]: !preferences[destination.id],
                       })
                     }
                   />

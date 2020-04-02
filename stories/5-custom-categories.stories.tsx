@@ -67,7 +67,7 @@ const cancelDialogContent = (
 const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBehaviorFunction }) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
 
-  const cleanup = onPreferencesSaved(preferences => {
+  const cleanup = onPreferencesSaved((preferences) => {
     updatePrefs(preferences)
   })
 
@@ -92,8 +92,10 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
         customCategories={{
           'Do Not Sell': {
             integrations: ['AdWords'],
-            purpose: 'To give the right to opt out of the sale of personal data.'
-          }
+            purpose: 'To give the right to opt out of the sale of personal data.',
+            example:
+              'For example, some ad companies would track you across the internet and sell that data',
+          },
         }}
       />
 
@@ -146,9 +148,9 @@ storiesOf('Custom Categories - Do Not Sell', module)
   .add(`Deny`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DENY} />)
   .add(`Custom Close Behavior`, () => (
     <ConsentManagerExample
-      closeBehavior={categories => ({
+      closeBehavior={(categories) => ({
         ...categories,
-        'Do Not Sell': false
+        'Do Not Sell': false,
       })}
     />
   ))

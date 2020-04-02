@@ -14,7 +14,7 @@ export function openDialog() {
 export const enum CloseBehavior {
   ACCEPT = 'accept',
   DENY = 'deny',
-  DISMISS = 'dismiss'
+  DISMISS = 'dismiss',
 }
 
 export interface CloseBehaviorFunction {
@@ -41,6 +41,7 @@ interface ContainerProps {
   preferencesDialogContent: React.ReactNode
   cancelDialogTitle: React.ReactNode
   cancelDialogContent: React.ReactNode
+  translate: Function
 }
 
 function normalizeDestinations(destinations: Destination[]) {
@@ -49,9 +50,9 @@ function normalizeDestinations(destinations: Destination[]) {
   const functionalDestinations: Destination[] = []
 
   for (const destination of destinations) {
-    if (ADVERTISING_CATEGORIES.find(c => c === destination.category)) {
+    if (ADVERTISING_CATEGORIES.find((c) => c === destination.category)) {
       advertisingDestinations.push(destination)
-    } else if (FUNCTIONAL_CATEGORIES.find(c => c === destination.category)) {
+    } else if (FUNCTIONAL_CATEGORIES.find((c) => c === destination.category)) {
       functionalDestinations.push(destination)
     } else {
       // Fallback to marketing
@@ -62,7 +63,7 @@ function normalizeDestinations(destinations: Destination[]) {
   return { marketingDestinations, advertisingDestinations, functionalDestinations }
 }
 
-const Container: React.FC<ContainerProps> = props => {
+const Container: React.FC<ContainerProps> = (props) => {
   const [isDialogOpen, toggleDialog] = React.useState(false)
   const [showBanner, toggleBanner] = React.useState(true)
   const [isCancelling, toggleCancel] = React.useState(false)
@@ -74,10 +75,10 @@ const Container: React.FC<ContainerProps> = props => {
   const {
     marketingDestinations,
     advertisingDestinations,
-    functionalDestinations
+    functionalDestinations,
   } = normalizeDestinations(props.destinations)
 
-  const handleBodyClick = e => {
+  const handleBodyClick = (e) => {
     // Do nothing if no new implicit consent needs to be saved
     if (
       !props.isConsentRequired ||
@@ -141,7 +142,7 @@ const Container: React.FC<ContainerProps> = props => {
 
   const handleCategoryChange = (category: string, value: boolean) => {
     props.setPreferences({
-      [category]: value
+      [category]: value,
     })
   }
 
@@ -178,7 +179,7 @@ const Container: React.FC<ContainerProps> = props => {
     <div>
       {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
         <Banner
-          innerRef={current => (banner = { current })}
+          innerRef={(current) => (banner = { current })}
           onClose={onClose}
           onChangePreferences={() => toggleDialog(true)}
           content={props.bannerContent}
@@ -193,7 +194,7 @@ const Container: React.FC<ContainerProps> = props => {
           customCategories={props.customCategories}
           destinations={props.destinations}
           preferences={props.preferences}
-          innerRef={current => (preferenceDialog = { current })}
+          innerRef={(current) => (preferenceDialog = { current })}
           onCancel={handleCancel}
           onSave={handleSave}
           onChange={handleCategoryChange}
@@ -205,16 +206,18 @@ const Container: React.FC<ContainerProps> = props => {
           functional={props.preferences.functional}
           title={props.preferencesDialogTitle}
           content={props.preferencesDialogContent}
+          translate={props.translate}
         />
       )}
 
       {isCancelling && (
         <CancelDialog
-          innerRef={current => (cancelDialog = { current })}
+          innerRef={(current) => (cancelDialog = { current })}
           onBack={handleCancelBack}
           onConfirm={handleCancelConfirm}
           title={props.cancelDialogTitle}
           content={props.cancelDialogContent}
+          translate={props.translate}
         />
       )}
     </div>
