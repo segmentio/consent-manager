@@ -250,7 +250,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
 
               {customCategories &&
                 Object.entries(customCategories).map(
-                  ([categoryName, { integrations, purpose }]) => (
+                  ([categoryName, { integrations, purpose, example }]) => (
                     <Row key={categoryName}>
                       <InputCell>
                         <label>
@@ -283,9 +283,11 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                       </RowHeading>
                       <td>
                         <p>{purpose || translate(`purpose.${categoryName}.explanation`)}</p>
-                        {/* <p className={hideOnMobile}>
-                          {example || translate(`purpose.${categoryName}.example`)}
-                        </p> */}
+                        {example && (
+                          <p className={hideOnMobile}>
+                            {example || translate(`purpose.${categoryName}.example`)}
+                          </p>
+                        )}
                       </td>
                       <td className={hideOnMobile}>
                         {destinations

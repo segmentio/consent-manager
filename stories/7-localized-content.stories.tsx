@@ -29,7 +29,7 @@ const ConsentManagerExample = () => {
       'Die nachstehende Tabelle gibt einen Überblick über die Verwendung dieser Daten nach Kategorien. Um eine Kategorie der Datenerhebung abzulehnen, wählen Sie "Nein" und speichern Sie Ihre Präferenzen.',
   }
 
-  const deTranslations = {
+  const translations = {
     de: {
       'ui.save': 'Speichern',
       'ui.cancel': 'Abbrechen',
@@ -93,7 +93,7 @@ const ConsentManagerExample = () => {
         shouldRequireConsent={shouldRequireConsent}
         initialPreferences={initialPreferences}
         locale="de"
-        translations={deTranslations}
+        translations={translations}
       />
 
       <Pane marginX={100} marginTop={20}>

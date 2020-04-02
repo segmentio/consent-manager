@@ -94,7 +94,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
             integrations: ['AdWords'],
             purpose: 'To give the right to opt out of the sale of personal data.',
             example:
-              'For example, some ad companies would track you across the internet and sell that data',
+              'For example, some ad companies would track you across the internet and sell that data.',
           },
         }}
       />
