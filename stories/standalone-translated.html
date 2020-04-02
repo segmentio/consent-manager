@@ -1,0 +1,169 @@
+<html lang="en">
+  <body>
+    <script type="application/javascript">
+      window.consentManagerConfig = function (exports) {
+        exports.preferences.onPreferencesSaved(function (prefs) {
+          // could be used to store consent server side, or send it into an API
+        })
+
+        var banner = {
+          header: '🍪 Wir lieben Keks 🍪',
+          content:
+            'Wir verwenden Cookies für ein komfortableres Nutzererlebnis und zu Analyse- und Marketing-zwecken. Du kannst diese Cookies jederzeit deaktivieren.',
+        }
+        var preference = {
+          description:
+            'Segment verwendet Daten, die von Cookies und JavaScript-Bibliotheken gesammelt wurden, um Ihr Surf-Erlebnis zu verbessern, den Website-Verkehr zu analysieren, personalisierte Werbung zu liefern und die Gesamtleistung unserer Website zu steigern.',
+          warning:
+            'Durch die Nutzung unserer Website stimmen Sie unserer Richtlinie zur Website-Datenerfassung zu.',
+          explanation:
+            'Die nachstehende Tabelle gibt einen Überblick über die Verwendung dieser Daten nach Kategorien. Um eine Kategorie der Datenerhebung abzulehnen, wählen Sie "Nein" und speichern Sie Ihre Präferenzen.',
+        }
+        /*
+      The consent manager ships with a lightweight version of 
+      React (preact) that you can use to customize the consent manager further
+      */
+        var translations = {
+          de: {
+            'ui.save': 'Speichern',
+            'ui.cancel': 'Abbrechen',
+            'ui.yes': 'Ja',
+            'ui.no': 'Nein',
+            'ui.not_available': 'NICHT VERFÜGBAR',
+            'ui.go_back': 'Zurückgehen',
+            'ui.yes_cancel': 'Ja, abbrechen',
+            'ui.header.allow': 'Erlauben',
+            'ui.header.category': 'Kategorie',
+            'ui.header.purpose': 'Zweck',
+            'ui.header.tools': 'Werkzeuge',
+            'ui.banner.content': exports.React.createElement(exports.React.Fragment, null, [
+              exports.React.createElement('strong', null, banner.header),
+              exports.React.createElement('div', null, banner.content),
+            ]),
+            'ui.banner.subContent': 'INFORMATIONEN & EINSTELLUNGEN',
+            'ui.preferences.title': 'Website-Datenerhebungs-Präferenzen',
+            'ui.preferences.content': exports.React.createElement(exports.React.Fragment, null, [
+              exports.React.createElement('p', null, preference.description),
+              exports.React.createElement('p', null, preference.warning),
+              exports.React.createElement('p', null, preference.explanation),
+            ]),
+            'ui.cancel.title': 'Sind Sie sicher, dass Sie absagen wollen?',
+            'ui.cancel.content':
+              'Ihre Einstellungen wurden nicht gespeichert. Wenn Sie unsere Website weiterhin nutzen, stimmen Sie unserer Richtlinie zur Datenerfassung auf der Website zu.',
+            'aria.functional.allow': 'Funktionales Verfolgung erlauben',
+            'aria.functional.disallow': 'Funktionale Verfolgung verbieten',
+            'aria.marketing.allow': 'Marketing und Analyse-Verfolgung erlauben',
+            'aria.marketing.disallow': 'Marketing und Analyse-Verfolgung verbieten',
+            'aria.advertising.allow': 'Werbetracking erlauben',
+            'aria.advertising.disallow': 'Werbetracking verbieten',
+            'category.functional': 'Funktionell',
+            'category.marketing': 'Marketing und Analytik',
+            'category.advertising': 'Werbung',
+            'category.essential': 'Wesentlich',
+            'purpose.functional.explanation':
+              'Um die Leistung unserer Website zu überwachen und Ihr Surf-Erlebnis zu verbessern.',
+            'purpose.functional.example':
+              'Zum Beispiel können Sie mit diesen Tools mit uns per Live-Chat kommunizieren.',
+            'purpose.marketing.explanation':
+              'Um das Nutzerverhalten zu verstehen, um Ihnen ein relevanteres Browsing-Erlebnis zu bieten oder den Inhalt unserer Website zu personalisieren.',
+            'purpose.marketing.example':
+              'Zum Beispiel sammeln wir Informationen darüber, welche Seiten Sie besuchen, um uns zu helfen, relevantere Informationen zu präsentieren',
+            'purpose.advertising.explanation':
+              'Um die Wirksamkeit der Werbung auf unserer und anderen Websites zu personalisieren und zu messen.',
+            'purpose.advertising.example':
+              'Wir können Ihnen beispielsweise eine personalisierte Werbung auf der Grundlage der von Ihnen besuchten Seiten auf unserer Website anbieten.',
+            'purpose.essential.explanation':
+              'Wir verwenden Browser-Cookies, die notwendig sind, damit die Site wie beabsichtigt funktioniert.',
+            'purpose.essential.example':
+              'Wir speichern zum Beispiel Ihre Präferenzen für die Datenerfassung auf der Website, damit wir sie berücksichtigen können, wenn Sie zu unserer Website zurückkehren. Sie können diese Cookies in Ihren Browsereinstellungen deaktivieren, aber wenn Sie das tun, funktioniert die Website möglicherweise nicht wie beabsichtigt.',
+          },
+        }
+
+        return {
+          container: '#consent-manager',
+          writeKey: 'tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0',
+          /* initialPreferences allows for customizing which categories already pre-loaded */
+          initialPreferences: {
+            marketingAndAnalytics: false,
+            functional: true,
+          },
+          translations: translations,
+          locale: 'de', // instead of hard coding, could come from something like navigator.language
+        }
+      }
+    </script>
+
+    <div id="consent-manager"></div>
+
+    <div>
+      <img src="http://giphygifs.s3.amazonaws.com/media/13HBDT4QSTpveU/giphy.gif" />
+    </div>
+
+    <button
+      type="button"
+      onclick="event.stopPropagation(); window.consentManager.openConsentManager()"
+    >
+      Data Collection and Cookie Preferences
+    </button>
+
+    <script src="./standalone/consent-manager.js" defer></script>
+
+    <!-- Load analytics.js -->
+    <script>
+      !(function () {
+        var analytics = (window.analytics = window.analytics || [])
+        if (!analytics.initialize)
+          if (analytics.invoked)
+            window.console && console.error && console.error('Segment snippet included twice.')
+          else {
+            analytics.invoked = !0
+            analytics.methods = [
+              'trackSubmit',
+              'trackClick',
+              'trackLink',
+              'trackForm',
+              'pageview',
+              'identify',
+              'reset',
+              'group',
+              'track',
+              'ready',
+              'alias',
+              'debug',
+              'page',
+              'once',
+              'off',
+              'on',
+            ]
+            analytics.factory = function (t) {
+              return function () {
+                var e = Array.prototype.slice.call(arguments)
+                e.unshift(t)
+                analytics.push(e)
+                return analytics
+              }
+            }
+            for (var t = 0; t < analytics.methods.length; t++) {
+              var e = analytics.methods[t]
+              analytics[e] = analytics.factory(e)
+            }
+            analytics.load = function (t, e) {
+              var n = document.createElement('script')
+              n.type = 'text/javascript'
+              n.async = !0
+              n.src =
+                ('https:' === document.location.protocol ? 'https://' : 'http://') +
+                'cdn.segment.com/analytics.js/v1/' +
+                t +
+                '/analytics.min.js'
+              var o = document.getElementsByTagName('script')[0]
+              o.parentNode.insertBefore(n, o)
+              analytics._loadOptions = e
+            }
+            analytics.SNIPPET_VERSION = '4.1.0'
+            analytics.page()
+          }
+      })()
+    </script>
+  </body>
+</html>
