@@ -21,6 +21,8 @@ export type ConsentManagerInput = ConsentManagerProps & {
   container: string
 }
 
+export type DefaultDestinationBehavior = 'enable' | 'disable' | 'imply' | 'ask'
+
 interface StandaloneConsentManagerParams {
   React: unknown
   version?: string
@@ -79,4 +81,5 @@ export interface ConsentManagerProps {
   closeBehavior?: CloseBehavior | CloseBehaviorFunction
   initialPreferences?: CategoryPreferences
   customCategories?: CustomCategories
+  defaultDestinationBehavior?: DefaultDestinationBehavior
 }

@@ -2,7 +2,12 @@ import { Component } from 'react'
 import { loadPreferences, savePreferences } from './preferences'
 import fetchDestinations from './fetch-destinations'
 import conditionallyLoadAnalytics from './analytics'
-import { Destination, CategoryPreferences, CustomCategories } from '../types'
+import {
+  Destination,
+  CategoryPreferences,
+  CustomCategories,
+  DefaultDestinationBehavior
+} from '../types'
 
 function getNewDestinations(destinations: Destination[], preferences: CategoryPreferences) {
   const newDestinations: Destination[] = []
@@ -57,6 +62,11 @@ interface Props {
    * Allows for adding custom consent categories by mapping a custom category to Segment integrations
    */
   customCategories?: CustomCategories
+
+  /**
+   * Specified default behavior for when new destinations are detected on the source(s) of this consent manager.
+   */
+  defaultDestinationBehavior?: DefaultDestinationBehavior
 
   /**
    * A callback for dealing with errors in the Consent Manager
