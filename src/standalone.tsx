@@ -23,7 +23,7 @@ if (localWindow.consentManagerConfig && typeof localWindow.consentManagerConfig 
     doNotTrack,
     inEU,
     preferences,
-    inRegions
+    inRegions,
   })
   containerRef = props.container
 } else {
@@ -38,18 +38,6 @@ if (!props.writeKey) {
   throw new Error('ConsentManager: writeKey is required')
 }
 
-if (!props.bannerContent) {
-  throw new Error('ConsentManager: bannerContent is required')
-}
-
-if (!props.preferencesDialogContent) {
-  throw new Error('ConsentManager: preferencesDialogContent is required')
-}
-
-if (!props.cancelDialogContent) {
-  throw new Error('ConsentManager: cancelDialogContent is required')
-}
-
 if (typeof props.implyConsentOnInteraction === 'string') {
   props.implyConsentOnInteraction = props.implyConsentOnInteraction === 'true'
 }
@@ -58,7 +46,7 @@ if (props.closeBehavior !== undefined && typeof props.closeBehavior === 'string'
   const options = [
     CloseBehavior.ACCEPT.toString(),
     CloseBehavior.DENY.toString(),
-    CloseBehavior.DISMISS.toString()
+    CloseBehavior.DISMISS.toString(),
   ]
 
   if (!options.includes(props.closeBehavior)) {
