@@ -57,6 +57,7 @@ export default function conditionallyLoadAnalytics({
     return
   }
 
+  //console.log('Loading integrations ', integrations)
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
     wd.analytics.load(writeKey, { integrations })

@@ -181,7 +181,10 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         v => v === null || v === undefined
       )
 
-      if (hasInitialPreferenceToTrue && emptyCustomPreferecences) {
+      if (
+        (hasInitialPreferenceToTrue && emptyCustomPreferecences) ||
+        defaultDestinationBehavior === 'imply'
+      ) {
         const mapped = mapCustomPreferences(destinations, preferences)
         destinationPreferences = mapped.destinationPreferences
         customPreferences = mapped.customPreferences
