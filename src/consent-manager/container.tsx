@@ -46,6 +46,7 @@ interface ContainerProps {
   preferencesDialogContent: React.ReactNode
   cancelDialogTitle: React.ReactNode
   cancelDialogContent: React.ReactNode
+  workspaceAddedNewDestinations?: boolean
   defaultDestinationBehavior?: DefaultDestinationBehavior
 }
 
@@ -69,8 +70,12 @@ function normalizeDestinations(destinations: Destination[]) {
 }
 
 const Container: React.FC<ContainerProps> = props => {
+  console.log(
+    'Should open? ',
+    props.workspaceAddedNewDestinations && props.defaultDestinationBehavior === 'ask'
+  )
   const [isDialogOpen, toggleDialog] = React.useState(
-    false || (props.defaultDestinationBehavior === 'ask' && props.newDestinations.length > 0)
+    false || (props.workspaceAddedNewDestinations && props.defaultDestinationBehavior === 'ask')
   )
   const [showBanner, toggleBanner] = React.useState(true)
   const [isCancelling, toggleCancel] = React.useState(false)

@@ -7,7 +7,6 @@ import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { Preferences } from '../src/types'
 import CookieView from './components/CookieView'
-import inRegions from '@segment/in-regions'
 import { CloseBehavior } from '../src/consent-manager/container'
 
 const bannerContent = (
@@ -78,31 +77,6 @@ const ConsentManagerExample = () => {
     }
   })
 
-  const inCA = inRegions(['CA'])
-  const inEU = inRegions(['EU'])
-  const shouldRequireConsent = inRegions(['CA', 'EU'])
-  const caDefaultPreferences = {
-    advertising: false,
-    marketingAndAnalytics: true,
-    functional: true
-  }
-  const euDefaultPreferences = {
-    advertising: false,
-    marketingAndAnalytics: false,
-    functional: false
-  }
-
-  const closeBehavior = inCA()
-    ? _categories => caDefaultPreferences
-    : inEU()
-    ? CloseBehavior.DENY
-    : CloseBehavior.ACCEPT
-
-  const initialPreferences = inCA()
-    ? caDefaultPreferences
-    : inEU()
-    ? euDefaultPreferences
-    : undefined
 
   return (
     <Pane>
@@ -115,9 +89,7 @@ const ConsentManagerExample = () => {
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
-        closeBehavior={closeBehavior}
-        shouldRequireConsent={shouldRequireConsent}
-        initialPreferences={initialPreferences}
+        closeBehavior={CloseBehavior.ACCEPT}
       />
 
       <Pane marginX={100} marginTop={20}>

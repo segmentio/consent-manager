@@ -81,6 +81,7 @@ interface RenderProps {
   isConsentRequired: boolean
   customCategories?: CustomCategories
   havePreferencesChanged: boolean
+  workspaceAddedNewDestinations: boolean
   setPreferences: (newPreferences: CategoryPreferences) => void
   resetPreferences: () => void
   saveConsent: (newPreferences?: CategoryPreferences | boolean, shouldReload?: boolean) => void
@@ -93,6 +94,7 @@ interface State {
   preferences?: CategoryPreferences
   isConsentRequired: boolean
   havePreferencesChanged: boolean
+  workspaceAddedNewDestinations: boolean
 }
 
 export default class ConsentManagerBuilder extends Component<Props, State> {
@@ -111,7 +113,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     newDestinations: [],
     preferences: {},
     isConsentRequired: true,
-    havePreferencesChanged: false
+    havePreferencesChanged: false,
+    workspaceAddedNewDestinations: false
   }
 
   render() {
@@ -122,7 +125,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences,
       newDestinations,
       isConsentRequired,
-      havePreferencesChanged
+      havePreferencesChanged,
+      workspaceAddedNewDestinations
     } = this.state
     if (isLoading) {
       return null
@@ -135,6 +139,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences,
       isConsentRequired,
       havePreferencesChanged,
+      workspaceAddedNewDestinations,
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
       saveConsent: this.handleSaveConsent
@@ -173,6 +178,10 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     ])
 
     const newDestinations = getNewDestinations(destinations, destinationPreferences || {})
+    const workspaceAddedNewDestinations =
+      destinationPreferences &&
+      Object.keys(destinationPreferences).length > 0 &&
+      newDestinations.length > 0
 
     let preferences: CategoryPreferences | undefined
     if (mapCustomPreferences) {
@@ -185,7 +194,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       if (
         (hasInitialPreferenceToTrue && emptyCustomPreferecences) ||
-        defaultDestinationBehavior === 'imply'
+        (defaultDestinationBehavior === 'imply' && workspaceAddedNewDestinations)
       ) {
         const mapped = mapCustomPreferences(destinations, preferences)
         destinationPreferences = mapped.destinationPreferences
@@ -195,7 +204,10 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences = destinationPreferences || initialPreferences
     }
 
-    savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+    if (workspaceAddedNewDestinations) {
+      savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+    }
+
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
@@ -209,7 +221,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       destinations,
       newDestinations,
       preferences,
-      isConsentRequired
+      isConsentRequired,
+      workspaceAddedNewDestinations: Boolean(workspaceAddedNewDestinations)
     })
   }
 
