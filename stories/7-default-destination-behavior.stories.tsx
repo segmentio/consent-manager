@@ -95,20 +95,20 @@ const ConsentManagerExample = () => {
   const closeBehavior = inCA()
     ? _categories => caDefaultPreferences
     : inEU()
-      ? CloseBehavior.DENY
-      : CloseBehavior.ACCEPT
+    ? CloseBehavior.DENY
+    : CloseBehavior.ACCEPT
 
   const initialPreferences = inCA()
     ? caDefaultPreferences
     : inEU()
-      ? euDefaultPreferences
-      : undefined
+    ? euDefaultPreferences
+    : undefined
 
   return (
     <Pane>
       <ConsentManager
-        writeKey="tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0"
-        otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
+        writeKey="VeSvGsFntmbyoQ3wh9FJphKGpPNW2paD"
+        otherWriteKeys={[]}
         bannerContent={bannerContent}
         bannerSubContent={bannerSubContent}
         preferencesDialogTitle={preferencesDialogTitle}
