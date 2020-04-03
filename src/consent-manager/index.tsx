@@ -101,6 +101,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
               resetPreferences={resetPreferences}
               saveConsent={saveConsent}
               closeBehavior={this.props.closeBehavior}
+              cancelBehavior={this.props.cancelBehavior}
               implyConsentOnInteraction={
                 implyConsentOnInteraction ?? ConsentManager.defaultProps.implyConsentOnInteraction
               }

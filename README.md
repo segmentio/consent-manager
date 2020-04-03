@@ -170,13 +170,39 @@ An option to determine what should be the default behavior for the `x` button on
 Options:
 
 - `dismiss` (default) - Dismisses the banner, but don't save or change any preferences. Analytics.js won't be loaded until explicit consent is given.
-- `accept` - Assume consent across every category.
+- `accept` - Assume consent across every category **based on initial preferences**.
 - `deny` - Denies consent across every category.
 
 `closeBehavior` can also be customized - i.e. don't load some categories, but load everything else. For example, if you wanted to load everything _except_ advertising, you could pass the following as `closeBehavior`:
 
 ```
 closeBehavior={
+  (categories) => ({
+    ...categories,
+    advertising: false
+  })
+}
+```
+
+##### cancelBehavior
+
+**_New Feature_** (versions < 4.6.0 do not support this feature)
+
+Type: `enum|string` or `function`<br>
+Default: `dismiss`
+
+An option to determine what should be the default behavior for the `Yes, cancel` button in the Cancel modal.
+
+Options:
+
+- `dismiss` (default) - Dismisses the modal, but keep the banner, and don't save or change any preferences. Analytics.js won't be loaded until explicit consent is given.
+- `accept` - Assume consent across every category **based on initial preferences**.
+- `deny` - Denies consent across every category.
+
+`cancelBehavior` can also be customized just like `closeBehavior` - i.e. don't load some categories, but load everything else. For example, if you wanted to load everything _except_ advertising, you could pass the following as `closeBehavior`:
+
+```
+cancelBehavior={
   (categories) => ({
     ...categories,
     advertising: false

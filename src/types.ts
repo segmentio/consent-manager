@@ -79,6 +79,7 @@ export interface ConsentManagerProps {
   cancelDialogTitle?: React.ReactNode | string
   cancelDialogContent?: React.ReactNode | string
   closeBehavior?: CloseBehavior | CloseBehaviorFunction
+  cancelBehavior?: CloseBehavior | CloseBehaviorFunction
   initialPreferences?: CategoryPreferences
   customCategories?: CustomCategories
   locale?: string

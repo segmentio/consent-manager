@@ -26,6 +26,7 @@ interface ContainerProps {
   saveConsent: (newPreferences?: CategoryPreferences, shouldReload?: boolean) => void
   resetPreferences: () => void
   closeBehavior?: CloseBehavior | CloseBehaviorFunction
+  cancelBehavior?: CloseBehavior | CloseBehaviorFunction
   destinations: Destination[]
   customCategories?: CustomCategories | undefined
   newDestinations: Destination[]
@@ -114,16 +115,16 @@ const Container: React.FC<ContainerProps> = (props) => {
     }
   })
 
-  const onClose = () => {
-    if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
+  const onClose = (behavior) => {
+    if (behavior === undefined || behavior === CloseBehavior.DISMISS) {
       return toggleBanner(false)
     }
 
-    if (props.closeBehavior === CloseBehavior.ACCEPT) {
+    if (behavior === CloseBehavior.ACCEPT) {
       return props.saveConsent()
     }
 
-    if (props.closeBehavior === CloseBehavior.DENY) {
+    if (behavior === CloseBehavior.DENY) {
       const falsePreferences = Object.keys(props.preferences).reduce((acc, category) => {
         acc[category] = false
         return acc
@@ -134,10 +135,14 @@ const Container: React.FC<ContainerProps> = (props) => {
     }
 
     // closeBehavior is a custom function
-    const customClosePreferences = props.closeBehavior(props.preferences)
+    const customClosePreferences = behavior(props.preferences)
     props.setPreferences(customClosePreferences)
     props.saveConsent()
     return toggleBanner(false)
+  }
+
+  const onBannerClose = () => {
+    onClose(props.closeBehavior)
   }
 
   const handleCategoryChange = (category: string, value: boolean) => {
@@ -172,7 +177,10 @@ const Container: React.FC<ContainerProps> = (props) => {
 
   const handleCancelConfirm = () => {
     toggleCancel(false)
-    props.resetPreferences()
+    if (props.cancelBehavior === undefined || props.cancelBehavior === CloseBehavior.DISMISS) {
+      return props.resetPreferences()
+    }
+    onClose(props.cancelBehavior)
   }
 
   return (
@@ -180,7 +188,7 @@ const Container: React.FC<ContainerProps> = (props) => {
       {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
         <Banner
           innerRef={(current) => (banner = { current })}
-          onClose={onClose}
+          onClose={onBannerClose}
           onChangePreferences={() => toggleDialog(true)}
           content={props.bannerContent}
           subContent={props.bannerSubContent}
