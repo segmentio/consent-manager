@@ -92,6 +92,7 @@ interface State {
   newDestinations: Destination[]
   preferences?: CategoryPreferences
   isConsentRequired: boolean
+  havePreferencesChanged: boolean
 }
 
 export default class ConsentManagerBuilder extends Component<Props, State> {
@@ -268,16 +269,18 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       }
 
       const newDestinations = getNewDestinations(destinations, destinationPreferences)
-
-      savePreferences({ destinationPreferences, customPreferences, cookieDomain })
-      conditionallyLoadAnalytics({
-        writeKey,
-        destinations,
-        destinationPreferences,
-        isConsentRequired,
-        shouldReload,
-        defaultDestinationBehavior
-      })
+      // If preferences haven't changed, don't reload the page as it's a disruptive experience for end-users
+      if (prevState.havePreferencesChanged || prevState.newDestinations.length > 0) {
+        savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+        conditionallyLoadAnalytics({
+          writeKey,
+          destinations,
+          destinationPreferences,
+          isConsentRequired,
+          shouldReload,
+          defaultDestinationBehavior
+        })
+      }
 
       return { ...prevState, destinationPreferences, preferences, newDestinations }
     })

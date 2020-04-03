@@ -4,7 +4,12 @@ import Banner from './banner'
 import PreferenceDialog from './preference-dialog'
 import CancelDialog from './cancel-dialog'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
-import { Destination, CategoryPreferences, CustomCategories } from '../types'
+import {
+  Destination,
+  CategoryPreferences,
+  CustomCategories,
+  DefaultDestinationBehavior
+} from '../types'
 
 const emitter = new EventEmitter()
 export function openDialog() {
@@ -41,6 +46,7 @@ interface ContainerProps {
   preferencesDialogContent: React.ReactNode
   cancelDialogTitle: React.ReactNode
   cancelDialogContent: React.ReactNode
+  defaultDestinationBehavior?: DefaultDestinationBehavior
 }
 
 function normalizeDestinations(destinations: Destination[]) {
@@ -63,7 +69,9 @@ function normalizeDestinations(destinations: Destination[]) {
 }
 
 const Container: React.FC<ContainerProps> = props => {
-  const [isDialogOpen, toggleDialog] = React.useState(false)
+  const [isDialogOpen, toggleDialog] = React.useState(
+    false || (props.defaultDestinationBehavior === 'ask' && props.newDestinations.length > 0)
+  )
   const [showBanner, toggleBanner] = React.useState(true)
   const [isCancelling, toggleCancel] = React.useState(false)
 
@@ -147,10 +155,7 @@ const Container: React.FC<ContainerProps> = props => {
 
   const handleSave = () => {
     toggleDialog(false)
-    // If preferences haven't changed, don't reload the page as it's a disruptive experience for end-users
-    if (!props.havePreferencesChanged) {
-      return
-    }
+
     props.saveConsent()
   }
 

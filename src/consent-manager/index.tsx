@@ -25,7 +25,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
     cancelDialogTitle: 'Are you sure you want to cancel?',
-    defaultDestinationBehavior: 'disable'
+    defaultDestinationBehavior: 'ask'
   }
 
   render() {
@@ -93,6 +93,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
             cancelDialogTitle={cancelDialogTitle}
             cancelDialogContent={cancelDialogContent}
             havePreferencesChanged={havePreferencesChanged}
+            defaultDestinationBehavior={defaultDestinationBehavior}
           />
         }}
       </ConsentManagerBuilder>
