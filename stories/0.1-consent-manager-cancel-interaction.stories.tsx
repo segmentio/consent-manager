@@ -1,14 +1,13 @@
 import React from 'react'
 import cookies from 'js-cookie'
-import { Pane, Heading, Paragraph, Button } from 'evergreen-ui'
+import { Pane, Heading, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager, loadPreferences, onPreferencesSaved } from '../src'
 import { storiesOf } from '@storybook/react'
+import { CloseBehavior, CloseBehaviorFunction } from '../src/consent-manager/container'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { Preferences } from '../src/types'
 import CookieView from './components/CookieView'
-import inRegions from '@segment/in-regions'
-import { CloseBehavior } from '../src/consent-manager/container'
 
 const bannerContent = (
   <span>
@@ -65,7 +64,9 @@ const cancelDialogContent = (
   </div>
 )
 
-const ConsentManagerExample = () => {
+const ConsentManagerExample = (props: {
+  cancelBehavior: CloseBehavior | CloseBehaviorFunction
+}) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
 
   const cleanup = onPreferencesSaved((preferences) => {
@@ -78,32 +79,6 @@ const ConsentManagerExample = () => {
     }
   })
 
-  const inCA = inRegions(['CA'])
-  const inEU = inRegions(['EU'])
-  const shouldRequireConsent = inRegions(['CA', 'EU'])
-  const caDefaultPreferences = {
-    advertising: false,
-    marketingAndAnalytics: true,
-    functional: true,
-  }
-  const euDefaultPreferences = {
-    advertising: false,
-    marketingAndAnalytics: false,
-    functional: false,
-  }
-
-  const closeBehavior = inCA()
-    ? (_categories) => caDefaultPreferences
-    : inEU()
-    ? CloseBehavior.DENY
-    : CloseBehavior.ACCEPT
-
-  const initialPreferences = inCA()
-    ? caDefaultPreferences
-    : inEU()
-    ? euDefaultPreferences
-    : undefined
-
   return (
     <Pane>
       <ConsentManager
@@ -115,13 +90,11 @@ const ConsentManagerExample = () => {
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
-        closeBehavior={closeBehavior}
-        shouldRequireConsent={shouldRequireConsent}
-        initialPreferences={initialPreferences}
+        cancelBehavior={props.cancelBehavior}
       />
 
       <Pane marginX={100} marginTop={20}>
-        <Heading> Cute Cats </Heading>
+        <Heading> Your website content </Heading>
         <Pane display="flex">
           <iframe
             src="https://giphy.com/embed/JIX9t2j0ZTN9S"
@@ -138,11 +111,7 @@ const ConsentManagerExample = () => {
           />
         </Pane>
 
-        <Paragraph marginTop={20}>
-          This example highlights checking for EU or CA residency, then changing the closeBehavior
-          based on membership in each.
-        </Paragraph>
-        <div>
+        <p>
           <div>
             <Heading>Current Preferences</Heading>
             <SyntaxHighlighter language="json" style={docco}>
@@ -160,11 +129,22 @@ const ConsentManagerExample = () => {
           >
             Clear
           </Button>
-        </div>
+        </p>
       </Pane>
       <CookieView />
     </Pane>
   )
 }
 
-storiesOf('CCPA + GDPR Example', module).add(`Basic`, () => <ConsentManagerExample />)
+storiesOf('React Component / OnCancelClose interactions', module)
+  .add(`Dismiss`, () => <ConsentManagerExample cancelBehavior={CloseBehavior.DISMISS} />)
+  .add(`Accept`, () => <ConsentManagerExample cancelBehavior={CloseBehavior.ACCEPT} />)
+  .add(`Deny`, () => <ConsentManagerExample cancelBehavior={CloseBehavior.DENY} />)
+  .add(`Custom Close Behavior`, () => (
+    <ConsentManagerExample
+      cancelBehavior={(categories) => ({
+        ...categories,
+        advertising: false,
+      })}
+    />
+  ))

@@ -7,8 +7,8 @@ const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div'
   position: relative;
   padding: 8px;
   padding-right: 40px;
-  background: ${props => props.backgroundColor};
-  color: ${props => props.textColor};
+  background: ${(props) => props.backgroundColor};
+  color: ${(props) => props.textColor};
   text-align: center;
   font-size: 12px;
   line-height: 1.3;
@@ -71,7 +71,7 @@ export default class Banner extends PureComponent<Props> {
       content,
       subContent,
       backgroundColor,
-      textColor
+      textColor,
     } = this.props
 
     return (
@@ -79,9 +79,11 @@ export default class Banner extends PureComponent<Props> {
         <Content>
           <P>{content}</P>
           <P>
-            <button type="button" onClick={onChangePreferences}>
-              {subContent}
-            </button>
+            {subContent && (
+              <button type="button" onClick={onChangePreferences}>
+                {subContent}
+              </button>
+            )}
           </P>
         </Content>
 

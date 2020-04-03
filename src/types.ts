@@ -9,7 +9,7 @@ export type WindowWithAJS = Window &
   typeof globalThis & {
     analytics?: AJS
   }
-
+// Why does this use  x | x ??
 export type WindowWithConsentManagerConfig = Window &
   typeof globalThis & {
     consentManagerConfig?: (
@@ -29,6 +29,7 @@ interface StandaloneConsentManagerParams {
   inEU: () => boolean
   preferences: PreferencesManager
   inRegions: (regions: string[]) => () => boolean
+  locales?: object
 }
 
 export interface Preferences {
@@ -59,6 +60,7 @@ export interface CustomCategories {
 interface CustomCategory {
   integrations: string[]
   purpose: string
+  example?: string
 }
 
 export interface ConsentManagerProps {
@@ -67,16 +69,19 @@ export interface ConsentManagerProps {
   shouldRequireConsent?: () => Promise<boolean> | boolean
   implyConsentOnInteraction?: boolean
   cookieDomain?: string
-  bannerContent: React.ReactNode
-  bannerSubContent?: string
+  bannerContent?: React.ReactNode | string
+  bannerSubContent?: React.ReactNode | string
   bannerTextColor?: string
   bannerBackgroundColor?: string
-  preferencesDialogTitle?: React.ReactNode
-  preferencesDialogContent: React.ReactNode
+  preferencesDialogTitle?: React.ReactNode | string
+  preferencesDialogContent?: React.ReactNode | string
   onError?: (error: Error | undefined) => void
-  cancelDialogTitle?: React.ReactNode
-  cancelDialogContent: React.ReactNode
+  cancelDialogTitle?: React.ReactNode | string
+  cancelDialogContent?: React.ReactNode | string
   closeBehavior?: CloseBehavior | CloseBehaviorFunction
+  cancelBehavior?: CloseBehavior | CloseBehaviorFunction
   initialPreferences?: CategoryPreferences
   customCategories?: CustomCategories
+  locale?: string
+  translations?: object
 }
