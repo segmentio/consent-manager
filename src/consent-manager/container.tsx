@@ -70,10 +70,6 @@ function normalizeDestinations(destinations: Destination[]) {
 }
 
 const Container: React.FC<ContainerProps> = props => {
-  console.log(
-    'Should open? ',
-    props.workspaceAddedNewDestinations && props.defaultDestinationBehavior === 'ask'
-  )
   const [isDialogOpen, toggleDialog] = React.useState(
     false || (props.workspaceAddedNewDestinations && props.defaultDestinationBehavior === 'ask')
   )
