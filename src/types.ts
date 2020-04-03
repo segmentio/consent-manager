@@ -69,15 +69,15 @@ export interface ConsentManagerProps {
   shouldRequireConsent?: () => Promise<boolean> | boolean
   implyConsentOnInteraction?: boolean
   cookieDomain?: string
-  bannerContent?: React.ReactNode
-  bannerSubContent?: string
+  bannerContent?: React.ReactNode | string
+  bannerSubContent?: React.ReactNode | string
   bannerTextColor?: string
   bannerBackgroundColor?: string
-  preferencesDialogTitle?: React.ReactNode
-  preferencesDialogContent?: React.ReactNode
+  preferencesDialogTitle?: React.ReactNode | string
+  preferencesDialogContent?: React.ReactNode | string
   onError?: (error: Error | undefined) => void
-  cancelDialogTitle?: React.ReactNode
-  cancelDialogContent?: React.ReactNode
+  cancelDialogTitle?: React.ReactNode | string
+  cancelDialogContent?: React.ReactNode | string
   closeBehavior?: CloseBehavior | CloseBehaviorFunction
   initialPreferences?: CategoryPreferences
   customCategories?: CustomCategories

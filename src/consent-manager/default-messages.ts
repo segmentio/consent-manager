@@ -14,7 +14,7 @@ export default {
     'ui.header.purpose': 'Purpose',
     'ui.header.tools': 'Tools',
     'ui.banner.content':
-      'We use cookies (and other similar technologies) to collect data to improve your experience on our site. By using our website, you’re agreeing to the collection of data as described in our Website Data Collection Policy',
+      'We use cookies (and other similar technologies) to collect data to improve your experience on our site. By using our website, you’re agreeing to the collection of data as described in our Website Data Collection Policy.',
     'ui.banner.subContent': 'You can change your preferences at any time.',
     'ui.preferences.title': 'Website Data Collection Preferences',
     'ui.preferences.content': React.createElement(React.Fragment, null, [
@@ -26,7 +26,7 @@ export default {
       React.createElement(
         'p',
         null,
-        'By using our website, you’re agreeing to our Website Data Collection Policy'
+        'By using our website, you’re agreeing to our Website Data Collection Policy.'
       ),
       React.createElement(
         'p',
