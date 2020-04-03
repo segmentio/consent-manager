@@ -43,15 +43,15 @@ const ConsentManagerExample = () => {
       'ui.header.purpose': 'Zweck',
       'ui.header.tools': 'Werkzeuge',
       'ui.banner.content': React.createElement(React.Fragment, null, [
-        React.createElement('strong', null, banner.header),
-        React.createElement('div', null, banner.content),
+        React.createElement('strong', { key: 1 }, banner.header),
+        React.createElement('span', { key: 2 }, banner.content),
       ]),
       'ui.banner.subContent': 'INFORMATIONEN & EINSTELLUNGEN',
       'ui.preferences.title': 'Website-Datenerhebungs-Präferenzen',
       'ui.preferences.content': React.createElement(React.Fragment, null, [
-        React.createElement('p', null, preference.description),
-        React.createElement('p', null, preference.warning),
-        React.createElement('p', null, preference.explanation),
+        React.createElement('p', { key: 1 }, preference.description),
+        React.createElement('p', { key: 2 }, preference.warning),
+        React.createElement('p', { key: 3 }, preference.explanation),
       ]),
       'ui.cancel.title': 'Sind Sie sicher, dass Sie absagen wollen?',
       'ui.cancel.content':

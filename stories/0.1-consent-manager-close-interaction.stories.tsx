@@ -97,17 +97,15 @@ const ConsentManagerExample = () => {
           <Button onClick={openConsentManager}>Data Collection and Cookie Preferences</Button>
         </p>
 
-        <p>
-          <Heading>to see the banner again:</Heading>
-          <Button
-            onClick={() => {
-              cookies.remove('tracking-preferences')
-              window.location.reload()
-            }}
-          >
-            Clear tracking preferences cookie
-          </Button>
-        </p>
+        <Heading>to see the banner again:</Heading>
+        <Button
+          onClick={() => {
+            cookies.remove('tracking-preferences')
+            window.location.reload()
+          }}
+        >
+          Clear tracking preferences cookie
+        </Button>
       </Pane>
 
       <CookieView />

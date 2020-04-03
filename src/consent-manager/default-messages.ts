@@ -20,17 +20,17 @@ export default {
     'ui.preferences.content': React.createElement(React.Fragment, null, [
       React.createElement(
         'p',
-        null,
+        { key: 1 },
         'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
       ),
       React.createElement(
         'p',
-        null,
+        { key: 2 },
         'By using our website, you’re agreeing to our Website Data Collection Policy.'
       ),
       React.createElement(
         'p',
-        null,
+        { key: 3 },
         'The table below outlines how we use this data by category. To opt out of a category of data collection, select “No” and save your preferences.'
       ),
     ]),

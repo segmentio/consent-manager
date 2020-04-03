@@ -117,7 +117,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
           />
         </Pane>
 
-        <p>
+        <div>
           <div>
             <Heading>Current Preferences</Heading>
             <SyntaxHighlighter language="json" style={docco}>
@@ -135,7 +135,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
           >
             Clear
           </Button>
-        </p>
+        </div>
       </Pane>
       <CookieView />
     </Pane>

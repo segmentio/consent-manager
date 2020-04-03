@@ -37,15 +37,15 @@
             'ui.header.purpose': 'Zweck',
             'ui.header.tools': 'Werkzeuge',
             'ui.banner.content': exports.React.createElement(exports.React.Fragment, null, [
-              exports.React.createElement('strong', null, banner.header),
-              exports.React.createElement('div', null, banner.content),
+              exports.React.createElement('strong', { key: 1 }, banner.header),
+              exports.React.createElement('div', { key: 2 }, banner.content),
             ]),
             'ui.banner.subContent': 'INFORMATIONEN & EINSTELLUNGEN',
             'ui.preferences.title': 'Website-Datenerhebungs-Präferenzen',
             'ui.preferences.content': exports.React.createElement(exports.React.Fragment, null, [
-              exports.React.createElement('p', null, preference.description),
-              exports.React.createElement('p', null, preference.warning),
-              exports.React.createElement('p', null, preference.explanation),
+              exports.React.createElement('p', { key: 1 }, preference.description),
+              exports.React.createElement('p', { key: 2 }, preference.warning),
+              exports.React.createElement('p', { key: 3 }, preference.explanation),
             ]),
             'ui.cancel.title': 'Sind Sie sicher, dass Sie absagen wollen?',
             'ui.cancel.content':
