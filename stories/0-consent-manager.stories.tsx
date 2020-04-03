@@ -67,7 +67,7 @@ const cancelDialogContent = (
 const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBehaviorFunction }) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
 
-  const cleanup = onPreferencesSaved(preferences => {
+  const cleanup = onPreferencesSaved((preferences) => {
     updatePrefs(preferences)
   })
 
@@ -108,26 +108,23 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
             frameBorder="0"
           />
         </Pane>
-
-        <p>
-          <div>
-            <Heading>Current Preferences</Heading>
-            <SyntaxHighlighter language="json" style={docco}>
-              {JSON.stringify(prefs, null, 2)}
-            </SyntaxHighlighter>
-          </div>
-          <Button marginRight={20} onClick={openConsentManager}>
-            Change Cookie Preferences
-          </Button>
-          <Button
-            onClick={() => {
-              cookies.remove('tracking-preferences')
-              window.location.reload()
-            }}
-          >
-            Clear
-          </Button>
-        </p>
+        <div>
+          <Heading>Current Preferences</Heading>
+          <SyntaxHighlighter language="json" style={docco}>
+            {JSON.stringify(prefs, null, 2)}
+          </SyntaxHighlighter>
+        </div>
+        <Button marginRight={20} onClick={openConsentManager}>
+          Change Cookie Preferences
+        </Button>
+        <Button
+          onClick={() => {
+            cookies.remove('tracking-preferences')
+            window.location.reload()
+          }}
+        >
+          Clear
+        </Button>
       </Pane>
       <CookieView />
     </Pane>
@@ -140,9 +137,9 @@ storiesOf('React Component / OnClose interactions', module)
   .add(`Deny`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DENY} />)
   .add(`Custom Close Behavior`, () => (
     <ConsentManagerExample
-      closeBehavior={categories => ({
+      closeBehavior={(categories) => ({
         ...categories,
-        advertising: false
+        advertising: false,
       })}
     />
   ))

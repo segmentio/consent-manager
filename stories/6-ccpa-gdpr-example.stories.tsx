@@ -68,7 +68,7 @@ const cancelDialogContent = (
 const ConsentManagerExample = () => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
 
-  const cleanup = onPreferencesSaved(preferences => {
+  const cleanup = onPreferencesSaved((preferences) => {
     updatePrefs(preferences)
   })
 
@@ -84,25 +84,25 @@ const ConsentManagerExample = () => {
   const caDefaultPreferences = {
     advertising: false,
     marketingAndAnalytics: true,
-    functional: true
+    functional: true,
   }
   const euDefaultPreferences = {
     advertising: false,
     marketingAndAnalytics: false,
-    functional: false
+    functional: false,
   }
 
   const closeBehavior = inCA()
-    ? _categories => caDefaultPreferences
+    ? (_categories) => caDefaultPreferences
     : inEU()
-      ? CloseBehavior.DENY
-      : CloseBehavior.ACCEPT
+    ? CloseBehavior.DENY
+    : CloseBehavior.ACCEPT
 
   const initialPreferences = inCA()
     ? caDefaultPreferences
     : inEU()
-      ? euDefaultPreferences
-      : undefined
+    ? euDefaultPreferences
+    : undefined
 
   return (
     <Pane>
@@ -142,7 +142,7 @@ const ConsentManagerExample = () => {
           This example highlights checking for EU or CA residency, then changing the closeBehavior
           based on membership in each.
         </Paragraph>
-        <p>
+        <div>
           <div>
             <Heading>Current Preferences</Heading>
             <SyntaxHighlighter language="json" style={docco}>
@@ -160,7 +160,7 @@ const ConsentManagerExample = () => {
           >
             Clear
           </Button>
-        </p>
+        </div>
       </Pane>
       <CookieView />
     </Pane>

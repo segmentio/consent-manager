@@ -8,20 +8,21 @@ interface Props {
   onConfirm: () => void
   title: React.ReactNode
   content: React.ReactNode
+  translate: Function
 }
 
 export default class CancelDialog extends PureComponent<Props> {
   static displayName = 'CancelDialog'
 
   render() {
-    const { innerRef, onBack, title, content } = this.props
+    const { innerRef, onBack, title, content, translate } = this.props
 
     const buttons = (
       <div>
         <DefaultButton type="button" onClick={onBack}>
-          Go Back
+          {translate('ui.go_back')}
         </DefaultButton>
-        <RedButton type="submit">Yes, Cancel</RedButton>
+        <RedButton type="submit">{translate('ui.yes_cancel')}</RedButton>
       </div>
     )
 
@@ -46,7 +47,7 @@ export default class CancelDialog extends PureComponent<Props> {
     document.body.removeEventListener('keydown', this.handleEsc, false)
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     const { onConfirm } = this.props
 
     e.preventDefault()
