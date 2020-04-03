@@ -5,9 +5,26 @@ import { ConsentManager, openConsentManager, loadPreferences, onPreferencesSaved
 import { storiesOf } from '@storybook/react'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { Preferences } from '../src/types'
+import { Preferences, DefaultDestinationBehavior } from '../src/types'
 import CookieView from './components/CookieView'
 import { CloseBehavior } from '../src/consent-manager/container'
+
+cookies.set(
+  'tracking-preferences',
+  JSON.stringify({
+    destinations: {
+      Amplitude: true,
+      'Customer.io': true,
+      'Google Analytics': true,
+      Webhooks: true
+    },
+    custom: {
+      advertising: false,
+      marketingAndAnalytics: true,
+      functional: true
+    }
+  })
+)
 
 const bannerContent = (
   <span>
@@ -64,9 +81,11 @@ const cancelDialogContent = (
   </div>
 )
 
-const ConsentManagerExample = () => {
+const ConsentManagerExample = (props: {
+  defaultDestinationBehavior: DefaultDestinationBehavior
+}) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
-
+  console.log('prefs ', prefs)
   const cleanup = onPreferencesSaved(preferences => {
     updatePrefs(preferences)
   })
@@ -76,7 +95,6 @@ const ConsentManagerExample = () => {
       cleanup()
     }
   })
-
 
   return (
     <Pane>
@@ -90,6 +108,7 @@ const ConsentManagerExample = () => {
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
         closeBehavior={CloseBehavior.ACCEPT}
+        defaultDestinationBehavior={props.defaultDestinationBehavior}
       />
 
       <Pane marginX={100} marginTop={20}>
@@ -111,8 +130,9 @@ const ConsentManagerExample = () => {
         </Pane>
 
         <Paragraph marginTop={20}>
-          This example highlights checking for EU or CA residency, then changing the closeBehavior
-          based on membership in each.
+          This example highlights default destination behavior. The cookie set is missing a
+          destination that is enabled on the source, imitating a newly added destination. In the
+          console, verify behavior by looking at analytics.options.
         </Paragraph>
         <p>
           <div>
@@ -126,11 +146,10 @@ const ConsentManagerExample = () => {
           </Button>
           <Button
             onClick={() => {
-              cookies.remove('tracking-preferences')
               window.location.reload()
             }}
           >
-            Clear
+            Reset Example
           </Button>
         </p>
       </Pane>
@@ -139,4 +158,15 @@ const ConsentManagerExample = () => {
   )
 }
 
-storiesOf('Default Destination Behavior', module).add(`disable`, () => <ConsentManagerExample />)
+storiesOf('Default Destination Behavior', module).add(`disable`, () => (
+  <ConsentManagerExample defaultDestinationBehavior="disable" />
+))
+storiesOf('Default Destination Behavior', module).add(`enable`, () => (
+  <ConsentManagerExample defaultDestinationBehavior="enable" />
+))
+storiesOf('Default Destination Behavior', module).add(`imply`, () => (
+  <ConsentManagerExample defaultDestinationBehavior="imply" />
+))
+storiesOf('Default Destination Behavior', module).add(`ask`, () => (
+  <ConsentManagerExample defaultDestinationBehavior="ask" />
+))
