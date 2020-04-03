@@ -161,7 +161,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       shouldRequireConsent = ConsentManagerBuilder.defaultProps.shouldRequireConsent,
       initialPreferences,
       mapCustomPreferences,
-      defaultDestinationBehavior
+      defaultDestinationBehavior,
+      cookieDomain
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
     let { destinationPreferences, customPreferences } = loadPreferences()
@@ -194,6 +195,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences = destinationPreferences || initialPreferences
     }
 
+    savePreferences({ destinationPreferences, customPreferences, cookieDomain })
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
