@@ -9,7 +9,7 @@ export type WindowWithAJS = Window &
   typeof globalThis & {
     analytics?: AJS
   }
-
+// Why does this use  x | x ??
 export type WindowWithConsentManagerConfig = Window &
   typeof globalThis & {
     consentManagerConfig?: (

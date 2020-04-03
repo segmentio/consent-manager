@@ -48,14 +48,15 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       translations,
     } = this.props
 
-    // if (window && window.consentManagerConfig && window.consentManagerConfig.locales) {
-    //   const translatedMessages = Object.assign(window.consentManagerConfig.locales)
-    // }
     const translate = (key) => {
       let transDictionary
       let lng
       if (translations) {
-        transDictionary = Object.assign(ConsentManager.defaultProps.translations, translations)
+        // Not a deep merge, consider changing to lodash
+        transDictionary = {
+          ...ConsentManager.defaultProps.translations,
+          ...translations,
+        }
       } else {
         transDictionary = ConsentManager.defaultProps.translations
       }
