@@ -191,8 +191,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
         v => v === null || v === undefined
       )
-      console.log('defaultDestinationBehavior ', defaultDestinationBehavior)
-      console.log('workspaceAddedNewDestinations ', workspaceAddedNewDestinations)
+
       if (
         (hasInitialPreferenceToTrue && emptyCustomPreferecences) ||
         (defaultDestinationBehavior === 'imply' && workspaceAddedNewDestinations)
@@ -202,9 +201,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         customPreferences = mapped.customPreferences
         savePreferences({ destinationPreferences, customPreferences, cookieDomain })
       }
-    } else {
-      preferences = destinationPreferences || initialPreferences
     }
+    preferences = destinationPreferences || initialPreferences
 
     conditionallyLoadAnalytics({
       writeKey,
