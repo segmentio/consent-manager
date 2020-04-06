@@ -1,4 +1,4 @@
-import { WindowWithAJS, Destination } from '../types'
+import { WindowWithAJS, Destination, DefaultDestinationBehavior } from '../types'
 
 interface AnalyticsParams {
   writeKey: string
@@ -6,6 +6,7 @@ interface AnalyticsParams {
   destinationPreferences: object | null | undefined
   isConsentRequired: boolean
   shouldReload?: boolean
+  defaultDestinationBehavior?: DefaultDestinationBehavior
 }
 
 export default function conditionallyLoadAnalytics({
@@ -13,7 +14,8 @@ export default function conditionallyLoadAnalytics({
   destinations,
   destinationPreferences,
   isConsentRequired,
-  shouldReload = true
+  shouldReload = true,
+  defaultDestinationBehavior
 }: AnalyticsParams) {
   const wd = window as WindowWithAJS
   const integrations = { All: false, 'Segment.io': true }
@@ -32,6 +34,13 @@ export default function conditionallyLoadAnalytics({
   }
 
   for (const destination of destinations) {
+    // Was a preference explicitly set on this destination?
+    const explicitPreference = destination.id in destinationPreferences
+    if (!explicitPreference && defaultDestinationBehavior === 'enable') {
+      integrations[destination.id] = true
+      continue
+    }
+
     const isEnabled = Boolean(destinationPreferences[destination.id])
     if (isEnabled) {
       isAnythingEnabled = true

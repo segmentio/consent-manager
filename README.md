@@ -192,6 +192,21 @@ Default: `false` (as of 3.0.0)
 
 Whether or not consent should be implied if the user interacts with the website (clicks anywhere outside the consent manager banner or dialogs).
 
+##### defaultDestinationBehavior
+
+Type: `string`<br>
+Default: 'disable'
+
+Determines how newly detected destinations are treated when the user already has a cookie set on their browser. This will be relevent when you've added a connected a new destination to any of the sources managed by Consent Manager.
+
+Options:
+
+- `disable` (default) - Newly detected destinations are by default, disabled.
+- `enable` - Newly detected destinations are by default, enabled.
+- `imply` - Newly detected destinations are by default, enabled or disabled, depending on the user's consent to the consent group that the new destination belongs to.
+  - For example, if a user has already consented to the "marketingAndAnalytics" category, and we detect a new destination with category "Analytics", that destination will be enabled.
+- `ask` - If we detect new destinations upon initializing the Consent Manager, the preferences dialog will automatically open, asking the user for their consent again.
+
 ##### cookieDomain
 
 Type: `string`<br>
@@ -355,6 +370,20 @@ Default: `{}`
 
 The initial value of the preferences. By default it should be an object map of `{destinationId: true|false}`. If you're using [mapCustomPreferences][] it should be an object map of your custom preferences' default values.
 
+##### defaultDestinationBehavior
+
+Type: `string`<br>
+Default: 'disable'
+
+Determines how newly detected destinations are treated when the user already has a cookie set on their browser. This will be relevent when you've added a connected a new destination to any of the sources managed by Consent Manager.
+
+Options:
+
+- `disable` (default) - Newly detected destinations are by default, disabled.
+- `enable` - Newly detected destinations are by default, enabled.
+- `imply` - Newly detected destinations are by default, enabled or disabled, depending on the user's consent to the consent group that the new destination belongs to.
+  - For example, if a user has already consented to the "marketingAndAnalytics" category, and we detect a new destination with category "Analytics", that destination will be enabled.
+
 ##### mapCustomPreferences
 
 Type: `function`<br>
@@ -417,6 +446,13 @@ Type: `boolean`<br>
 Default: `true`
 
 The result of [shouldRequireConsent][].
+
+##### workspaceAddedNewDestinations
+
+Type: `boolean`<br>
+Default: `false`
+
+A boolean value representing whether or not there have been new destinations connected to the source(s) managed by Consent Manager, compared to the destinations set on the existing cookie.
 
 ##### setPreferences
 

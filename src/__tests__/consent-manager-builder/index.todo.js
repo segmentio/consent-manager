@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 import nock from 'nock'
 import sinon from 'sinon'
 import ConsentManagerBuilder from '../../consent-manager-builder'
+import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from '../../consent-manager/categories'
 
 describe('ConsentManagerBuilder', () => {
   beforeEach(() => {
@@ -163,6 +164,155 @@ describe('ConsentManagerBuilder', () => {
       <ConsentManagerBuilder writeKey="123">
         {({ preferences }) => {
           expect(preferences).toMatchObject({})
+          done()
+        }}
+      </ConsentManagerBuilder>
+    )
+  })
+
+  test('if defaultDestinationBehavior is set to imply and category is set to true, loads new destination', done => {
+    document.cookie =
+      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22advertising%22:false%2C%22marketingAndAnalytics%22:true%2C%22functional%22:true}}'
+    window.analytics = { load() {}, identify() {} }
+
+    nock('https://cdn.segment.com')
+      .get('/v1/projects/123/integrations')
+      .reply(200, [
+        {
+          name: 'Google Analytics',
+          creationName: 'Google Analytics'
+        },
+        {
+          name: 'Amplitude',
+          creationName: 'Amplitude'
+        }
+      ])
+
+    shallow(
+      <ConsentManagerBuilder
+        defaultDestinationBehavior="imply"
+        writeKey="123"
+        mapCustomPreferences={(destinations, preferences) => {
+          const destinationPreferences = {}
+          const customPreferences = {}
+          // Default unset preferences to true (for implicit consent)
+          for (const preferenceName of Object.keys(preferences)) {
+            const value = preferences[preferenceName]
+            if (typeof value === 'boolean') {
+              customPreferences[preferenceName] = value
+            } else {
+              customPreferences[preferenceName] = true
+            }
+          }
+
+          const customPrefs = customPreferences
+
+          for (const destination of destinations) {
+            // Mark advertising destinations
+            if (
+              ADVERTISING_CATEGORIES.find(c => c === destination.category) &&
+              destinationPreferences[destination.id] !== false
+            ) {
+              destinationPreferences[destination.id] = customPrefs.advertising
+            }
+
+            // Mark function destinations
+            if (
+              FUNCTIONAL_CATEGORIES.find(c => c === destination.category) &&
+              destinationPreferences[destination.id] !== false
+            ) {
+              destinationPreferences[destination.id] = customPrefs.functional
+            }
+
+            // Fallback to marketing
+            if (!(destination.id in destinationPreferences)) {
+              destinationPreferences[destination.id] = customPrefs.marketingAndAnalytics
+            }
+          }
+
+          return { destinationPreferences, customPreferences }
+        }}
+      >
+        {({ preferences }) => {
+          expect(preferences).toMatchObject({
+            Amplitude: true,
+            'Google Analytics': true
+          })
+          done()
+        }}
+      </ConsentManagerBuilder>
+    )
+  })
+
+  test('if defaultDestinationBehavior is set to imply and category is set to false, does not load new destination', done => {
+    document.cookie =
+      'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22advertising%22:false%2C%22marketingAndAnalytics%22:false%2C%22functional%22:true}}'
+    window.analytics = { load() {}, identify() {} }
+
+    nock('https://cdn.segment.com')
+      .get('/v1/projects/123/integrations')
+      .reply(200, [
+        {
+          name: 'Google Analytics',
+          creationName: 'Google Analytics'
+        },
+        {
+          name: 'Amplitude',
+          creationName: 'Amplitude'
+        }
+      ])
+
+    shallow(
+      <ConsentManagerBuilder
+        defaultDestinationBehavior="imply"
+        writeKey="123"
+        mapCustomPreferences={(destinations, preferences) => {
+          const destinationPreferences = {}
+          const customPreferences = {}
+
+          // Default unset preferences to true (for implicit consent)
+          for (const preferenceName of Object.keys(preferences)) {
+            const value = preferences[preferenceName]
+            if (typeof value === 'boolean') {
+              customPreferences[preferenceName] = value
+            } else {
+              customPreferences[preferenceName] = true
+            }
+          }
+
+          const customPrefs = customPreferences
+
+          for (const destination of destinations) {
+            // Mark advertising destinations
+            if (
+              ADVERTISING_CATEGORIES.find(c => c === destination.category) &&
+              destinationPreferences[destination.id] !== false
+            ) {
+              destinationPreferences[destination.id] = customPrefs.advertising
+            }
+
+            // Mark function destinations
+            if (
+              FUNCTIONAL_CATEGORIES.find(c => c === destination.category) &&
+              destinationPreferences[destination.id] !== false
+            ) {
+              destinationPreferences[destination.id] = customPrefs.functional
+            }
+
+            // Fallback to marketing
+            if (!(destination.id in destinationPreferences)) {
+              destinationPreferences[destination.id] = customPrefs.marketingAndAnalytics
+            }
+          }
+
+          return { destinationPreferences, customPreferences }
+        }}
+      >
+        {({ preferences }) => {
+          expect(preferences).toMatchObject({
+            Amplitude: false,
+            'Google Analytics': false
+          })
           done()
         }}
       </ConsentManagerBuilder>

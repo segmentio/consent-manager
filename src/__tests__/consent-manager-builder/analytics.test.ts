@@ -179,4 +179,66 @@ describe('analytics', () => {
       }
     })
   })
+
+  test('sets new destinations to false if defaultDestinationBehavior is set to "disable"', () => {
+    const ajsLoad = sinon.spy()
+    wd.analytics = { load: ajsLoad }
+    const writeKey = '123'
+    const destinations = [
+      { id: 'Amplitude' } as Destination,
+      { id: 'Google Analytics' } as Destination
+    ]
+    const destinationPreferences = {
+      Amplitude: true
+    }
+
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isConsentRequired: false,
+      shouldReload: true,
+      defaultDestinationBehavior: 'disable'
+    })
+
+    expect(ajsLoad.args[0][1]).toMatchObject({
+      integrations: {
+        All: false,
+        Amplitude: true,
+        'Google Analytics': false,
+        'Segment.io': true
+      }
+    })
+  })
+
+  test('sets new destinations to true if defaultDestinationBehavior is set to "enable"', () => {
+    const ajsLoad = sinon.spy()
+    wd.analytics = { load: ajsLoad }
+    const writeKey = '123'
+    const destinations = [
+      { id: 'Amplitude' } as Destination,
+      { id: 'Google Analytics' } as Destination
+    ]
+    const destinationPreferences = {
+      Amplitude: true
+    }
+
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isConsentRequired: false,
+      shouldReload: true,
+      defaultDestinationBehavior: 'enable'
+    })
+
+    expect(ajsLoad.args[0][1]).toMatchObject({
+      integrations: {
+        All: false,
+        Amplitude: true,
+        'Google Analytics': true,
+        'Segment.io': true
+      }
+    })
+  })
 })
