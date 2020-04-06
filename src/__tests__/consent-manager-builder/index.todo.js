@@ -175,7 +175,6 @@ describe('ConsentManagerBuilder', () => {
       'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22advertising%22:false%2C%22marketingAndAnalytics%22:true%2C%22functional%22:true}}'
     window.analytics = { load() {}, identify() {} }
 
-    console.log('document.cookie ', document.cookie)
     nock('https://cdn.segment.com')
       .get('/v1/projects/123/integrations')
       .reply(200, [
