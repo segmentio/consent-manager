@@ -85,7 +85,7 @@ const ConsentManagerExample = (props: {
   defaultDestinationBehavior: DefaultDestinationBehavior
 }) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
-  console.log('prefs ', prefs)
+
   const cleanup = onPreferencesSaved(preferences => {
     updatePrefs(preferences)
   })
