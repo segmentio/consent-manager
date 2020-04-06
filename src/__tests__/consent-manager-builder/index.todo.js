@@ -171,7 +171,7 @@ describe('ConsentManagerBuilder', () => {
 
   test('if defaultDestinationBehavior is set to imply and category is set to true, loads new destination', done => {
     document.cookie =
-      'tracking-preferences={%22destinations%22:{%22Amplitude%22:false%2C}%2C%22custom%22:{%22advertising%22:false%2C%22marketingAndAnalytics%22:false%2C%22functional%22:true}}'
+      'tracking-preferences={%22destinations%22:{%22Amplitude%22:true%2C}%2C%22custom%22:{%22advertising%22:false%2C%22marketingAndAnalytics%22:true%2C%22functional%22:true}}'
     window.analytics = { load() {} }
 
     nock('https://cdn.segment.com')
@@ -189,13 +189,12 @@ describe('ConsentManagerBuilder', () => {
 
     shallow(
       <ConsentManagerBuilder defaultDestinationBehavior="imply" writeKey="123">
-        {({ preferences }) => {
-          expect(preferences).toMatchObject([
-            {
-              Amplitude: true,
-              'Google Analytics': true
-            }
-          ])
+        {props => {
+          console.log(props)
+          expect(props.preferences).toMatchObject({
+            Amplitude: true,
+            'Google Analytics': true
+          })
           done()
         }}
       </ConsentManagerBuilder>
@@ -223,12 +222,10 @@ describe('ConsentManagerBuilder', () => {
     shallow(
       <ConsentManagerBuilder defaultDestinationBehavior="imply" writeKey="123">
         {({ preferences }) => {
-          expect(preferences).toMatchObject([
-            {
-              Amplitude: false,
-              'Google Analytics': false
-            }
-          ])
+          expect(preferences).toMatchObject({
+            Amplitude: false,
+            'Google Analytics': false
+          })
           done()
         }}
       </ConsentManagerBuilder>
