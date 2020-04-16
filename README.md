@@ -14,7 +14,7 @@ It works by taking control of the analytics.js load process to only load destina
 
 *Disclaimer: Segment’s Consent Manager is an open source tool and is not officially supported by product support teams. If you reach out to our product support teams, there is no guarantee they will be able to resolve your issue.* 
 
-*Please note, Consent Manager is not currently compatible with [Replays](https://segment.com/docs/guides/what-is-replay/) or [Personas](https://segment.com/docs/personas/). If you plan to replay data collected from users who specified their tracking preferences using Consent Mananger, Segment's Replay tool will not respect these preferences. Similarly, Personas may send data to destinations the user has explicitly opted out of for data collection* 
+*Please note, Consent Manager is not currently compatible with [Replays](https://segment.com/docs/guides/what-is-replay/) or [Personas](https://segment.com/docs/personas/). If you plan to replay data collected from users who specified their tracking preferences using Consent Manager, Segment's Replay tool will not respect these preferences. Similarly, Personas may send data to destinations the user has explicitly opted out of for data collection* 
 
 ### Features
 
