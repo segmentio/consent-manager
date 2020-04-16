@@ -12,6 +12,10 @@ At its core, the Consent Manager empowers your visitors to control and customize
 
 It works by taking control of the analytics.js load process to only load destinations that the user has consented to and not loading analytics.js at all if the user has opted out of everything. The user's tracking preferences are saved to a cookie and sent as an identify trait (if they haven't opted out of everything) so that you can also access them on the server-side and from destinations (warehouse).
 
+*Disclaimer: Segment’s Consent Manager is an open source tool and is not officially supported by product support teams. If you reach out to our product support teams, there is no guarantee they will be able to resolve your issue.* 
+
+*Please note, Conesnt Manager is not currently compatible with Replays [Replays](https://segment.com/docs/guides/what-is-replay/)or [Personas](https://segment.com/docs/personas/). If you plan to replay data collected from users who specified their tracking preferences, Segment's Replay tool will not respect these preferences. Similarly, Personas may send data to destinations the user has explicity opted out of tracking for* 
+
 ### Features
 
 - Give users the ability to opt-in or opt-out to tracking.
