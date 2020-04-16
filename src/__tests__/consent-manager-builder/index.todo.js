@@ -234,7 +234,7 @@ describe('ConsentManagerBuilder', () => {
         }}
       >
         {({ destinationPreferences }) => {
-          expect(preferences).toMatchObject({
+          expect(destinationPreferences).toMatchObject({
             Amplitude: true,
             'Google Analytics': true
           })
@@ -309,7 +309,7 @@ describe('ConsentManagerBuilder', () => {
         }}
       >
         {({ destinationPreferences }) => {
-          expect(preferences).toMatchObject({
+          expect(destinationPreferences).toMatchObject({
             Amplitude: false,
             'Google Analytics': false
           })
