@@ -12,6 +12,8 @@ At its core, the Consent Manager empowers your visitors to control and customize
 
 It works by taking control of the analytics.js load process to only load destinations that the user has consented to and not loading analytics.js at all if the user has opted out of everything. The user's tracking preferences are saved to a cookie and sent as an identify trait (if they haven't opted out of everything) so that you can also access them on the server-side and from destinations (warehouse).
 
+*Please note, Consent Manager is not currently compatible with [Personas](https://segment.com/docs/personas/). Personas may send user data to destinations the user has explicitly opted out of for data collection.* 
+
 ### Features
 
 - Give users the ability to opt-in or opt-out to tracking.
