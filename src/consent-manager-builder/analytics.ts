@@ -1,4 +1,9 @@
-import { WindowWithAJS, Destination, DefaultDestinationBehavior } from '../types'
+import {
+  WindowWithAJS,
+  Destination,
+  DefaultDestinationBehavior
+  // CategoryPreferences
+} from '../types'
 
 interface AnalyticsParams {
   writeKey: string
@@ -62,3 +67,7 @@ export default function conditionallyLoadAnalytics({
     wd.analytics.load(writeKey, { integrations })
   }
 }
+
+// function wrapAnalytics(destinationPreferences: CategoryPreferences) {
+//   const wd = window as WindowWithAJS
+// }

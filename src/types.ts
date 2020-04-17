@@ -3,6 +3,7 @@ import { PreferencesManager } from './consent-manager-builder/preferences'
 
 type AJS = SegmentAnalytics.AnalyticsJS & {
   initialized: boolean
+  track: (event: string, properties: { [key: string]: any }) => void
 }
 
 export type WindowWithAJS = Window &
