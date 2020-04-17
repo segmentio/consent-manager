@@ -431,6 +431,13 @@ Default: `{}`
 
 The current preferences in state. By default if should be in the format of `{destinationId: true|false}`, but if you're using [mapCustomPreferences][] the object map can be in any format you want. _Note: this isn't the saved preferences._
 
+##### destinationPreferences
+
+Type: `object`<br>
+Default: `{}`
+
+The current _destination specific_ preferences, i.e. `{Amplitude: true}`.
+
 ##### havePreferencesChanged
 
 Type: `boolean`<br>

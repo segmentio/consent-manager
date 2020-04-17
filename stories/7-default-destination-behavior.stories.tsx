@@ -9,23 +9,6 @@ import { Preferences, DefaultDestinationBehavior } from '../src/types'
 import CookieView from './components/CookieView'
 import { CloseBehavior } from '../src/consent-manager/container'
 
-cookies.set(
-  'tracking-preferences',
-  JSON.stringify({
-    destinations: {
-      Amplitude: true,
-      'Customer.io': true,
-      'Google Analytics': true,
-      Webhooks: true
-    },
-    custom: {
-      advertising: false,
-      marketingAndAnalytics: true,
-      functional: true
-    }
-  })
-)
-
 const bannerContent = (
   <span>
     We use cookies (and other similar technologies) to collect data to improve your experience on
@@ -85,6 +68,25 @@ const ConsentManagerExample = (props: {
   defaultDestinationBehavior: DefaultDestinationBehavior
 }) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
+
+  React.useEffect(() => {
+    cookies.set(
+      'tracking-preferences',
+      JSON.stringify({
+        destinations: {
+          Amplitude: true,
+          'Customer.io': true,
+          'Google Analytics': true,
+          Webhooks: true
+        },
+        custom: {
+          advertising: false,
+          marketingAndAnalytics: true,
+          functional: true
+        }
+      })
+    )
+  })
 
   const cleanup = onPreferencesSaved(preferences => {
     updatePrefs(preferences)

@@ -233,8 +233,8 @@ describe('ConsentManagerBuilder', () => {
           return { destinationPreferences, customPreferences }
         }}
       >
-        {({ preferences }) => {
-          expect(preferences).toMatchObject({
+        {({ destinationPreferences }) => {
+          expect(destinationPreferences).toMatchObject({
             Amplitude: true,
             'Google Analytics': true
           })
@@ -308,8 +308,8 @@ describe('ConsentManagerBuilder', () => {
           return { destinationPreferences, customPreferences }
         }}
       >
-        {({ preferences }) => {
-          expect(preferences).toMatchObject({
+        {({ destinationPreferences }) => {
+          expect(destinationPreferences).toMatchObject({
             Amplitude: false,
             'Google Analytics': false
           })

@@ -78,6 +78,7 @@ interface RenderProps {
   destinations: Destination[]
   newDestinations: Destination[]
   preferences: CategoryPreferences
+  destinationPreferences: CategoryPreferences
   isConsentRequired: boolean
   customCategories?: CustomCategories
   havePreferencesChanged: boolean
@@ -92,6 +93,7 @@ interface State {
   destinations: Destination[]
   newDestinations: Destination[]
   preferences?: CategoryPreferences
+  destinationPreferences?: CategoryPreferences
   isConsentRequired: boolean
   havePreferencesChanged: boolean
   workspaceAddedNewDestinations: boolean
@@ -112,6 +114,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     destinations: [],
     newDestinations: [],
     preferences: {},
+    destinationPreferences: {},
     isConsentRequired: true,
     havePreferencesChanged: false,
     workspaceAddedNewDestinations: false
@@ -126,7 +129,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       newDestinations,
       isConsentRequired,
       havePreferencesChanged,
-      workspaceAddedNewDestinations
+      workspaceAddedNewDestinations,
+      destinationPreferences
     } = this.state
     if (isLoading) {
       return null
@@ -140,6 +144,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       isConsentRequired,
       havePreferencesChanged,
       workspaceAddedNewDestinations,
+      destinationPreferences,
       setPreferences: this.handleSetPreferences,
       resetPreferences: this.handleResetPreferences,
       saveConsent: this.handleSaveConsent
@@ -201,8 +206,9 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         customPreferences = mapped.customPreferences
         savePreferences({ destinationPreferences, customPreferences, cookieDomain })
       }
+    } else {
+      preferences = destinationPreferences || initialPreferences
     }
-    preferences = destinationPreferences || initialPreferences
 
     conditionallyLoadAnalytics({
       writeKey,
@@ -218,6 +224,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       newDestinations,
       preferences,
       isConsentRequired,
+      destinationPreferences,
       workspaceAddedNewDestinations: Boolean(workspaceAddedNewDestinations)
     })
   }
