@@ -66,7 +66,6 @@ export default function conditionallyLoadAnalytics({
 
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
-    // @ts-ignore
     wd.analytics.load(writeKey, { integrations })
     wd.analytics.track = wrapTrack(wd.analytics.track, destinationPreferences, categoryPreferences)
     // Only temporary for testing
@@ -85,7 +84,6 @@ function wrapTrack(
       destinationConsentPreferences,
       categoryConsentPreferences
     }
-    // @ts-ignore
     track(event, properties, optionsWithConsent, callback)
   }
 }
