@@ -15,6 +15,26 @@ interface AnalyticsParams {
   categoryPreferences: CategoryPreferences | null | undefined
 }
 
+function wrapTrack(
+  track: SegmentAnalytics.AnalyticsJS['track'],
+  destinationConsentPreferences,
+  categoryConsentPreferences
+) {
+  return (
+    event: string,
+    properties?: Record<string, any>,
+    options?: Record<string, any>,
+    callback?: () => void
+  ) => {
+    const optionsWithConsent: object = {
+      ...options,
+      destinationConsentPreferences,
+      categoryConsentPreferences
+    }
+    track(event, properties, optionsWithConsent, callback)
+  }
+}
+
 export default function conditionallyLoadAnalytics({
   writeKey,
   destinations,
@@ -70,20 +90,5 @@ export default function conditionallyLoadAnalytics({
     wd.analytics.track = wrapTrack(wd.analytics.track, destinationPreferences, categoryPreferences)
     // Only temporary for testing
     wd.analytics.track('hiiii, goodbye')
-  }
-}
-
-function wrapTrack(
-  track: SegmentAnalytics.AnalyticsJS['track'],
-  destinationConsentPreferences,
-  categoryConsentPreferences
-) {
-  return (event: string, properties?: Object, options?: Object, callback?: () => void) => {
-    const optionsWithConsent: object = {
-      ...options,
-      destinationConsentPreferences,
-      categoryConsentPreferences
-    }
-    track(event, properties, optionsWithConsent, callback)
   }
 }
