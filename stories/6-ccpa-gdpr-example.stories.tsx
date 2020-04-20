@@ -137,6 +137,9 @@ const ConsentManagerExample = () => {
             frameBorder="0"
           />
         </Pane>
+        <Button onClick={() => window.analytics.track('Send Track Event Clicked')}>
+          Send Track Event
+        </Button>
 
         <Paragraph marginTop={20}>
           This example highlights checking for EU or CA residency, then changing the closeBehavior

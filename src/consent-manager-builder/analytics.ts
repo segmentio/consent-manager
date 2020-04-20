@@ -28,7 +28,6 @@ export default function conditionallyLoadAnalytics({
   const integrations = { All: false, 'Segment.io': true }
   let isAnythingEnabled = false
 
-  writeKey = 'n2DAIaakJzCUq0saLY0LMcm9dKsqCZvU'
   if (!destinationPreferences) {
     if (isConsentRequired) {
       return
