@@ -209,7 +209,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       destinations,
       destinationPreferences,
       isConsentRequired,
-      defaultDestinationBehavior
+      defaultDestinationBehavior,
+      categoryPreferences: preferences
     })
 
     this.setState({
@@ -290,7 +291,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
           destinationPreferences,
           isConsentRequired,
           shouldReload,
-          defaultDestinationBehavior
+          defaultDestinationBehavior,
+          categoryPreferences: customPreferences
         })
       }
 

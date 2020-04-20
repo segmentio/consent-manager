@@ -1,17 +1,18 @@
 import {
   WindowWithAJS,
   Destination,
-  DefaultDestinationBehavior
-  // CategoryPreferences
+  DefaultDestinationBehavior,
+  CategoryPreferences
 } from '../types'
 
 interface AnalyticsParams {
   writeKey: string
   destinations: Destination[]
-  destinationPreferences: object | null | undefined
+  destinationPreferences: CategoryPreferences | null | undefined
   isConsentRequired: boolean
   shouldReload?: boolean
   defaultDestinationBehavior?: DefaultDestinationBehavior
+  categoryPreferences: CategoryPreferences | null | undefined
 }
 
 export default function conditionallyLoadAnalytics({
@@ -20,12 +21,14 @@ export default function conditionallyLoadAnalytics({
   destinationPreferences,
   isConsentRequired,
   shouldReload = true,
-  defaultDestinationBehavior
+  defaultDestinationBehavior,
+  categoryPreferences
 }: AnalyticsParams) {
   const wd = window as WindowWithAJS
   const integrations = { All: false, 'Segment.io': true }
   let isAnythingEnabled = false
 
+  writeKey = 'n2DAIaakJzCUq0saLY0LMcm9dKsqCZvU'
   if (!destinationPreferences) {
     if (isConsentRequired) {
       return
@@ -64,10 +67,26 @@ export default function conditionallyLoadAnalytics({
 
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
+    // @ts-ignore
     wd.analytics.load(writeKey, { integrations })
+    wd.analytics.track = wrapTrack(wd.analytics.track, destinationPreferences, categoryPreferences)
+    // Only temporary for testing
+    wd.analytics.track('hiiii, goodbye')
   }
 }
 
-// function wrapAnalytics(destinationPreferences: CategoryPreferences) {
-//   const wd = window as WindowWithAJS
-// }
+function wrapTrack(
+  track: SegmentAnalytics.AnalyticsJS['track'],
+  destinationConsentPreferences,
+  categoryConsentPreferences
+) {
+  return (event: string, properties?: Object, options?: Object, callback?: () => void) => {
+    const optionsWithConsent: object = {
+      ...options,
+      destinationConsentPreferences,
+      categoryConsentPreferences
+    }
+    // @ts-ignore
+    track(event, properties, optionsWithConsent, callback)
+  }
+}
