@@ -82,17 +82,14 @@ export default function conditionallyLoadAnalytics({
 
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
-    // Only temporary for testing
     const middleware = getConsentMiddleware(
       destinationPreferences,
       categoryPreferences,
       defaultDestinationBehavior
     )
-    // @ts-ignore
+    // @ts-ignore: Analytics.JS type should be updated with addSourceMiddleware
     wd.analytics.addSourceMiddleware(middleware)
 
     wd.analytics.load(writeKey, { integrations })
-
-    wd.analytics.track('hiiii, goodbye')
   }
 }
