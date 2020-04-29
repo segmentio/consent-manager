@@ -2,7 +2,8 @@ import {
   WindowWithAJS,
   Destination,
   DefaultDestinationBehavior,
-  CategoryPreferences
+  CategoryPreferences,
+  Middleware
 } from '../types'
 
 interface AnalyticsParams {
@@ -13,26 +14,6 @@ interface AnalyticsParams {
   shouldReload?: boolean
   defaultDestinationBehavior?: DefaultDestinationBehavior
   categoryPreferences: CategoryPreferences | null | undefined
-}
-
-function wrapTrack(
-  track: SegmentAnalytics.AnalyticsJS['track'],
-  destinationConsentPreferences,
-  categoryConsentPreferences
-) {
-  return (
-    event: string,
-    properties?: Record<string, any>,
-    options?: Record<string, any>,
-    callback?: () => void
-  ) => {
-    const optionsWithConsent: object = {
-      ...options,
-      destinationConsentPreferences,
-      categoryConsentPreferences
-    }
-    track(event, properties, optionsWithConsent, callback)
-  }
 }
 
 export default function conditionallyLoadAnalytics({
@@ -86,9 +67,27 @@ export default function conditionallyLoadAnalytics({
 
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
+    wd.analytics.addSourceMiddleware(
+      getConsentMiddleware(destinationPreferences, categoryPreferences, defaultDestinationBehavior)
+    )
+
     wd.analytics.load(writeKey, { integrations })
-    wd.analytics.track = wrapTrack(wd.analytics.track, destinationPreferences, categoryPreferences)
     // Only temporary for testing
     wd.analytics.track('hiiii, goodbye')
+  }
+}
+
+function getConsentMiddleware(
+  destinationPreferences,
+  categoryPreferences,
+  defaultDestinationBehavior
+): Middleware {
+  return ({ payload, next }) => {
+    payload.obj.consent = {
+      defaultDestinationBehavior,
+      categoryPreferences,
+      destinationPreferences
+    }
+    next(payload)
   }
 }
