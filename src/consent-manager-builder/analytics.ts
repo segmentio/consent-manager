@@ -22,7 +22,7 @@ function getConsentMiddleware(
   defaultDestinationBehavior
 ): Middleware {
   return ({ payload, next }) => {
-    payload.obj.consent = {
+    payload.obj.context.consent = {
       defaultDestinationBehavior,
       categoryPreferences,
       destinationPreferences
