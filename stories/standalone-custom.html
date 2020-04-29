@@ -16,9 +16,9 @@
             functional: true
           },
           /*
-        The consent manager ships with a lightweight version of 
-        React (preact) that you can use to customize the consent manager further
-      */
+      The consent manager ships with a lightweight version of 
+      React (preact) that you can use to customize the consent manager further
+    */
           bannerContent: exports.React.createElement('span', null, '🍪We like cookies 🍪'),
           bannerSubContent: 'Change your preferences 👻',
           preferencesDialogTitle: 'Website Data Collection',
@@ -69,7 +69,8 @@
               'page',
               'once',
               'off',
-              'on'
+              'on',
+              'addSourceMiddleware'
             ]
             analytics.factory = function(t) {
               return function() {
