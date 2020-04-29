@@ -16,6 +16,21 @@ interface AnalyticsParams {
   categoryPreferences: CategoryPreferences | null | undefined
 }
 
+function getConsentMiddleware(
+  destinationPreferences,
+  categoryPreferences,
+  defaultDestinationBehavior
+): Middleware {
+  return ({ payload, next }) => {
+    payload.obj.consent = {
+      defaultDestinationBehavior,
+      categoryPreferences,
+      destinationPreferences
+    }
+    next(payload)
+  }
+}
+
 export default function conditionallyLoadAnalytics({
   writeKey,
   destinations,
@@ -74,20 +89,5 @@ export default function conditionallyLoadAnalytics({
     wd.analytics.load(writeKey, { integrations })
     // Only temporary for testing
     wd.analytics.track('hiiii, goodbye')
-  }
-}
-
-function getConsentMiddleware(
-  destinationPreferences,
-  categoryPreferences,
-  defaultDestinationBehavior
-): Middleware {
-  return ({ payload, next }) => {
-    payload.obj.consent = {
-      defaultDestinationBehavior,
-      categoryPreferences,
-      destinationPreferences
-    }
-    next(payload)
   }
 }
