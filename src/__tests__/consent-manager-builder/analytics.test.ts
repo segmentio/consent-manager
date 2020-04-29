@@ -1,5 +1,5 @@
 import sinon from 'sinon'
-import { WindowWithAJS, Destination } from '../../types'
+import { WindowWithAJS, Destination, Middleware } from '../../types'
 import conditionallyLoadAnalytics from '../../consent-manager-builder/analytics'
 
 describe('analytics', () => {
@@ -8,7 +8,10 @@ describe('analytics', () => {
   beforeEach(() => {
     window = {} as WindowWithAJS
     wd = window
-    wd.analytics = { track: (_event, _properties, _optionsWithConsent, _callback) => {} }
+    wd.analytics = {
+      track: (_event, _properties, _optionsWithConsent, _callback) => {},
+      addSourceMiddleware: (_middleware: Middleware) => {}
+    }
   })
 
   test('loads analytics.js with preferences', () => {
