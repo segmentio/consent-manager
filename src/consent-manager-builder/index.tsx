@@ -186,7 +186,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     let preferences: CategoryPreferences | undefined
     if (mapCustomPreferences) {
       preferences = customPreferences || initialPreferences || {}
-
+      console.log('Preferences ', preferences)
       const hasInitialPreferenceToTrue = Object.values(initialPreferences || {}).some(Boolean)
       const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
         v => v === null || v === undefined
@@ -202,7 +202,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         savePreferences({ destinationPreferences, customPreferences, cookieDomain })
       }
     }
-    preferences = destinationPreferences || initialPreferences
+    preferences = customPreferences || initialPreferences
 
     conditionallyLoadAnalytics({
       writeKey,
@@ -266,6 +266,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       if (mapCustomPreferences) {
         const custom = mapCustomPreferences(destinations, preferences)
+        console.log('CUSTOM ', custom.customPreferences, custom.destinationPreferences)
         destinationPreferences = custom.destinationPreferences
         customPreferences = custom.customPreferences
 

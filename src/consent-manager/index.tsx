@@ -124,7 +124,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     const { customCategories } = this.props
     const destinationPreferences = {}
     const customPreferences = {}
-
+    console.log('destinations', destinations)
+    console.log('preferences ', preferences)
     if (customCategories) {
       for (const preferenceName of Object.keys(customCategories)) {
         const value = preferences[preferenceName]
