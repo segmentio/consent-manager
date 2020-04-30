@@ -68,6 +68,25 @@ const ConsentManagerExample = (props: {
 }) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
 
+  React.useEffect(() => {
+    cookies.set(
+      'tracking-preferences',
+      JSON.stringify({
+        destinations: {
+          Amplitude: true,
+          'Customer.io': true,
+          'Google Analytics': true,
+          Webhooks: true
+        },
+        custom: {
+          advertising: false,
+          marketingAndAnalytics: true,
+          functional: true
+        }
+      })
+    )
+  })
+
   const cleanup = onPreferencesSaved(preferences => {
     updatePrefs(preferences)
   })
