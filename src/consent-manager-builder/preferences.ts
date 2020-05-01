@@ -50,7 +50,6 @@ export function savePreferences({
   cookieDomain
 }: SavePreferences) {
   const wd = window as WindowWithAJS
-
   if (wd.analytics) {
     wd.analytics.identify({
       destinationTrackingPreferences: destinationPreferences,

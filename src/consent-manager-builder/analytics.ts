@@ -1,12 +1,34 @@
-import { WindowWithAJS, Destination, DefaultDestinationBehavior } from '../types'
+import {
+  WindowWithAJS,
+  Destination,
+  DefaultDestinationBehavior,
+  CategoryPreferences,
+  Middleware
+} from '../types'
 
 interface AnalyticsParams {
   writeKey: string
   destinations: Destination[]
-  destinationPreferences: object | null | undefined
+  destinationPreferences: CategoryPreferences | null | undefined
   isConsentRequired: boolean
   shouldReload?: boolean
   defaultDestinationBehavior?: DefaultDestinationBehavior
+  categoryPreferences: CategoryPreferences | null | undefined
+}
+
+function getConsentMiddleware(
+  destinationPreferences,
+  categoryPreferences,
+  defaultDestinationBehavior
+): Middleware {
+  return ({ payload, next }) => {
+    payload.obj.context.consent = {
+      defaultDestinationBehavior,
+      categoryPreferences,
+      destinationPreferences
+    }
+    next(payload)
+  }
 }
 
 export default function conditionallyLoadAnalytics({
@@ -15,7 +37,8 @@ export default function conditionallyLoadAnalytics({
   destinationPreferences,
   isConsentRequired,
   shouldReload = true,
-  defaultDestinationBehavior
+  defaultDestinationBehavior,
+  categoryPreferences
 }: AnalyticsParams) {
   const wd = window as WindowWithAJS
   const integrations = { All: false, 'Segment.io': true }
@@ -59,6 +82,14 @@ export default function conditionallyLoadAnalytics({
 
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
+    const middleware = getConsentMiddleware(
+      destinationPreferences,
+      categoryPreferences,
+      defaultDestinationBehavior
+    )
+    // @ts-ignore: Analytics.JS type should be updated with addSourceMiddleware
+    wd.analytics.addSourceMiddleware(middleware)
+
     wd.analytics.load(writeKey, { integrations })
   }
 }

@@ -23,6 +23,62 @@ It works by taking control of the analytics.js load process to only load destina
 - EU traffic detection through [@segment/in-eu][ineu].
 - Ability for visitors to reconsent and change preferences.
 - Automatically updates to reflect the destinations you have enabled in Segment.
+- **5.0.0**: Consent Manager will add consent metadata to the context of all track calls:
+
+Track call message payloads will be extended to include Consent metadata in the `context` object:
+```
+{
+  "context": {
+    "campaign": {},
+    "consent": {
+      "categoryPreferences": {
+        "Amplitude": true,
+        "Customer.io": true,
+        "Google Analytics": true,
+        "Webhooks": true
+      },
+      "defaultDestinationBehavior": "disable",
+      "destinationPreferences": {
+        "Amplitude": true,
+        "Customer.io": true,
+        "Google Analytics": true,
+        "Webhooks": true
+      }
+    }
+  },
+  "event": "Send Track Event Clicked",
+  "integrations": {
+    "All": false,
+    "Amplitude": true,
+    "HubSpot": false,
+    "Salesforce": false,
+    "Segment.io": true
+  }
+}
+```
+
+**Breaking Changes:** Version 5.0.0 and above require that your analytics.js snippet include the method `addSourceMiddleware` in the `analytics.methods` array: 
+```
+analytics.methods = [
+  'trackSubmit',
+  'trackClick',
+  'trackLink',
+  'trackForm',
+  'pageview',
+  'identify',
+  'reset',
+  'group',
+  'track',
+  'ready',
+  'alias',
+  'debug',
+  'page',
+  'once',
+  'off',
+  'on',
+  'addSourceMiddleware' // This method is necessary for Consent Manager to forward consent metadata.
+]
+```
 
 ## Usage
 
@@ -130,7 +186,7 @@ All the options are supported. The callback function also receives these exports
 </script>
 
 <script
-  src="https://unpkg.com/@segment/consent-manager@4.3.0/standalone/consent-manager.js"
+  src="https://unpkg.com/@segment/consent-manager@5.0.0/standalone/consent-manager.js"
   defer
 ></script>
 ```
@@ -385,6 +441,8 @@ Options:
 - `enable` - Newly detected destinations are by default, enabled.
 - `imply` - Newly detected destinations are by default, enabled or disabled, depending on the user's consent to the consent group that the new destination belongs to.
   - For example, if a user has already consented to the "marketingAndAnalytics" category, and we detect a new destination with category "Analytics", that destination will be enabled.
+
+This setting will also also affect replays to new destinations. Only `disable` and `enable` will apply to these replays. Setting `defaultDestinationBehavior` to `imply` here will be interpreted as `enable` during a replay. 
 
 ##### mapCustomPreferences
 

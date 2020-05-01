@@ -191,7 +191,6 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     let preferences: CategoryPreferences | undefined
     if (mapCustomPreferences) {
       preferences = customPreferences || initialPreferences || {}
-
       const hasInitialPreferenceToTrue = Object.values(initialPreferences || {}).some(Boolean)
       const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
         v => v === null || v === undefined
@@ -215,7 +214,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       destinations,
       destinationPreferences,
       isConsentRequired,
-      defaultDestinationBehavior
+      defaultDestinationBehavior,
+      categoryPreferences: preferences
     })
 
     this.setState({
@@ -297,7 +297,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
           destinationPreferences,
           isConsentRequired,
           shouldReload,
-          defaultDestinationBehavior
+          defaultDestinationBehavior,
+          categoryPreferences: customPreferences
         })
       }
 

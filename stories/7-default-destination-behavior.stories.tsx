@@ -1,5 +1,4 @@
 import React from 'react'
-import cookies from 'js-cookie'
 import { Pane, Heading, Paragraph, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager, loadPreferences, onPreferencesSaved } from '../src'
 import { storiesOf } from '@storybook/react'
@@ -68,25 +67,6 @@ const ConsentManagerExample = (props: {
   defaultDestinationBehavior: DefaultDestinationBehavior
 }) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
-
-  React.useEffect(() => {
-    cookies.set(
-      'tracking-preferences',
-      JSON.stringify({
-        destinations: {
-          Amplitude: true,
-          'Customer.io': true,
-          'Google Analytics': true,
-          Webhooks: true
-        },
-        custom: {
-          advertising: false,
-          marketingAndAnalytics: true,
-          functional: true
-        }
-      })
-    )
-  })
 
   const cleanup = onPreferencesSaved(preferences => {
     updatePrefs(preferences)

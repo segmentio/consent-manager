@@ -107,8 +107,7 @@ const ConsentManagerExample = () => {
   return (
     <Pane>
       <ConsentManager
-        writeKey="tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0"
-        otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
+        writeKey="n2DAIaakJzCUq0saLY0LMcm9dKsqCZvU"
         bannerContent={bannerContent}
         bannerSubContent={bannerSubContent}
         preferencesDialogTitle={preferencesDialogTitle}
@@ -137,6 +136,9 @@ const ConsentManagerExample = () => {
             frameBorder="0"
           />
         </Pane>
+        <Button onClick={() => window.analytics.track('Send Track Event Clicked')}>
+          Send Track Event
+        </Button>
 
         <Paragraph marginTop={20}>
           This example highlights checking for EU or CA residency, then changing the closeBehavior

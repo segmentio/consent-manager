@@ -1,5 +1,5 @@
 import sinon from 'sinon'
-import { WindowWithAJS, Destination } from '../../types'
+import { WindowWithAJS, Destination, Middleware } from '../../types'
 import conditionallyLoadAnalytics from '../../consent-manager-builder/analytics'
 
 describe('analytics', () => {
@@ -8,11 +8,15 @@ describe('analytics', () => {
   beforeEach(() => {
     window = {} as WindowWithAJS
     wd = window
+    wd.analytics = {
+      track: (_event, _properties, _optionsWithConsent, _callback) => {},
+      addSourceMiddleware: (_middleware: Middleware) => {}
+    }
   })
 
   test('loads analytics.js with preferences', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = { load: ajsLoad }
+    wd.analytics.load = ajsLoad
     const writeKey = '123'
     const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = {
@@ -23,7 +27,8 @@ describe('analytics', () => {
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: true
+      isConsentRequired: true,
+      categoryPreferences: {}
     })
 
     expect(ajsLoad.calledOnce).toBe(true)
@@ -39,7 +44,7 @@ describe('analytics', () => {
 
   test('doesn՚t load analytics.js when there are no preferences', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = { load: ajsLoad }
+    wd.analytics.load = ajsLoad
     const writeKey = '123'
     const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = null
@@ -48,7 +53,8 @@ describe('analytics', () => {
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: true
+      isConsentRequired: true,
+      categoryPreferences: {}
     })
 
     expect(ajsLoad.notCalled).toBe(true)
@@ -56,7 +62,7 @@ describe('analytics', () => {
 
   test('doesn՚t load analytics.js when all preferences are false', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = { load: ajsLoad }
+    wd.analytics.load = ajsLoad
     const writeKey = '123'
     const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = {
@@ -67,18 +73,18 @@ describe('analytics', () => {
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: true
+      isConsentRequired: true,
+      categoryPreferences: {}
     })
 
     expect(ajsLoad.notCalled).toBe(true)
   })
 
   test('reloads the page when analytics.js has already been initialised', () => {
-    wd.analytics = {
-      load() {
-        this.initialized = true
-      }
+    wd.analytics.load = function load() {
+      this.initialized = true
     }
+
     jest.spyOn(window.location, 'reload')
 
     const writeKey = '123'
@@ -91,13 +97,15 @@ describe('analytics', () => {
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: true
+      isConsentRequired: true,
+      categoryPreferences: {}
     })
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: true
+      isConsentRequired: true,
+      categoryPreferences: {}
     })
 
     expect(window.location.reload).toHaveBeenCalled()
@@ -105,10 +113,8 @@ describe('analytics', () => {
 
   test('should allow the reload behvaiour to be disabled', () => {
     const reload = sinon.spy()
-    wd.analytics = {
-      load() {
-        this.initialized = true
-      }
+    wd.analytics.load = function load() {
+      this.initialized = true
     }
     wd.location = { reload }
     const writeKey = '123'
@@ -121,14 +127,16 @@ describe('analytics', () => {
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: true
+      isConsentRequired: true,
+      categoryPreferences: {}
     })
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
       destinationPreferences,
       isConsentRequired: true,
-      shouldReload: false
+      shouldReload: false,
+      categoryPreferences: {}
     })
 
     expect(reload.calledOnce).toBe(false)
@@ -136,7 +144,7 @@ describe('analytics', () => {
 
   test('loads analytics.js normally when consent isn՚t required', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = { load: ajsLoad }
+    wd.analytics.load = ajsLoad
     const writeKey = '123'
     const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = null
@@ -145,7 +153,8 @@ describe('analytics', () => {
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: false
+      isConsentRequired: false,
+      categoryPreferences: {}
     })
 
     expect(ajsLoad.calledOnce).toBe(true)
@@ -155,7 +164,7 @@ describe('analytics', () => {
 
   test('still applies preferences when consent isn՚t required', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = { load: ajsLoad }
+    wd.analytics.load = ajsLoad
     const writeKey = '123'
     const destinations = [{ id: 'Amplitude' } as Destination]
     const destinationPreferences = {
@@ -166,7 +175,8 @@ describe('analytics', () => {
       writeKey,
       destinations,
       destinationPreferences,
-      isConsentRequired: false
+      isConsentRequired: false,
+      categoryPreferences: {}
     })
 
     expect(ajsLoad.calledOnce).toBe(true)
@@ -182,7 +192,7 @@ describe('analytics', () => {
 
   test('sets new destinations to false if defaultDestinationBehavior is set to "disable"', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = { load: ajsLoad }
+    wd.analytics.load = ajsLoad
     const writeKey = '123'
     const destinations = [
       { id: 'Amplitude' } as Destination,
@@ -198,7 +208,8 @@ describe('analytics', () => {
       destinationPreferences,
       isConsentRequired: false,
       shouldReload: true,
-      defaultDestinationBehavior: 'disable'
+      defaultDestinationBehavior: 'disable',
+      categoryPreferences: {}
     })
 
     expect(ajsLoad.args[0][1]).toMatchObject({
@@ -213,7 +224,7 @@ describe('analytics', () => {
 
   test('sets new destinations to true if defaultDestinationBehavior is set to "enable"', () => {
     const ajsLoad = sinon.spy()
-    wd.analytics = { load: ajsLoad }
+    wd.analytics.load = ajsLoad
     const writeKey = '123'
     const destinations = [
       { id: 'Amplitude' } as Destination,
@@ -229,7 +240,8 @@ describe('analytics', () => {
       destinationPreferences,
       isConsentRequired: false,
       shouldReload: true,
-      defaultDestinationBehavior: 'enable'
+      defaultDestinationBehavior: 'enable',
+      categoryPreferences: {}
     })
 
     expect(ajsLoad.args[0][1]).toMatchObject({

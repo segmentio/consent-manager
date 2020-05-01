@@ -3,6 +3,18 @@ import { PreferencesManager } from './consent-manager-builder/preferences'
 
 type AJS = SegmentAnalytics.AnalyticsJS & {
   initialized: boolean
+  track: (event: string, properties: { [key: string]: any }) => void
+  addSourceMiddleware: (middleware: Middleware) => void
+}
+
+export type Middleware = (input: MiddlewareInput) => void
+interface MiddlewareInput {
+  payload: {
+    obj: Record<string, any>
+    [key: string]: any
+  }
+  integrations?: Record<string, boolean>
+  next: (payload: MiddlewareInput['payload']) => void
 }
 
 export type WindowWithAJS = Window &
