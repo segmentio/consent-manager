@@ -14,6 +14,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
   static displayName = 'ConsentManager'
 
   static defaultProps = {
+    analytics: window.analytics,
     otherWriteKeys: [],
     shouldRequireConsent: () => true,
     implyConsentOnInteraction: false,
@@ -30,6 +31,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
 
   render() {
     const {
+      analytics,
       writeKey,
       otherWriteKeys,
       shouldRequireConsent,
@@ -50,6 +52,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
 
     return (
       <ConsentManagerBuilder
+        analytics={analytics}
         onError={onError}
         writeKey={writeKey}
         otherWriteKeys={otherWriteKeys}
