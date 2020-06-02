@@ -7,6 +7,11 @@ export type AnalyticsJS = SegmentAnalytics.AnalyticsJS & {
   addSourceMiddleware?: (middleware: Middleware) => void
 }
 
+export type WindowWithAJS = Window &
+  typeof globalThis & {
+    analytics?: AnalyticsJS
+  }
+
 export type Middleware = (input: MiddlewareInput) => void
 interface MiddlewareInput {
   payload: {
