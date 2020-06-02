@@ -12,7 +12,7 @@ At its core, the Consent Manager empowers your visitors to control and customize
 
 It works by taking control of the analytics.js load process to only load destinations that the user has consented to and not loading analytics.js at all if the user has opted out of everything. The user's tracking preferences are saved to a cookie and sent as an identify trait (if they haven't opted out of everything) so that you can also access them on the server-side and from destinations (warehouse).
 
-*Segment works to ensure the Consent Manager Tech Demo works with most of our product pipeline. We cannot ensure it works in your specific implementation or website. Please contact our Professional Services team for implementation support. Please see the License.txt included.*
+_Segment works to ensure the Consent Manager Tech Demo works with most of our product pipeline. We cannot ensure it works in your specific implementation or website. Please contact our Professional Services team for implementation support. Please see the License.txt included._
 
 ### Features
 
@@ -27,6 +27,7 @@ It works by taking control of the analytics.js load process to only load destina
 - **5.0.0**: Consent Manager will add consent metadata to the context of all track calls:
 
 Track call message payloads will be extended to include Consent metadata in the `context` object:
+
 ```
 {
   "context": {
@@ -58,7 +59,8 @@ Track call message payloads will be extended to include Consent metadata in the 
 }
 ```
 
-**Breaking Changes:** Version 5.0.0 and above require that your analytics.js snippet include the method `addSourceMiddleware` in the `analytics.methods` array: 
+**Breaking Changes:** Version 5.0.0 and above require that your analytics.js snippet include the method `addSourceMiddleware` in the `analytics.methods` array:
+
 ```
 analytics.methods = [
   'trackSubmit',
@@ -343,6 +345,13 @@ const customCategories = {
 
 The values for `integrations` should be an integration's creationName (`integration.creationName`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
 
+##### analytics
+
+Type `SegmentAnalytics.AnalyticsJS`<br>
+Default: `window.analytics`
+
+The analytics instance you want the consent manager to connect to. By default, the analytics instance is stored at `window.analytics`. This prop is an escape hatch which allows this to be customised if necessary.
+
 #### Example
 
 ```javascript
@@ -443,7 +452,7 @@ Options:
 - `imply` - Newly detected destinations are by default, enabled or disabled, depending on the user's consent to the consent group that the new destination belongs to.
   - For example, if a user has already consented to the "marketingAndAnalytics" category, and we detect a new destination with category "Analytics", that destination will be enabled.
 
-This setting will also also affect replays to new destinations. Only `disable` and `enable` will apply to these replays. Setting `defaultDestinationBehavior` to `imply` here will be interpreted as `enable` during a replay. 
+This setting will also also affect replays to new destinations. Only `disable` and `enable` will apply to these replays. Setting `defaultDestinationBehavior` to `imply` here will be interpreted as `enable` during a replay.
 
 ##### mapCustomPreferences
 
@@ -458,6 +467,13 @@ Type: `string`<br>
 Default: the [top most domain][top-domain] and all sub domains
 
 The domain the `tracking-preferences` cookie should be scoped to.
+
+##### analytics
+
+Type `SegmentAnalytics.AnalyticsJS`<br>
+Default: `window.analytics`
+
+The analytics instance you want the consent manager to connect to. By default, the analytics instance is stored at `window.analytics`. This prop is an escape hatch which allows this to be customised if necessary.
 
 #### Render Props
 
