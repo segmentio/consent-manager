@@ -1,7 +1,7 @@
 // TODO: remove duplicate cookie library from bundle
 import cookies from 'js-cookie'
 import topDomain from '@segment/top-domain'
-import { WindowWithAJS, Preferences, CategoryPreferences } from '../types'
+import { AnalyticsJS, Preferences, CategoryPreferences } from '../types'
 import { EventEmitter } from 'events'
 
 const COOKIE_KEY = 'tracking-preferences'
@@ -29,7 +29,7 @@ export function loadPreferences(): Preferences {
   }
 }
 
-type SavePreferences = Preferences & { cookieDomain?: string }
+type SavePreferences = Preferences & { analytics?: AnalyticsJS; cookieDomain?: string }
 
 const emitter = new EventEmitter()
 
@@ -45,13 +45,13 @@ export function onPreferencesSaved(listener: (prefs: Preferences) => void) {
 }
 
 export function savePreferences({
+  analytics = window.analytics,
   destinationPreferences,
   customPreferences,
   cookieDomain
 }: SavePreferences) {
-  const wd = window as WindowWithAJS
-  if (wd.analytics) {
-    wd.analytics.identify({
+  if (analytics) {
+    analytics.identify({
       destinationTrackingPreferences: destinationPreferences,
       customTrackingPreferences: customPreferences
     })
