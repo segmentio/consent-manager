@@ -25,7 +25,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
     cancelDialogTitle: 'Are you sure you want to cancel?',
-    defaultDestinationBehavior: 'disable'
+    defaultDestinationBehavior: 'disable',
+    conditionallyLoadAnalyticsOverride: undefined
   }
 
   render() {
@@ -45,7 +46,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       cancelDialogContent,
       customCategories,
       defaultDestinationBehavior,
-      onError
+      onError,
+      conditionallyLoadAnalyticsOverride
     } = this.props
 
     return (
@@ -59,6 +61,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         mapCustomPreferences={this.handleMapCustomPreferences}
         customCategories={customCategories}
         defaultDestinationBehavior={defaultDestinationBehavior}
+        conditionallyLoadAnalyticsOverride={conditionallyLoadAnalyticsOverride}
       >
         {({
           destinations,

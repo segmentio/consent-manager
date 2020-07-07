@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { loadPreferences, savePreferences } from './preferences'
 import fetchDestinations from './fetch-destinations'
-import conditionallyLoadAnalytics from './analytics'
+import conditionallyLoadAnalytics, { AnalyticsParams } from './analytics'
 import {
   Destination,
   CategoryPreferences,
@@ -72,6 +72,8 @@ interface Props {
    * A callback for dealing with errors in the Consent Manager
    */
   onError?: (err: Error) => void | Promise<void>
+
+  conditionallyLoadAnalyticsOverride?: (params: AnalyticsParams) => void | undefined
 }
 
 interface RenderProps {
@@ -172,7 +174,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       initialPreferences,
       mapCustomPreferences,
       defaultDestinationBehavior,
-      cookieDomain
+      cookieDomain,
+      conditionallyLoadAnalyticsOverride
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
     let { destinationPreferences, customPreferences } = loadPreferences()
@@ -209,7 +212,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences = destinationPreferences || initialPreferences
     }
 
-    conditionallyLoadAnalytics({
+    const loadAnalytics = conditionallyLoadAnalyticsOverride || conditionallyLoadAnalytics
+    loadAnalytics({
       writeKey,
       destinations,
       destinationPreferences,
