@@ -16,7 +16,7 @@ describe('fetchDestinations', () => {
         }
       ])
 
-    expect(await fetchDestinations(['123'])).toMatchObject([
+    expect(await fetchDestinations('cdn.segment.com', ['123'])).toMatchObject([
       {
         id: 'Amplitude',
         name: 'Amplitude'
@@ -38,7 +38,7 @@ describe('fetchDestinations', () => {
         }
       ])
 
-    expect(await fetchDestinations(['123'])).toMatchObject([
+    expect(await fetchDestinations('cdn.segment.com', ['123'])).toMatchObject([
       {
         id: 'Old Amplitude',
         name: 'New Amplitude'
@@ -71,7 +71,7 @@ describe('fetchDestinations', () => {
         }
       ])
 
-    expect(await fetchDestinations(['123', 'abc'])).toMatchObject([
+    expect(await fetchDestinations('cdn.segment.com', ['123', 'abc'])).toMatchObject([
       {
         id: 'Amplitude',
         name: 'Amplitude'
