@@ -59,8 +59,8 @@ const InputCell = styled('td')`
 `
 
 const CustomContent = styled('div')`
-  display: flex;    
-  border:  1px solid rgba(67, 90, 111, 0.079);   
+  display: flex;
+  border: 1px solid rgba(67, 90, 111, 0.079);
   border-top: none;
   height: 370px;
 `
@@ -82,25 +82,25 @@ const CustomCategory = styled('div')`
 `
 
 const CategoryTitle = styled('h4')`
-margin: 0;
-color: #1f4160;
-font-size: 14px;
-font-weight: 600;
-line-height: 1.3;
+  margin: 0;
+  color: #1f4160;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
 `
 
 const Bar = styled('div')`
- width: 25px;
- height: 2px;
- background-color: #E4E7EB;
- margin: 24px 0px;
+  width: 25px;
+  height: 2px;
+  background-color: #e4e7eb;
+  margin: 24px 0px;
 `
 
 const ToolsHeading = styled('h4')`
-font-weight: 500;
-font-size: 13px;
-line-height: 135%;
-color: #425A70;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 135%;
+  color: #425a70;
 `
 
 const CategoryHeader = styled('div')`
@@ -130,7 +130,10 @@ interface PreferenceDialogProps {
   saveButtonColor?: string
 }
 
-export default class PreferenceDialog extends PureComponent<PreferenceDialogProps, { selectedCategory: string }> {
+export default class PreferenceDialog extends PureComponent<
+  PreferenceDialogProps,
+  { selectedCategory: string }
+> {
   static displayName = 'PreferenceDialog'
 
   static defaultProps = {
@@ -167,11 +170,16 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
         <DefaultButton type="button" onClick={onCancel}>
           Cancel
         </DefaultButton>
-        <SaveButton type="submit" style={{
-          backgroundImage: saveButtonColor ? 'none' : 'linear-gradient(to top, #3faf77, #47b881)',
-          backgroundColor: saveButtonColor ? saveButtonColor : '#47b881'
-        }}>Save</SaveButton>
-      </div >
+        <SaveButton
+          type="submit"
+          style={{
+            backgroundImage: saveButtonColor ? 'none' : 'linear-gradient(to top, #3faf77, #47b881)',
+            backgroundColor: saveButtonColor ? saveButtonColor : '#47b881'
+          }}
+        >
+          Save
+        </SaveButton>
+      </div>
     )
 
     return (
@@ -183,7 +191,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
         onSubmit={this.handleSubmit}
         logo={logo}
       >
-        {!customCategories && <div style={{ padding: "16px" }}>{content}</div>}
+        {!customCategories && <div style={{ padding: '16px' }}>{content}</div>}
 
         {customCategories && (
           <CustomContent>
@@ -193,47 +201,59 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                   backgroundColor: this.state.selectedCategory === 'Overview' ? '#E9F2FA' : 'white',
                   borderBottom: '1px solid rgba(67, 90, 111, 0.079)'
                 }}
-                onClick={() => { this.setState({ selectedCategory: 'Overview' }) }}
+                onClick={() => {
+                  this.setState({ selectedCategory: 'Overview' })
+                }}
               >
                 Overview
               </CustomCategoryTab>
-              {Object.keys(customCategories).map((cc) => (
-                <CustomCategoryTab style={{
-                  backgroundColor: this.state.selectedCategory === cc ? '#E9F2FA' : 'white',
-                  borderBottom: '1px solid rgba(67, 90, 111, 0.079)'
-
-                }}
-                  onClick={() => { this.setState({ selectedCategory: cc }) }}
+              {Object.keys(customCategories).map(cc => (
+                <CustomCategoryTab
+                  style={{
+                    backgroundColor: this.state.selectedCategory === cc ? '#E9F2FA' : 'white',
+                    borderBottom: '1px solid rgba(67, 90, 111, 0.079)'
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCategory: cc })
+                  }}
                 >
                   {cc}
-                </CustomCategoryTab>))}
+                </CustomCategoryTab>
+              ))}
             </CustomCategoryTabs>
             <CustomCategories>
-              <CustomCategory style={{ display: this.state.selectedCategory === 'Overview' ? 'block' : 'none' }}>
+              <CustomCategory
+                style={{ display: this.state.selectedCategory === 'Overview' ? 'block' : 'none' }}
+              >
                 {content}
               </CustomCategory>
               {Object.entries(customCategories).map(([ccName, cc]) => (
-                <CustomCategory style={{ display: this.state.selectedCategory === ccName ? 'block' : 'none' }}>
+                <CustomCategory
+                  style={{ display: this.state.selectedCategory === ccName ? 'block' : 'none' }}
+                >
                   <CategoryHeader>
                     <CategoryTitle>{ccName}</CategoryTitle>
-                    <Switch checked={preferences[ccName]} onChange={() => {
-                      this.props.onChange(ccName, !Boolean(preferences[ccName]))
-                    }} />
+                    <Switch
+                      checked={preferences[ccName]}
+                      onChange={() => {
+                        this.props.onChange(ccName, !preferences[ccName])
+                      }}
+                    />
                   </CategoryHeader>
                   <p>{cc.purpose}</p>
                   <Bar />
                   <ToolsHeading>Tools used for {ccName}</ToolsHeading>
                   {destinations
                     .filter(d => cc.integrations.includes(d.id))
-                    .map(d => <p style={{ fontSize: '13px' }}>{d.name}</p>)}
+                    .map(d => (
+                      <p style={{ fontSize: '13px' }}>{d.name}</p>
+                    ))}
                 </CustomCategory>
               ))}
             </CustomCategories>
           </CustomContent>
-        )
-        }
-        {
-          !customCategories &&
+        )}
+        {!customCategories && (
           <TableScroll>
             <Table>
               <thead>
@@ -243,7 +263,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                   <ColumnHeading scope="col">Purpose</ColumnHeading>
                   <ColumnHeading scope="col" className={hideOnMobile}>
                     Tools
-                </ColumnHeading>
+                  </ColumnHeading>
                 </Row>
               </thead>
 
@@ -262,8 +282,8 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label="Allow functional tracking"
                             required
                           />{' '}
-                        Yes
-                      </label>
+                          Yes
+                        </label>
                         <label>
                           <input
                             type="radio"
@@ -274,18 +294,18 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label="Disallow functional tracking"
                             required
                           />{' '}
-                        No
-                      </label>
+                          No
+                        </label>
                       </InputCell>
                       <RowHeading scope="row">Functional</RowHeading>
                       <td>
                         <p>
                           To monitor the performance of our site and to enhance your browsing
                           experience.
-                      </p>
+                        </p>
                         <p className={hideOnMobile}>
                           For example, these tools enable you to communicate with us via live chat.
-                      </p>
+                        </p>
                       </td>
                       <td className={hideOnMobile}>
                         {functionalDestinations.map(d => d.name).join(', ')}
@@ -304,8 +324,8 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label="Allow marketing and analytics tracking"
                             required
                           />{' '}
-                        Yes
-                      </label>
+                          Yes
+                        </label>
                         <label>
                           <input
                             type="radio"
@@ -316,19 +336,19 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label="Disallow marketing and analytics tracking"
                             required
                           />{' '}
-                        No
-                      </label>
+                          No
+                        </label>
                       </InputCell>
                       <RowHeading scope="row">Marketing and Analytics</RowHeading>
                       <td>
                         <p>
                           To understand user behavior in order to provide you with a more relevant
                           browsing experience or personalize the content on our site.
-                      </p>
+                        </p>
                         <p className={hideOnMobile}>
                           For example, we collect information about which pages you visit to help us
                           present more relevant information.
-                      </p>
+                        </p>
                       </td>
                       <td className={hideOnMobile}>
                         {marketingDestinations.map(d => d.name).join(', ')}
@@ -347,8 +367,8 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label="Allow advertising tracking"
                             required
                           />{' '}
-                        Yes
-                      </label>
+                          Yes
+                        </label>
                         <label>
                           <input
                             type="radio"
@@ -359,19 +379,19 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label="Disallow advertising tracking"
                             required
                           />{' '}
-                        No
-                      </label>
+                          No
+                        </label>
                       </InputCell>
                       <RowHeading scope="row">Advertising</RowHeading>
                       <td>
                         <p>
-                          To personalize and measure the effectiveness of advertising on our site and
-                          other websites.
-                      </p>
+                          To personalize and measure the effectiveness of advertising on our site
+                          and other websites.
+                        </p>
                         <p className={hideOnMobile}>
-                          For example, we may serve you a personalized ad based on the pages you visit
-                          on our site.
-                      </p>
+                          For example, we may serve you a personalized ad based on the pages you
+                          visit on our site.
+                        </p>
                       </td>
                       <td className={hideOnMobile}>
                         {advertisingDestinations.map(d => d.name).join(', ')}
@@ -384,20 +404,22 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                   <td>N/A</td>
                   <RowHeading scope="row">Essential</RowHeading>
                   <td>
-                    <p>We use browser cookies that are necessary for the site to work as intended.</p>
+                    <p>
+                      We use browser cookies that are necessary for the site to work as intended.
+                    </p>
                     <p>
                       For example, we store your website data collection preferences so we can honor
                       them if you return to our site. You can disable these cookies in your browser
                       settings but if you do the site may not work as intended.
-                  </p>
+                    </p>
                   </td>
                   <td className={hideOnMobile} />
                 </Row>
               </tbody>
             </Table>
           </TableScroll>
-        }
-      </Dialog >
+        )}
+      </Dialog>
     )
   }
 
