@@ -86,6 +86,7 @@ export interface ConsentManagerProps {
   bannerSubContent?: string
   bannerTextColor?: string
   bannerBackgroundColor?: string
+  saveButtonColor?: string
   preferencesDialogTitle?: React.ReactNode
   preferencesDialogContent: React.ReactNode
   onError?: (error: Error | undefined) => void
@@ -96,4 +97,5 @@ export interface ConsentManagerProps {
   customCategories?: CustomCategories
   defaultDestinationBehavior?: DefaultDestinationBehavior
   conditionallyLoadAnalyticsOverride: (params: AnalyticsParams) => void | undefined
+  logo?: string
 }

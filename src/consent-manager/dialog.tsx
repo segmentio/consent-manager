@@ -40,7 +40,6 @@ const Root = styled<{ width: number | string | undefined }, 'section'>('section'
   width: ${props => props.width};
   margin: 8px;
   background: #fff;
-  border-radius: 8px;
   animation: ${openAnimation} ${ANIMATION_DURATION} ${ANIMATION_EASING} both;
 `
 
@@ -57,6 +56,18 @@ const Header = styled('div')`
   justify-content: space-between;
   padding: 12px 16px;
   border-bottom: 1px solid rgba(67, 90, 111, 0.079);
+`
+
+const ImageContainer = styled('div')`
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const Image = styled('img')`
+  max-height: 40px;
+  max-width: 40px;
 `
 
 const Title = styled('h2')`
@@ -80,7 +91,6 @@ const HeaderCancelButton = styled('button')`
 
 const Content = styled('div')`
   overflow-y: auto;
-  padding: 16px;
   padding-bottom: 0;
   min-height: 0;
   font-size: 14px;
@@ -116,6 +126,7 @@ interface DialogProps {
   title: React.ReactNode
   buttons: React.ReactNode
   width?: string
+  logo?: string
 }
 
 export default class Dialog extends PureComponent<DialogProps, {}> {
@@ -141,7 +152,7 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
   }
 
   render() {
-    const { onCancel, onSubmit, title, children, buttons, width } = this.props
+    const { onCancel, onSubmit, title, children, buttons, logo, width } = this.props
 
     const dialog = (
       <Overlay onClick={this.handleOverlayClick}>
@@ -152,12 +163,21 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
           aria-labelledby={this.titleId}
           width={width}
         >
-          <Header>
+          <Header
+            style={{ height: logo ? '100px' : 'auto', padding: logo ? '0px 30px' : '12px 16px' }}
+          >
+            {logo && (
+              <ImageContainer>
+                <Image src={logo} />
+              </ImageContainer>
+            )}
             <Title id={this.titleId}>{title}</Title>
             {onCancel && (
-              <HeaderCancelButton onClick={onCancel} title="Cancel" aria-label="Cancel">
-                ✕
-              </HeaderCancelButton>
+              <ImageContainer>
+                <HeaderCancelButton onClick={onCancel} title="Cancel" aria-label="Cancel">
+                  ✕
+                </HeaderCancelButton>
+              </ImageContainer>
             )}
           </Header>
 

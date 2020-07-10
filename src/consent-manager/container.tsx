@@ -48,6 +48,8 @@ interface ContainerProps {
   cancelDialogContent: React.ReactNode
   workspaceAddedNewDestinations?: boolean
   defaultDestinationBehavior?: DefaultDestinationBehavior
+  logo?: string
+  saveButtonColor?: string
 }
 
 function normalizeDestinations(destinations: Destination[]) {
@@ -211,6 +213,8 @@ const Container: React.FC<ContainerProps> = props => {
           functional={props.preferences.functional}
           title={props.preferencesDialogTitle}
           content={props.preferencesDialogContent}
+          logo={props.logo}
+          saveButtonColor={props.saveButtonColor}
         />
       )}
 
@@ -220,7 +224,7 @@ const Container: React.FC<ContainerProps> = props => {
           onBack={handleCancelBack}
           onConfirm={handleCancelConfirm}
           title={props.cancelDialogTitle}
-          content={props.cancelDialogContent}
+          content={<div style={{ padding: '16px' }}>{props.cancelDialogContent}</div>}
         />
       )}
     </div>

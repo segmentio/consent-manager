@@ -47,7 +47,9 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       customCategories,
       defaultDestinationBehavior,
       onError,
-      conditionallyLoadAnalyticsOverride
+      conditionallyLoadAnalyticsOverride,
+      logo,
+      saveButtonColor
     } = this.props
 
     return (
@@ -75,6 +77,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           havePreferencesChanged,
           workspaceAddedNewDestinations
         }) => {
+          console.log("banner background color ", bannerBackgroundColor)
           return <Container
             customCategories={customCategories}
             destinations={destinations}
@@ -99,6 +102,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
             havePreferencesChanged={havePreferencesChanged}
             defaultDestinationBehavior={defaultDestinationBehavior}
             workspaceAddedNewDestinations={workspaceAddedNewDestinations}
+            logo={logo}
+            saveButtonColor={saveButtonColor}
           />
         }}
       </ConsentManagerBuilder>
