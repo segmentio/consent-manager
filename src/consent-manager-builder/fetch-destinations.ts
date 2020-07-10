@@ -3,7 +3,7 @@ import { flatten, sortedUniqBy, sortBy } from 'lodash'
 import { Destination } from '../types'
 
 async function fetchDestinationForWriteKey(writeKey: string): Promise<Destination[]> {
-  const res = await fetch(`https://cdn.segment.com/v1/projects/${writeKey}/integrations`)
+  const res = await fetch(`https://cdn.segment.build/v1/projects/${writeKey}/integrations`)
 
   if (!res.ok) {
     throw new Error(

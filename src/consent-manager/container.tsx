@@ -77,6 +77,14 @@ const Container: React.FC<ContainerProps> = props => {
   )
   const [showBanner, toggleBanner] = React.useState(true)
   const [isCancelling, toggleCancel] = React.useState(false)
+  const [wasDialogPreopened, setWasDialogPreopened] = React.useState(false)
+
+  React.useEffect(() => {
+    if (window.location.href.includes('#consent-manager') && !wasDialogPreopened) {
+      toggleDialog(true)
+      setWasDialogPreopened(true)
+    }
+  })
 
   let banner = React.useRef<HTMLElement>(null)
   let preferenceDialog = React.useRef<HTMLElement>(null)

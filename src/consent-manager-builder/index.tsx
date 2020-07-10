@@ -260,7 +260,14 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
   }
 
   handleSaveConsent = (newPreferences: CategoryPreferences | undefined, shouldReload: boolean) => {
-    const { writeKey, cookieDomain, mapCustomPreferences, defaultDestinationBehavior } = this.props
+    const {
+      writeKey,
+      cookieDomain,
+      mapCustomPreferences,
+      defaultDestinationBehavior,
+      conditionallyLoadAnalyticsOverride
+    } = this.props
+    const loadAnalytics = conditionallyLoadAnalyticsOverride || conditionallyLoadAnalytics
 
     this.setState(prevState => {
       const { destinations, preferences: existingPreferences, isConsentRequired } = prevState
@@ -295,7 +302,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       // If preferences haven't changed, don't reload the page as it's a disruptive experience for end-users
       if (prevState.havePreferencesChanged || newDestinations.length > 0) {
         savePreferences({ destinationPreferences, customPreferences, cookieDomain })
-        conditionallyLoadAnalytics({
+        loadAnalytics({
           writeKey,
           destinations,
           destinationPreferences,
