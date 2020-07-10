@@ -107,7 +107,8 @@ const ConsentManagerExample = () => {
   return (
     <Pane>
       <ConsentManager
-        writeKey="n2DAIaakJzCUq0saLY0LMcm9dKsqCZvU"
+        writeKey="H1Ookx2sN3kJTRioc9swGrQuwHLJv4Fl"
+        bannerTextColor={"white"}
         bannerContent={bannerContent}
         bannerSubContent={bannerSubContent}
         preferencesDialogTitle={preferencesDialogTitle}
@@ -117,6 +118,7 @@ const ConsentManagerExample = () => {
         closeBehavior={closeBehavior}
         shouldRequireConsent={shouldRequireConsent}
         initialPreferences={initialPreferences}
+        logo={"https://logos.bugcrowdusercontent.com/logos/ee8e/501c/fbdd27c3/dd8875f7828f4c2835038a40930e9f7c_segment_logo_avatar_blue_icon_blue-364x364-81e5a41.png"}
       />
 
       <Pane marginX={100} marginTop={20}>

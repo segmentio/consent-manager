@@ -25,7 +25,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
     cancelDialogTitle: 'Are you sure you want to cancel?',
-    defaultDestinationBehavior: 'disable'
+    defaultDestinationBehavior: 'disable',
+    conditionallyLoadAnalyticsOverride: undefined
   }
 
   render() {
@@ -45,7 +46,10 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       cancelDialogContent,
       customCategories,
       defaultDestinationBehavior,
-      onError
+      onError,
+      conditionallyLoadAnalyticsOverride,
+      logo,
+      saveButtonColor
     } = this.props
 
     return (
@@ -59,6 +63,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         mapCustomPreferences={this.handleMapCustomPreferences}
         customCategories={customCategories}
         defaultDestinationBehavior={defaultDestinationBehavior}
+        conditionallyLoadAnalyticsOverride={conditionallyLoadAnalyticsOverride}
       >
         {({
           destinations,
@@ -72,6 +77,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           havePreferencesChanged,
           workspaceAddedNewDestinations
         }) => {
+          console.log("banner background color ", bannerBackgroundColor)
           return <Container
             customCategories={customCategories}
             destinations={destinations}
@@ -96,6 +102,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
             havePreferencesChanged={havePreferencesChanged}
             defaultDestinationBehavior={defaultDestinationBehavior}
             workspaceAddedNewDestinations={workspaceAddedNewDestinations}
+            logo={logo}
+            saveButtonColor={saveButtonColor}
           />
         }}
       </ConsentManagerBuilder>

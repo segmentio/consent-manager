@@ -36,14 +36,17 @@ export const DefaultButton = styled('button')`
   }
 `
 
+export const SaveButton = styled('button')`
+  ${baseStyles};
+  box-shadow: inset 0 0 0 1px rgba(67, 90, 111, 0.204), inset 0 -1px 1px 0 rgba(67, 90, 111, 0.204);
+  color: #fff;
+`
 export const GreenButton = styled('button')`
   ${baseStyles};
-  background-color: #47b881;
-  background-image: linear-gradient(to top, #3faf77, #47b881);
   box-shadow: inset 0 0 0 1px rgba(67, 90, 111, 0.204), inset 0 -1px 1px 0 rgba(67, 90, 111, 0.204);
   color: #fff;
   &:hover {
-    background-image: linear-gradient(to top, #37a56d, #3faf77);
+    background-image: 'linear-gradient(to top, #37a56d, #3faf77)';
   }
   &:focus {
     box-shadow: 0 0 0 3px rgba(71, 184, 129, 0.477), inset 0 0 0 1px rgba(71, 184, 129, 0.204),

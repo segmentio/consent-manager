@@ -1,6 +1,6 @@
 {
   "name": "@segment/consent-manager",
-  "version": "5.0.0",
+  "version": "5.1.0-hackweek2020.0",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
     "gdpr",
@@ -120,11 +120,11 @@
   "size-limit": [
     {
       "path": "esm/index.js",
-      "limit": "50 KB"
+      "limit": "70 KB"
     },
     {
       "path": "standalone/consent-manager.js",
-      "limit": "46 KB"
+      "limit": "70 KB"
     }
   ],
   "husky": {

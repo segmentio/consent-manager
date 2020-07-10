@@ -80,6 +80,9 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
   return (
     <Pane>
       <ConsentManager
+        bannerBackgroundColor={"pink"}
+        saveButtonColor={"pink"}
+        logo={"https://logos.bugcrowdusercontent.com/logos/ee8e/501c/fbdd27c3/dd8875f7828f4c2835038a40930e9f7c_segment_logo_avatar_blue_icon_blue-364x364-81e5a41.png"}
         writeKey="tYQQPcY78Hc3T1hXUYk0n4xcbEHnN7r0"
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
         bannerContent={bannerContent}

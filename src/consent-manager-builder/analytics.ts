@@ -6,7 +6,7 @@ import {
   Middleware
 } from '../types'
 
-interface AnalyticsParams {
+export interface AnalyticsParams {
   writeKey: string
   destinations: Destination[]
   destinationPreferences: CategoryPreferences | null | undefined
