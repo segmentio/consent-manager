@@ -120,11 +120,11 @@
   "size-limit": [
     {
       "path": "esm/index.js",
-      "limit": "50 KB"
+      "limit": "70 KB"
     },
     {
       "path": "standalone/consent-manager.js",
-      "limit": "46 KB"
+      "limit": "70 KB"
     }
   ],
   "husky": {
