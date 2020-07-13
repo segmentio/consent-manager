@@ -324,6 +324,49 @@ describe('ConsentManagerBuilder', () => {
     )
   })
 
+  test('a different cdn is used when cdnHost is set', done => {
+    nock('https://foo.bar.com')
+      .get('/v1/projects/123/integrations')
+      .reply(200, [
+        {
+          name: 'Google Analytics',
+          creationName: 'Google Analytics'
+        },
+        {
+          name: 'Amplitude',
+          creationName: 'Amplitude'
+        }
+      ])
+      .get('/v1/projects/abc/integrations')
+      .reply(200, [
+        {
+          name: 'FullStory',
+          creationName: 'FullStory'
+        }
+      ])
+
+    shallow(
+      <ConsentManagerBuilder writeKey="123" otherWriteKeys={['abc']} cdnHost="foo.bar.com">
+        {({ destinations }) => {
+          expect(destinations).toMatchObject([
+            {
+              id: 'Amplitude',
+              name: 'Amplitude'
+            },
+            {
+              id: 'FullStory',
+              name: 'FullStory'
+            },
+            {
+              id: 'Google Analytics',
+              name: 'Google Analytics'
+            }
+          ])
+          done()
+        }}
+      </ConsentManagerBuilder>
+    )
+  })
   test.todo('loads analytics.js normally when consent isn՚t required')
   test.todo('still applies preferences when consent isn՚t required')
   test.todo('provides a setPreferences() function for setting the preferences')

@@ -72,6 +72,11 @@ interface Props {
    * A callback for dealing with errors in the Consent Manager
    */
   onError?: (err: Error) => void | Promise<void>
+
+  /**
+   * CDN to fetch list of integrations from
+   */
+  cdnHost?: string
 }
 
 interface RenderProps {
@@ -106,7 +111,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     otherWriteKeys: [],
     onError: undefined,
     shouldRequireConsent: () => true,
-    initialPreferences: {}
+    initialPreferences: {},
+    cdnHost: 'cdn.segment.com'
   }
 
   state = {
@@ -172,14 +178,15 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       initialPreferences,
       mapCustomPreferences,
       defaultDestinationBehavior,
-      cookieDomain
+      cookieDomain,
+      cdnHost = ConsentManagerBuilder.defaultProps.cdnHost
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
     let { destinationPreferences, customPreferences } = loadPreferences()
 
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),
-      fetchDestinations([writeKey, ...otherWriteKeys])
+      fetchDestinations(cdnHost, [writeKey, ...otherWriteKeys])
     ])
 
     const newDestinations = getNewDestinations(destinations, destinationPreferences || {})

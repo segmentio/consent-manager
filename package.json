@@ -88,7 +88,7 @@
     "lodash-es": "^4.17.10",
     "nock": "^9.2.5",
     "preact": "^10.0.0",
-    "prettier": "1.18.2",
+    "prettier": "^1.19.1",
     "pretty-quick": "^1.11.1",
     "prismjs": "^1.17.1",
     "raw-loader": "^3.1.0",

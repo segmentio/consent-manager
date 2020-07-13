@@ -94,4 +94,5 @@ export interface ConsentManagerProps {
   initialPreferences?: CategoryPreferences
   customCategories?: CustomCategories
   defaultDestinationBehavior?: DefaultDestinationBehavior
+  cdnHost?: string
 }
