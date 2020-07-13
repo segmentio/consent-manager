@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.1(July 13, 2020)
+
+### Added
+
+- [#110](https://github.com/segmentio/consent-manager/pull/110) Added `cdnHost` property to allow using non-default CDN host
+
 ## 4.1.0(Dec 11, 2019)
 
 ### Added
