@@ -88,7 +88,7 @@ export default class Banner extends PureComponent {
         </Content>
         <div className="ConsentButtonContainer">
           <CloseButton
-            className="Button Button--primary"
+            className="Button Button--primary button is-primary"
             type="button"
             title={translate('ui.accept_all')}
             aria-label={translate('ui.accept_all')}
@@ -97,7 +97,7 @@ export default class Banner extends PureComponent {
             {translate('ui.accept_all')}
           </CloseButton>
           <P>
-            <button type="button" onClick={onChangePreferences}>
+            <button type="button" className=" button is-text is-small" onClick={onChangePreferences}>
               {subContent}
             </button>
           </P>
