@@ -79,16 +79,17 @@ export default class Banner extends PureComponent {
 
     return (
       <Root
+        className="ConsentBannerRoot"
         innerRef={innerRef}
         backgroundColor={backgroundColor}
         textColor={textColor}
       >
-        <Content>
+        <Content className="ConsentConentContainer">
           <P>{content}</P>
         </Content>
         <div className="ConsentButtonContainer">
           <CloseButton
-            className="Button Button--primary button is-primary"
+            className="Button Button--primary button is-primary ConsentButtonContainer__item ConsentButtonContainer__accept-button"
             type="button"
             title={translate('ui.accept_all')}
             aria-label={translate('ui.accept_all')}
@@ -96,8 +97,12 @@ export default class Banner extends PureComponent {
           >
             {translate('ui.accept_all')}
           </CloseButton>
-          <P>
-            <button type="button" className=" button is-text is-small" onClick={onChangePreferences}>
+          <P className="ConsentButtonContainer__item">
+            <button
+              type="button"
+              className="ConsentButtonContainer__options-button button is-text is-small"
+              onClick={onChangePreferences}
+            >
               {subContent}
             </button>
           </P>
