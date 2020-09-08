@@ -1,5 +1,5 @@
 {
-  "name": "@segment/consent-manager",
+  "name": "@popdog/consent-manager",
   "version": "4.5.0",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
@@ -8,7 +8,7 @@
     "analytics",
     "analytics.js"
   ],
-  "repository": "segmentio/consent-manager",
+  "repository": "popdog/consent-manager",
   "license": "MIT",
   "main": "commonjs/index.js",
   "module": "esm/index.js",
@@ -137,6 +137,9 @@
     "semi": false,
     "singleQuote": true,
     "printWidth": 100
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "storybook-deployer": {
     "gitUsername": "GitHub Pages Bot",
