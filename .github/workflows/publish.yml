@@ -21,9 +21,7 @@ jobs:
       - name: Install Deps
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          yarn install --frozen-lockfile
-          yarn schema:update
+        run: yarn install --frozen-lockfile
 
       - name: Publish
         env:
