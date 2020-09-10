@@ -137,9 +137,6 @@
     "singleQuote": true,
     "printWidth": 100
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "storybook-deployer": {
     "gitUsername": "GitHub Pages Bot",
     "gitEmail": "friends@segment.com",
