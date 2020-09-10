@@ -18,6 +18,13 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@popdog'
 
+      - name: Install Deps
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          yarn install --frozen-lockfile
+          yarn schema:update
+
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
