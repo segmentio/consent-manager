@@ -1,6 +1,6 @@
 {
-  "name": "@segment/consent-manager",
-  "version": "4.5.0",
+  "name": "@popdog/consent-manager",
+  "version": "4.5.4",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
     "gdpr",
@@ -8,7 +8,7 @@
     "analytics",
     "analytics.js"
   ],
-  "repository": "segmentio/consent-manager",
+  "repository": "popdog/consent-manager",
   "license": "MIT",
   "main": "commonjs/index.js",
   "module": "esm/index.js",
@@ -21,7 +21,6 @@
   "scripts": {
     "test": "jest src/__tests__",
     "prepublishOnly": "yarn run clean && yarn run build",
-    "postpublish": "yarn build-storybook && yarn deploy-storybook -- --existing-output-dir=storybook-static",
     "dev": "concurrently 'yarn build-standalone --watch' 'yarn start-storybook -s ./ -p 9009'",
     "build-commonjs": "tsc --outDir commonjs --module CommonJS --inlineSourceMap",
     "build-esm": "tsc --module es2015 --outDir esm --inlineSourceMap",
@@ -137,6 +136,9 @@
     "semi": false,
     "singleQuote": true,
     "printWidth": 100
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "storybook-deployer": {
     "gitUsername": "GitHub Pages Bot",
