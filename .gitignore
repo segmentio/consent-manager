@@ -4,6 +4,7 @@
 /standalone/
 /build
 /storybook-static
+/types
 
 # IDE
 .vscode/
