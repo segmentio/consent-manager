@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.0.2(Nov 9, 2020)
+
+- [#111](https://github.com/segmentio/consent-manager/pull/111) Added missing TypeScript declarations in packaged output
+
+### Added
+
+- [#110](https://github.com/segmentio/consent-manager/pull/110) Added `cdnHost` property to allow using non-default CDN host
+
 ## 5.0.1(July 13, 2020)
 
 ### Added
