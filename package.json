@@ -1,6 +1,6 @@
 {
   "name": "@popdog/consent-manager",
-  "version": "4.5.6",
+  "version": "4.5.7",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
     "gdpr",
