@@ -1,5 +1,5 @@
 import React from 'react'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import { Pane, Heading, SubHeading, Ul, Code, Button } from 'evergreen-ui'
 import { ConsentManagerBuilder } from '../src'
 import DestinationTile from './components/destination-tile'
