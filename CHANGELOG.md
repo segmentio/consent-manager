@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.0(Nov 17, 2020)
+
+- [#123](https://github.com/segmentio/consent-manager/pull/123) Fixed an issue where the react state wasn't being updated after the user updates the preferences via the `.savePreferences` API. This change also slightly changes how the Cancel confirmation modal is displayed.
+
 ## 5.0.2(Nov 9, 2020)
 
 - [#111](https://github.com/segmentio/consent-manager/pull/111) Added missing TypeScript declarations in packaged output
