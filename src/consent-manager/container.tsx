@@ -122,6 +122,12 @@ const Container: React.FC<ContainerProps> = props => {
     }
   })
 
+  React.useEffect(() => {
+    if (isDialogOpen) {
+      props.resetPreferences()
+    }
+  }, [isDialogOpen])
+
   const onClose = () => {
     if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
       return toggleBanner(false)
@@ -161,22 +167,22 @@ const Container: React.FC<ContainerProps> = props => {
   }
 
   const handleCancel = () => {
-    toggleDialog(false)
     // Only show the cancel confirmation if there's unconsented destinations
     if (props.newDestinations.length > 0) {
       toggleCancel(true)
     } else {
+      toggleDialog(false)
       props.resetPreferences()
     }
   }
 
   const handleCancelBack = () => {
-    toggleDialog(true)
     toggleCancel(false)
   }
 
   const handleCancelConfirm = () => {
     toggleCancel(false)
+    toggleDialog(false)
     props.resetPreferences()
   }
 
