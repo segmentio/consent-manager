@@ -1,5 +1,5 @@
 {
-  "name": "@segment/consent-manager",
+  "name": "@venture-allaboutme/consent-manager",
   "version": "5.1.0",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
@@ -8,11 +8,11 @@
     "analytics",
     "analytics.js"
   ],
-  "repository": "segmentio/consent-manager",
+  "repository": "git://github.com/venture-allaboutme/consent-manager",
   "license": "MIT",
   "main": "commonjs/index.js",
   "module": "esm/index.js",
-  "types": "types/src/index.d.ts",
+  "types": "types/index.d.ts",
   "sideEffects": false,
   "files": [
     "commonjs",
