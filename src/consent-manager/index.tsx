@@ -20,7 +20,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     onError: undefined,
     cookieDomain: undefined,
     customCategories: undefined,
-    bannerTextColor: '#fff',
+    bannerTextColor: '#ffffff',
     bannerAcceptContent: 'Accept All',
     bannerSubContent: 'Manage Preferences',
     bannerBackgroundColor: '#1f4160',
