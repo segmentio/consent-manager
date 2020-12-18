@@ -113,6 +113,7 @@ interface Props {
   subContent: React.ReactNode
   backgroundColor: string
   textColor: string
+  showClose?: boolean
 }
 
 export default class Banner extends PureComponent<Props> {
@@ -121,6 +122,7 @@ export default class Banner extends PureComponent<Props> {
   render() {
     const {
       innerRef,
+      showClose,
       onClose,
       onAccept,
       onChangePreferences,
@@ -146,9 +148,11 @@ export default class Banner extends PureComponent<Props> {
           </Action>
         </Content>
 
-        <CloseButton type="button" title="Close" aria-label="Close" onClick={onClose}>
-          ✕
-        </CloseButton>
+        {showClose && (
+          <CloseButton type="button" title="Close" aria-label="Close" onClick={onClose}>
+            ✕
+          </CloseButton>
+        )}
       </Root>
     )
   }

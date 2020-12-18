@@ -35,6 +35,7 @@ interface ContainerProps {
   customCategories?: CustomCategories | undefined
   newDestinations: Destination[]
   preferences: CategoryPreferences
+  showClose?: boolean
   havePreferencesChanged: boolean
   isConsentRequired: boolean
   implyConsentOnInteraction: boolean
@@ -202,6 +203,7 @@ const Container: React.FC<ContainerProps> = props => {
       {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
         <Banner
           innerRef={current => (banner = { current })}
+          showClose={false}
           onClose={onClose}
           onAccept={onAccept}
           onChangePreferences={() => toggleDialog(true)}
