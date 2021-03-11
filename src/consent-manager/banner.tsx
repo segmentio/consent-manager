@@ -68,7 +68,7 @@ const BannerContent = styled('div')`
 `
 
 const AcceptButton = styled('button')`
-  background-color: #f77857;
+  background-color: #0C826B;
   color: #ffffff;
   font-weight: 600;
   padding: 8px;
