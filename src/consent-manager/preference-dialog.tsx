@@ -88,10 +88,10 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
       innerRef,
       onCancel,
       marketingDestinations,
-      advertisingDestinations,
+      // advertisingDestinations,
       functionalDestinations,
       marketingAndAnalytics,
-      advertising,
+      // advertising,
       functional,
       customCategories,
       destinations,
@@ -121,9 +121,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
           <Table>
             <thead>
               <Row>
-                <ColumnHeading scope="col">Allow</ColumnHeading>
-                <ColumnHeading scope="col">Category</ColumnHeading>
-                <ColumnHeading scope="col">Purpose</ColumnHeading>
+                <ColumnHeading scope="col">Erlaubnis</ColumnHeading>
+                <ColumnHeading scope="col">Kategorie</ColumnHeading>
+                <ColumnHeading scope="col">Zweck</ColumnHeading>
                 <ColumnHeading scope="col" className={hideOnMobile}>
                   Tools
                 </ColumnHeading>
@@ -145,7 +145,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Allow functional tracking"
                           required
                         />{' '}
-                        Yes
+                        Ja
                       </label>
                       <label>
                         <input
@@ -157,14 +157,18 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Disallow functional tracking"
                           required
                         />{' '}
-                        No
+                        Nein
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">Functional</RowHeading>
+                    <RowHeading scope="row">Funktional</RowHeading>
                     <td>
                       <p>
-                        To monitor the performance of our site and to enhance your browsing
-                        experience.
+                        Diese Cookies ermöglichen es uns, die Funktionalität und individuelle
+                        Gestaltung zu verbessern, beispielsweise von Videos und Live-Chats. Sie
+                        können von uns oder von Drittanbietern festgelegt werden, deren Dienste wir
+                        auf unseren Seiten hinzugefügt haben. Wenn du diese Cookies nicht zulässt,
+                        kann es sein, dass einige oder alle dieser Funktionen nicht ordnungsgemäß
+                        funktionieren.
                       </p>
                       <p className={hideOnMobile}>
                         For example, these tools enable you to communicate with us via live chat.
@@ -187,7 +191,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Allow marketing and analytics tracking"
                           required
                         />{' '}
-                        Yes
+                        Ja
                       </label>
                       <label>
                         <input
@@ -199,14 +203,19 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Disallow marketing and analytics tracking"
                           required
                         />{' '}
-                        No
+                        Nein
                       </label>
                     </InputCell>
                     <RowHeading scope="row">Marketing and Analytics</RowHeading>
                     <td>
                       <p>
-                        To understand user behavior in order to provide you with a more relevant
-                        browsing experience or personalize the content on our site.
+                        Diese Cookies werden durch unsere Website von unseren Werbepartnern
+                        eingestellt. Sie können von diesen Unternehmen verwendet werden, um ein
+                        Profil deiner Interessen zu erstellen und dir relevante Anzeigen an anderer
+                        Stelle zu zeigen. Sie funktionieren, indem sie deinen Browser und dein Gerät
+                        eindeutig identifizieren. Wenn du diese Cookies nicht zulässt, wird dir auf
+                        verschiedenen Websites keine gezielte Werbung aufgrund dieser Cookies
+                        angezeigt.
                       </p>
                       <p className={hideOnMobile}>
                         For example, we collect information about which pages you visit to help us
@@ -215,49 +224,6 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     </td>
                     <td className={hideOnMobile}>
                       {marketingDestinations.map(d => d.name).join(', ')}
-                    </td>
-                  </Row>
-
-                  <Row>
-                    <InputCell>
-                      <label>
-                        <input
-                          type="radio"
-                          name="advertising"
-                          value="true"
-                          checked={advertising === true}
-                          onChange={this.handleChange}
-                          aria-label="Allow advertising tracking"
-                          required
-                        />{' '}
-                        Yes
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          name="advertising"
-                          value="false"
-                          checked={advertising === false}
-                          onChange={this.handleChange}
-                          aria-label="Disallow advertising tracking"
-                          required
-                        />{' '}
-                        No
-                      </label>
-                    </InputCell>
-                    <RowHeading scope="row">Advertising</RowHeading>
-                    <td>
-                      <p>
-                        To personalize and measure the effectiveness of advertising on our site and
-                        other websites.
-                      </p>
-                      <p className={hideOnMobile}>
-                        For example, we may serve you a personalized ad based on the pages you visit
-                        on our site.
-                      </p>
-                    </td>
-                    <td className={hideOnMobile}>
-                      {advertisingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
                 </>
@@ -278,7 +244,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label={`Allow "${categoryName}" tracking`}
                             required
                           />{' '}
-                          Yes
+                          Ja
                         </label>
                         <label>
                           <input
@@ -290,7 +256,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label={`Disallow "${categoryName}" tracking`}
                             required
                           />{' '}
-                          No
+                          Nein
                         </label>
                       </InputCell>
                       <RowHeading scope="row">{categoryName}</RowHeading>
@@ -309,13 +275,16 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
 
               <Row>
                 <td>N/A</td>
-                <RowHeading scope="row">Essential</RowHeading>
+                <RowHeading scope="row">Unbedingt erforderlich</RowHeading>
                 <td>
-                  <p>We use browser cookies that are necessary for the site to work as intended.</p>
                   <p>
-                    For example, we store your website data collection preferences so we can honor
-                    them if you return to our site. You can disable these cookies in your browser
-                    settings but if you do the site may not work as intended.
+                    Diese Cookies sind für die Funktion der Website notwendig und können in unseren
+                    Systemen nicht ausgeschaltet werden. Sie werden in der Regel nur als Reaktion
+                    auf eine deiner Aktionen eingestellt, die zu einer Anfrage nach einem Service
+                    führen, wie beispielsweise das Festlegen deiner Datenschutzeinstellungen, das
+                    Einloggen oder das Ausfüllen von Formularen. Du kannst deinen Browser so
+                    einstellen, dass diese Cookies blockiert oder dich warnt, dann könnte es jedoch
+                    sein, dass einige Teile der Website nicht funktionieren.
                   </p>
                 </td>
                 <td className={hideOnMobile} />
