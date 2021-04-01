@@ -6,6 +6,7 @@ import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
 
 const zeroValuePreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
+  advertising: null,
   functional: null
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@venture-allaboutme/consent-manager",
-  "version": "5.3.2",
+  "version": "5.3.5",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
     "gdpr",
@@ -8,7 +8,10 @@
     "analytics",
     "analytics.js"
   ],
-  "repository": "git://github.com/venture-allaboutme/consent-manager",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/venture-allaboutme/consent-manager.git"
+  },
   "license": "MIT",
   "main": "commonjs/index.js",
   "module": "esm/index.js",
@@ -144,5 +147,13 @@
     "gitUsername": "GitHub Pages Bot",
     "gitEmail": "friends@segment.com",
     "commitMessage": "Deploy Storybook to GitHub Pages [skip ci]"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/venture-allaboutme/consent-manager/issues"
+  },
+  "homepage": "https://github.com/venture-allaboutme/consent-manager#readme",
+  "directories": {
+    "test": "test"
+  },
+  "author": ""
 }

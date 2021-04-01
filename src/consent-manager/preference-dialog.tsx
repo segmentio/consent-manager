@@ -88,10 +88,10 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
       innerRef,
       onCancel,
       marketingDestinations,
-      // advertisingDestinations,
+      advertisingDestinations,
       functionalDestinations,
       marketingAndAnalytics,
-      // advertising,
+      advertising,
       functional,
       customCategories,
       destinations,
@@ -226,6 +226,48 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                       {marketingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
+                  <Row>
+                    <InputCell>
+                      <label>
+                        <input
+                          type="radio"
+                          name="advertising"
+                          value="true"
+                          checked={advertising === true}
+                          onChange={this.handleChange}
+                          aria-label="Allow advertising tracking"
+                          required
+                        />{' '}
+                        Yes
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="advertising"
+                          value="false"
+                          checked={advertising === false}
+                          onChange={this.handleChange}
+                          aria-label="Disallow advertising tracking"
+                          required
+                        />{' '}
+                        No
+                      </label>
+                    </InputCell>
+                    <RowHeading scope="row">Advertising</RowHeading>
+                    <td>
+                      <p>
+                        Zur Personalisierung und Messung der Effektivität von Werbung auf unserer
+                        Website und anderen Websites.
+                      </p>
+                      <p className={hideOnMobile}>
+                        For example, we may serve you a personalized ad based on the pages you visit
+                        on our site.
+                      </p>
+                    </td>
+                    <td className={hideOnMobile}>
+                      {advertisingDestinations.map(d => d.name).join(', ')}
+                    </td>
+                  </Row>
                 </>
               )}
 
@@ -302,11 +344,21 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
   }
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const { onSave, preferences, marketingAndAnalytics, functional, customCategories } = this.props
+    const {
+      onSave,
+      preferences,
+      marketingAndAnalytics,
+      advertising,
+      functional,
+      customCategories
+    } = this.props
     e.preventDefault()
     // Safe guard against browsers that don't prevent the
     // submission of invalid forms (Safari < 10.1)
-    if (!customCategories && (marketingAndAnalytics === null || functional === null)) {
+    if (
+      !customCategories &&
+      (marketingAndAnalytics === null || advertising === null || functional === null)
+    ) {
       return
     }
 
