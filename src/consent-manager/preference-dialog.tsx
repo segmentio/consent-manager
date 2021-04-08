@@ -238,7 +238,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Allow advertising tracking"
                           required
                         />{' '}
-                        Yes
+                        Ja
                       </label>
                       <label>
                         <input
@@ -250,7 +250,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Disallow advertising tracking"
                           required
                         />{' '}
-                        No
+                        Nein
                       </label>
                     </InputCell>
                     <RowHeading scope="row">Advertising</RowHeading>

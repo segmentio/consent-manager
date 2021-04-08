@@ -17,7 +17,7 @@ const Overlay = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(67, 90, 111, 0.699);
+  background: rgba(0, 0, 0, 0.6);
 `
 
 const openAnimation = keyframes`

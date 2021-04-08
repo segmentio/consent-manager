@@ -1,5 +1,6 @@
 import EventEmitter from 'events'
 import React from 'react'
+import styled from 'react-emotion'
 import Banner from './banner'
 import PreferenceDialog from './preference-dialog'
 import CancelDialog from './cancel-dialog'
@@ -10,6 +11,17 @@ import {
   CustomCategories,
   DefaultDestinationBehavior
 } from '../types'
+
+const Overlay = styled('div')`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+`
 
 const emitter = new EventEmitter()
 export function openDialog() {
@@ -125,6 +137,12 @@ const Container: React.FC<ContainerProps> = props => {
   })
 
   React.useEffect(() => {
+    if (showBanner && props.isConsentRequired && props.newDestinations.length > 0) {
+      document.body.style.overflow = 'hidden'
+    }
+  }, [])
+
+  React.useEffect(() => {
     if (isDialogOpen) {
       props.resetPreferences()
     }
@@ -161,7 +179,7 @@ const Container: React.FC<ContainerProps> = props => {
       acc[category] = true
       return acc
     }, {})
-
+    document.body.style.overflow = ''
     props.setPreferences(truePreferences)
     return props.saveConsent()
   }
@@ -201,18 +219,20 @@ const Container: React.FC<ContainerProps> = props => {
   return (
     <div>
       {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
-        <Banner
-          innerRef={current => (banner = { current })}
-          showClose={false}
-          onClose={onClose}
-          onAccept={onAccept}
-          onChangePreferences={() => toggleDialog(true)}
-          content={props.bannerContent}
-          acceptContent={props.bannerAcceptContent}
-          subContent={props.bannerSubContent}
-          textColor={props.bannerTextColor}
-          backgroundColor={props.bannerBackgroundColor}
-        />
+        <Overlay>
+          <Banner
+            innerRef={current => (banner = { current })}
+            showClose={false}
+            onClose={onClose}
+            onAccept={onAccept}
+            onChangePreferences={() => toggleDialog(true)}
+            content={props.bannerContent}
+            acceptContent={props.bannerAcceptContent}
+            subContent={props.bannerSubContent}
+            textColor={props.bannerTextColor}
+            backgroundColor={props.bannerBackgroundColor}
+          />
+        </Overlay>
       )}
 
       {isDialogOpen && (
