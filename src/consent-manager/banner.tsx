@@ -20,6 +20,7 @@ const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div'
   top: 50%;
   margin: auto;
   transform: translateY(-50%);
+  overflow-y: scroll;
 
   @media only screen and (min-width: 768px) {
     bottom: 0;
