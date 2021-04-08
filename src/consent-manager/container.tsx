@@ -138,12 +138,6 @@ const Container: React.FC<ContainerProps> = props => {
   })
 
   React.useEffect(() => {
-    if (showBanner && props.isConsentRequired && props.newDestinations.length > 0) {
-      document.body.style.overflow = 'hidden'
-    }
-  }, [])
-
-  React.useEffect(() => {
     if (isDialogOpen) {
       props.resetPreferences()
     }
@@ -180,7 +174,6 @@ const Container: React.FC<ContainerProps> = props => {
       acc[category] = true
       return acc
     }, {})
-    document.body.style.overflow = ''
     props.setPreferences(truePreferences)
     return props.saveConsent()
   }
