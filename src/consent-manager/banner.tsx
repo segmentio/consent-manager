@@ -18,13 +18,12 @@ const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div'
   left: 0;
   right: 0;
   top: 50%;
-  margin: auto 12px;
+  margin: auto;
   transform: translateY(-50%);
 
   @media only screen and (min-width: 768px) {
     bottom: 0;
     top: auto;
-    margin: 12px 24px;
   }
 `
 
