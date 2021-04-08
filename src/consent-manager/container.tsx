@@ -218,7 +218,7 @@ const Container: React.FC<ContainerProps> = props => {
   }
 
   return (
-    <div>
+    <div className="consent-manager-container">
       {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
         <Overlay>
           <Banner
