@@ -20,6 +20,7 @@ const Overlay = styled('div')`
   bottom: 0;
   width: 100%;
   height: 100%;
+  z-index: 9998;
   background: rgba(0, 0, 0, 0.6);
 `
 

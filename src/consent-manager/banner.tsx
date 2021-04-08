@@ -4,7 +4,8 @@ import fontStyles from './font-styles'
 
 const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div')`
   ${fontStyles};
-  position: relative;
+  position: fixed;
+  bottom: 0;
   padding: 24px 32px;
   padding-right: 40px;
   background: #ffffff;
@@ -13,6 +14,18 @@ const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div'
   line-height: 1.3;
   border-radius: 8px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.06), 0px 6px 12px rgba(0, 0, 0, 0.06);
+  max-width: 90%;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin: auto 12px;
+  transform: translateY(-50%);
+
+  @media only screen and (min-width: 768px) {
+    bottom: 0;
+    top: auto;
+    margin: 12px 24px;
+  }
 `
 
 const Content = styled('div')`
@@ -68,7 +81,7 @@ const BannerContent = styled('div')`
 `
 
 const AcceptButton = styled('button')`
-  background-color: #0C826B;
+  background-color: #0c826b;
   color: #ffffff;
   font-weight: 600;
   padding: 8px;
