@@ -345,6 +345,13 @@ const customCategories = {
 
 The values for `integrations` should be an integration's creationName (`integration.creationName`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
 
+##### analytics
+
+Type `SegmentAnalytics.AnalyticsJS`<br>
+Default: `window.analytics`
+
+The analytics instance you want the consent manager to connect to. By default, the analytics instance is stored at `window.analytics`. This prop is an escape hatch which allows this to be customised if necessary.
+
 #### Example
 
 ```javascript
@@ -467,6 +474,13 @@ Type: `string`<br>
 Default: the [top most domain][top-domain] and all sub domains
 
 The domain the `tracking-preferences` cookie should be scoped to.
+
+##### analytics
+
+Type `SegmentAnalytics.AnalyticsJS`<br>
+Default: `window.analytics`
+
+The analytics instance you want the consent manager to connect to. By default, the analytics instance is stored at `window.analytics`. This prop is an escape hatch which allows this to be customised if necessary.
 
 #### Render Props
 

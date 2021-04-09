@@ -1,11 +1,16 @@
 import { CloseBehavior, CloseBehaviorFunction } from './consent-manager/container'
 import { PreferencesManager } from './consent-manager-builder/preferences'
 
-type AJS = SegmentAnalytics.AnalyticsJS & {
-  initialized: boolean
-  track: (event: string, properties: { [key: string]: any }) => void
-  addSourceMiddleware: (middleware: Middleware) => void
+export type AnalyticsJS = SegmentAnalytics.AnalyticsJS & {
+  initialized?: boolean
+  track?: (event: string, properties: { [key: string]: any }) => void
+  addSourceMiddleware?: (middleware: Middleware) => void
 }
+
+export type WindowWithAJS = Window &
+  typeof globalThis & {
+    analytics?: AnalyticsJS
+  }
 
 export type Middleware = (input: MiddlewareInput) => void
 interface MiddlewareInput {
@@ -16,11 +21,6 @@ interface MiddlewareInput {
   integrations?: Record<string, boolean>
   next: (payload: MiddlewareInput['payload']) => void
 }
-
-export type WindowWithAJS = Window &
-  typeof globalThis & {
-    analytics?: AJS
-  }
 
 export type WindowWithConsentManagerConfig = Window &
   typeof globalThis & {
@@ -76,6 +76,7 @@ interface CustomCategory {
 }
 
 export interface ConsentManagerProps {
+  analytics?: SegmentAnalytics.AnalyticsJS
   writeKey: string
   otherWriteKeys?: string[]
   shouldRequireConsent?: () => Promise<boolean> | boolean

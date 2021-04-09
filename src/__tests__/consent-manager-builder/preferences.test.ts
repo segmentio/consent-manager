@@ -93,4 +93,45 @@ describe('preferences', () => {
     // TODO: actually check domain
     // expect(document.cookie.includes('domain=example.com')).toBe(true)
   })
+
+  test('savePreferences() saves to the specified instance when defined', () => {
+    const windowAjsIdentify = sinon.spy()
+
+    // @ts-ignore
+    window.analytics = { identify: windowAjsIdentify }
+    document.cookie = ''
+
+    const analytics = {
+      ...window.analytics,
+      identify: sinon.spy()
+    }
+
+    const destinationPreferences = {
+      Amplitude: true
+    }
+    const customPreferences = {
+      functional: true
+    }
+
+    savePreferences({
+      analytics,
+      destinationPreferences,
+      customPreferences,
+      cookieDomain: undefined
+    })
+
+    expect(analytics.identify.calledOnce).toBe(true)
+    expect(analytics.identify.args[0][0]).toMatchObject({
+      destinationTrackingPreferences: destinationPreferences,
+      customTrackingPreferences: customPreferences
+    })
+
+    expect(windowAjsIdentify.calledOnce).toBe(false)
+
+    expect(
+      document.cookie.includes(
+        'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}}'
+      )
+    ).toBe(true)
+  })
 })

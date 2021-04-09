@@ -27,6 +27,12 @@ function getNewDestinations(destinations: Destination[], preferences: CategoryPr
 }
 
 interface Props {
+  /**
+   * Your segment analytics instance, for use when your instance is stored
+   * somewhere other than window.analytics.
+   */
+  analytics?: SegmentAnalytics.AnalyticsJS
+
   /** Your Segment Write key for your website */
   writeKey: string
 
@@ -108,6 +114,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
   static displayName = 'ConsentManagerBuilder'
 
   static defaultProps = {
+    analytics: window.analytics,
     otherWriteKeys: [],
     onError: undefined,
     shouldRequireConsent: () => true,
@@ -172,6 +179,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
   initialise = async () => {
     const {
+      analytics,
       writeKey,
       otherWriteKeys = ConsentManagerBuilder.defaultProps.otherWriteKeys,
       shouldRequireConsent = ConsentManagerBuilder.defaultProps.shouldRequireConsent,
@@ -210,13 +218,14 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         const mapped = mapCustomPreferences(destinations, preferences)
         destinationPreferences = mapped.destinationPreferences
         customPreferences = mapped.customPreferences
-        savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+        savePreferences({ analytics, destinationPreferences, customPreferences, cookieDomain })
       }
     } else {
       preferences = destinationPreferences || initialPreferences
     }
 
     conditionallyLoadAnalytics({
+      analytics,
       writeKey,
       destinations,
       destinationPreferences,
@@ -263,7 +272,13 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
   }
 
   handleSaveConsent = (newPreferences: CategoryPreferences | undefined, shouldReload: boolean) => {
-    const { writeKey, cookieDomain, mapCustomPreferences, defaultDestinationBehavior } = this.props
+    const {
+      analytics,
+      writeKey,
+      cookieDomain,
+      mapCustomPreferences,
+      defaultDestinationBehavior
+    } = this.props
 
     this.setState(prevState => {
       const { destinations, preferences: existingPreferences, isConsentRequired } = prevState
@@ -297,8 +312,9 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       // If preferences haven't changed, don't reload the page as it's a disruptive experience for end-users
       if (prevState.havePreferencesChanged || newDestinations.length > 0) {
-        savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+        savePreferences({ analytics, destinationPreferences, customPreferences, cookieDomain })
         conditionallyLoadAnalytics({
+          analytics,
           writeKey,
           destinations,
           destinationPreferences,

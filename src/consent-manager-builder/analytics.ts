@@ -1,5 +1,5 @@
 import {
-  WindowWithAJS,
+  AnalyticsJS,
   Destination,
   DefaultDestinationBehavior,
   CategoryPreferences,
@@ -7,6 +7,7 @@ import {
 } from '../types'
 
 interface AnalyticsParams {
+  analytics?: AnalyticsJS
   writeKey: string
   destinations: Destination[]
   destinationPreferences: CategoryPreferences | null | undefined
@@ -32,6 +33,7 @@ function getConsentMiddleware(
 }
 
 export default function conditionallyLoadAnalytics({
+  analytics = window.analytics,
   writeKey,
   destinations,
   destinationPreferences,
@@ -40,7 +42,6 @@ export default function conditionallyLoadAnalytics({
   defaultDestinationBehavior,
   categoryPreferences
 }: AnalyticsParams) {
-  const wd = window as WindowWithAJS
   const integrations = { All: false, 'Segment.io': true }
   let isAnythingEnabled = false
 
@@ -50,8 +51,8 @@ export default function conditionallyLoadAnalytics({
     }
 
     // Load a.js normally when consent isn't required and there's no preferences
-    if (!wd.analytics.initialized) {
-      wd.analytics.load(writeKey)
+    if (!analytics.initialized) {
+      analytics.load(writeKey)
     }
     return
   }
@@ -73,7 +74,7 @@ export default function conditionallyLoadAnalytics({
 
   // Reload the page if the trackers have already been initialised so that
   // the user's new preferences can take affect
-  if (wd.analytics && wd.analytics.initialized) {
+  if (analytics && analytics.initialized) {
     if (shouldReload) {
       window.location.reload()
     }
@@ -88,8 +89,8 @@ export default function conditionallyLoadAnalytics({
       defaultDestinationBehavior
     )
     // @ts-ignore: Analytics.JS type should be updated with addSourceMiddleware
-    wd.analytics.addSourceMiddleware(middleware)
+    analytics.addSourceMiddleware(middleware)
 
-    wd.analytics.load(writeKey, { integrations })
+    analytics.load(writeKey, { integrations })
   }
 }

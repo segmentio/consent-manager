@@ -253,4 +253,54 @@ describe('analytics', () => {
       }
     })
   })
+
+  test('should support multiple instances when passed in manually', () => {
+    const windowAjsLoad = sinon.spy()
+    wd.analytics.load = windowAjsLoad
+    const analytics = {
+      ...wd.analytics,
+      load: sinon.spy()
+    }
+    const writeKey = '123'
+    const destinations = [{ id: 'Amplitude' } as Destination]
+    const destinationPreferences = {
+      Amplitude: true
+    }
+
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isConsentRequired: true,
+      categoryPreferences: {}
+    })
+    conditionallyLoadAnalytics({
+      analytics,
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isConsentRequired: true,
+      categoryPreferences: {}
+    })
+
+    expect(windowAjsLoad.calledOnce).toBe(true)
+    expect(windowAjsLoad.args[0][0]).toBe(writeKey)
+    expect(windowAjsLoad.args[0][1]).toMatchObject({
+      integrations: {
+        All: false,
+        Amplitude: true,
+        'Segment.io': true
+      }
+    })
+
+    expect(analytics.load.calledOnce).toBe(true)
+    expect(analytics.load.args[0][0]).toBe(writeKey)
+    expect(analytics.load.args[0][1]).toMatchObject({
+      integrations: {
+        All: false,
+        Amplitude: true,
+        'Segment.io': true
+      }
+    })
+  })
 })
