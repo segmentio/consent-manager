@@ -36,7 +36,7 @@ const Root = styled<{ width: number | string | undefined }, 'section'>('section'
   display: flex;
   flex-direction: column;
   max-width: calc(100vw - 16px);
-  max-height: calc(100vh - 16px);
+  max-height: calc(100% - 16px);
   width: ${props => props.width};
   margin: 8px;
   background: #fff;
