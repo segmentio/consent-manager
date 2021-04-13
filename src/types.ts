@@ -83,8 +83,10 @@ export interface ConsentManagerProps {
   cookieDomain?: string
   bannerContent: React.ReactNode
   bannerSubContent?: string
+  bannerActionsBlock?: ((props: ActionsBlockProps) => React.ReactElement) | true
   bannerTextColor?: string
   bannerBackgroundColor?: string
+  bannerHideCloseButton: boolean
   preferencesDialogTitle?: React.ReactNode
   preferencesDialogContent: React.ReactNode
   onError?: (error: Error | undefined) => void
@@ -95,4 +97,10 @@ export interface ConsentManagerProps {
   customCategories?: CustomCategories
   defaultDestinationBehavior?: DefaultDestinationBehavior
   cdnHost?: string
+}
+
+export interface ActionsBlockProps {
+  acceptAll: () => void
+  denyAll: () => void
+  changePreferences: () => void
 }

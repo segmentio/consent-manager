@@ -8,7 +8,8 @@ import {
   Destination,
   CategoryPreferences,
   CustomCategories,
-  DefaultDestinationBehavior
+  DefaultDestinationBehavior,
+  ActionsBlockProps
 } from '../types'
 
 const emitter = new EventEmitter()
@@ -40,8 +41,10 @@ interface ContainerProps {
   implyConsentOnInteraction: boolean
   bannerContent: React.ReactNode
   bannerSubContent: React.ReactNode
+  bannerActionsBlock?: ((props: ActionsBlockProps) => React.ReactElement) | true
   bannerTextColor: string
   bannerBackgroundColor: string
+  bannerHideCloseButton: boolean
   preferencesDialogTitle: React.ReactNode
   preferencesDialogContent: React.ReactNode
   cancelDialogTitle: React.ReactNode
@@ -195,8 +198,12 @@ const Container: React.FC<ContainerProps> = props => {
           onChangePreferences={() => toggleDialog(true)}
           content={props.bannerContent}
           subContent={props.bannerSubContent}
+          actionsBlock={props.bannerActionsBlock}
           textColor={props.bannerTextColor}
           backgroundColor={props.bannerBackgroundColor}
+          saveConsent={props.saveConsent}
+          toggleBanner={toggleBanner}
+          hideCloseButton={props.bannerHideCloseButton}
         />
       )}
 

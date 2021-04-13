@@ -1,20 +1,31 @@
 import React, { PureComponent } from 'react'
 import styled from 'react-emotion'
 import fontStyles from './font-styles'
+import { ActionsBlockProps, CategoryPreferences } from '../types'
+import { DefaultButton, GreenButton } from './buttons'
 
-const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div')`
+const Root = styled<{ backgroundColor: string; textColor: string; hideCloseButton }, 'div'>('div')`
   ${fontStyles};
   position: relative;
   padding: 8px;
-  padding-right: 40px;
+  padding-right: ${props => (props.hideCloseButton ? 0 : '40px')};
   background: ${props => props.backgroundColor};
   color: ${props => props.textColor};
   text-align: center;
   font-size: 12px;
   line-height: 1.3;
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+  }
 `
 
 const Content = styled('div')`
+  margin-bottom: 8px;
+  @media (min-width: 768px) {
+    flex: 1;
+    margin-bottom: 0;
+  }
   a,
   button {
     display: inline;
@@ -25,6 +36,17 @@ const Content = styled('div')`
     font: inherit;
     text-decoration: underline;
     cursor: pointer;
+  }
+`
+
+const ActionsBlock = styled('div')`
+  color: #000;
+  button {
+    margin: 4px 8px;
+    width: 100%;
+    @media (min-width: 768px) {
+      width: 200px;
+    }
   }
 `
 
@@ -56,8 +78,12 @@ interface Props {
   onChangePreferences: () => void
   content: React.ReactNode
   subContent: React.ReactNode
+  actionsBlock?: ((props: ActionsBlockProps) => React.ReactElement) | true
   backgroundColor: string
   textColor: string
+  saveConsent: (newPreferences?: CategoryPreferences | boolean, shouldReload?: boolean) => void
+  toggleBanner: (value: boolean) => void
+  hideCloseButton: boolean
 }
 
 export default class Banner extends PureComponent<Props> {
@@ -70,12 +96,30 @@ export default class Banner extends PureComponent<Props> {
       onChangePreferences,
       content,
       subContent,
+      actionsBlock,
       backgroundColor,
-      textColor
+      textColor,
+      saveConsent,
+      toggleBanner,
+      hideCloseButton
     } = this.props
 
+    const acceptAll = () => {
+      saveConsent(true)
+      toggleBanner(false)
+    }
+    const denyAll = () => {
+      saveConsent(false)
+      toggleBanner(false)
+    }
+
     return (
-      <Root innerRef={innerRef} backgroundColor={backgroundColor} textColor={textColor}>
+      <Root
+        innerRef={innerRef}
+        backgroundColor={backgroundColor}
+        textColor={textColor}
+        hideCloseButton={hideCloseButton}
+      >
         <Content>
           <P>{content}</P>
           <P>
@@ -84,10 +128,23 @@ export default class Banner extends PureComponent<Props> {
             </button>
           </P>
         </Content>
-
-        <CloseButton type="button" title="Close" aria-label="Close" onClick={onClose}>
-          ✕
-        </CloseButton>
+        {typeof actionsBlock === 'function' &&
+          actionsBlock({ acceptAll, denyAll, changePreferences: onChangePreferences })}
+        {actionsBlock === true && (
+          <ActionsBlock>
+            <GreenButton type="button" onClick={acceptAll}>
+              Allow all
+            </GreenButton>
+            <DefaultButton type="button" onClick={denyAll}>
+              Deny all
+            </DefaultButton>
+          </ActionsBlock>
+        )}
+        {!hideCloseButton && (
+          <CloseButton type="button" title="Close" aria-label="Close" onClick={onClose}>
+            ✕
+          </CloseButton>
+        )}
       </Root>
     )
   }

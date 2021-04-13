@@ -20,6 +20,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     onError: undefined,
     cookieDomain: undefined,
     customCategories: undefined,
+    bannerActionsBlock: undefined,
+    bannerHideCloseButton: false,
     bannerTextColor: '#fff',
     bannerSubContent: 'You can change your preferences at any time.',
     bannerBackgroundColor: '#1f4160',
@@ -36,9 +38,11 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       implyConsentOnInteraction,
       cookieDomain,
       bannerContent,
+      bannerActionsBlock,
       bannerSubContent,
       bannerTextColor,
       bannerBackgroundColor,
+      bannerHideCloseButton,
       preferencesDialogTitle,
       preferencesDialogContent,
       cancelDialogTitle,
@@ -90,6 +94,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
               }
               bannerContent={bannerContent}
               bannerSubContent={bannerSubContent}
+              bannerActionsBlock={bannerActionsBlock}
+              bannerHideCloseButton={bannerHideCloseButton}
               bannerTextColor={bannerTextColor || ConsentManager.defaultProps.bannerTextColor}
               bannerBackgroundColor={
                 bannerBackgroundColor || ConsentManager.defaultProps.bannerBackgroundColor
