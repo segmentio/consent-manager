@@ -8,7 +8,7 @@ const Root = styled<{ backgroundColor: string; textColor: string; hideCloseButto
   ${fontStyles};
   position: relative;
   padding: 8px;
-  padding-right: ${props => (props.hideCloseButton ? 0 : '40px')};
+  padding-right: ${props => (props.hideCloseButton ? '8px' : '40px')};
   background: ${props => props.backgroundColor};
   color: ${props => props.textColor};
   text-align: center;
@@ -42,9 +42,10 @@ const Content = styled('div')`
 const ActionsBlock = styled('div')`
   color: #000;
   button {
-    margin: 4px 8px;
+    margin: 4px 0;
     width: 100%;
     @media (min-width: 768px) {
+      margin: 4px 8px;
       width: 200px;
     }
   }
