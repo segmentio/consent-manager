@@ -196,7 +196,7 @@ All the options are supported. The callback function also receives these exports
 
 ### ConsentManager
 
-The `ConsentManager` React component is a prebuilt consent manager UI (it's the one we use on https://segment.com) that uses the [ConsentManagerBuilder][] component under the hood. To use it, just mount the component where you want the consent banner to appear and pass in your own custom copy.
+The `ConsentManager` React component is a prebuilt consent manager UI (it's the one we use on <https://segment.com>) that uses the [ConsentManagerBuilder][] component under the hood. To use it, just mount the component where you want the consent banner to appear and pass in your own custom copy.
 
 #### Props
 
@@ -287,6 +287,18 @@ Type: `PropTypes.node`
 
 The call to action under the content in the consent banner.
 
+##### bannerActionsBlock
+
+Type: `function(object) | boolean`
+
+The flag or function to render the actions block. If `true` value is passed - will render the default buttons block with `Accept all` and `Deny all` (required for the GDPR compliance). if the function is passed - will render the passed function into a actions block placeholder.
+
+Function props:
+
+- `acceptAll: () => void` - accept all cookies and close the banner
+- `denyAll: () => void` - deny all cookies and close the banner
+- `changePreferences: () => void` - open the dialog
+
 ##### bannerTextColor
 
 Type: `string`<br>
@@ -300,6 +312,13 @@ Type: `string`<br>
 Default: `#1f4160`
 
 The color of the consent banner background.
+
+##### bannerHideCloseButton
+
+Type: `boolean`<br>
+Default: `false`
+
+Hide the close button of the consent banner.
 
 ##### preferencesDialogTitle
 
@@ -615,7 +634,7 @@ The CDN to fetch list of integrations from
 To run our storybook locally, simply do:
 
 ```
-$ yarn dev
+yarn dev
 ```
 
 and the storybook should be opened in your browser. We recommend adding a new story for new features, and testing against existing stories when making bug fixes.
@@ -625,8 +644,8 @@ and the storybook should be opened in your browser. We recommend adding a new st
 This package follows semantic versioning. To publish a new version:
 
 ```
-$ npm version <new-version>
-$ npm publish
+npm version <new-version>
+npm publish
 ```
 
 ## License
