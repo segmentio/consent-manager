@@ -102,9 +102,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
     const buttons = (
       <div>
         <DefaultButton type="button" onClick={onCancel}>
-          Cancel
+          Abbrechen
         </DefaultButton>
-        <GreenButton type="submit">Save</GreenButton>
+        <GreenButton type="submit">Speichern</GreenButton>
       </div>
     )
     return (
