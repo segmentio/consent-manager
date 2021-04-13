@@ -17,13 +17,13 @@ const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div'
   max-width: 90%;
   left: 0;
   right: 0;
-  top: 50%;
+  top: 0;
+  height: fit-content;
   margin: auto;
-  transform: translateY(-50%);
   overflow-y: scroll;
 
   @media only screen and (min-width: 768px) {
-    bottom: 0;
+    bottom: 16px;
     top: auto;
   }
 `
