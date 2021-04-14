@@ -137,6 +137,7 @@ const Container: React.FC<ContainerProps> = props => {
     }
 
     if (props.closeBehavior === CloseBehavior.ACCEPT) {
+      props.setPreferences(props.preferences)
       return props.saveConsent()
     }
 
