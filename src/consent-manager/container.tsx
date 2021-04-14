@@ -131,24 +131,32 @@ const Container: React.FC<ContainerProps> = props => {
     }
   }, [isDialogOpen])
 
+  const onAcceptAll = () => {
+    props.setPreferences(props.preferences)
+    props.saveConsent()
+  }
+
+  const onDenyAll = () => {
+    const falsePreferences = Object.keys(props.preferences).reduce((acc, category) => {
+      acc[category] = false
+      return acc
+    }, {})
+
+    props.setPreferences(falsePreferences)
+    return props.saveConsent()
+  }
+
   const onClose = () => {
     if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
       return toggleBanner(false)
     }
 
     if (props.closeBehavior === CloseBehavior.ACCEPT) {
-      props.setPreferences(props.preferences)
-      return props.saveConsent()
+      return onAcceptAll()
     }
 
     if (props.closeBehavior === CloseBehavior.DENY) {
-      const falsePreferences = Object.keys(props.preferences).reduce((acc, category) => {
-        acc[category] = false
-        return acc
-      }, {})
-
-      props.setPreferences(falsePreferences)
-      return props.saveConsent()
+      return onDenyAll()
     }
 
     // closeBehavior is a custom function
@@ -202,8 +210,8 @@ const Container: React.FC<ContainerProps> = props => {
           actionsBlock={props.bannerActionsBlock}
           textColor={props.bannerTextColor}
           backgroundColor={props.bannerBackgroundColor}
-          saveConsent={props.saveConsent}
-          toggleBanner={toggleBanner}
+          onAcceptAll={onAcceptAll}
+          onDenyAll={onDenyAll}
           hideCloseButton={props.bannerHideCloseButton}
         />
       )}
