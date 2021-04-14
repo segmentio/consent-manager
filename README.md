@@ -634,7 +634,7 @@ The CDN to fetch list of integrations from
 To run our storybook locally, simply do:
 
 ```
-yarn dev
+$ yarn dev
 ```
 
 and the storybook should be opened in your browser. We recommend adding a new story for new features, and testing against existing stories when making bug fixes.
@@ -644,8 +644,8 @@ and the storybook should be opened in your browser. We recommend adding a new st
 This package follows semantic versioning. To publish a new version:
 
 ```
-npm version <new-version>
-npm publish
+$ npm version <new-version>
+$ npm publish
 ```
 
 ## License
