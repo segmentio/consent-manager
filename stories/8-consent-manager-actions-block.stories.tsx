@@ -4,6 +4,7 @@ import { Pane, Heading, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager } from '../src'
 import { storiesOf } from '@storybook/react'
 import CookieView from './components/CookieView'
+import { CloseBehavior } from '../src/consent-manager/container'
 
 const bannerContent = (
   <span>
@@ -86,6 +87,7 @@ const ConsentManagerExample = props => {
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
+        closeBehavior={CloseBehavior.ACCEPT}
       />
 
       <Pane marginX={100} marginTop={20}>

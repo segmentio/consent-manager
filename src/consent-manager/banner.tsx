@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import styled from 'react-emotion'
 import fontStyles from './font-styles'
-import { ActionsBlockProps, CategoryPreferences } from '../types'
+import { ActionsBlockProps } from '../types'
 import { DefaultButton, GreenButton } from './buttons'
 
 const Root = styled<{ backgroundColor: string; textColor: string; hideCloseButton }, 'div'>('div')`
@@ -82,8 +82,8 @@ interface Props {
   actionsBlock?: ((props: ActionsBlockProps) => React.ReactElement) | true
   backgroundColor: string
   textColor: string
-  saveConsent: (newPreferences?: CategoryPreferences | boolean, shouldReload?: boolean) => void
-  toggleBanner: (value: boolean) => void
+  onAcceptAll: () => void
+  onDenyAll: () => void
   hideCloseButton: boolean
 }
 
@@ -100,19 +100,10 @@ export default class Banner extends PureComponent<Props> {
       actionsBlock,
       backgroundColor,
       textColor,
-      saveConsent,
-      toggleBanner,
+      onAcceptAll,
+      onDenyAll,
       hideCloseButton
     } = this.props
-
-    const acceptAll = () => {
-      saveConsent(true)
-      toggleBanner(false)
-    }
-    const denyAll = () => {
-      saveConsent(false)
-      toggleBanner(false)
-    }
 
     return (
       <Root
@@ -130,13 +121,17 @@ export default class Banner extends PureComponent<Props> {
           </P>
         </Content>
         {typeof actionsBlock === 'function' &&
-          actionsBlock({ acceptAll, denyAll, changePreferences: onChangePreferences })}
+          actionsBlock({
+            acceptAll: onAcceptAll,
+            denyAll: onDenyAll,
+            changePreferences: onChangePreferences
+          })}
         {actionsBlock === true && (
           <ActionsBlock>
-            <GreenButton type="button" onClick={acceptAll}>
+            <GreenButton type="button" onClick={onAcceptAll}>
               Allow all
             </GreenButton>
-            <DefaultButton type="button" onClick={denyAll}>
+            <DefaultButton type="button" onClick={onDenyAll}>
               Deny all
             </DefaultButton>
           </ActionsBlock>
