@@ -59,13 +59,23 @@ const Content = styled('div')`
 
 const Action = styled('div')`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   justify-content: center;
   margin-top: 48px;
 
   @media only screen and (min-width: 768px) {
     margin-top: 0;
     flex-direction: row;
+    align-items: center;
+  }
+`
+const SecondaryActions = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media only screen and (min-width: 768px) {
+    margin-top: 0;
     align-items: center;
   }
 `
@@ -86,18 +96,24 @@ const AcceptButton = styled('button')`
   color: #ffffff;
   font-weight: 600;
   padding: 8px;
+  margin-bottom: 12px;
+  @media only screen and (min-width: 768px) {
+    margin-bottom: 0;
+  }
 `
 
-const EditButton = styled('button')`
-  background-color: #f0eeeb;
-  color: #5c5a59;
-  font-weight: 600;
-  margin-bottom: 12px;
-  padding: 8px;
+const LinkButton = styled('button')`
+  background-color: transparent;
+  text-decoration: underline;
+  font-size: 1em;
+  color: #a5a2a1;
+  font-weight: 500;
+  /* margin-bottom: 12px; */
+  padding: 6px;
 
   @media only screen and (min-width: 768px) {
     margin-bottom: 0;
-    margin-right: 12px;
+    margin-right: 8px;
   }
 `
 
@@ -121,9 +137,11 @@ interface Props {
   innerRef: (node: HTMLElement | null) => void
   onClose: () => void
   onAccept: () => void
+  onReject: () => void
   onChangePreferences: () => void
   content: React.ReactNode
   acceptContent: React.ReactNode
+  rejectContent: React.ReactNode
   subContent: React.ReactNode
   backgroundColor: string
   textColor: string
@@ -139,9 +157,11 @@ export default class Banner extends PureComponent<Props> {
       showClose,
       onClose,
       onAccept,
+      onReject,
       onChangePreferences,
       content,
       acceptContent,
+      rejectContent,
       subContent,
       backgroundColor,
       textColor
@@ -153,9 +173,14 @@ export default class Banner extends PureComponent<Props> {
           <BannerContent>{content}</BannerContent>
 
           <Action>
-            <EditButton type="button" onClick={onChangePreferences}>
-              {subContent}
-            </EditButton>
+            <SecondaryActions>
+              <LinkButton type="button" onClick={onReject}>
+                {rejectContent}
+              </LinkButton>
+              <LinkButton type="button" onClick={onChangePreferences}>
+                {subContent}
+              </LinkButton>
+            </SecondaryActions>
             <AcceptButton type="button" onClick={onAccept}>
               {acceptContent}
             </AcceptButton>

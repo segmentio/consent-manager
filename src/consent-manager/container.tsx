@@ -54,6 +54,7 @@ interface ContainerProps {
   implyConsentOnInteraction: boolean
   bannerContent: React.ReactNode
   bannerAcceptContent: React.ReactNode
+  bannerRejectContent: React.ReactNode
   bannerSubContent: React.ReactNode
   bannerTextColor: string
   bannerBackgroundColor: string
@@ -178,6 +179,15 @@ const Container: React.FC<ContainerProps> = props => {
     return props.saveConsent()
   }
 
+  const onReject = () => {
+    const falsePreferences = Object.keys(props.preferences).reduce((acc, category) => {
+      acc[category] = false
+      return acc
+    }, {})
+    props.setPreferences(falsePreferences)
+    return props.saveConsent()
+  }
+
   const handleCategoryChange = (category: string, value: boolean) => {
     props.setPreferences({
       [category]: value
@@ -219,9 +229,11 @@ const Container: React.FC<ContainerProps> = props => {
             showClose={false}
             onClose={onClose}
             onAccept={onAccept}
+            onReject={onReject}
             onChangePreferences={() => toggleDialog(true)}
             content={props.bannerContent}
             acceptContent={props.bannerAcceptContent}
+            rejectContent={props.bannerRejectContent}
             subContent={props.bannerSubContent}
             textColor={props.bannerTextColor}
             backgroundColor={props.bannerBackgroundColor}
