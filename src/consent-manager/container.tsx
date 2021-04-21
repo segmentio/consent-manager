@@ -198,9 +198,12 @@ const Container: React.FC<ContainerProps> = props => {
     props.resetPreferences()
   }
 
+  const shouldShowBanner =
+    (props.workspaceAddedNewDestinations && props.defaultDestinationBehavior === 'ask') ||
+    props.newDestinations.length > 0
   return (
     <div>
-      {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
+      {showBanner && props.isConsentRequired && shouldShowBanner && (
         <Banner
           innerRef={current => (banner = { current })}
           onClose={onClose}
