@@ -83,6 +83,7 @@ export interface ConsentManagerProps {
   cookieDomain?: string
   bannerContent: React.ReactNode
   bannerAcceptContent?: string
+  bannerRejectContent?: string
   bannerSubContent?: React.ReactNode
   bannerTextColor?: string
   bannerBackgroundColor?: string
