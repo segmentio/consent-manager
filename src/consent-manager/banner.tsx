@@ -10,7 +10,7 @@ const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div'
   padding-right: 40px;
   background: #ffffff;
   color: #8f8d8b;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.3;
   border-radius: 8px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.06), 0px 6px 12px rgba(0, 0, 0, 0.06);
@@ -141,7 +141,7 @@ interface Props {
   onChangePreferences: () => void
   content: React.ReactNode
   acceptContent: React.ReactNode
-  rejectContent: React.ReactNode
+  rejectContent?: React.ReactNode
   subContent: React.ReactNode
   backgroundColor: string
   textColor: string
@@ -174,9 +174,11 @@ export default class Banner extends PureComponent<Props> {
 
           <Action>
             <SecondaryActions>
-              <LinkButton type="button" onClick={onReject}>
-                {rejectContent}
-              </LinkButton>
+              {rejectContent && (
+                <LinkButton type="button" onClick={onReject}>
+                  {rejectContent}
+                </LinkButton>
+              )}
               <LinkButton type="button" onClick={onChangePreferences}>
                 {subContent}
               </LinkButton>

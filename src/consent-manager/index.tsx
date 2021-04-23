@@ -22,7 +22,6 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     customCategories: undefined,
     bannerTextColor: '#ffffff',
     bannerAcceptContent: 'Accept All',
-    bannerRejectContent: 'Reject All',
     bannerSubContent: 'Manage Preferences',
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
