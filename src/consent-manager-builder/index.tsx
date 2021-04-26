@@ -34,6 +34,7 @@ interface Props {
   otherWriteKeys?: string[]
 
   cookieDomain?: string
+  cookieName?: string
 
   /**
    * An initial selection of Preferences
@@ -179,10 +180,11 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       mapCustomPreferences,
       defaultDestinationBehavior,
       cookieDomain,
+      cookieName,
       cdnHost = ConsentManagerBuilder.defaultProps.cdnHost
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
-    let { destinationPreferences, customPreferences } = loadPreferences()
+    let { destinationPreferences, customPreferences } = loadPreferences(cookieName)
 
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),
@@ -210,7 +212,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         const mapped = mapCustomPreferences(destinations, preferences)
         destinationPreferences = mapped.destinationPreferences
         customPreferences = mapped.customPreferences
-        savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+        savePreferences({ destinationPreferences, customPreferences, cookieDomain, cookieName })
       }
     } else {
       preferences = destinationPreferences || initialPreferences
@@ -249,8 +251,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
   }
 
   handleResetPreferences = () => {
-    const { initialPreferences, mapCustomPreferences } = this.props
-    const { destinationPreferences, customPreferences } = loadPreferences()
+    const { initialPreferences, mapCustomPreferences, cookieName } = this.props
+    const { destinationPreferences, customPreferences } = loadPreferences(cookieName)
 
     let preferences: CategoryPreferences | undefined
     if (mapCustomPreferences) {
@@ -263,7 +265,13 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
   }
 
   handleSaveConsent = (newPreferences: CategoryPreferences | undefined, shouldReload: boolean) => {
-    const { writeKey, cookieDomain, mapCustomPreferences, defaultDestinationBehavior } = this.props
+    const {
+      writeKey,
+      cookieDomain,
+      cookieName,
+      mapCustomPreferences,
+      defaultDestinationBehavior
+    } = this.props
 
     this.setState(prevState => {
       const { destinations, preferences: existingPreferences, isConsentRequired } = prevState
@@ -297,7 +305,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       // If preferences haven't changed, don't reload the page as it's a disruptive experience for end-users
       if (prevState.havePreferencesChanged || newDestinations.length > 0) {
-        savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+        savePreferences({ destinationPreferences, customPreferences, cookieDomain, cookieName })
         conditionallyLoadAnalytics({
           writeKey,
           destinations,
