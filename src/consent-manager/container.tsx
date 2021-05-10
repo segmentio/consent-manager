@@ -22,6 +22,7 @@ const Overlay = styled('div')`
   height: 100%;
   z-index: 9998;
   background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
 `
 
 const emitter = new EventEmitter()

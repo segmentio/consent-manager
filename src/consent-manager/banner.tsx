@@ -23,9 +23,7 @@ const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div'
   overflow-y: scroll;
 
   @media only screen and (min-width: 768px) {
-    height: auto;
-    bottom: 16px;
-    top: auto;
+    max-width: 50%;
   }
 `
 
