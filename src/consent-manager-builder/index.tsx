@@ -36,6 +36,11 @@ interface Props {
   cookieDomain?: string
 
   /**
+   * Number of days until the preferences cookie should expire
+   */
+  cookieExpires?: number
+
+  /**
    * An initial selection of Preferences
    */
   initialPreferences?: CategoryPreferences
@@ -179,6 +184,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       mapCustomPreferences,
       defaultDestinationBehavior,
       cookieDomain,
+      cookieExpires,
       cdnHost = ConsentManagerBuilder.defaultProps.cdnHost
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
@@ -210,7 +216,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         const mapped = mapCustomPreferences(destinations, preferences)
         destinationPreferences = mapped.destinationPreferences
         customPreferences = mapped.customPreferences
-        savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+        savePreferences({ destinationPreferences, customPreferences, cookieDomain, cookieExpires })
       }
     } else {
       preferences = destinationPreferences || initialPreferences
@@ -263,7 +269,13 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
   }
 
   handleSaveConsent = (newPreferences: CategoryPreferences | undefined, shouldReload: boolean) => {
-    const { writeKey, cookieDomain, mapCustomPreferences, defaultDestinationBehavior } = this.props
+    const {
+      writeKey,
+      cookieDomain,
+      cookieExpires,
+      mapCustomPreferences,
+      defaultDestinationBehavior
+    } = this.props
 
     this.setState(prevState => {
       const { destinations, preferences: existingPreferences, isConsentRequired } = prevState
@@ -297,7 +309,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       // If preferences haven't changed, don't reload the page as it's a disruptive experience for end-users
       if (prevState.havePreferencesChanged || newDestinations.length > 0) {
-        savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+        savePreferences({ destinationPreferences, customPreferences, cookieDomain, cookieExpires })
         conditionallyLoadAnalytics({
           writeKey,
           destinations,
