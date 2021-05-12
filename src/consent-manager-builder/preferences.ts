@@ -64,7 +64,6 @@ export function savePreferences({
     destinations: destinationPreferences,
     custom: customPreferences
   }
-  debugger
   cookies.set(cookieName || DEFAULT_COOKIE_NAME, value, {
     expires: COOKIE_EXPIRES,
     domain
