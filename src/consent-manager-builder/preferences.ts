@@ -4,6 +4,7 @@ import topDomain from '@segment/top-domain'
 import { WindowWithAJS, Preferences, CategoryPreferences } from '../types'
 import { EventEmitter } from 'events'
 
+const DEFAULT_COOKIE_NAME = 'tracking-preferences'
 const COOKIE_KEY = 'tracking-preferences'
 const COOKIE_DEFAULT_EXPIRES = 365
 
@@ -15,8 +16,8 @@ export interface PreferencesManager {
 
 // TODO: harden against invalid cookies
 // TODO: harden against different versions of cookies
-export function loadPreferences(): Preferences {
-  const preferences = cookies.getJSON(COOKIE_KEY)
+export function loadPreferences(cookieName?: string): Preferences {
+  const preferences = cookies.getJSON(cookieName || DEFAULT_COOKIE_NAME)
 
   if (!preferences) {
     return {}
@@ -28,7 +29,11 @@ export function loadPreferences(): Preferences {
   }
 }
 
-type SavePreferences = Preferences & { cookieDomain?: string; cookieExpires?: number }
+type SavePreferences = Preferences & {
+  cookieDomain?: string
+  cookieName?: string
+  cookieExpires?: number
+}
 
 const emitter = new EventEmitter()
 
@@ -47,6 +52,7 @@ export function savePreferences({
   destinationPreferences,
   customPreferences,
   cookieDomain,
+  cookieName,
   cookieExpires
 }: SavePreferences) {
   const wd = window as WindowWithAJS

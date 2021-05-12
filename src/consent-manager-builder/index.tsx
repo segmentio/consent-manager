@@ -34,6 +34,7 @@ interface Props {
   otherWriteKeys?: string[]
 
   cookieDomain?: string
+  cookieName?: string
 
   /**
    * Number of days until the preferences cookie should expire
@@ -184,11 +185,12 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       mapCustomPreferences,
       defaultDestinationBehavior,
       cookieDomain,
+      cookieName,
       cookieExpires,
       cdnHost = ConsentManagerBuilder.defaultProps.cdnHost
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
-    let { destinationPreferences, customPreferences } = loadPreferences()
+    let { destinationPreferences, customPreferences } = loadPreferences(cookieName)
 
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),
@@ -216,7 +218,13 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         const mapped = mapCustomPreferences(destinations, preferences)
         destinationPreferences = mapped.destinationPreferences
         customPreferences = mapped.customPreferences
-        savePreferences({ destinationPreferences, customPreferences, cookieDomain, cookieExpires })
+        savePreferences({
+          destinationPreferences,
+          customPreferences,
+          cookieDomain,
+          cookieName,
+          cookieExpires
+        })
       }
     } else {
       preferences = destinationPreferences || initialPreferences
@@ -255,8 +263,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
   }
 
   handleResetPreferences = () => {
-    const { initialPreferences, mapCustomPreferences } = this.props
-    const { destinationPreferences, customPreferences } = loadPreferences()
+    const { initialPreferences, mapCustomPreferences, cookieName } = this.props
+    const { destinationPreferences, customPreferences } = loadPreferences(cookieName)
 
     let preferences: CategoryPreferences | undefined
     if (mapCustomPreferences) {
@@ -272,6 +280,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     const {
       writeKey,
       cookieDomain,
+      cookieName,
       cookieExpires,
       mapCustomPreferences,
       defaultDestinationBehavior
@@ -309,7 +318,13 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       // If preferences haven't changed, don't reload the page as it's a disruptive experience for end-users
       if (prevState.havePreferencesChanged || newDestinations.length > 0) {
-        savePreferences({ destinationPreferences, customPreferences, cookieDomain, cookieExpires })
+        savePreferences({
+          destinationPreferences,
+          customPreferences,
+          cookieDomain,
+          cookieName,
+          cookieExpires
+        })
         conditionallyLoadAnalytics({
           writeKey,
           destinations,

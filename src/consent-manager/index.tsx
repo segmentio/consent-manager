@@ -19,6 +19,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     implyConsentOnInteraction: false,
     onError: undefined,
     cookieDomain: undefined,
+    cookieName: undefined,
     cookieExpires: undefined,
     customCategories: undefined,
     bannerTextColor: '#fff',
@@ -36,6 +37,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       shouldRequireConsent,
       implyConsentOnInteraction,
       cookieDomain,
+      cookieName,
       cookieExpires,
       bannerContent,
       bannerSubContent,
@@ -58,6 +60,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         otherWriteKeys={otherWriteKeys}
         shouldRequireConsent={shouldRequireConsent}
         cookieDomain={cookieDomain}
+        cookieName={cookieName}
         cookieExpires={cookieExpires}
         initialPreferences={this.getInitialPreferences()}
         mapCustomPreferences={this.handleMapCustomPreferences}
