@@ -82,6 +82,7 @@ export interface ConsentManagerProps {
   implyConsentOnInteraction?: boolean
   cookieDomain?: string
   cookieName?: string
+  cookieExpires?: number
   bannerContent: React.ReactNode
   bannerSubContent?: string
   bannerTextColor?: string

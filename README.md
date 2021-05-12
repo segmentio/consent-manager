@@ -275,6 +275,13 @@ Default: the [top most domain][top-domain] and all sub domains
 
 The domain the `tracking-preferences` cookie should be scoped to.
 
+##### cookieExpires
+
+Type: `number`<br>
+Default: 365
+
+The number of dates until the `tracking-preferences` cookie should expire.
+
 ##### bannerContent
 
 Type: `PropTypes.node`
@@ -474,6 +481,13 @@ Type: `string`<br>
 Default: `tracking-preferences`
 
 The cookie name that should be used to store tracking preferences cookie
+
+#### cookieExpires
+
+Type: `number`<br>
+Default: 365
+
+The number of dates until the `tracking-preferences` cookie should expire.
 
 #### Render Props
 
