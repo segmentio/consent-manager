@@ -5,7 +5,6 @@ import { WindowWithAJS, Preferences, CategoryPreferences } from '../types'
 import { EventEmitter } from 'events'
 
 const DEFAULT_COOKIE_NAME = 'tracking-preferences'
-const COOKIE_KEY = 'tracking-preferences'
 const COOKIE_DEFAULT_EXPIRES = 365
 
 export interface PreferencesManager {
@@ -71,7 +70,7 @@ export function savePreferences({
     custom: customPreferences
   }
 
-  cookies.set(COOKIE_KEY, value, {
+  cookies.set(cookieName || DEFAULT_COOKIE_NAME, value, {
     expires,
     domain
   })
