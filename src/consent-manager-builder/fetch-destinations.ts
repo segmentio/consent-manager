@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+import fetch from 'isomorphic-unfetch'
 import { flatten, sortedUniqBy, sortBy } from 'lodash'
 import { Destination } from '../types'
 
