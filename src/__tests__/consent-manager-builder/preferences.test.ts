@@ -35,6 +35,20 @@ describe('preferences', () => {
     })
   })
 
+  test('loadPreferences(cookieName) returns preferences when cookie exists', () => {
+    document.cookie =
+      'custom-tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}%2C%22custom%22:{%22functional%22:true}}'
+
+    expect(loadPreferences('custom-tracking-preferences')).toMatchObject({
+      destinationPreferences: {
+        Amplitude: true
+      },
+      customPreferences: {
+        functional: true
+      }
+    })
+  })
+
   test('savePreferences() saves the preferences', () => {
     const ajsIdentify = sinon.spy()
 
@@ -92,5 +106,31 @@ describe('preferences', () => {
 
     // TODO: actually check domain
     // expect(document.cookie.includes('domain=example.com')).toBe(true)
+  })
+
+  test('savePreferences() sets the cookie with custom key', () => {
+    const ajsIdentify = sinon.spy()
+    // @ts-ignore
+    window.analytics = { identify: ajsIdentify }
+    document.cookie = ''
+
+    const destinationPreferences = {
+      Amplitude: true
+    }
+
+    savePreferences({
+      destinationPreferences,
+      customPreferences: undefined,
+      cookieDomain: undefined,
+      cookieName: 'custom-tracking-preferences'
+    })
+
+    expect(ajsIdentify.calledOnce).toBe(true)
+    expect(ajsIdentify.args[0][0]).toMatchObject({
+      destinationTrackingPreferences: destinationPreferences,
+      customTrackingPreferences: undefined
+    })
+
+    expect(document.cookie.includes('custom-tracking-preferences')).toBe(true)
   })
 })
