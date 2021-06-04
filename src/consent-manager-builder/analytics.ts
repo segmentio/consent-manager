@@ -42,7 +42,6 @@ export default function conditionallyLoadAnalytics({
 }: AnalyticsParams) {
   const wd = window as WindowWithAJS
   const integrations = { All: false, 'Segment.io': true }
-  let isAnythingEnabled = false
 
   if (!destinationPreferences) {
     if (isConsentRequired) {
@@ -65,9 +64,6 @@ export default function conditionallyLoadAnalytics({
     }
 
     const isEnabled = Boolean(destinationPreferences[destination.id])
-    if (isEnabled) {
-      isAnythingEnabled = true
-    }
     integrations[destination.id] = isEnabled
   }
 
@@ -80,16 +76,14 @@ export default function conditionallyLoadAnalytics({
     return
   }
 
-  // Don't load a.js at all if nothing has been enabled
-  if (isAnythingEnabled) {
-    const middleware = getConsentMiddleware(
-      destinationPreferences,
-      categoryPreferences,
-      defaultDestinationBehavior
-    )
-    // @ts-ignore: Analytics.JS type should be updated with addSourceMiddleware
-    wd.analytics.addSourceMiddleware(middleware)
+  // We can assume that segment.io should always be enabled, so there will always be at least one destination
+  const middleware = getConsentMiddleware(
+    destinationPreferences,
+    categoryPreferences,
+    defaultDestinationBehavior
+  )
+  // @ts-ignore: Analytics.JS type should be updated with addSourceMiddleware
+  wd.analytics.addSourceMiddleware(middleware)
 
-    wd.analytics.load(writeKey, { integrations })
-  }
+  wd.analytics.load(writeKey, { integrations })
 }
