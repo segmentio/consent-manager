@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import Dialog from './dialog'
 import styled from 'react-emotion'
 import { Button } from './buttons'
+import { translations } from './translations-utils'
 
 const BackButton = styled(Button)`
   background: none;
@@ -31,8 +32,8 @@ export default class CancelDialog extends PureComponent<Props> {
 
     const buttons = (
       <div>
-        <BackButton onClick={onBack}>Back to Preferences</BackButton>
-        <CloseButton>Close</CloseButton>
+        <BackButton onClick={onBack}>{translations.back_to_preferences}</BackButton>
+        <CloseButton>{translations.cancel}</CloseButton>
       </div>
     )
 

@@ -17,8 +17,17 @@ export type WindowWithConsentManagerConfig = Window &
     ) => ConsentManagerInput | ConsentManagerInput
   }
 
+export type WindowWithConsentManagerLocalizations = Window &
+  typeof globalThis & {
+    consentManagerTranslations?: string
+  }
+
 export type ConsentManagerInput = ConsentManagerProps & {
   container: string
+}
+
+export interface TranslationsDictionary {
+  [phrase: string]: string
 }
 
 interface StandaloneConsentManagerParams {
@@ -49,6 +58,12 @@ export interface CategoryPreferences {
   marketingAndAnalytics?: boolean | null | undefined
   advertising?: boolean | null | undefined
   [category: string]: boolean | null | undefined
+}
+
+export interface LanguageData {
+  locale: string
+  locales: TranslationsDictionary | {}
+  translations: TranslationsDictionary
 }
 
 export interface CustomCategories {

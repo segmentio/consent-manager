@@ -3,6 +3,7 @@ import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
 import { Destination, CustomCategories, CategoryPreferences } from '../types'
 import { Button } from './buttons'
+import { translations } from './translations-utils'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -85,6 +86,10 @@ const SaveButton = styled(Button)`
   margin-left: 8px;
 `
 
+const categoryPlaceholder = '[CATEGORY_NAME]'
+const replaceWith = (category: string, phrase: string) =>
+  phrase.replace(categoryPlaceholder, category)
+
 interface PreferenceDialogProps {
   innerRef: (element: HTMLElement | null) => void
   onCancel: () => void
@@ -125,11 +130,12 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
       content,
       preferences
     } = this.props
+
     const buttons = (
       <div>
         <div>
-          <CancelButton onClick={onCancel}>Cancel</CancelButton>
-          <SaveButton type="submit">Save</SaveButton>
+          <CancelButton onClick={onCancel}>{translations.cancel}</CancelButton>
+          <SaveButton type="submit">{translations.save}</SaveButton>
         </div>
       </div>
     )
@@ -149,9 +155,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
           <Table>
             <thead>
               <Row>
-                <ColumnHeading scope="col">Allow</ColumnHeading>
-                <ColumnHeading scope="col">Category</ColumnHeading>
-                <ColumnHeading scope="col">Purpose</ColumnHeading>
+                <ColumnHeading scope="col">{translations.allow}</ColumnHeading>
+                <ColumnHeading scope="col">{translations.category}</ColumnHeading>
+                <ColumnHeading scope="col">{translations.purpose}</ColumnHeading>
               </Row>
             </thead>
 
@@ -167,10 +173,13 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           value="true"
                           checked={functional === true}
                           onChange={this.handleChange}
-                          aria-label="Allow functional tracking"
+                          aria-label={replaceWith(
+                            translations.functional_category,
+                            translations.allow_category_tracking
+                          )}
                           required
                         />{' '}
-                        Yes
+                        {translations.yes}
                       </label>
                       <label>
                         <input
@@ -179,18 +188,18 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           value="false"
                           checked={functional === false}
                           onChange={this.handleChange}
-                          aria-label="Disallow functional tracking"
+                          aria-label={replaceWith(
+                            translations.functional_category,
+                            translations.disallow_category_tracking
+                          )}
                           required
                         />{' '}
-                        No
+                        {translations.no}
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">Functional</RowHeading>
+                    <RowHeading scope="row">{translations.functional_category}</RowHeading>
                     <td>
-                      <p>
-                        Enables enhanced functionality, such as videos and live chat. If you do not
-                        allow these, then some or all of these functions may not work properly.
-                      </p>
+                      <p>{translations.functional_purpose}</p>
                     </td>
                   </Row>
 
@@ -203,10 +212,13 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           value="true"
                           checked={marketingAndAnalytics === true}
                           onChange={this.handleChange}
-                          aria-label="Allow marketing and analytics tracking"
+                          aria-label={replaceWith(
+                            translations.analytics_category,
+                            translations.allow_category_tracking
+                          )}
                           required
                         />{' '}
-                        Yes
+                        {translations.yes}
                       </label>
                       <label>
                         <input
@@ -215,18 +227,18 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           value="false"
                           checked={marketingAndAnalytics === false}
                           onChange={this.handleChange}
-                          aria-label="Disallow marketing and analytics tracking"
+                          aria-label={replaceWith(
+                            translations.analytics_category,
+                            translations.disallow_category_tracking
+                          )}
                           required
                         />{' '}
-                        No
+                        {translations.no}
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">Analytics</RowHeading>
+                    <RowHeading scope="row">{translations.analytics_category}</RowHeading>
                     <td>
-                      <p>
-                        Provide statistical information on site usage, e.g., web analytics so we can
-                        improve this website over time.
-                      </p>
+                      <p>{translations.analytics_purpose}</p>
                     </td>
                   </Row>
 
@@ -239,10 +251,13 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           value="true"
                           checked={advertising === true}
                           onChange={this.handleChange}
-                          aria-label="Allow advertising tracking"
+                          aria-label={replaceWith(
+                            translations.advertising_category,
+                            translations.allow_category_tracking
+                          )}
                           required
                         />{' '}
-                        Yes
+                        {translations.yes}
                       </label>
                       <label>
                         <input
@@ -251,18 +266,20 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           value="false"
                           checked={advertising === false}
                           onChange={this.handleChange}
-                          aria-label="Disallow advertising tracking"
+                          aria-label={replaceWith(
+                            translations.advertising_category,
+                            translations.disallow_category_tracking
+                          )}
                           required
                         />{' '}
-                        No
+                        {translations.no}
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">Targeting; Advertising</RowHeading>
+                    <RowHeading scope="row">
+                      {translations.targeting_category}; {translations.advertising_category}
+                    </RowHeading>
                     <td>
-                      <p>
-                        Used to create profiles or personalize content to enhance your shopping
-                        experience.
-                      </p>
+                      <p>{translations.advertising_purpose}</p>
                     </td>
                   </Row>
                 </>
@@ -283,7 +300,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label={`Allow "${categoryName}" tracking`}
                             required
                           />{' '}
-                          Yes
+                          {translations.yes}
                         </label>
                         <label>
                           <input
@@ -295,7 +312,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label={`Disallow "${categoryName}" tracking`}
                             required
                           />{' '}
-                          No
+                          {translations.no}
                         </label>
                       </InputCell>
                       <RowHeading scope="row">{categoryName}</RowHeading>
@@ -314,12 +331,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
 
               <Row>
                 <td>N/A</td>
-                <RowHeading scope="row">Essential</RowHeading>
+                <RowHeading scope="row">{translations.essential_category}</RowHeading>
                 <td>
-                  <p>
-                    Essential for the site and any requested services to work, but do not perform
-                    any additional or secondary function.
-                  </p>
+                  <p>{translations.esential_purpose}</p>
                 </td>
               </Row>
             </tbody>

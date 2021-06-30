@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import styled from 'react-emotion'
 import fontStyles from './font-styles'
+import { translations } from './translations-utils'
 
 import { Button } from './buttons'
 
@@ -99,8 +100,10 @@ export default class Banner extends PureComponent<Props> {
           </Content>
 
           <ButtonContainer>
-            <SettingsButton onClick={onChangePreferences}>Settings</SettingsButton>
-            <AcceptButton onClick={onAcceptAll}>Accept All Cookies</AcceptButton>
+            <SettingsButton onClick={onChangePreferences}>
+              {translations.gdpr_settings}
+            </SettingsButton>
+            <AcceptButton onClick={onAcceptAll}>{translations.accept_all_cookies}</AcceptButton>
           </ButtonContainer>
         </div>
       </Root>

@@ -3,6 +3,7 @@ import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
 import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
+import {translations} from './translations-utils'
 
 const zeroValuePreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
@@ -21,10 +22,10 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     cookieDomain: undefined,
     customCategories: undefined,
     bannerTextColor: '#fff',
-    bannerSubContent: 'You can change your preferences at any time.',
+    bannerSubContent: translations.change_preferences,
     bannerBackgroundColor: '#1f4160',
-    preferencesDialogTitle: 'Website Data Collection Preferences',
-    cancelDialogTitle: 'Are you sure you want to cancel?'
+    preferencesDialogTitle: translations.data_collection_preferences,
+    cancelDialogTitle: translations.cancel_dialog_title,
   }
 
   render() {
