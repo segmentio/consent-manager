@@ -61,10 +61,15 @@ const AcceptButton = styled(Button)`
   margin-left: 8px;
 `
 
+const DenyButton = styled(Button)`
+  margin-left: 8px;
+`
+
 interface Props {
   innerRef: (node: HTMLElement | null) => void
   onChangePreferences: () => void
   onAcceptAll: () => void
+  onDenyAll: () => void
   content: React.ReactNode
   backgroundColor: string
   textColor: string
@@ -78,6 +83,7 @@ export default class Banner extends PureComponent<Props> {
       innerRef,
       onChangePreferences,
       onAcceptAll,
+      onDenyAll,
       content,
       backgroundColor,
       textColor
@@ -103,6 +109,7 @@ export default class Banner extends PureComponent<Props> {
             <SettingsButton onClick={onChangePreferences}>
               {translations.gdpr_settings}
             </SettingsButton>
+            <DenyButton onClick={onDenyAll}>{translations.reject_all}</DenyButton>
             <AcceptButton onClick={onAcceptAll}>{translations.accept_all_cookies}</AcceptButton>
           </ButtonContainer>
         </div>

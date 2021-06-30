@@ -10,6 +10,7 @@ const fallbackDictionary: TranslationsDictionary = {
   save: 'Save',
   allow: 'Allow',
   accept_all_cookies: 'Accept All Cookies',
+  reject_all: 'Reject all',
   gdpr_settings: 'Settings',
   category: 'Category',
   purpose: 'Purpose',

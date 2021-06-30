@@ -162,6 +162,15 @@ const Container: React.FC<ContainerProps> = props => {
     props.saveConsent()
   }
 
+  const handleDenyAll = () => {
+    props.setPreferences({
+      advertising: false,
+      functional: false,
+      marketingAndAnalytics: false
+    })
+    props.saveConsent()
+  }
+
   return (
     <div>
       {props.isConsentRequired && props.newDestinations.length >= 0 && (
@@ -169,6 +178,7 @@ const Container: React.FC<ContainerProps> = props => {
           innerRef={current => (banner = { current })}
           onChangePreferences={() => toggleDialog(true)}
           onAcceptAll={() => handleAcceptAll()}
+          onDenyAll={() => handleDenyAll()}
           content={props.bannerContent}
           textColor={props.bannerTextColor}
           backgroundColor={props.bannerBackgroundColor}
