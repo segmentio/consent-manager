@@ -31,7 +31,7 @@ const openAnimation = keyframes`
   }
 `
 
-const Root = styled<{ width: number | string | undefined }, 'section'>('section')`
+const Root = styled.section<{ width: number | string | undefined }>`
   ${fontStyles};
   display: flex;
   flex-direction: column;
