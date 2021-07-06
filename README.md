@@ -275,6 +275,13 @@ Default: the [top most domain][top-domain] and all sub domains
 
 The domain the `tracking-preferences` cookie should be scoped to.
 
+##### cookieExpires
+
+Type: `number`<br>
+Default: 365
+
+The number of dates until the `tracking-preferences` cookie should expire.
+
 ##### bannerContent
 
 Type: `PropTypes.node`
@@ -487,6 +494,20 @@ Default: the [top most domain][top-domain] and all sub domains
 
 The domain the `tracking-preferences` cookie should be scoped to.
 
+##### cookieName
+
+Type: `string`<br>
+Default: `tracking-preferences`
+
+The cookie name that should be used to store tracking preferences cookie
+
+#### cookieExpires
+
+Type: `number`<br>
+Default: 365
+
+The number of dates until the `tracking-preferences` cookie should expire.
+
 #### Render Props
 
 ##### destinations
@@ -634,7 +655,7 @@ The CDN to fetch list of integrations from
 To run our storybook locally, simply do:
 
 ```
-$ yarn dev
+yarn dev
 ```
 
 and the storybook should be opened in your browser. We recommend adding a new story for new features, and testing against existing stories when making bug fixes.
@@ -644,8 +665,8 @@ and the storybook should be opened in your browser. We recommend adding a new st
 This package follows semantic versioning. To publish a new version:
 
 ```
-$ npm version <new-version>
-$ npm publish
+npm version <new-version>
+npm publish
 ```
 
 ## License

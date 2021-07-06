@@ -4,7 +4,13 @@ import fontStyles from './font-styles'
 import { ActionsBlockProps } from '../types'
 import { DefaultButton, GreenButton } from './buttons'
 
-const Root = styled<{ backgroundColor: string; textColor: string; hideCloseButton }, 'div'>('div')`
+interface RootProps {
+  readonly backgroundColor: string
+  readonly textColor: string
+  readonly hideCloseButton: boolean
+}
+
+const Root = styled.div<RootProps>`
   ${fontStyles};
   position: relative;
   padding: 8px;
