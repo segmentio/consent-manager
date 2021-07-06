@@ -10,7 +10,7 @@ interface RootProps {
   readonly hideCloseButton: boolean
 }
 
-const Root = styled.div<RootProps>`
+const Root = styled('div')<RootProps>`
   ${fontStyles};
   position: relative;
   padding: 8px;

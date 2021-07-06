@@ -31,7 +31,11 @@ const openAnimation = keyframes`
   }
 `
 
-const Root = styled.section<{ width: number | string | undefined }>`
+interface RootProps {
+  readonly width: number | string | undefined
+}
+
+const Root = styled('section')<RootProps>`
   ${fontStyles};
   display: flex;
   flex-direction: column;
