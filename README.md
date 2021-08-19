@@ -1,12 +1,6 @@
-# consent-manager [![build status](https://circleci.com/gh/segmentio/consent-manager.svg?style=svg&circle-token=d3a9e0da7a07fb443f1b4e558ad9c60a55dca223)](https://circleci.com/gh/segmentio/consent-manager)
+# Forked version of The Segment Consent Manager (Not Official repository)
 
-> Drop-in consent management plugin for analytics.js
-
-[StoryBook](https://segmentio.github.io/consent-manager/index.html)
-
-## Segment Consent Manager
-
-The Segment Consent Manager is an analytics.js add-on with support to consent management.
+The Fork of The Segment Consent Manager is an analytics.js add-on with support to consent management.
 
 At its core, the Consent Manager empowers your visitors to control and customize their tracking preferences on a website. They can opt out entirely of being tracked, or selectively opt out of tools in which they don’t want their information stored.
 
@@ -326,6 +320,13 @@ Type: `boolean`<br>
 Default: `false`
 
 Hide the close button of the consent banner.
+
+##### bannerAsModal
+
+Type: `boolean`<br>
+Default: `false`
+
+Show the consent banner as a modal, blocking the interaction while it is not accepted/rejected.
 
 ##### preferencesDialogTitle
 

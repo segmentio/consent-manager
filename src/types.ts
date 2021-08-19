@@ -89,6 +89,7 @@ export interface ConsentManagerProps {
   bannerTextColor?: string
   bannerBackgroundColor?: string
   bannerHideCloseButton: boolean
+  bannerAsModal?: boolean
   preferencesDialogTitle?: React.ReactNode
   preferencesDialogContent: React.ReactNode
   onError?: (error: Error | undefined) => void

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import styled from 'react-emotion'
 import fontStyles from './font-styles'
 import { ActionsBlockProps } from '../types'
@@ -9,6 +9,44 @@ interface RootProps {
   readonly textColor: string
   readonly hideCloseButton: boolean
 }
+
+interface ContentProps {
+  asModal?: boolean
+}
+
+const Overlay = styled('div')`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  opacity: 0.8;
+`
+
+const Centered = styled('div')`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  @media (max-width: 767px) {
+    width: 80vw;
+  }
+`
+
+const RootCentered = styled('div')<RootProps>`
+  ${fontStyles};
+  position: relative;
+  max-width: 500px;
+  padding: 18px;
+  padding-right: ${props => (props.hideCloseButton ? '18px' : '40px')};
+  background: ${props => props.backgroundColor};
+  color: ${props => props.textColor};
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.3;
+`
 
 const Root = styled('div')<RootProps>`
   ${fontStyles};
@@ -26,11 +64,11 @@ const Root = styled('div')<RootProps>`
   }
 `
 
-const Content = styled('div')`
-  margin-bottom: 8px;
+const Content = styled('div')<ContentProps>`
+  margin-bottom: ${props => (props.asModal ? '20px' : '8px')};
   @media (min-width: 768px) {
-    flex: 1;
-    margin-bottom: 0;
+    flex: auto;
+    margin-bottom: ${props => (props.asModal ? '20px' : '0')};
   }
   a,
   button {
@@ -91,6 +129,7 @@ interface Props {
   onAcceptAll: () => void
   onDenyAll: () => void
   hideCloseButton: boolean
+  asModal?: boolean
 }
 
 export default class Banner extends PureComponent<Props> {
@@ -108,17 +147,13 @@ export default class Banner extends PureComponent<Props> {
       textColor,
       onAcceptAll,
       onDenyAll,
-      hideCloseButton
+      hideCloseButton,
+      asModal
     } = this.props
 
-    return (
-      <Root
-        innerRef={innerRef}
-        backgroundColor={backgroundColor}
-        textColor={textColor}
-        hideCloseButton={hideCloseButton}
-      >
-        <Content>
+    const RootContent = (
+      <Fragment>
+        <Content asModal={asModal}>
           <P>{content}</P>
           <P>
             <button type="button" onClick={onChangePreferences}>
@@ -137,9 +172,11 @@ export default class Banner extends PureComponent<Props> {
             <GreenButton type="button" onClick={onAcceptAll}>
               Allow all
             </GreenButton>
-            <DefaultButton type="button" onClick={onDenyAll}>
-              Deny all
-            </DefaultButton>
+            {!asModal && (
+              <DefaultButton type="button" onClick={onDenyAll}>
+                Deny all
+              </DefaultButton>
+            )}
           </ActionsBlock>
         )}
         {!hideCloseButton && (
@@ -147,6 +184,34 @@ export default class Banner extends PureComponent<Props> {
             ✕
           </CloseButton>
         )}
+      </Fragment>
+    )
+
+    if (asModal) {
+      return (
+        <Fragment>
+          <Overlay />
+          <Centered>
+            <RootCentered
+              innerRef={innerRef}
+              backgroundColor={backgroundColor}
+              textColor={textColor}
+              hideCloseButton={hideCloseButton}
+            >
+              {RootContent}
+            </RootCentered>
+          </Centered>
+        </Fragment>
+      )
+    }
+    return (
+      <Root
+        innerRef={innerRef}
+        backgroundColor={backgroundColor}
+        textColor={textColor}
+        hideCloseButton={hideCloseButton}
+      >
+        {RootContent}
       </Root>
     )
   }

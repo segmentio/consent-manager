@@ -45,6 +45,7 @@ interface ContainerProps {
   bannerTextColor: string
   bannerBackgroundColor: string
   bannerHideCloseButton: boolean
+  bannerAsModal?: boolean
   preferencesDialogTitle: React.ReactNode
   preferencesDialogContent: React.ReactNode
   cancelDialogTitle: React.ReactNode
@@ -213,6 +214,7 @@ const Container: React.FC<ContainerProps> = props => {
           onAcceptAll={onAcceptAll}
           onDenyAll={onDenyAll}
           hideCloseButton={props.bannerHideCloseButton}
+          asModal={props.bannerAsModal}
         />
       )}
 

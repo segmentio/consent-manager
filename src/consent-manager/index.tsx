@@ -47,6 +47,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       bannerTextColor,
       bannerBackgroundColor,
       bannerHideCloseButton,
+      bannerAsModal,
       preferencesDialogTitle,
       preferencesDialogContent,
       cancelDialogTitle,
@@ -106,6 +107,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
               bannerBackgroundColor={
                 bannerBackgroundColor || ConsentManager.defaultProps.bannerBackgroundColor
               }
+              bannerAsModal={bannerAsModal}
               preferencesDialogTitle={preferencesDialogTitle}
               preferencesDialogContent={preferencesDialogContent}
               cancelDialogTitle={cancelDialogTitle}
