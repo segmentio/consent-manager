@@ -81,8 +81,8 @@ const ConsentManagerExample = props => {
         otherWriteKeys={['vMRS7xbsjH97Bb2PeKbEKvYDvgMm5T3l']}
         bannerContent={bannerContent}
         bannerSubContent={bannerSubContent}
-        bannerActionsBlock={props.bannerActionsBlock || bannerActionsBlock}
-        bannerHideCloseButton={true}
+        bannerActionsBlock={props.bannerActionsBlock}
+        bannerHideCloseButton={props.bannerHideCloseButton}
         preferencesDialogTitle={preferencesDialogTitle}
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
@@ -131,6 +131,15 @@ const ConsentManagerExample = props => {
   )
 }
 
-storiesOf('React Component / Banner as Modal', module).add(`Banner as Modal`, () => (
-  <ConsentManagerExample bannerAsModal bannerActionsBlock />
-))
+storiesOf('React Component / Banner as Modal', module)
+  .add(`Banner as Modal`, () => (
+    <ConsentManagerExample bannerAsModal bannerActionsBlock bannerHideCloseButton />
+  ))
+  .add(`Banner as Modal with close button`, () => <ConsentManagerExample bannerAsModal />)
+  .add(`Banner as Modal with custom buttons`, () => (
+    <ConsentManagerExample bannerAsModal bannerActionsBlock={bannerActionsBlock} />
+  ))
+
+  .add(`Banner as Modal with custom buttons and close button`, () => (
+    <ConsentManagerExample bannerAsModal />
+  ))

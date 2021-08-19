@@ -102,10 +102,14 @@ const P = styled('p')`
   }
 `
 
-const CloseButton = styled('button')`
+interface CloseButtonProps {
+  isTop?: boolean
+}
+
+const CloseButton = styled('button')<CloseButtonProps>`
   position: absolute;
   right: 8px;
-  top: 50%;
+  top: ${props => (props.isTop ? '20px' : '50%')};
   transform: translateY(-50%);
   padding: 8px;
   border: none;
@@ -180,7 +184,13 @@ export default class Banner extends PureComponent<Props> {
           </ActionsBlock>
         )}
         {!hideCloseButton && (
-          <CloseButton type="button" title="Close" aria-label="Close" onClick={onClose}>
+          <CloseButton
+            type="button"
+            title="Close"
+            aria-label="Close"
+            onClick={onClose}
+            isTop={asModal}
+          >
             ✕
           </CloseButton>
         )}
