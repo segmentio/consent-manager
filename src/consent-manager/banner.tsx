@@ -38,12 +38,26 @@ const P = styled('p')`
   margin: 0;
 `
 const ButtonContainer = styled('div')`
-  display: 'flex';
-  flexdirection: 'row';
-  justifycontent: 'flex-end';
-  flexwrap: 'nowrap';
-  margin: 0;
-  margin-top: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  margin: 16px 0 0;
+
+  @media only screen and (max-width: 400px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+
+    button {
+      margin-left: 0;
+      justify-content: center;
+    }
+    button:nth-child(even) {
+      margin: 8px 0;
+    }
+  }
 `
 
 const SettingsButton = styled(Button)`
