@@ -4,6 +4,25 @@
 
 [StoryBook](https://segmentio.github.io/consent-manager/index.html)
 
+- [Segment Consent Manager](#segment-consent-manager)
+	- [Features](#features)
+- [Usage](#usage)
+	- [Standalone Script](#standalone-script)
+		- [Options](#options)
+		- [Globals](#globals)
+		- [Callback Function](#callback-function)
+	- [ConsentManager](#consentmanager)
+		- [ConsentManager Props](#consentmanager-props)
+		- [ConsentManager global variables and callback functions](#consentmanager-global-variables-and-callback-functions)
+	- [ConsentManagerBuilder](#consentmanagerbuilder)
+		- [ConsentManagerBuilder Props](#consentmanagerbuilder-props)
+		- [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props)
+		- [Example](#example)
+	- [Utility functions](#utility-functions)
+- [Development](#development)
+	- [Publishing New Version](#publishing-new-version)
+- [License](#license)
+
 ## Segment Consent Manager
 
 The Segment Consent Manager is an analytics.js add-on with support to consent management.
@@ -14,6 +33,8 @@ It works by taking control of the analytics.js load process to only load destina
 
 _Segment works to ensure the Consent Manager Tech Demo works with most of our product pipeline. We cannot ensure it works in your specific implementation or website. Please contact our Professional Services team for implementation support. Please see the License.txt included._
 
+_Please note, Consent Manager is not currently compatible with [Personas](https://segment.com/docs/personas/). Personas may send user data to destinations the user has explicitly opted out of for data collection._
+
 ### Features
 
 - Give users the ability to opt-in or opt-out to tracking.
@@ -22,13 +43,12 @@ _Segment works to ensure the Consent Manager Tech Demo works with most of our pr
 - Or fully customizable UI/UX through React components.
 - EU traffic detection through [@segment/in-eu][ineu].
 - Ability for visitors to reconsent and change preferences.
-- Automatically asks again for consent after 12 months (365 days).
 - Automatically updates to reflect the destinations you have enabled in Segment.
 - **5.0.0**: Consent Manager will add consent metadata to the context of all track calls:
 
 Track call message payloads will be extended to include Consent metadata in the `context` object:
 
-```
+```js
 {
   "context": {
     "campaign": {},
@@ -61,7 +81,7 @@ Track call message payloads will be extended to include Consent metadata in the 
 
 **Breaking Changes:** Version 5.0.0 and above require that your analytics.js snippet include the method `addSourceMiddleware` in the `analytics.methods` array:
 
-```
+```js
 analytics.methods = [
   'trackSubmit',
   'trackClick',
@@ -85,7 +105,7 @@ analytics.methods = [
 
 ## Usage
 
-The Segment Consent Manager can be used in multiple ways, depending on how custom you want your visitor's experience to be.
+The Segment Consent Manager can be used in several ways, depending on how custom you want your visitor's experience to be.
 
 To get started, make sure you're using the latest version of the [analytics.js snippet][] (4.1.0 or above) and remove the `analytics.load("YOUR_WRITE_KEY");` call (so the consent manager can manage the loading process). Then continue onto one of the implementation methods below.
 
@@ -101,7 +121,7 @@ All of the [ConsentManager][] options are supported with the addition of these o
 
 ##### container
 
-Type: `string`
+**Type**: `string`
 
 [CSS selector][] to the DOM element that will host the consent banner. It should be an empty DOM element (usually a `<div>`) because the consent manager will replace any existing DOM elements inside it. The element must also exist on the page before the script is executed.
 
@@ -196,46 +216,84 @@ All the options are supported. The callback function also receives these exports
 
 ### ConsentManager
 
-The `ConsentManager` React component is a prebuilt consent manager UI (it's the one we use on <https://segment.com>) that uses the [ConsentManagerBuilder][] component under the hood. To use it, just mount the component where you want the consent banner to appear and pass in your own custom copy.
+The `ConsentManager` React component is a prebuilt consent manager UI (it's the one we use on https://segment.com) that uses the [ConsentManagerBuilder][] component under the hood. To use it, just mount the component where you want the consent banner to appear and pass in your own custom copy.
 
-#### Props
+#### ConsentManager Props
+
+This section lists the configurable props you can change when
+loading the out of the box Consent Manager. In [this demo](https://codepen.io/samuelkahr/pen/eYYrobB), these are all the props you can pass into the returned preferences object.
+
+<!-- TOC depthFrom:5 depthTo:5 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [writeKey](#writekey)
+- [otherWriteKeys](#otherwritekeys)
+- [shouldRequireConsent](#shouldrequireconsent)
+- [closeBehavior](#closebehavior)
+- [implyConsentOnInteraction](#implyconsentoninteraction)
+- [defaultDestinationBehavior](#defaultdestinationbehavior)
+- [cookieDomain](#cookiedomain)
+- [bannerContent](#bannercontent)
+- [bannerSubContent](#bannersubcontent)
+- [bannerTextColor](#bannertextcolor)
+- [bannerBackgroundColor](#bannerbackgroundcolor)
+- [preferencesDialogTitle](#preferencesdialogtitle)
+- [preferencesDialogContent](#preferencesdialogcontent)
+- [cancelDialogTitle](#canceldialogtitle)
+- [cancelDialogContent](#canceldialogcontent)
+- [customCategories](#customcategories)
+-
+
+<!-- /TOC -->
 
 ##### writeKey
 
-Type: `string`
+**Type**: `string`
+**Default**: none
 
 The write key analytics.js should be loaded with.
 
+You can find more information here.
+https://segment.com/docs/connections/find-writekey/
+
 ##### otherWriteKeys
 
-Type: `array<string>`<br>
-Default: `[]`
+**Type**: `array<string>`
+**Default**: `[]`
 
-Other write keys that you want to load destination information for. This is useful for including your server-side destinations in the consent manager, so that you can easily apply the user's tracking preferences to your server-side analytics too. _No data will be sent to these write keys._
+[Write keys](https://share.getcloudapp.com/jkunGzrw) for other sources so you can include destinations they use in the Consent Manager tool list. This only displays destinations that are not connected to the primary writeKey.
+
+The user’s consent preferences for these tools are not sent to these additional sources, but they are added to the `identify` call the Consent Manager sends to Segment. The user’s preferences can then be added to a raw data destination (like a data warehouse) or to a user profile in Personas.
 
 ##### shouldRequireConsent
 
-Type: `function`<br>
-Default: `() => true`
+**Type**: `function`
+**Default**: `() => true`
 
-Callback function that determines if consent is required before tracking can begin. Return `true` to show the consent banner and wait for consent (if no consent has been given yet). Return `false` to not show the consent banner and start tracking immediately (unless the user has opted out). The function can return a `Promise` that resolves to a boolean.
+Callback function that determines if consent is required before tracking begins. Set to `true` to show the consent banner, otherwise return `false` to not show consent banner and start tracking immediately.
+
+The function can return a `Promise` that resolves to a boolean.
+
+##### initialPreferences
+
+**Type**: object
+**Default**: {}
+
+Object that opts into users into tracking for the different tracking categories. For example `{‘Functional’:true}`
 
 ##### closeBehavior
 
-Type: `enum|string` or `function`<br>
-Default: `dismiss`
+**Type**: `enum|string` or `function`
+**Default**: `dismiss`
 
-An option to determine what should be the default behavior for the `x` button on the consent manager banner.
+This option sets the default behavior for the x (close) button on the Consent Manager banner. Available options:
 
-Options:
-
-- `dismiss` (default) - Dismisses the banner, but don't save or change any preferences. Analytics.js won't be loaded until explicit consent is given.
-- `accept` - Assume consent across every category.
-- `deny` - Denies consent across every category.
+- “dismiss” - dismisses the banner, but doesn't save or change any preferences. Analytics.js won’t load until consent is given.
+- “accept”- assume consent across every category.
+- ”deny” - denies consent across every category.
 
 `closeBehavior` can also be customized - i.e. don't load some categories, but load everything else. For example, if you wanted to load everything _except_ advertising, you could pass the following as `closeBehavior`:
 
-```
+```js
 closeBehavior={
   (categories) => ({
     ...categories,
@@ -248,98 +306,93 @@ closeBehavior={
 
 **_Breaking Change_** (versions < 3.0.0 will default this option `true`)
 
-Type: `boolean`<br>
-Default: `false` (as of 3.0.0)
+**Type**: `boolean`
+**Default**: `false` (as of 3.0.0)
 
-Whether or not consent should be implied if the user interacts with the website (clicks anywhere outside the consent manager banner or dialogs).
+Determines whether or not consent should be implied if the user interacts with the website by clicking anywhere outside the Consent Manager banner.
 
 ##### defaultDestinationBehavior
 
-Type: `string`<br>
-Default: 'disable'
+**Type**: `string`
+**Default**: `disable`
 
-Determines how newly detected destinations are treated when the user already has a cookie set on their browser. This will be relevent when you've added a connected a new destination to any of the sources managed by Consent Manager.
+Determines what the Consent Manager does if the user has already made consent selections and it detects new destination tools. (This is determined by checking if the user already has a cookie set on their browser.)
+
+This is relevant when you've added a connected a new destination to any of the sources managed by Consent Manager.
 
 Options:
 
-- `disable` (default) - Newly detected destinations are by default, disabled.
-- `enable` - Newly detected destinations are by default, enabled.
-- `imply` - Newly detected destinations are by default, enabled or disabled, depending on the user's consent to the consent group that the new destination belongs to.
-  - For example, if a user has already consented to the "marketingAndAnalytics" category, and we detect a new destination with category "Analytics", that destination will be enabled.
-- `ask` - If we detect new destinations upon initializing the Consent Manager, the preferences dialog will automatically open, asking the user for their consent again.
+- `disable` (default) - When you add new destinations, they are set to “disabled” unless a user updates their consent selections by default.
+- `enable` - When you add new destinations, they are set to “enabled” unless a user updates their consent selections.
+- `imply` - When you add new destinations, they are enabled or disabled based on the category to which they belong and the user's previous consent to that category.
+  For example, if a user already consented to the `marketingAndAnalytics` category, and you add a new destination which is in the `Analytics` category, that destination will be enabled until the user updates their consent selections.
+- `ask` - When you add new destinations, the Consent Manager automatically opens the preferences dialog on initialization, and asks the user for their consent again.
 
 ##### cookieDomain
 
-Type: `string`<br>
-Default: the [top most domain][top-domain] and all sub domains
+**Type**: `string`
+**Default**: the top most domain and all sub domains
 
 The domain the `tracking-preferences` cookie should be scoped to.
 
-##### cookieExpires
-
-Type: `number`<br>
-Default: 365
-
-The number of dates until the `tracking-preferences` cookie should expire.
-
-##### bannerContent
-
-Type: `PropTypes.node`
-
-The consent of the consent banner.
-
-##### bannerSubContent
-
-Type: `PropTypes.node`
-
-The call to action under the content in the consent banner.
-
-##### bannerTextColor
-
-Type: `string`<br>
-Default: `#fff`
-
-The color of the consent banner text.
-
 ##### bannerBackgroundColor
 
-Type: `string`<br>
-Default: `#1f4160`
+**Type**: `string`
+**Default**: `#1f4160`
 
 The color of the consent banner background.
 
+##### bannerContent
+
+**Type**: `PropTypes.node`
+
+The content of the [consent banner](https://share.getcloudapp.com/Apurj6zv).
+
+##### bannerSubContent
+
+**Type**: `PropTypes.node`
+
+The [call to action](https://share.getcloudapp.com/z8uXxpkZ) under the primary text in the Consent Manager banner.
+
+##### bannerTextColor
+
+**Type**: `string`
+**Default**: `#fff`
+
+The color of the consent banner text.
+
 ##### preferencesDialogTitle
 
-Type: `PropTypes.node`<br>
-Default: `Website Data Collection Preferences`
+**Type**: `PropTypes.node`
+**Default**: `Website Data Collection Preferences`
 
-The title of the preferences dialog.
+The [title of the preferences dialog](https://share.getcloudapp.com/jkuKlrAw).
 
 ##### preferencesDialogContent
 
-Type: `PropTypes.node`
+**Type**: `PropTypes.node`
 
-The top descriptive content of the preferences dialog.
+The top [descriptive content](https://share.getcloudapp.com/z8uXxJAQ) of the preferences dialog.
 
 ##### cancelDialogTitle
 
-Type: `PropTypes.node`<br>
-Default: `Are you sure you want to cancel?`
+**Type**: `PropTypes.node`
+**Default**: `Are you sure you want to cancel?`
 
-The title of the cancel dialog.
+[The title](https://share.getcloudapp.com/v1urD6R6) of the cancel dialog.
 
 ##### cancelDialogContent
 
-Type: `PropTypes.node`
+**Type**: `PropTypes.node`
 
-The content of the cancel dialog.
+The text displayed in the cancel dialog box.
 
 ##### customCategories
 
-Type: `PropTypes.object`<br>
-Default: `undefined`
+**Type**: `PropTypes.object`
+**Default**: `undefined`
 
-An object representing custom consent categories - mapping custom categories to Segment integrations, i.e:
+An object that represents custom consent categories, and which tools are included in these categories. For example, for CCPA compliance, you could create a custom “Do Not Sell” category and list relevant destinations to it.
 
 ```javascript
 const customCategories = {
@@ -352,7 +405,7 @@ const customCategories = {
 
 The values for `integrations` should be an integration's creationName (`integration.creationName`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
 
-#### Example
+##### Example
 
 ```javascript
 import React from 'react'
@@ -399,102 +452,162 @@ export default function() {
 }
 ```
 
-##### cdnHost
+#### ConsentManager global variables and callback functions
 
-Type: `string`<br>
-Default: `cdn.segment.com`
+This section lists the available callback functions you can use in
+the `consentManagerConfig` function, and which are also accessible
+globally in the window once Consent Manager loads on the site.
 
-The CDN to fetch list of integrations from
+For example, when you invoke [consentManager.preferences.loadPreferences() from the console](https://share.getcloudapp.com/YEuAXj89) it displays the user’s current tracking preferences.
+
+All of these callback functions are accessible from `window.consentManagerConfig = function(exports) {}`.
+
+##### exports.version
+
+**Global Variable**: `consentManager.version`
+
+Version of the Consent Manager. Useful for debugging if certain functionality not showing up, can use this to verify you are using most up to date version of Consent Manager
+
+##### exports.React
+
+**Global Variable**: (none)
+
+A reference to the [Preact library](https://preactjs.com/) (the API is React compatible). Useful if you need to use virtual DOM in your content and or customize the consent manager banner content beyond what is available as an editable props.
+
+##### exports.openConsentManager()
+
+**Global Variable**: `consentManager.openConsentManager()`
+
+Opens the Consent Manager preferences dialog.
+
+##### Functionality incorporated into exports.inRegion()
+
+**Global Variable**: `consentManager.inEU()`
+
+Returns true if user is in the EU
+
+##### exports.inRegions()
+
+**Global Variable**: (none)
+
+Call to [in-regions package](https://www.npmjs.com/package/@segment/in-regions) to determine user's location based on timezone and browser language. Function returns `true|false` on whether users are in a specified region, which can be passed into `shouldRequireConsent` prop. For example to return true for users in California, pass in `exports.inRegions([“CA”])`. Pass in “EU” to return true for users in European Union.
+
+##### exports.doNotTrack()
+
+**Global Variable**: `consentManager.doNotTrack()`
+
+Returns user’s [Do Not Track](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/doNotTrack) preferences.
+
+##### exports.consentManager.preferences
+
+**Global Variable**: `consentManager.preferences`
+
+Returns an instance of PreferencesManager with the following helper functions below.
+
+- `exports.consentManager.preferences.loadpreferences`:
+  Returns the cookie value for consent preferences (what's contained in ‘tracking-preferences’ cookie)
+- `exports.consentManager.preferences.savePreferences`:
+  Allows for managing the consent cookie programmatically (useful if you want to re-hydrate consent from your own database or prefill consent options)
+- `exports.consentManager.preferences.onPreferencesSaved` (callback): Allows for subscribing to changes in preferences via callback function
 
 ### ConsentManagerBuilder
 
 The `ConsentManagerBuilder` React component is a low level render props component for building your own consent manager UI. It abstracts away all the logic for fetching destinations, checking/saving consent and loading analytics.js.
 
-#### Props
+#### ConsentManagerBuilder Props
+
+- [children](#children)
+- [writeKey](#writekey)
+- [otherWriteKeys](#otherwritekeys)
+- [shouldRequireConsent](#shouldrequireconsent)
+- [initialPreferences](#initialpreferences)
+- [defaultDestinationBehavior](#defaultdestinationbehavior)
+- [mapCustomPreferences](#mapcustompreferences)
+- [cookieDomain](#cookiedomain)
 
 ##### children
 
-Type: `function`
+**Type**: `function`
 
 The render props function that returns your UI.
 
 ##### writeKey
 
-Type: `string`
+**Type**: `string`
 
 The write key analytics.js should be loaded with.
 
 ##### otherWriteKeys
 
-Type: `array<string>`<br>
-Default: `[]`
+**Type**: `array<string>`
+**Default**: `[]`
 
 Other write keys that you want to load destination information for. This is useful for including your server-side destinations in the consent manager, so that you can easily apply the user's tracking preferences to your server-side analytics too. _No data will be sent to these write keys._
 
 ##### shouldRequireConsent
 
-Type: `function`<br>
-Default: `() => true`
+**Type**: `function`
+**Default**: `() => true`
 
 Callback function that determines if consent is required before tracking can begin. Return `true` to show the consent banner and wait for consent (if no consent has been given yet). Return `false` to not show the consent banner and start tracking immediately (unless the user has opted out). The function can return a `Promise` that resolves to a boolean.
 
 ##### initialPreferences
 
-Type: `object`<br>
-Default: `{}`
+**Type**: `object`
+**Default**: `{}`
 
 The initial value of the preferences. By default it should be an object map of `{destinationId: true|false}`. If you're using [mapCustomPreferences][] it should be an object map of your custom preferences' default values.
 
 ##### defaultDestinationBehavior
 
-Type: `string`<br>
-Default: 'disable'
+**Type**: `string`
+**Default**: `disable`
 
-Determines how newly detected destinations are treated when the user already has a cookie set on their browser. This will be relevent when you've added a connected a new destination to any of the sources managed by Consent Manager.
+Determines what the Consent Manager does if the user has already made consent selections and it detects new destination tools. (This is determined by checking if the user already has a cookie set on their browser.)
+
+This is relevant when you've added a connected a new destination to any of the sources managed by Consent Manager.
 
 Options:
 
-- `disable` (default) - Newly detected destinations are by default, disabled.
-- `enable` - Newly detected destinations are by default, enabled.
-- `imply` - Newly detected destinations are by default, enabled or disabled, depending on the user's consent to the consent group that the new destination belongs to.
-  - For example, if a user has already consented to the "marketingAndAnalytics" category, and we detect a new destination with category "Analytics", that destination will be enabled.
+- `disable` (default) - When you add new destinations, they are set to “disabled” unless a user updates their consent selections by default.
+- `enable` - When you add new destinations, they are set to “enabled” unless a user updates their consent selections.
+- `imply` - When you add new destinations, they are enabled or disabled based on the category to which they belong and the user's previous consent to that category.
+  For example, if a user already consented to the `marketingAndAnalytics` category, and you add a new destination which is in the `Analytics` category, that destination will be enabled until the user updates their consent selections.
+- `ask` - When you add new destinations, the Consent Manager automatically opens the preferences dialog on initialization, and asks the user for their consent again.
 
-This setting will also also affect replays to new destinations. Only `disable` and `enable` will apply to these replays. Setting `defaultDestinationBehavior` to `imply` here will be interpreted as `enable` during a replay.
+This setting also also affects [Replays](https://segment.com/docs/guides/what-is-replay/) to new destinations. Only `disable` and `enable` apply to these replays. If you set `defaultDestinationBehavior` to `imply`, Segment interprets this as `enable` during a replay.
 
 ##### mapCustomPreferences
 
-Type: `function`<br>
-Default: `undefined`
+**Type**: `function`
+**Default**: `undefined`
 
 Callback function allows you to use a custom preferences format (e.g: categories) instead of the default destination based one. The function gets called during the consent saving process and gets passed `(destinations, preferences)`. The function should return `{destinationPreferences, customPreferences}` where `destinationPreferences` is your custom preferences mapped to the destinations format (`{destiantionId: true|false}`) and `customPreferences` is your custom preferences if you changed them in the callback (optional).
 
 ##### cookieDomain
 
-Type: `string`<br>
-Default: the [top most domain][top-domain] and all sub domains
+**Type**: `string`
+**Default**: the [top most domain][top-domain] and all sub domains
 
 The domain the `tracking-preferences` cookie should be scoped to.
 
-##### cookieName
+#### ConsentManagerBuilder Render Props
 
-Type: `string`<br>
-Default: `tracking-preferences`
-
-The cookie name that should be used to store tracking preferences cookie
-
-#### cookieExpires
-
-Type: `number`<br>
-Default: 365
-
-The number of dates until the `tracking-preferences` cookie should expire.
-
-#### Render Props
+- [destinations](#destinations)
+- [newDestinations](#newdestinations)
+- [preferences](#preferences)
+- [destinationPreferences](#destinationpreferences)
+- [havePreferencesChanged](#havepreferenceschanged)
+- [isConsentRequired](#isconsentrequired)
+- [workspaceAddedNewDestinations](#workspaceaddednewdestinations)
+- [setPreferences](#setpreferences)
+- [resetPreferences](#resetpreferences)
+- [saveConsent](#saveconsent)
 
 ##### destinations
 
-Type: `array<object>`<br>
-Default: `[]`
+**Type**: `array<object>`
+**Default**: `[]`
 
 Destinations enabled for the provided write keys. Each destination contains these properties:
 
@@ -510,29 +623,29 @@ Destinations enabled for the provided write keys. Each destination contains thes
 
 ##### newDestinations
 
-Type: `array<object>`<br>
-Default: `[]`
+**Type**: `array<object>`
+**Default**: `[]`
 
 New destinations that have been enabled since the user last gave consent.
 
 ##### preferences
 
-Type: `object`<br>
-Default: `{}`
+**Type**: `object`
+**Default**: `{}`
 
 The current preferences in state. By default if should be in the format of `{destinationId: true|false}`, but if you're using [mapCustomPreferences][] the object map can be in any format you want. _Note: this isn't the saved preferences._
 
 ##### destinationPreferences
 
-Type: `object`<br>
-Default: `{}`
+**Type**: `object`
+**Default**: `{}`
 
 The current _destination specific_ preferences, i.e. `{Amplitude: true}`.
 
 ##### havePreferencesChanged
 
-Type: `boolean`<br>
-Default: `false`
+**Type**: `boolean`
+**Default**: `false`
 
 A boolean value representing whether or not the user has changed their preferences since opening the preferences modal. Will be set to `true` if the user interacts with the preferences modal by selecting "Yes" or "No" on any of the consent categories.
 
@@ -540,33 +653,33 @@ This is used to not reload the page if no preferences have changed, as to not cr
 
 ##### isConsentRequired
 
-Type: `boolean`<br>
-Default: `true`
+**Type**: `boolean`
+**Default**: `true`
 
 The result of [shouldRequireConsent][].
 
 ##### workspaceAddedNewDestinations
 
-Type: `boolean`<br>
-Default: `false`
+**Type**: `boolean`
+**Default**: `false`
 
 A boolean value representing whether or not there have been new destinations connected to the source(s) managed by Consent Manager, compared to the destinations set on the existing cookie.
 
 ##### setPreferences
 
-Type: `function(object|boolean)`
+**Type**: `function(object|boolean)`
 
 Sets a preference to a new value in state. By default it takes an object map in the format of `{destinationId: true|false}`, but if you're using [mapCustomPreferences][] the object map can be in any format you want. It behaves like `setState()` in that you can set one or more preferences at a time and they get merged with what's currently in state. You can also pass a boolean to set all destination preferences to `true` or `false` (you shouldn't do this if you're using [mapCustomPreferences][]).
 
 ##### resetPreferences
 
-Type: `function`
+**Type**: `function`
 
 Resets the [preferences][] state to the value saved in the cookie. Useful for resetting the state when the preferences dialog is closed without saving for example.
 
 ##### saveConsent
 
-Type: `function(object|boolean)`
+**Type**: `function(object|boolean)`
 
 Saves the preferences currently in state to a cookie called `tracking-preferences`, triggers an identify call with `destinationTrackingPreferences` and `customTrackingPreferences` traits and then reloads analytics.js using the new preferences. It can also be passed preferences like [setPreferences][] to do a final update before saving.
 
@@ -619,13 +732,6 @@ export default function() {
 }
 ```
 
-##### cdnHost
-
-Type: `string`<br>
-Default: `cdn.segment.com`
-
-The CDN to fetch list of integrations from
-
 ### Utility functions
 
 - `openConsentManager()` - Opens the [ConsentManager][] preferences dialog.
@@ -636,7 +742,7 @@ The CDN to fetch list of integrations from
 To run our storybook locally, simply do:
 
 ```
-yarn dev
+$ yarn dev
 ```
 
 and the storybook should be opened in your browser. We recommend adding a new story for new features, and testing against existing stories when making bug fixes.
@@ -646,8 +752,8 @@ and the storybook should be opened in your browser. We recommend adding a new st
 This package follows semantic versioning. To publish a new version:
 
 ```
-npm version <new-version>
-npm publish
+$ npm version <new-version>
+$ npm publish
 ```
 
 ## License
