@@ -12,12 +12,14 @@
 		- [Globals](#globals)
 		- [Callback Function](#callback-function)
 	- [ConsentManager](#consentmanager)
+		- [Install](#install)
+		- [Example](#example)
 		- [ConsentManager Props](#consentmanager-props)
-		- [ConsentManager global variables and callback functions](#consentmanager-global-variables-and-callback-functions)
 	- [ConsentManagerBuilder](#consentmanagerbuilder)
+  	- [Install](#install-1)
+		- [Example](#example-1)
 		- [ConsentManagerBuilder Props](#consentmanagerbuilder-props)
 		- [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props)
-		- [Example](#example)
 	- [Utility functions](#utility-functions)
 - [Development](#development)
 	- [Publishing New Version](#publishing-new-version)
@@ -209,7 +211,7 @@ All the options are supported. The callback function also receives these exports
 </script>
 
 <script
-  src="https://unpkg.com/@segment/consent-manager@5.0.0/standalone/consent-manager.js"
+  src="https://unpkg.com/@segment/consent-manager@5.2.0/standalone/consent-manager.js"
   defer
 ></script>
 ```
@@ -217,6 +219,65 @@ All the options are supported. The callback function also receives these exports
 ### ConsentManager
 
 The `ConsentManager` React component is a prebuilt consent manager UI (it's the one we use on https://segment.com) that uses the [ConsentManagerBuilder][] component under the hood. To use it, just mount the component where you want the consent banner to appear and pass in your own custom copy.
+
+_Note: Consent Manager is React-based so is not currently compatible with other frameworks like Vue.js or Angular. In case you want to use it in another framework that is not React, you should use the Standalone implementation._
+
+#### Install
+Using npm:
+```
+npm install @segment/consent-manager
+```
+Using yarn:
+```
+yarn add @segment/consent-manager
+```
+
+#### Example
+
+```javascript
+import React from 'react'
+import { ConsentManager, openConsentManager } from '@segment/consent-manager'
+import inEU from '@segment/in-eu'
+
+export default function() {
+  const bannerContent = (
+    <span>
+      We use cookies (and other similar technologies) to collect data to improve your experience on
+      our site. By using our website, you’re agreeing to the collection of data as described in our{' '}
+      <a href="/docs/legal/website-data-collection-policy/" target="_blank">
+        Website Data Collection Policy
+      </a>
+      .
+    </span>
+  )
+  const bannerSubContent = 'You can change your preferences at any time.'
+  const preferencesDialogTitle = 'Website Data Collection Preferences'
+  const preferencesDialogContent =
+    'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
+  const cancelDialogTitle = 'Are you sure you want to cancel?'
+  const cancelDialogContent =
+    'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
+
+  return (
+    <div>
+      <ConsentManager
+        writeKey="<your-segment-write-key>"
+        shouldRequireConsent={inEU}
+        bannerContent={bannerContent}
+        bannerSubContent={bannerSubContent}
+        preferencesDialogTitle={preferencesDialogTitle}
+        preferencesDialogContent={preferencesDialogContent}
+        cancelDialogTitle={cancelDialogTitle}
+        cancelDialogContent={cancelDialogContent}
+      />
+
+      <button type="button" onClick={openConsentManager}>
+        Website Data Collection Preferences
+      </button>
+    </div>
+  )
+}
+```
 
 #### ConsentManager Props
 
@@ -241,7 +302,6 @@ loading the out of the box Consent Manager. In [this demo](https://codepen.io/sa
 - [cancelDialogTitle](#canceldialogtitle)
 - [cancelDialogContent](#canceldialogcontent)
 - [customCategories](#customcategories)
--
 
 <!-- /TOC -->
 
@@ -405,114 +465,70 @@ const customCategories = {
 
 The values for `integrations` should be an integration's creationName (`integration.creationName`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
 
-##### Example
-
-```javascript
-import React from 'react'
-import { ConsentManager, openConsentManager } from '@segment/consent-manager'
-import inEU from '@segment/in-eu'
-
-export default function() {
-  const bannerContent = (
-    <span>
-      We use cookies (and other similar technologies) to collect data to improve your experience on
-      our site. By using our website, you’re agreeing to the collection of data as described in our{' '}
-      <a href="/docs/legal/website-data-collection-policy/" target="_blank">
-        Website Data Collection Policy
-      </a>
-      .
-    </span>
-  )
-  const bannerSubContent = 'You can change your preferences at any time.'
-  const preferencesDialogTitle = 'Website Data Collection Preferences'
-  const preferencesDialogContent =
-    'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
-  const cancelDialogTitle = 'Are you sure you want to cancel?'
-  const cancelDialogContent =
-    'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
-
-  return (
-    <div>
-      <ConsentManager
-        writeKey="<your-segment-write-key>"
-        shouldRequireConsent={inEU}
-        bannerContent={bannerContent}
-        bannerSubContent={bannerSubContent}
-        preferencesDialogTitle={preferencesDialogTitle}
-        preferencesDialogContent={preferencesDialogContent}
-        cancelDialogTitle={cancelDialogTitle}
-        cancelDialogContent={cancelDialogContent}
-      />
-
-      <button type="button" onClick={openConsentManager}>
-        Website Data Collection Preferences
-      </button>
-    </div>
-  )
-}
-```
-
-#### ConsentManager global variables and callback functions
-
-This section lists the available callback functions you can use in
-the `consentManagerConfig` function, and which are also accessible
-globally in the window once Consent Manager loads on the site.
-
-For example, when you invoke [consentManager.preferences.loadPreferences() from the console](https://share.getcloudapp.com/YEuAXj89) it displays the user’s current tracking preferences.
-
-All of these callback functions are accessible from `window.consentManagerConfig = function(exports) {}`.
-
-##### exports.version
-
-**Global Variable**: `consentManager.version`
-
-Version of the Consent Manager. Useful for debugging if certain functionality not showing up, can use this to verify you are using most up to date version of Consent Manager
-
-##### exports.React
-
-**Global Variable**: (none)
-
-A reference to the [Preact library](https://preactjs.com/) (the API is React compatible). Useful if you need to use virtual DOM in your content and or customize the consent manager banner content beyond what is available as an editable props.
-
-##### exports.openConsentManager()
-
-**Global Variable**: `consentManager.openConsentManager()`
-
-Opens the Consent Manager preferences dialog.
-
-##### Functionality incorporated into exports.inRegion()
-
-**Global Variable**: `consentManager.inEU()`
-
-Returns true if user is in the EU
-
-##### exports.inRegions()
-
-**Global Variable**: (none)
-
-Call to [in-regions package](https://www.npmjs.com/package/@segment/in-regions) to determine user's location based on timezone and browser language. Function returns `true|false` on whether users are in a specified region, which can be passed into `shouldRequireConsent` prop. For example to return true for users in California, pass in `exports.inRegions([“CA”])`. Pass in “EU” to return true for users in European Union.
-
-##### exports.doNotTrack()
-
-**Global Variable**: `consentManager.doNotTrack()`
-
-Returns user’s [Do Not Track](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/doNotTrack) preferences.
-
-##### exports.consentManager.preferences
-
-**Global Variable**: `consentManager.preferences`
-
-Returns an instance of PreferencesManager with the following helper functions below.
-
-- `exports.consentManager.preferences.loadpreferences`:
-  Returns the cookie value for consent preferences (what's contained in ‘tracking-preferences’ cookie)
-- `exports.consentManager.preferences.savePreferences`:
-  Allows for managing the consent cookie programmatically (useful if you want to re-hydrate consent from your own database or prefill consent options)
-- `exports.consentManager.preferences.onPreferencesSaved` (callback): Allows for subscribing to changes in preferences via callback function
 
 ### ConsentManagerBuilder
 
 The `ConsentManagerBuilder` React component is a low level render props component for building your own consent manager UI. It abstracts away all the logic for fetching destinations, checking/saving consent and loading analytics.js.
+
+_Note: ConsentManagerBuilder is React-based so is not currently compatible with other frameworks like Vue.js or Angular. In case you want to use it in another framework that is not React, you should use the Standalone implementation._
+
+#### Install:
+Using npm:
+```
+npm install @segment/consent-manager
+```
+Using yarn:
+```
+yarn add @segment/consent-manager
+```
+#### Example
+
+For a more detailed/advanced example, checkout the [ConsentManager implementation][].
+
+```javascript
+import React from 'react'
+import { ConsentManagerBuilder } from '@segment/consent-manager'
+
+export default function() {
+  return (
+    <ConsentManagerBuilder writeKey="<your-segment-write-key>">
+      {({ destinations, preferences, setPreferences, saveConsent }) => (
+        <div>
+          <h2>Tracking tools</h2>
+          <ul>
+            {destinations.map(destination => (
+              <li key={destination.id}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={Boolean(preferences[destination.id])}
+                    onChange={() =>
+                      setPreferences({
+                        [destination.id]: !preferences[destination.id]
+                      })
+                    }
+                  />
+                  {destination.name}
+                </label>
+              </li>
+            ))}
+          </ul>
+
+          <button type="button" onClick={() => saveConsent()}>
+            Save
+          </button>
+          <button type="button" onClick={() => saveConsent(true)}>
+            Allow all
+          </button>
+          <button type="button" onClick={() => saveConsent(false)}>
+            Deny all
+          </button>
+        </div>
+      )}
+    </ConsentManagerBuilder>
+  )
+}
+```
 
 #### ConsentManagerBuilder Props
 
@@ -683,54 +699,6 @@ Resets the [preferences][] state to the value saved in the cookie. Useful for re
 
 Saves the preferences currently in state to a cookie called `tracking-preferences`, triggers an identify call with `destinationTrackingPreferences` and `customTrackingPreferences` traits and then reloads analytics.js using the new preferences. It can also be passed preferences like [setPreferences][] to do a final update before saving.
 
-#### Example
-
-For a more detailed/advanced example, checkout the [ConsentManager implementation][].
-
-```javascript
-import React from 'react'
-import { ConsentManagerBuilder } from '@segment/consent-manager'
-
-export default function() {
-  return (
-    <ConsentManagerBuilder writeKey="<your-segment-write-key>">
-      {({ destinations, preferences, setPreferences, saveConsent }) => (
-        <div>
-          <h2>Tracking tools</h2>
-          <ul>
-            {destinations.map(destination => (
-              <li key={destination.id}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={Boolean(preferences[destination.id])}
-                    onChange={() =>
-                      setPreferences({
-                        [destination.id]: !preferences[destination.id]
-                      })
-                    }
-                  />
-                  {destination.name}
-                </label>
-              </li>
-            ))}
-          </ul>
-
-          <button type="button" onClick={() => saveConsent()}>
-            Save
-          </button>
-          <button type="button" onClick={() => saveConsent(true)}>
-            Allow all
-          </button>
-          <button type="button" onClick={() => saveConsent(false)}>
-            Deny all
-          </button>
-        </div>
-      )}
-    </ConsentManagerBuilder>
-  )
-}
-```
 
 ### Utility functions
 
