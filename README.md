@@ -220,7 +220,7 @@ All the options are supported. The callback function also receives these exports
 
 The `ConsentManager` React component is a prebuilt consent manager UI (it's the one we use on https://segment.com) that uses the [ConsentManagerBuilder][] component under the hood. To use it, just mount the component where you want the consent banner to appear and pass in your own custom copy.
 
-_Note: Consent Manager is React-based so is not currently compatible with other frameworks like Vue.js or Angular. In case you want to use it in another framework that is not React, you should use the Standalone implementation._
+_Note: Consent Manager is React-based so is not currently compatible with other frameworks such as Vue.js or Angular. In case you want to use it in another framework that is not React, you should use the Standalone implementation._
 
 #### Install
 Using npm:
@@ -470,9 +470,9 @@ The values for `integrations` should be an integration's creationName (`integrat
 
 The `ConsentManagerBuilder` React component is a low level render props component for building your own consent manager UI. It abstracts away all the logic for fetching destinations, checking/saving consent and loading analytics.js.
 
-_Note: ConsentManagerBuilder is React-based so is not currently compatible with other frameworks like Vue.js or Angular. In case you want to use it in another framework that is not React, you should use the Standalone implementation._
+_Note: ConsentManagerBuilder is React-based so is not currently compatible with other frameworks such as Vue.js or Angular. In case you want to use it in another framework that is not React, you should use the Standalone implementation._
 
-#### Install:
+#### Install
 Using npm:
 ```
 npm install @segment/consent-manager
