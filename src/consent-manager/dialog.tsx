@@ -35,7 +35,7 @@ interface RootProps {
   readonly width: number | string | undefined
 }
 
-const Root = styled('section')<RootProps>`
+const Root = styled<RootProps, 'section'>('section')`
   ${fontStyles};
   display: flex;
   flex-direction: column;

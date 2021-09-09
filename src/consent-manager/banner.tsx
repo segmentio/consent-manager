@@ -35,7 +35,7 @@ const Centered = styled('div')`
   }
 `
 
-const RootCentered = styled('div')<RootProps>`
+const RootCentered = styled<RootProps, 'div'>('div')`
   ${fontStyles};
   position: relative;
   max-width: 500px;
@@ -48,7 +48,7 @@ const RootCentered = styled('div')<RootProps>`
   line-height: 1.3;
 `
 
-const Root = styled('div')<RootProps>`
+const Root = styled<RootProps, 'div'>('div')`
   ${fontStyles};
   position: relative;
   padding: 8px;
@@ -64,7 +64,7 @@ const Root = styled('div')<RootProps>`
   }
 `
 
-const Content = styled('div')<ContentProps>`
+const Content = styled<ContentProps, 'div'>('div')`
   margin-bottom: ${props => (props.asModal ? '20px' : '8px')};
   @media (min-width: 768px) {
     flex: auto;
@@ -106,7 +106,7 @@ interface CloseButtonProps {
   isTop?: boolean
 }
 
-const CloseButton = styled('button')<CloseButtonProps>`
+const CloseButton = styled<CloseButtonProps, 'button'>('button')`
   position: absolute;
   right: 8px;
   top: ${props => (props.isTop ? '20px' : '50%')};
