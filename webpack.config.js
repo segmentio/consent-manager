@@ -38,8 +38,7 @@ module.exports = {
     new webpack.BannerPlugin(
       `
 Consent Manager v${pkg.version}
-https://github.com/boatim/consent-manager
-forked from https://github.com/segmentio/consent-manager
+https://github.com/segmentio/consent-manager
 Released under the MIT license
 Copyright © 2021, Segment.io, Inc
     `.trim()

@@ -1,6 +1,11 @@
-# Forked version of The Segment Consent Manager (Not Official repository)
+# consent-manager [![build status](https://circleci.com/gh/segmentio/consent-manager.svg?style=svg&circle-token=d3a9e0da7a07fb443f1b4e558ad9c60a55dca223)](https://circleci.com/gh/segmentio/consent-manager)
 
-The Fork of The Segment Consent Manager is an analytics.js add-on with support to consent management.
+> Drop-in consent management plugin for analytics.js
+> [StoryBook](https://segmentio.github.io/consent-manager/index.html)
+
+## Segment Consent Manager
+
+The Segment Consent Manager is an analytics.js add-on with support to consent management.
 
 At its core, the Consent Manager empowers your visitors to control and customize their tracking preferences on a website. They can opt out entirely of being tracked, or selectively opt out of tools in which they don’t want their information stored.
 

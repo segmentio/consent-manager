@@ -1,5 +1,5 @@
 {
-  "name": "@boatim/consent-manager",
+  "name": "@segment/consent-manager",
   "version": "5.4.0",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
@@ -8,10 +8,7 @@
     "analytics",
     "analytics.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/boatim/consent-manager.git"
-  },
+  "repository": "segmentio/consent-manager",
   "license": "MIT",
   "main": "commonjs/index.js",
   "module": "esm/index.js",
