@@ -4,25 +4,9 @@
 
 [StoryBook](https://segmentio.github.io/consent-manager/index.html)
 
-- [Segment Consent Manager](#segment-consent-manager)
-  - [Features](#features)
-- [Usage](#usage)
-  - [Standalone Script](#standalone-script)
-    - [Options](#options)
-    - [Globals](#globals)
-    - [Callback Function](#callback-function)
-  - [ConsentManager](#consentmanager)
-    - [Install](#install)
-    - [Example](#example)
-    - [ConsentManager Props](#consentmanager-props)
-  - [ConsentManagerBuilder](#consentmanagerbuilder)
-  - [Install](#install-1)
-  - [Example](#example-1)
-  - [ConsentManagerBuilder Props](#consentmanagerbuilder-props)
-  - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props)
-  - [Utility functions](#utility-functions)
-- [Development](#development)
-  - [Publishing New Version](#publishing-new-version)
+- [Segment Consent Manager](#segment-consent-manager) - [Features](#features)
+- [Usage](#usage) - [Standalone Script](#standalone-script) - [Options](#options) - [Globals](#globals) - [Callback Function](#callback-function) - [ConsentManager](#consentmanager) - [Install](#install) - [Example](#example) - [ConsentManager Props](#consentmanager-props) - [ConsentManagerBuilder](#consentmanagerbuilder) - [Install](#install-1) - [Example](#example-1) - [ConsentManagerBuilder Props](#consentmanagerbuilder-props) - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props) - [Utility functions](#utility-functions)
+- [Development](#development) - [Publishing New Version](#publishing-new-version)
 - [License](#license)
 
 ## Segment Consent Manager
@@ -218,7 +202,7 @@ All the options are supported. The callback function also receives these exports
 
 ### ConsentManager
 
-The `ConsentManager` React component is a prebuilt consent manager UI (it's the one we use on <https://segment.com>) that uses the [ConsentManagerBuilder][] component under the hood. To use it, just mount the component where you want the consent banner to appear and pass in your own custom copy.
+The `ConsentManager` React component is a prebuilt consent manager UI (it's the one we use on https://segment.com) that uses the [ConsentManagerBuilder][] component under the hood. To use it, just mount the component where you want the consent banner to appear and pass in your own custom copy.
 
 _Note: Consent Manager is React-based so is not currently compatible with other frameworks such as Vue.js or Angular. In case you want to use it in another framework that is not React, you should use the Standalone implementation._
 
@@ -317,7 +301,7 @@ loading the out of the box Consent Manager. In [this demo](https://codepen.io/sa
 The write key analytics.js should be loaded with.
 
 You can find more information here.
-<https://segment.com/docs/connections/find-writekey/>
+https://segment.com/docs/connections/find-writekey
 
 ##### otherWriteKeys
 
