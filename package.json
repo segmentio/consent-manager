@@ -12,7 +12,7 @@
   "license": "MIT",
   "main": "commonjs/index.js",
   "module": "esm/index.js",
-  "types": "types/src/index.d.ts",
+  "types": "types/index.d.ts",
   "sideEffects": false,
   "files": [
     "commonjs",
