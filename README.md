@@ -5,7 +5,8 @@
 [StoryBook](https://segmentio.github.io/consent-manager/index.html)
 
 - [Segment Consent Manager](#segment-consent-manager) - [Features](#features)
-- [Usage](#usage) - [Standalone Script](#standalone-script) - [Options](#options) - [Globals](#globals) - [Callback Function](#callback-function) - [ConsentManager](#consentmanager) - [Install](#install) - [Example](#example) - [ConsentManager Props](#consentmanager-props) - [ConsentManagerBuilder](#consentmanagerbuilder) - [Install](#install-1) - [Example](#example-1) - [ConsentManagerBuilder Props](#consentmanagerbuilder-props) - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props) - [Utility functions](#utility-functions)
+- [Usage](#usage) - [Standalone Script](#standalone-script) - [Options](#options) - [Globals](#globals) - [Callback Function](#callback-function) - [ConsentManager](#consentmanager) - [Install](#install) - [Example](#example) - [ConsentManager Props](#consentmanager-props) - [ConsentManagerBuilder](#consentmanagerbuilder)
+  - [Install](#install-1) - [Example](#example-1) - [ConsentManagerBuilder Props](#consentmanagerbuilder-props) - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props) - [Utility functions](#utility-functions)
 - [Development](#development) - [Publishing New Version](#publishing-new-version)
 - [License](#license)
 
