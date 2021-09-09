@@ -734,7 +734,7 @@ Saves the preferences currently in state to a cookie called `tracking-preference
 To run our storybook locally, simply do:
 
 ```
-yarn dev
+$ yarn dev
 ```
 
 and the storybook should be opened in your browser. We recommend adding a new story for new features, and testing against existing stories when making bug fixes.
@@ -744,15 +744,15 @@ and the storybook should be opened in your browser. We recommend adding a new st
 This package follows semantic versioning. To publish a new version:
 
 ```
-npm version <new-version>
-npm publish
+$ npm version <new-version>
+$ npm publish
 ```
 
 ## License
 
 consent-manager is released under the MIT license.
 
-Copyright © 2018, Segment.io, Inc.
+Copyright © 2021, Segment.io, Inc.
 
 [analytics.js snippet]: https://segment.com/docs/sources/website/analytics.js/quickstart/#step-1-copy-the-snippet
 [preact]: https://preactjs.com
