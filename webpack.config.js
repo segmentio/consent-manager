@@ -40,7 +40,7 @@ module.exports = {
 Consent Manager v${pkg.version}
 https://github.com/segmentio/consent-manager
 Released under the MIT license
-Copyright © 2018, Segment.io, Inc
+Copyright © 2021, Segment.io, Inc
     `.trim()
     )
   ]

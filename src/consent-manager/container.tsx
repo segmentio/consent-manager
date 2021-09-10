@@ -8,7 +8,8 @@ import {
   Destination,
   CategoryPreferences,
   CustomCategories,
-  DefaultDestinationBehavior
+  DefaultDestinationBehavior,
+  ActionsBlockProps
 } from '../types'
 
 const emitter = new EventEmitter()
@@ -40,8 +41,11 @@ interface ContainerProps {
   implyConsentOnInteraction: boolean
   bannerContent: React.ReactNode
   bannerSubContent: React.ReactNode
+  bannerActionsBlock?: ((props: ActionsBlockProps) => React.ReactElement) | true
   bannerTextColor: string
   bannerBackgroundColor: string
+  bannerHideCloseButton: boolean
+  bannerAsModal?: boolean
   preferencesDialogTitle: React.ReactNode
   preferencesDialogContent: React.ReactNode
   cancelDialogTitle: React.ReactNode
@@ -128,23 +132,32 @@ const Container: React.FC<ContainerProps> = props => {
     }
   }, [isDialogOpen])
 
+  const onAcceptAll = () => {
+    props.setPreferences(props.preferences)
+    props.saveConsent()
+  }
+
+  const onDenyAll = () => {
+    const falsePreferences = Object.keys(props.preferences).reduce((acc, category) => {
+      acc[category] = false
+      return acc
+    }, {})
+
+    props.setPreferences(falsePreferences)
+    return props.saveConsent()
+  }
+
   const onClose = () => {
     if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
       return toggleBanner(false)
     }
 
     if (props.closeBehavior === CloseBehavior.ACCEPT) {
-      return props.saveConsent()
+      return onAcceptAll()
     }
 
     if (props.closeBehavior === CloseBehavior.DENY) {
-      const falsePreferences = Object.keys(props.preferences).reduce((acc, category) => {
-        acc[category] = false
-        return acc
-      }, {})
-
-      props.setPreferences(falsePreferences)
-      return props.saveConsent()
+      return onDenyAll()
     }
 
     // closeBehavior is a custom function
@@ -195,8 +208,13 @@ const Container: React.FC<ContainerProps> = props => {
           onChangePreferences={() => toggleDialog(true)}
           content={props.bannerContent}
           subContent={props.bannerSubContent}
+          actionsBlock={props.bannerActionsBlock}
           textColor={props.bannerTextColor}
           backgroundColor={props.bannerBackgroundColor}
+          onAcceptAll={onAcceptAll}
+          onDenyAll={onDenyAll}
+          hideCloseButton={props.bannerHideCloseButton}
+          asModal={props.bannerAsModal}
         />
       )}
 

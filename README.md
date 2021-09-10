@@ -4,25 +4,10 @@
 
 [StoryBook](https://segmentio.github.io/consent-manager/index.html)
 
-- [Segment Consent Manager](#segment-consent-manager)
-	- [Features](#features)
-- [Usage](#usage)
-	- [Standalone Script](#standalone-script)
-		- [Options](#options)
-		- [Globals](#globals)
-		- [Callback Function](#callback-function)
-	- [ConsentManager](#consentmanager)
-		- [Install](#install)
-		- [Example](#example)
-		- [ConsentManager Props](#consentmanager-props)
-	- [ConsentManagerBuilder](#consentmanagerbuilder)
-  	- [Install](#install-1)
-		- [Example](#example-1)
-		- [ConsentManagerBuilder Props](#consentmanagerbuilder-props)
-		- [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props)
-	- [Utility functions](#utility-functions)
-- [Development](#development)
-	- [Publishing New Version](#publishing-new-version)
+- [Segment Consent Manager](#segment-consent-manager) - [Features](#features)
+- [Usage](#usage) - [Standalone Script](#standalone-script) - [Options](#options) - [Globals](#globals) - [Callback Function](#callback-function) - [ConsentManager](#consentmanager) - [Install](#install) - [Example](#example) - [ConsentManager Props](#consentmanager-props) - [ConsentManagerBuilder](#consentmanagerbuilder)
+  - [Install](#install-1) - [Example](#example-1) - [ConsentManagerBuilder Props](#consentmanagerbuilder-props) - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props) - [Utility functions](#utility-functions)
+- [Development](#development) - [Publishing New Version](#publishing-new-version)
 - [License](#license)
 
 ## Segment Consent Manager
@@ -223,11 +208,15 @@ The `ConsentManager` React component is a prebuilt consent manager UI (it's the 
 _Note: Consent Manager is React-based so is not currently compatible with other frameworks such as Vue.js or Angular. In case you want to use it in another framework that is not React, you should use the Standalone implementation._
 
 #### Install
+
 Using npm:
+
 ```
 npm install @segment/consent-manager
 ```
+
 Using yarn:
+
 ```
 yarn add @segment/consent-manager
 ```
@@ -313,7 +302,7 @@ loading the out of the box Consent Manager. In [this demo](https://codepen.io/sa
 The write key analytics.js should be loaded with.
 
 You can find more information here.
-https://segment.com/docs/connections/find-writekey/
+https://segment.com/docs/connections/find-writekey
 
 ##### otherWriteKeys
 
@@ -414,12 +403,45 @@ The content of the [consent banner](https://share.getcloudapp.com/Apurj6zv).
 
 The [call to action](https://share.getcloudapp.com/z8uXxpkZ) under the primary text in the Consent Manager banner.
 
+##### bannerActionsBlock
+
+Type: `function(object) | boolean`
+
+The flag or function to render the actions block. If `true` value is passed - will render the default buttons block with `Accept all` and `Deny all` (required for the GDPR compliance). if the function is passed - will render the passed function into a actions block placeholder.
+
+Function props:
+
+- `acceptAll: () => void` - accept all cookies and close the banner
+- `denyAll: () => void` - deny all cookies and close the banner
+- `changePreferences: () => void` - open the dialog
+
 ##### bannerTextColor
 
 **Type**: `string`
 **Default**: `#fff`
 
 The color of the consent banner text.
+
+##### bannerBackgroundColor
+
+Type: `string`<br>
+Default: `#1f4160`
+
+The color of the consent banner background.
+
+##### bannerHideCloseButton
+
+Type: `boolean`<br>
+Default: `false`
+
+Hide the close button of the consent banner.
+
+##### bannerAsModal
+
+Type: `boolean`<br>
+Default: `false`
+
+Show the consent banner as a modal, blocking the interaction while it is not accepted/rejected.
 
 ##### preferencesDialogTitle
 
@@ -465,7 +487,6 @@ const customCategories = {
 
 The values for `integrations` should be an integration's creationName (`integration.creationName`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
 
-
 ### ConsentManagerBuilder
 
 The `ConsentManagerBuilder` React component is a low level render props component for building your own consent manager UI. It abstracts away all the logic for fetching destinations, checking/saving consent and loading analytics.js.
@@ -473,14 +494,19 @@ The `ConsentManagerBuilder` React component is a low level render props componen
 _Note: ConsentManagerBuilder is React-based so is not currently compatible with other frameworks such as Vue.js or Angular. In case you want to use it in another framework that is not React, you should use the Standalone implementation._
 
 #### Install
+
 Using npm:
+
 ```
 npm install @segment/consent-manager
 ```
+
 Using yarn:
+
 ```
 yarn add @segment/consent-manager
 ```
+
 #### Example
 
 For a more detailed/advanced example, checkout the [ConsentManager implementation][].
@@ -699,7 +725,6 @@ Resets the [preferences][] state to the value saved in the cookie. Useful for re
 
 Saves the preferences currently in state to a cookie called `tracking-preferences`, triggers an identify call with `destinationTrackingPreferences` and `customTrackingPreferences` traits and then reloads analytics.js using the new preferences. It can also be passed preferences like [setPreferences][] to do a final update before saving.
 
-
 ### Utility functions
 
 - `openConsentManager()` - Opens the [ConsentManager][] preferences dialog.
@@ -728,7 +753,7 @@ $ npm publish
 
 consent-manager is released under the MIT license.
 
-Copyright © 2018, Segment.io, Inc.
+Copyright © 2021, Segment.io, Inc.
 
 [analytics.js snippet]: https://segment.com/docs/sources/website/analytics.js/quickstart/#step-1-copy-the-snippet
 [preact]: https://preactjs.com
