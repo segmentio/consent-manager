@@ -1,16 +1,16 @@
 # Changelog
 
 ## 5.3.0 (Sept 13, 2021) 
-- [#145] Introduce cookieName attribute to allow a custom cookie name
-- [#126] Fixing types directory 
-- [#164] Fix On Standalone script closeBehavior: accept does not work
-- [#164] A possibility to add default buttons to accept/deny cookies via bannerActionsBlock
-- [#164] A possibility to add custom buttons block via bannerActionsBlock
-- [#164] Hide Clone button via bannerHideCloseButton
-- [#164] Fix the dialog on iPhone
-- [#164] Add option to show banner as modal
-- [#164] Use only loadsh-es and remove lodash package and include only used functions instead of the whole package (reduce the final bundle size)
-- [#164] Update webpack CLI
+- [#145](https://github.com/segmentio/consent-manager/pull/145) Introduce cookieName attribute to allow a custom cookie name
+- [#126](https://github.com/segmentio/consent-manager/pull/126) Fixing types directory 
+- [#164](https://github.com/segmentio/consent-manager/pull/164) Fix On Standalone script closeBehavior: accept does not work
+- [#164](https://github.com/segmentio/consent-manager/pull/164) A possibility to add default buttons to accept/deny cookies via bannerActionsBlock
+- [#164](https://github.com/segmentio/consent-manager/pull/164) A possibility to add custom buttons block via bannerActionsBlock
+- [#164](https://github.com/segmentio/consent-manager/pull/164) Hide Clone button via bannerHideCloseButton
+- [#164](https://github.com/segmentio/consent-manager/pull/164) Fix the dialog on iPhone
+- [#164](https://github.com/segmentio/consent-manager/pull/164) Add option to show banner as modal
+- [#164](https://github.com/segmentio/consent-manager/pull/164) Use only loadsh-es and remove lodash package and include only used functions instead of the whole package (reduce the final bundle size)
+- [#164](https://github.com/segmentio/consent-manager/pull/164) Update webpack CLI
 
 ## 5.2.0(May 11, 2021)
 
