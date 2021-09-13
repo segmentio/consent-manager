@@ -4,10 +4,25 @@
 
 [StoryBook](https://segmentio.github.io/consent-manager/index.html)
 
-- [Segment Consent Manager](#segment-consent-manager) - [Features](#features)
-- [Usage](#usage) - [Standalone Script](#standalone-script) - [Options](#options) - [Globals](#globals) - [Callback Function](#callback-function) - [ConsentManager](#consentmanager) - [Install](#install) - [Example](#example) - [ConsentManager Props](#consentmanager-props) - [ConsentManagerBuilder](#consentmanagerbuilder)
-  - [Install](#install-1) - [Example](#example-1) - [ConsentManagerBuilder Props](#consentmanagerbuilder-props) - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props) - [Utility functions](#utility-functions)
-- [Development](#development) - [Publishing New Version](#publishing-new-version)
+- [Segment Consent Manager](#segment-consent-manager) 
+- [Features](#features)
+- [Usage](#usage) 
+  - [Standalone Script](#standalone-script) 
+    - [Options](#options) 
+    - [Globals](#globals) 
+    - [Callback Function](#callback-function) 
+  - [ConsentManager](#consentmanager) 
+    - [Install](#install) 
+    - [Example](#example) 
+    - [ConsentManager Props](#consentmanager-props) 
+  - [ConsentManagerBuilder](#consentmanagerbuilder)
+    - [Install](#install-1) 
+    - [Example](#example-1) 
+    - [ConsentManagerBuilder Props](#consentmanagerbuilder-props) 
+    - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props) 
+  - [Utility functions](#utility-functions)
+- [Development](#development) 
+- [Publishing New Version](#publishing-new-version)
 - [License](#license)
 
 ## Segment Consent Manager
@@ -755,7 +770,7 @@ consent-manager is released under the MIT license.
 
 Copyright © 2021, Segment.io, Inc.
 
-[analytics.js snippet]: https://segment.com/docs/sources/website/analytics.js/quickstart/#step-1-copy-the-snippet
+[analytics.js snippet]: https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/quickstart/#step-2-copy-the-segment-snippet
 [preact]: https://preactjs.com
 [currentscript]: https://caniuse.com/#feat=document-currentscript
 [ineu]: https://github.com/segmentio/in-eu
