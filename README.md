@@ -21,7 +21,8 @@
     - [ConsentManagerBuilder Props](#consentmanagerbuilder-props) 
     - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props) 
   - [Utility functions](#utility-functions)
-- [Development](#development) - [Publishing New Version](#publishing-new-version)
+- [Development](#development) 
+- [Publishing New Version](#publishing-new-version)
 - [License](#license)
 
 ## Segment Consent Manager
