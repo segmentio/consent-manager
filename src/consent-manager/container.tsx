@@ -109,7 +109,10 @@ const Container: React.FC<ContainerProps> = props => {
       return
     }
 
-    props.saveConsent(undefined, false)
+    // Accept all consent on page interaction.
+    if (!isDialogOpen && props.implyConsentOnInteraction) {
+      onAcceptAll()
+    }
   }
 
   const showDialog = () => toggleDialog(true)
