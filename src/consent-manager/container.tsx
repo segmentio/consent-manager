@@ -52,6 +52,7 @@ interface ContainerProps {
   cancelDialogContent: React.ReactNode
   workspaceAddedNewDestinations?: boolean
   defaultDestinationBehavior?: DefaultDestinationBehavior
+  preferencesDialogTemplate?: any
 }
 
 function normalizeDestinations(destinations: Destination[]) {
@@ -238,6 +239,7 @@ const Container: React.FC<ContainerProps> = props => {
           functional={props.preferences.functional}
           title={props.preferencesDialogTitle}
           content={props.preferencesDialogContent}
+          preferencesDialogTemplate={props.preferencesDialogTemplate}
         />
       )}
 

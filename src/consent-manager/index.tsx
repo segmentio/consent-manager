@@ -10,6 +10,40 @@ const zeroValuePreferences: CategoryPreferences = {
   functional: null
 }
 
+const defaultPreferencesDialogTemplate = {
+  headings: ['Allow', 'Category', 'Purpose', 'Tools'],
+  checkboxes: ['Yes', 'No'],
+  actionButtons: ['Cancel', 'Save'],
+  categories: [
+    {
+      name: 'Functional',
+      description:
+        'To monitor the performance of our site and to enhance your browsing experience.',
+      example: 'For example, these tools enable you to communicate with us via live chat.'
+    },
+    {
+      name: 'Marketing and Analytics',
+      description:
+        'To understand user behavior in order to provide you with a more relevant browsing experience or personalize the content on our site.',
+      example:
+        'For example, we collect information about which pages you visit to help us present more relevant information.'
+    },
+    {
+      name: 'Advertising',
+      description:
+        'To personalize and measure the effectiveness of advertising on our site and other websites.',
+      example:
+        'For example, we may serve you a personalized ad based on the pages you visit on our site.'
+    },
+    {
+      name: 'Essential',
+      description: 'We use browser cookies that are necessary for the site to work as intended.',
+      example:
+        'For example, we store your website data collection preferences so we can honor them if you return to our site. You can disable these cookies in your browser settings but if you do the site may not work as intended.'
+    }
+  ]
+}
+
 export default class ConsentManager extends PureComponent<ConsentManagerProps, {}> {
   static displayName = 'ConsentManager'
 
@@ -29,7 +63,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
     cancelDialogTitle: 'Are you sure you want to cancel?',
-    defaultDestinationBehavior: 'disable'
+    defaultDestinationBehavior: 'disable',
+    preferencesDialogTemplate: defaultPreferencesDialogTemplate
   }
 
   render() {
@@ -55,6 +90,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       customCategories,
       defaultDestinationBehavior,
       cdnHost,
+      preferencesDialogTemplate,
       onError
     } = this.props
 
@@ -115,6 +151,9 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
               havePreferencesChanged={havePreferencesChanged}
               defaultDestinationBehavior={defaultDestinationBehavior}
               workspaceAddedNewDestinations={workspaceAddedNewDestinations}
+              preferencesDialogTemplate={
+                preferencesDialogTemplate || ConsentManager.defaultProps.preferencesDialogTemplate
+              }
             />
           )
         }}

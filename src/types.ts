@@ -100,6 +100,7 @@ export interface ConsentManagerProps {
   customCategories?: CustomCategories
   defaultDestinationBehavior?: DefaultDestinationBehavior
   cdnHost?: string
+  preferencesDialogTemplate?: any
 }
 
 export interface ActionsBlockProps {
