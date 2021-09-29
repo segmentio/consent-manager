@@ -2,6 +2,7 @@ import { Component } from 'react'
 import { loadPreferences, savePreferences } from './preferences'
 import fetchDestinations from './fetch-destinations'
 import conditionallyLoadAnalytics from './analytics'
+import { getConsentPreferences } from './preferences-utils'
 import { Destination, CategoryPreferences, CustomCategories } from '../types'
 
 function getNewDestinations(destinations: Destination[], preferences: CategoryPreferences) {
@@ -256,6 +257,17 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       const newDestinations = getNewDestinations(destinations, destinationPreferences)
 
       savePreferences({ destinationPreferences, customPreferences, cookieDomain })
+
+      const trackingPermissions = {
+        ...destinationPreferences,
+        ...customPreferences
+      }
+
+      this.dispatchEvent('consent_permissions_changed', {
+        referrer: document.referrer,
+        ...getConsentPreferences(trackingPermissions)
+      })
+
       conditionallyLoadAnalytics({
         writeKey,
         destinations,
@@ -266,6 +278,12 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       return { ...prevState, destinationPreferences, preferences, newDestinations }
     })
+  }
+
+  dispatchEvent = (eventType: string, data: object) => {
+    const event = new CustomEvent(eventType, { detail: data })
+
+    document.dispatchEvent(event)
   }
 
   mergePreferences = (args: {

@@ -4,7 +4,8 @@
 
 ### Added
 
-Added styles for consent banner buttons for mobiles [#7](https://github.com/bigcommerce/consent-manager/pull/7)
+- Added custom event when consent preferences are changed [#8](https://github.com/bigcommerce/consent-manager/pull/8)
+- Added styles for consent banner buttons for mobiles [#7](https://github.com/bigcommerce/consent-manager/pull/7)
 
 ## 4.1.0(Dec 11, 2019)
 

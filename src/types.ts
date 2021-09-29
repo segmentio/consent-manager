@@ -44,6 +44,11 @@ export interface Preferences {
   customPreferences?: CategoryPreferences
 }
 
+export interface CustomerPermissions {
+  allow: number[]
+  deny: number[]
+}
+
 export interface Destination {
   id: string
   name: string
