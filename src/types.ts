@@ -75,6 +75,34 @@ interface CustomCategory {
   purpose: string
 }
 
+export enum PreferencesCategoriesKeys {
+  FUNCTIONAL = 'functional',
+  MARKETING = 'marketing',
+  ADVERTISING = 'advertising',
+  ESSENTIAL = 'essential'
+}
+
+export interface PreferencesCategories {
+  key: PreferencesCategoriesKeys
+  name?: string
+  description?: string
+  example?: string
+}
+
+interface PreferenceHeadings {
+  allowValue?: string
+  categoryValue?: string
+  purposeValue?: string
+  toolsValue?: string
+}
+
+export interface PreferenceDialogTemplate {
+  headings: PreferenceHeadings
+  checkboxes: string[]
+  actionButtons: string[]
+  categories: PreferencesCategories[]
+}
+
 export interface ConsentManagerProps {
   writeKey: string
   otherWriteKeys?: string[]
@@ -100,7 +128,7 @@ export interface ConsentManagerProps {
   customCategories?: CustomCategories
   defaultDestinationBehavior?: DefaultDestinationBehavior
   cdnHost?: string
-  preferencesDialogTemplate?: any
+  preferencesDialogTemplate?: PreferenceDialogTemplate
 }
 
 export interface ActionsBlockProps {

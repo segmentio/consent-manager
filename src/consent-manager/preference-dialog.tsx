@@ -2,7 +2,13 @@ import React, { PureComponent } from 'react'
 import styled, { css } from 'react-emotion'
 import Dialog from './dialog'
 import { DefaultButton, GreenButton } from './buttons'
-import { Destination, CustomCategories, CategoryPreferences } from '../types'
+import {
+  Destination,
+  CustomCategories,
+  CategoryPreferences,
+  PreferenceDialogTemplate,
+  PreferencesCategoriesKeys
+} from '../types'
 
 const hideOnMobile = css`
   @media (max-width: 600px) {
@@ -72,7 +78,7 @@ interface PreferenceDialogProps {
   preferences: CategoryPreferences
   title: React.ReactNode
   content: React.ReactNode
-  preferencesDialogTemplate?: any
+  preferencesDialogTemplate?: PreferenceDialogTemplate
 }
 
 export default class PreferenceDialog extends PureComponent<PreferenceDialogProps, {}> {
@@ -102,14 +108,27 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
       preferencesDialogTemplate
     } = this.props
 
-    const { headings, checkboxes, actionButtons, categories } = preferencesDialogTemplate
+    // const { headings, checkboxes, actionButtons, categories } = preferencesDialogTemplate
+
+    const functionalInfo = preferencesDialogTemplate?.categories.find(
+      c => c.key === PreferencesCategoriesKeys.FUNCTIONAL
+    )
+    const marketingInfo = preferencesDialogTemplate?.categories.find(
+      c => c.key === PreferencesCategoriesKeys.MARKETING
+    )
+    const advertisingInfo = preferencesDialogTemplate?.categories.find(
+      c => c.key === PreferencesCategoriesKeys.ADVERTISING
+    )
+    const essentialInfo = preferencesDialogTemplate?.categories.find(
+      c => c.key === PreferencesCategoriesKeys.ESSENTIAL
+    )
 
     const buttons = (
       <div>
         <DefaultButton type="button" onClick={onCancel}>
-          {actionButtons[0]}
+          {preferencesDialogTemplate?.actionButtons[0]}
         </DefaultButton>
-        <GreenButton type="submit">{actionButtons[1]}</GreenButton>
+        <GreenButton type="submit">{preferencesDialogTemplate?.actionButtons[1]}</GreenButton>
       </div>
     )
 
@@ -127,11 +146,17 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
           <Table>
             <thead>
               <Row>
-                <ColumnHeading scope="col">{headings[0]}</ColumnHeading>
-                <ColumnHeading scope="col">{headings[1]}</ColumnHeading>
-                <ColumnHeading scope="col">{headings[2]}</ColumnHeading>
+                <ColumnHeading scope="col">
+                  {preferencesDialogTemplate?.headings.allowValue}
+                </ColumnHeading>
+                <ColumnHeading scope="col">
+                  {preferencesDialogTemplate?.headings.categoryValue}
+                </ColumnHeading>
+                <ColumnHeading scope="col">
+                  {preferencesDialogTemplate?.headings.purposeValue}
+                </ColumnHeading>
                 <ColumnHeading scope="col" className={hideOnMobile}>
-                  {headings[3]}
+                  {preferencesDialogTemplate?.headings.toolsValue}
                 </ColumnHeading>
               </Row>
             </thead>
@@ -151,7 +176,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Allow functional tracking"
                           required
                         />{' '}
-                        {checkboxes[0]}
+                        {preferencesDialogTemplate?.checkboxes[0]}
                       </label>
                       <label>
                         <input
@@ -163,13 +188,13 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Disallow functional tracking"
                           required
                         />{' '}
-                        {checkboxes[1]}
+                        {preferencesDialogTemplate?.checkboxes[1]}
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">{categories[0].name}</RowHeading>
+                    <RowHeading scope="row">{functionalInfo?.name}</RowHeading>
                     <td>
-                      <p>{categories[0].description}</p>
-                      <p className={hideOnMobile}>{categories[0].example}</p>
+                      <p>{functionalInfo?.description}</p>
+                      <p className={hideOnMobile}>{functionalInfo?.example}</p>
                     </td>
                     <td className={hideOnMobile}>
                       {functionalDestinations.map(d => d.name).join(', ')}
@@ -188,7 +213,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Allow marketing and analytics tracking"
                           required
                         />{' '}
-                        {checkboxes[0]}
+                        {preferencesDialogTemplate?.checkboxes[0]}
                       </label>
                       <label>
                         <input
@@ -200,13 +225,13 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Disallow marketing and analytics tracking"
                           required
                         />{' '}
-                        {checkboxes[1]}
+                        {preferencesDialogTemplate?.checkboxes[1]}
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">{categories[1].name}</RowHeading>
+                    <RowHeading scope="row">{marketingInfo?.name}</RowHeading>
                     <td>
-                      <p>{categories[1].description}</p>
-                      <p className={hideOnMobile}>{categories[1].example}</p>
+                      <p>{marketingInfo?.description}</p>
+                      <p className={hideOnMobile}>{marketingInfo?.example}</p>
                     </td>
                     <td className={hideOnMobile}>
                       {marketingDestinations.map(d => d.name).join(', ')}
@@ -225,7 +250,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Allow advertising tracking"
                           required
                         />{' '}
-                        {checkboxes[0]}
+                        {preferencesDialogTemplate?.checkboxes[0]}
                       </label>
                       <label>
                         <input
@@ -237,13 +262,13 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Disallow advertising tracking"
                           required
                         />{' '}
-                        {checkboxes[1]}
+                        {preferencesDialogTemplate?.checkboxes[1]}
                       </label>
                     </InputCell>
-                    <RowHeading scope="row">{categories[2].name}</RowHeading>
+                    <RowHeading scope="row">{advertisingInfo?.name}</RowHeading>
                     <td>
-                      <p>{categories[2].description}</p>
-                      <p className={hideOnMobile}>{categories[2].example}</p>
+                      <p>{advertisingInfo?.description}</p>
+                      <p className={hideOnMobile}>{advertisingInfo?.example}</p>
                     </td>
                     <td className={hideOnMobile}>
                       {advertisingDestinations.map(d => d.name).join(', ')}
@@ -267,7 +292,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label={`Allow "${categoryName}" tracking`}
                             required
                           />{' '}
-                          {checkboxes[0]}
+                          {preferencesDialogTemplate?.checkboxes[0]}
                         </label>
                         <label>
                           <input
@@ -279,7 +304,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label={`Disallow "${categoryName}" tracking`}
                             required
                           />{' '}
-                          {checkboxes[1]}
+                          {preferencesDialogTemplate?.checkboxes[1]}
                         </label>
                       </InputCell>
                       <RowHeading scope="row">{categoryName}</RowHeading>
@@ -298,10 +323,10 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
 
               <Row>
                 <td>N/A</td>
-                <RowHeading scope="row">{categories[3].name}</RowHeading>
+                <RowHeading scope="row">{essentialInfo?.name}</RowHeading>
                 <td>
-                  <p>{categories[3].description}</p>
-                  <p>{categories[3].example}</p>
+                  <p>{essentialInfo?.description}</p>
+                  <p>{essentialInfo?.example}</p>
                 </td>
                 <td className={hideOnMobile} />
               </Row>
