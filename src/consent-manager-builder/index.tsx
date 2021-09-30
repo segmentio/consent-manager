@@ -230,11 +230,14 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences = destinationPreferences || initialPreferences
     }
 
+    const shouldReload = false
+
     conditionallyLoadAnalytics({
       writeKey,
       destinations,
       destinationPreferences,
       isConsentRequired,
+      shouldReload,
       defaultDestinationBehavior,
       categoryPreferences: preferences
     })
