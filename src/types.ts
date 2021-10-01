@@ -97,6 +97,10 @@ export interface PreferenceDialogTemplate {
     saveValue?: string
     cancelValue?: string
   }
+  cancelDialogButtons: {
+    cancelValue?: string
+    backValue?: string
+  }
   categories: PreferencesCategories[]
 }
 

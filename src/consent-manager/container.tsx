@@ -251,6 +251,7 @@ const Container: React.FC<ContainerProps> = props => {
           onConfirm={handleCancelConfirm}
           title={props.cancelDialogTitle}
           content={props.cancelDialogContent}
+          preferencesDialogTemplate={props.preferencesDialogTemplate}
         />
       )}
     </div>

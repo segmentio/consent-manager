@@ -30,6 +30,10 @@ const defaultPreferencesDialogTemplate: PreferenceDialogTemplate = {
     cancelValue: 'Cancel',
     saveValue: 'Save'
   },
+  cancelDialogButtons: {
+    cancelValue: 'Yes, Cancel',
+    backValue: 'Go Back'
+  },
   categories: [
     {
       key: 'functional',
@@ -198,6 +202,10 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       ...defaultPreferencesDialogTemplate.actionButtons,
       ...newProps.actionButtons
     }
+    const cancelDialogButtonsMerge = {
+      ...defaultPreferencesDialogTemplate.cancelDialogButtons,
+      ...newProps.cancelDialogButtons
+    }
     const categoriesMerge = defaultPreferencesDialogTemplate?.categories.map(category => ({
       ...category,
       ...newProps?.categories?.find(c => c.key === category.key)
@@ -206,6 +214,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       headings: headingsMerge,
       checkboxes: checkboxesMerge,
       actionButtons: actionButtonsMerge,
+      cancelDialogButtons: cancelDialogButtonsMerge,
       categories: categoriesMerge
     }
   }
