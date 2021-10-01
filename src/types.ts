@@ -75,31 +75,28 @@ interface CustomCategory {
   purpose: string
 }
 
-export enum PreferencesCategoriesKeys {
-  FUNCTIONAL = 'functional',
-  MARKETING = 'marketing',
-  ADVERTISING = 'advertising',
-  ESSENTIAL = 'essential'
-}
-
 export interface PreferencesCategories {
-  key: PreferencesCategoriesKeys
+  key: string
   name?: string
   description?: string
   example?: string
 }
 
-interface PreferenceHeadings {
-  allowValue?: string
-  categoryValue?: string
-  purposeValue?: string
-  toolsValue?: string
-}
-
 export interface PreferenceDialogTemplate {
-  headings: PreferenceHeadings
-  checkboxes: string[]
-  actionButtons: string[]
+  headings: {
+    allowValue?: string
+    categoryValue?: string
+    purposeValue?: string
+    toolsValue?: string
+  }
+  checkboxes: {
+    noValue?: string
+    yesValue?: string
+  }
+  actionButtons: {
+    saveValue?: string
+    cancelValue?: string
+  }
   categories: PreferencesCategories[]
 }
 

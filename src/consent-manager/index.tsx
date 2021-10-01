@@ -6,8 +6,7 @@ import {
   CategoryPreferences,
   Destination,
   ConsentManagerProps,
-  PreferenceDialogTemplate,
-  PreferencesCategoriesKeys
+  PreferenceDialogTemplate
 } from '../types'
 
 const zeroValuePreferences: CategoryPreferences = {
@@ -23,18 +22,24 @@ const defaultPreferencesDialogTemplate: PreferenceDialogTemplate = {
     purposeValue: 'Purpose',
     toolsValue: 'Tools'
   },
-  checkboxes: ['Yes', 'No'],
-  actionButtons: ['Cancel', 'Save'],
+  checkboxes: {
+    noValue: 'No',
+    yesValue: 'Yes'
+  },
+  actionButtons: {
+    cancelValue: 'Cancel',
+    saveValue: 'Save'
+  },
   categories: [
     {
-      key: PreferencesCategoriesKeys.FUNCTIONAL,
+      key: 'functional',
       name: 'Functional',
       description:
         'To monitor the performance of our site and to enhance your browsing experience.',
       example: 'For example, these tools enable you to communicate with us via live chat.'
     },
     {
-      key: PreferencesCategoriesKeys.MARKETING,
+      key: 'marketing',
       name: 'Marketing and Analytics',
       description:
         'To understand user behavior in order to provide you with a more relevant browsing experience or personalize the content on our site.',
@@ -42,7 +47,7 @@ const defaultPreferencesDialogTemplate: PreferenceDialogTemplate = {
         'For example, we collect information about which pages you visit to help us present more relevant information.'
     },
     {
-      key: PreferencesCategoriesKeys.ADVERTISING,
+      key: 'advertising',
       name: 'Advertising',
       description:
         'To personalize and measure the effectiveness of advertising on our site and other websites.',
@@ -50,7 +55,7 @@ const defaultPreferencesDialogTemplate: PreferenceDialogTemplate = {
         'For example, we may serve you a personalized ad based on the pages you visit on our site.'
     },
     {
-      key: PreferencesCategoriesKeys.ESSENTIAL,
+      key: 'essential',
       name: 'Essential',
       description: 'We use browser cookies that are necessary for the site to work as intended.',
       example:
