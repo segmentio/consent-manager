@@ -83,25 +83,25 @@ export interface PreferencesCategories {
 }
 
 export interface PreferenceDialogTemplate {
-  headings: {
+  headings?: {
     allowValue?: string
     categoryValue?: string
     purposeValue?: string
     toolsValue?: string
   }
-  checkboxes: {
+  checkboxes?: {
     noValue?: string
     yesValue?: string
   }
-  actionButtons: {
+  actionButtons?: {
     saveValue?: string
     cancelValue?: string
   }
-  cancelDialogButtons: {
+  cancelDialogButtons?: {
     cancelValue?: string
     backValue?: string
   }
-  categories: PreferencesCategories[]
+  categories?: PreferencesCategories[]
 }
 
 export interface ConsentManagerProps {
