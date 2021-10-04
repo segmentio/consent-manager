@@ -4,25 +4,25 @@
 
 [StoryBook](https://segmentio.github.io/consent-manager/index.html)
 
-- [Segment Consent Manager](#segment-consent-manager) 
+- [Segment Consent Manager](#segment-consent-manager)
 - [Features](#features)
-- [Usage](#usage) 
-  - [Standalone Script](#standalone-script) 
-    - [Options](#options) 
-    - [Globals](#globals) 
-    - [Callback Function](#callback-function) 
-  - [ConsentManager](#consentmanager) 
-    - [Install](#install) 
+- [Usage](#usage)
+  - [Standalone Script](#standalone-script)
+    - [Options](#options)
+    - [Globals](#globals)
+    - [Callback Function](#callback-function)
+  - [ConsentManager](#consentmanager)
+    - [Install](#install)
     - [Example](#example)
-    - [Example in Next.js](#example-in-next.js)  
-    - [ConsentManager Props](#consentmanager-props) 
+    - [Example in Next.js](#example-in-next.js)
+    - [ConsentManager Props](#consentmanager-props)
   - [ConsentManagerBuilder](#consentmanagerbuilder)
-    - [Install](#install-1) 
-    - [Example](#example-1) 
-    - [ConsentManagerBuilder Props](#consentmanagerbuilder-props) 
-    - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props) 
+    - [Install](#install-1)
+    - [Example](#example-1)
+    - [ConsentManagerBuilder Props](#consentmanagerbuilder-props)
+    - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props)
   - [Utility functions](#utility-functions)
-- [Development](#development) 
+- [Development](#development)
 - [Publishing New Version](#publishing-new-version)
 - [License](#license)
 
@@ -285,47 +285,47 @@ export default function() {
 ```
 
 #### Example in Next.js
-In Next.js we do not have an html file where to inject the script. Here we will use the Script component to inject the snippet provided by Segment. 
+
+In Next.js we do not have an html file where to inject the script. Here we will use the Script component to inject the snippet provided by Segment.
 
 ```javascript
-import React from 'react';
-import Script from 'next/script';
-import { ConsentManager, openConsentManager } from '@segment/consent-manager';
+import React from 'react'
+import Script from 'next/script'
+import { ConsentManager, openConsentManager } from '@segment/consent-manager'
 
 export default function Home() {
   const bannerContent = (
     <span>
-      We use cookies (and other similar technologies) to collect data to improve
-      your experience on our site. By using our website, you’re agreeing to the
-      collection of data as described in our{' '}
-      <a href='/docs/legal/website-data-collection-policy/' target='_blank'>
+      We use cookies (and other similar technologies) to collect data to improve your experience on
+      our site. By using our website, you’re agreeing to the collection of data as described in our{' '}
+      <a href="/docs/legal/website-data-collection-policy/" target="_blank">
         Website Data Collection Policy
       </a>
       .
     </span>
-  );
-  const bannerSubContent = 'You can change your preferences at any time.';
-  const preferencesDialogTitle = 'Website Data Collection Preferences';
+  )
+  const bannerSubContent = 'You can change your preferences at any time.'
+  const preferencesDialogTitle = 'Website Data Collection Preferences'
   const preferencesDialogContent =
-    'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.';
-  const cancelDialogTitle = 'Are you sure you want to cancel?';
+    'We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site.'
+  const cancelDialogTitle = 'Are you sure you want to cancel?'
   const cancelDialogContent =
-    'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.';
+    'Your preferences have not been saved. By continuing to use our website, you՚re agreeing to our Website Data Collection Policy.'
 
   return (
     <div>
       <Script
-        id='show-banner'
+        id="show-banner"
         dangerouslySetInnerHTML={{
           __html: `!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};;analytics.SNIPPET_VERSION="4.13.2";
           analytics.page();
-          }}();`,
+          }}();`
         }}
       />
 
       <main>
         <ConsentManager
-          writeKey='5V8KznnIFIDh1ejQLbmX7ikfSRa6r8bF'
+          writeKey="5V8KznnIFIDh1ejQLbmX7ikfSRa6r8bF"
           bannerContent={bannerContent}
           bannerSubContent={bannerSubContent}
           preferencesDialogTitle={preferencesDialogTitle}
@@ -335,12 +335,12 @@ export default function Home() {
           bannerActionsBlock={true}
         />
 
-        <button type='button' onClick={openConsentManager}>
+        <button type="button" onClick={openConsentManager}>
           Website Data Collection Preferences
         </button>
       </main>
     </div>
-  );
+  )
 }
 ```
 
@@ -367,6 +367,7 @@ loading the out of the box Consent Manager. In [this demo](https://codepen.io/sa
 - [cancelDialogTitle](#canceldialogtitle)
 - [cancelDialogContent](#canceldialogcontent)
 - [customCategories](#customcategories)
+- [preferencesDialogTemplate](#preferencesdialogtemplate)
 
 <!-- /TOC -->
 
@@ -562,6 +563,73 @@ const customCategories = {
 ```
 
 The values for `integrations` should be an integration's creationName (`integration.creationName`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
+
+##### preferencesDialogTemplate
+
+**Type**: `PropTypes.object`
+**Default**:
+
+```javascript
+{
+  headings: {
+    allowValue: 'Allow',
+    categoryValue: 'Category',
+    purposeValue: 'Purpose',
+    toolsValue: 'Tools'
+  },
+  checkboxes: {
+    noValue: 'No',
+    yesValue: 'Yes'
+  },
+  actionButtons: {
+    cancelValue: 'Cancel',
+    saveValue: 'Save'
+  },
+  cancelDialogButtons: {
+    cancelValue: 'Yes, Cancel',
+    backValue: 'Go Back'
+  },
+  categories: [
+    {
+      key: 'functional',
+      name: 'Functional',
+      description:
+        'To monitor the performance of our site and to enhance your browsing experience.',
+      example: 'For example, these tools enable you to communicate with us via live chat.'
+    },
+    {
+      key: 'marketing',
+      name: 'Marketing and Analytics',
+      description:
+        'To understand user behavior in order to provide you with a more relevant browsing experience or personalize the content on our site.',
+      example:
+        'For example, we collect information about which pages you visit to help us present more relevant information.'
+    },
+    {
+      key: 'advertising',
+      name: 'Advertising',
+      description:
+        'To personalize and measure the effectiveness of advertising on our site and other websites.',
+      example:
+        'For example, we may serve you a personalized ad based on the pages you visit on our site.'
+    },
+    {
+      key: 'essential',
+      name: 'Essential',
+      description: 'We use browser cookies that are necessary for the site to work as intended.',
+      example:
+        'For example, we store your website data collection preferences so we can honor them if you return to our site. You can disable these cookies in your browser settings but if you do the site may not work as intended.'
+    }
+  ]
+}
+```
+
+An object that represents the text fields of the preferences dialog and allows customizing them.
+We recommend copying the default object and changing the fields as necessary.
+
+_Note: All fields are optional. If they are not included in the template (object) the default fields will be used._
+
+_Note 2: For categories, you need to provide the key in order to map all the values properly._
 
 ### ConsentManagerBuilder
 

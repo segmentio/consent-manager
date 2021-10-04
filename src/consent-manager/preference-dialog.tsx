@@ -109,17 +109,19 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
 
     const { headings, checkboxes, actionButtons } = preferencesDialogTemplate!
 
-    const functionalInfo = preferencesDialogTemplate?.categories.find(c => c.key === 'functional')
-    const marketingInfo = preferencesDialogTemplate?.categories.find(c => c.key === 'marketing')
-    const advertisingInfo = preferencesDialogTemplate?.categories.find(c => c.key === 'advertising')
-    const essentialInfo = preferencesDialogTemplate?.categories.find(c => c.key === 'essential')
+    const functionalInfo = preferencesDialogTemplate?.categories!.find(c => c.key === 'functional')
+    const marketingInfo = preferencesDialogTemplate?.categories!.find(c => c.key === 'marketing')
+    const advertisingInfo = preferencesDialogTemplate?.categories!.find(
+      c => c.key === 'advertising'
+    )
+    const essentialInfo = preferencesDialogTemplate?.categories!.find(c => c.key === 'essential')
 
     const buttons = (
       <div>
         <DefaultButton type="button" onClick={onCancel}>
-          {actionButtons.cancelValue}
+          {actionButtons!.cancelValue}
         </DefaultButton>
-        <GreenButton type="submit">{actionButtons.saveValue}</GreenButton>
+        <GreenButton type="submit">{actionButtons!.saveValue}</GreenButton>
       </div>
     )
 
@@ -137,11 +139,11 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
           <Table>
             <thead>
               <Row>
-                <ColumnHeading scope="col">{headings.allowValue}</ColumnHeading>
-                <ColumnHeading scope="col">{headings.categoryValue}</ColumnHeading>
-                <ColumnHeading scope="col">{headings.purposeValue}</ColumnHeading>
+                <ColumnHeading scope="col">{headings!.allowValue}</ColumnHeading>
+                <ColumnHeading scope="col">{headings!.categoryValue}</ColumnHeading>
+                <ColumnHeading scope="col">{headings!.purposeValue}</ColumnHeading>
                 <ColumnHeading scope="col" className={hideOnMobile}>
-                  {headings.toolsValue}
+                  {headings!.toolsValue}
                 </ColumnHeading>
               </Row>
             </thead>
@@ -161,7 +163,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Allow functional tracking"
                           required
                         />{' '}
-                        {checkboxes.yesValue}
+                        {checkboxes!.yesValue}
                       </label>
                       <label>
                         <input
@@ -173,7 +175,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Disallow functional tracking"
                           required
                         />{' '}
-                        {checkboxes.noValue}
+                        {checkboxes!.noValue}
                       </label>
                     </InputCell>
                     <RowHeading scope="row">{functionalInfo?.name}</RowHeading>
@@ -198,7 +200,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Allow marketing and analytics tracking"
                           required
                         />{' '}
-                        {checkboxes.yesValue}
+                        {checkboxes!.yesValue}
                       </label>
                       <label>
                         <input
@@ -210,7 +212,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Disallow marketing and analytics tracking"
                           required
                         />{' '}
-                        {checkboxes.noValue}
+                        {checkboxes!.noValue}
                       </label>
                     </InputCell>
                     <RowHeading scope="row">{marketingInfo?.name}</RowHeading>
@@ -235,7 +237,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Allow advertising tracking"
                           required
                         />{' '}
-                        {checkboxes.yesValue}
+                        {checkboxes!.yesValue}
                       </label>
                       <label>
                         <input
@@ -247,7 +249,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                           aria-label="Disallow advertising tracking"
                           required
                         />{' '}
-                        {checkboxes.noValue}
+                        {checkboxes!.noValue}
                       </label>
                     </InputCell>
                     <RowHeading scope="row">{advertisingInfo?.name}</RowHeading>
@@ -277,7 +279,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label={`Allow "${categoryName}" tracking`}
                             required
                           />{' '}
-                          {checkboxes.yesValue}
+                          {checkboxes!.yesValue}
                         </label>
                         <label>
                           <input
@@ -289,7 +291,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                             aria-label={`Disallow "${categoryName}" tracking`}
                             required
                           />{' '}
-                          {checkboxes.noValue}
+                          {checkboxes!.noValue}
                         </label>
                       </InputCell>
                       <RowHeading scope="row">{categoryName}</RowHeading>

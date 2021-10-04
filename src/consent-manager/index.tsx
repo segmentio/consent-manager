@@ -206,7 +206,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       ...defaultPreferencesDialogTemplate.cancelDialogButtons,
       ...newProps.cancelDialogButtons
     }
-    const categoriesMerge = defaultPreferencesDialogTemplate?.categories.map(category => ({
+    const categoriesMerge = defaultPreferencesDialogTemplate?.categories!.map(category => ({
       ...category,
       ...newProps?.categories?.find(c => c.key === category.key)
     }))
