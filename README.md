@@ -22,6 +22,7 @@
     - [ConsentManagerBuilder Props](#consentmanagerbuilder-props)
     - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props)
   - [Utility functions](#utility-functions)
+  - [Setting Custom Anonymous ID](#setting-custom-anonymous-id)
 - [Development](#development)
 - [Publishing New Version](#publishing-new-version)
 - [License](#license)
@@ -874,6 +875,28 @@ Saves the preferences currently in state to a cookie called `tracking-preference
 - `openConsentManager()` - Opens the [ConsentManager][] preferences dialog.
 - `doNotTrack()` - Returns the user's Do Not Track preference (normalises the cross browser API differences). Returns `true`, `false` or `null` (no preference specified).
 
+### Setting Custom Anonymous ID
+
+Analytics.js generates a universally unique ID (UUID) for the viewer during the library’s initialization phase, and sets this as anonymousId for each new visitor to your site. This happens before Analytics.js loads any device-mode destinations, and so before these destination-libraries can generate their own user IDs.
+
+Example
+
+```javascript
+ajs_anonymous_id=%2239ee7ea5-b6d8-4174-b612-04e1ef3fa952
+```
+
+You can override the default-generated anonymousID from the Segment snippet.
+
+```javascript
+analytics.SNIPPET_VERSION = '4.13.2'
+analytics.page()
+analytics.setAnonymousId('YOUR_CUSTOM_ID')
+```
+
+_Note: Keep in mind that setting the anonymousId in Analytics.js does not overwrite the anonymous tracking IDs for any destinations you’re using._
+
+_There are other ways to override the anonymusID, you can find more information [here][]._
+
 ## Development
 
 To run our storybook locally, simply do:
@@ -912,3 +935,4 @@ Copyright © 2021, Segment.io, Inc.
 [setpreferences]: #setpreferences
 [consentmanager implementation]: src/consent-manager
 [css selector]: https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
+[here]: https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/identity/
