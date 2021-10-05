@@ -2,7 +2,12 @@ import React, { PureComponent } from 'react'
 import ConsentManagerBuilder from '../consent-manager-builder'
 import Container from './container'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
-import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
+import {
+  CategoryPreferences,
+  Destination,
+  ConsentManagerProps,
+  PreferenceDialogTemplate
+} from '../types'
 
 const zeroValuePreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
@@ -10,6 +15,58 @@ const zeroValuePreferences: CategoryPreferences = {
   functional: null
 }
 
+const defaultPreferencesDialogTemplate: PreferenceDialogTemplate = {
+  headings: {
+    allowValue: 'Allow',
+    categoryValue: 'Category',
+    purposeValue: 'Purpose',
+    toolsValue: 'Tools'
+  },
+  checkboxes: {
+    noValue: 'No',
+    yesValue: 'Yes'
+  },
+  actionButtons: {
+    cancelValue: 'Cancel',
+    saveValue: 'Save'
+  },
+  cancelDialogButtons: {
+    cancelValue: 'Yes, Cancel',
+    backValue: 'Go Back'
+  },
+  categories: [
+    {
+      key: 'functional',
+      name: 'Functional',
+      description:
+        'To monitor the performance of our site and to enhance your browsing experience.',
+      example: 'For example, these tools enable you to communicate with us via live chat.'
+    },
+    {
+      key: 'marketing',
+      name: 'Marketing and Analytics',
+      description:
+        'To understand user behavior in order to provide you with a more relevant browsing experience or personalize the content on our site.',
+      example:
+        'For example, we collect information about which pages you visit to help us present more relevant information.'
+    },
+    {
+      key: 'advertising',
+      name: 'Advertising',
+      description:
+        'To personalize and measure the effectiveness of advertising on our site and other websites.',
+      example:
+        'For example, we may serve you a personalized ad based on the pages you visit on our site.'
+    },
+    {
+      key: 'essential',
+      name: 'Essential',
+      description: 'We use browser cookies that are necessary for the site to work as intended.',
+      example:
+        'For example, we store your website data collection preferences so we can honor them if you return to our site. You can disable these cookies in your browser settings but if you do the site may not work as intended.'
+    }
+  ]
+}
 export default class ConsentManager extends PureComponent<ConsentManagerProps, {}> {
   static displayName = 'ConsentManager'
 
@@ -29,7 +86,8 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: 'Website Data Collection Preferences',
     cancelDialogTitle: 'Are you sure you want to cancel?',
-    defaultDestinationBehavior: 'disable'
+    defaultDestinationBehavior: 'disable',
+    preferencesDialogTemplate: defaultPreferencesDialogTemplate
   }
 
   render() {
@@ -55,6 +113,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       customCategories,
       defaultDestinationBehavior,
       cdnHost,
+      preferencesDialogTemplate,
       onError
     } = this.props
 
@@ -115,11 +174,49 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
               havePreferencesChanged={havePreferencesChanged}
               defaultDestinationBehavior={defaultDestinationBehavior}
               workspaceAddedNewDestinations={workspaceAddedNewDestinations}
+              preferencesDialogTemplate={
+                preferencesDialogTemplate
+                  ? this.mergeTemplates(preferencesDialogTemplate, defaultPreferencesDialogTemplate)
+                  : ConsentManager.defaultProps.preferencesDialogTemplate
+              }
             />
           )
         }}
       </ConsentManagerBuilder>
     )
+  }
+
+  mergeTemplates = (
+    newProps: PreferenceDialogTemplate,
+    defaultPreferencesDialogTemplate: PreferenceDialogTemplate
+  ): PreferenceDialogTemplate => {
+    const headingsMerge = {
+      ...defaultPreferencesDialogTemplate.headings,
+      ...newProps.headings
+    }
+    const checkboxesMerge = {
+      ...defaultPreferencesDialogTemplate.checkboxes,
+      ...newProps.checkboxes
+    }
+    const actionButtonsMerge = {
+      ...defaultPreferencesDialogTemplate.actionButtons,
+      ...newProps.actionButtons
+    }
+    const cancelDialogButtonsMerge = {
+      ...defaultPreferencesDialogTemplate.cancelDialogButtons,
+      ...newProps.cancelDialogButtons
+    }
+    const categoriesMerge = defaultPreferencesDialogTemplate?.categories!.map(category => ({
+      ...category,
+      ...newProps?.categories?.find(c => c.key === category.key)
+    }))
+    return {
+      headings: headingsMerge,
+      checkboxes: checkboxesMerge,
+      actionButtons: actionButtonsMerge,
+      cancelDialogButtons: cancelDialogButtonsMerge,
+      categories: categoriesMerge
+    }
   }
 
   getInitialPreferences = () => {

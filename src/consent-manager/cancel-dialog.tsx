@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import Dialog from './dialog'
 import { DefaultButton, RedButton } from './buttons'
+import { PreferenceDialogTemplate } from '../types'
 
 interface Props {
   innerRef: (node: HTMLElement) => void
@@ -8,20 +9,23 @@ interface Props {
   onConfirm: () => void
   title: React.ReactNode
   content: React.ReactNode
+  preferencesDialogTemplate?: PreferenceDialogTemplate
 }
 
 export default class CancelDialog extends PureComponent<Props> {
   static displayName = 'CancelDialog'
 
   render() {
-    const { innerRef, onBack, title, content } = this.props
+    const { innerRef, onBack, title, content, preferencesDialogTemplate } = this.props
 
     const buttons = (
       <div>
         <DefaultButton type="button" onClick={onBack}>
-          Go Back
+          {preferencesDialogTemplate?.cancelDialogButtons.backValue}
         </DefaultButton>
-        <RedButton type="submit">Yes, Cancel</RedButton>
+        <RedButton type="submit">
+          {preferencesDialogTemplate?.cancelDialogButtons.cancelValue}
+        </RedButton>
       </div>
     )
 

@@ -9,7 +9,8 @@ import {
   CategoryPreferences,
   CustomCategories,
   DefaultDestinationBehavior,
-  ActionsBlockProps
+  ActionsBlockProps,
+  PreferenceDialogTemplate
 } from '../types'
 
 const emitter = new EventEmitter()
@@ -52,6 +53,7 @@ interface ContainerProps {
   cancelDialogContent: React.ReactNode
   workspaceAddedNewDestinations?: boolean
   defaultDestinationBehavior?: DefaultDestinationBehavior
+  preferencesDialogTemplate?: PreferenceDialogTemplate
 }
 
 function normalizeDestinations(destinations: Destination[]) {
@@ -238,6 +240,7 @@ const Container: React.FC<ContainerProps> = props => {
           functional={props.preferences.functional}
           title={props.preferencesDialogTitle}
           content={props.preferencesDialogContent}
+          preferencesDialogTemplate={props.preferencesDialogTemplate}
         />
       )}
 
@@ -248,6 +251,7 @@ const Container: React.FC<ContainerProps> = props => {
           onConfirm={handleCancelConfirm}
           title={props.cancelDialogTitle}
           content={props.cancelDialogContent}
+          preferencesDialogTemplate={props.preferencesDialogTemplate}
         />
       )}
     </div>

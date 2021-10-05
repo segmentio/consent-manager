@@ -75,6 +75,35 @@ interface CustomCategory {
   purpose: string
 }
 
+export interface PreferencesCategories {
+  key: string
+  name?: string
+  description?: string
+  example?: string
+}
+
+export interface PreferenceDialogTemplate {
+  headings?: {
+    allowValue?: string
+    categoryValue?: string
+    purposeValue?: string
+    toolsValue?: string
+  }
+  checkboxes?: {
+    noValue?: string
+    yesValue?: string
+  }
+  actionButtons?: {
+    saveValue?: string
+    cancelValue?: string
+  }
+  cancelDialogButtons?: {
+    cancelValue?: string
+    backValue?: string
+  }
+  categories?: PreferencesCategories[]
+}
+
 export interface ConsentManagerProps {
   writeKey: string
   otherWriteKeys?: string[]
@@ -100,6 +129,7 @@ export interface ConsentManagerProps {
   customCategories?: CustomCategories
   defaultDestinationBehavior?: DefaultDestinationBehavior
   cdnHost?: string
+  preferencesDialogTemplate?: PreferenceDialogTemplate
 }
 
 export interface ActionsBlockProps {

@@ -368,6 +368,7 @@ loading the out of the box Consent Manager. In [this demo](https://codepen.io/sa
 - [cancelDialogTitle](#canceldialogtitle)
 - [cancelDialogContent](#canceldialogcontent)
 - [customCategories](#customcategories)
+- [preferencesDialogTemplate](#preferencesdialogtemplate)
 
 <!-- /TOC -->
 
@@ -563,6 +564,73 @@ const customCategories = {
 ```
 
 The values for `integrations` should be an integration's creationName (`integration.creationName`). You can find examples of that by going to `https://cdn.segment.com/v1/projects/<writeKey>/integrations`
+
+##### preferencesDialogTemplate
+
+**Type**: `PropTypes.object`
+**Default**:
+
+```javascript
+{
+  headings: {
+    allowValue: 'Allow',
+    categoryValue: 'Category',
+    purposeValue: 'Purpose',
+    toolsValue: 'Tools'
+  },
+  checkboxes: {
+    noValue: 'No',
+    yesValue: 'Yes'
+  },
+  actionButtons: {
+    cancelValue: 'Cancel',
+    saveValue: 'Save'
+  },
+  cancelDialogButtons: {
+    cancelValue: 'Yes, Cancel',
+    backValue: 'Go Back'
+  },
+  categories: [
+    {
+      key: 'functional',
+      name: 'Functional',
+      description:
+        'To monitor the performance of our site and to enhance your browsing experience.',
+      example: 'For example, these tools enable you to communicate with us via live chat.'
+    },
+    {
+      key: 'marketing',
+      name: 'Marketing and Analytics',
+      description:
+        'To understand user behavior in order to provide you with a more relevant browsing experience or personalize the content on our site.',
+      example:
+        'For example, we collect information about which pages you visit to help us present more relevant information.'
+    },
+    {
+      key: 'advertising',
+      name: 'Advertising',
+      description:
+        'To personalize and measure the effectiveness of advertising on our site and other websites.',
+      example:
+        'For example, we may serve you a personalized ad based on the pages you visit on our site.'
+    },
+    {
+      key: 'essential',
+      name: 'Essential',
+      description: 'We use browser cookies that are necessary for the site to work as intended.',
+      example:
+        'For example, we store your website data collection preferences so we can honor them if you return to our site. You can disable these cookies in your browser settings but if you do the site may not work as intended.'
+    }
+  ]
+}
+```
+
+An object that represents the text fields of the preferences dialog and allows customizing them.
+We recommend copying the default object and changing the fields as necessary.
+
+_Note: All fields are optional. If they are not included in the template (object) the default fields will be used._
+
+_Note 2: For categories, you need to provide the key in order to map all the values properly._
 
 ### ConsentManagerBuilder
 
