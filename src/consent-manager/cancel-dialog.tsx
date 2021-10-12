@@ -21,10 +21,10 @@ export default class CancelDialog extends PureComponent<Props> {
     const buttons = (
       <div>
         <DefaultButton type="button" onClick={onBack}>
-          {preferencesDialogTemplate?.cancelDialogButtons.backValue}
+          {preferencesDialogTemplate?.cancelDialogButtons!.backValue}
         </DefaultButton>
         <RedButton type="submit">
-          {preferencesDialogTemplate?.cancelDialogButtons.cancelValue}
+          {preferencesDialogTemplate?.cancelDialogButtons!.cancelValue}
         </RedButton>
       </div>
     )
