@@ -213,7 +213,7 @@ All the options are supported. The callback function also receives these exports
 </script>
 
 <script
-  src="https://unpkg.com/@segment/consent-manager@5.2.0/standalone/consent-manager.js"
+  src="https://unpkg.com/@segment/consent-manager@5.3.0/standalone/consent-manager.js"
   defer
 ></script>
 ```
