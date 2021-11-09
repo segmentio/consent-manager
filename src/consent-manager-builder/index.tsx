@@ -189,6 +189,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       cookieExpires,
       cdnHost = ConsentManagerBuilder.defaultProps.cdnHost
     } = this.props
+
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
     let { destinationPreferences, customPreferences } = loadPreferences(cookieName)
     const [isConsentRequired, destinations] = await Promise.all([
@@ -200,17 +201,19 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       destinationPreferences &&
       Object.keys(destinationPreferences).length > 0 &&
       newDestinations.length > 0
+
     let preferences: CategoryPreferences | undefined
+    const initialPrefencesHaveValue = Object.values(initialPreferences || {}).some(
+      v => v === true || v === false
+    )
+    const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
+      v => v === null || v === undefined
+    )
+
     if (mapCustomPreferences) {
       preferences = customPreferences || initialPreferences || {}
-      const intialPrefencesHaveValue = Object.values(initialPreferences || {}).some(
-        v => v === true || v === false
-      )
-      const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
-        v => v === null || v === undefined
-      )
       if (
-        (intialPrefencesHaveValue && emptyCustomPreferecences) ||
+        (initialPrefencesHaveValue && emptyCustomPreferecences) ||
         (defaultDestinationBehavior === 'imply' && workspaceAddedNewDestinations)
       ) {
         const mapped = mapCustomPreferences(destinations, preferences)
@@ -228,7 +231,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences = destinationPreferences || initialPreferences
     }
 
-    if (!initialPreferences) {
+    if (!initialPrefencesHaveValue) {
       conditionallyLoadAnalytics({
         writeKey,
         destinations,
@@ -246,7 +249,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences,
       isConsentRequired,
       destinationPreferences,
-      workspaceAddedNewDestinations: Boolean(workspaceAddedNewDestinations)
+      workspaceAddedNewDestinations: Boolean(workspaceAddedNewDestinations),
+      havePreferencesChanged: initialPrefencesHaveValue
     })
   }
 
@@ -316,24 +320,32 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       const newDestinations = getNewDestinations(destinations, destinationPreferences)
 
-      savePreferences({
-        destinationPreferences,
-        customPreferences,
-        cookieDomain,
-        cookieName,
-        cookieExpires
-      })
-      conditionallyLoadAnalytics({
-        writeKey,
-        destinations,
-        destinationPreferences,
-        isConsentRequired,
-        shouldReload,
-        defaultDestinationBehavior,
-        categoryPreferences: customPreferences
-      })
+      if (prevState.havePreferencesChanged || newDestinations.length > 0) {
+        savePreferences({
+          destinationPreferences,
+          customPreferences,
+          cookieDomain,
+          cookieName,
+          cookieExpires
+        })
+        conditionallyLoadAnalytics({
+          writeKey,
+          destinations,
+          destinationPreferences,
+          isConsentRequired,
+          shouldReload,
+          defaultDestinationBehavior,
+          categoryPreferences: customPreferences
+        })
+      }
 
-      return { ...prevState, destinationPreferences, preferences, newDestinations }
+      return {
+        ...prevState,
+        destinationPreferences,
+        preferences,
+        newDestinations,
+        havePreferencesChanged: false
+      }
     })
   }
 
