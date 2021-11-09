@@ -320,7 +320,11 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       const newDestinations = getNewDestinations(destinations, destinationPreferences)
 
-      if (prevState.havePreferencesChanged || newDestinations.length > 0) {
+      if (
+        prevState.havePreferencesChanged ||
+        newDestinations.length > 0 ||
+        typeof newPreferences === 'boolean'
+      ) {
         savePreferences({
           destinationPreferences,
           customPreferences,
