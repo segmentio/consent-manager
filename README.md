@@ -355,6 +355,7 @@ loading the out of the box Consent Manager. In [this demo](https://codepen.io/sa
 - [writeKey](#writekey)
 - [otherWriteKeys](#otherwritekeys)
 - [shouldRequireConsent](#shouldrequireconsent)
+- [initialPreferences](#initialpreferences)
 - [closeBehavior](#closebehavior)
 - [implyConsentOnInteraction](#implyconsentoninteraction)
 - [defaultDestinationBehavior](#defaultdestinationbehavior)
@@ -707,13 +708,13 @@ export default function() {
 #### ConsentManagerBuilder Props
 
 - [children](#children)
-- [writeKey](#writekey)
-- [otherWriteKeys](#otherwritekeys)
-- [shouldRequireConsent](#shouldrequireconsent)
-- [initialPreferences](#initialpreferences)
-- [defaultDestinationBehavior](#defaultdestinationbehavior)
+- [writeKey](#writekey-1)
+- [otherWriteKeys](#otherwritekeys-1)
+- [shouldRequireConsent](#shouldrequireconsent-1)
+- [initialPreferences](#initialpreferences-1)
+- [defaultDestinationBehavior](#defaultdestinationbehavior-1)
 - [mapCustomPreferences](#mapcustompreferences)
-- [cookieDomain](#cookiedomain)
+- [cookieDomain](#cookiedomain-1)
 
 ##### children
 
@@ -898,7 +899,7 @@ analytics.setAnonymousId('YOUR_CUSTOM_ID')
 
 _Note: Keep in mind that setting the anonymousId in Analytics.js does not overwrite the anonymous tracking IDs for any destinations you’re using._
 
-_There are other ways to override the anonymusID, you can find more information [here][]._
+_There are other ways to override the anonymousID, you can find more information [here][]._
 
 ## Development
 
