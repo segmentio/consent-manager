@@ -92,51 +92,6 @@ const Container: React.FC<ContainerProps> = props => {
     functionalDestinations
   } = normalizeDestinations(props.destinations)
 
-  const handleBodyClick = e => {
-    // Do nothing if no new implicit consent needs to be saved
-    if (
-      !props.isConsentRequired ||
-      !props.implyConsentOnInteraction ||
-      props.newDestinations.length === 0
-    ) {
-      return
-    }
-
-    // Ignore propogated clicks from inside the consent manager
-    if (
-      (banner.current && banner.current.contains(e.target)) ||
-      (preferenceDialog.current && preferenceDialog.current.contains(e.target)) ||
-      (cancelDialog.current && cancelDialog.current.contains(e.target))
-    ) {
-      return
-    }
-
-    // Accept all consent on page interaction.
-    if (!isDialogOpen && props.implyConsentOnInteraction) {
-      onAcceptAll()
-    }
-  }
-
-  const showDialog = () => toggleDialog(true)
-
-  React.useEffect(() => {
-    emitter.on('openDialog', showDialog)
-    if (props.isConsentRequired && props.implyConsentOnInteraction) {
-      document.body.addEventListener('click', handleBodyClick, false)
-    }
-
-    return () => {
-      emitter.removeListener('openDialog', showDialog)
-      document.body.removeEventListener('click', handleBodyClick, false)
-    }
-  })
-
-  React.useEffect(() => {
-    if (isDialogOpen) {
-      props.resetPreferences()
-    }
-  }, [isDialogOpen])
-
   const onAcceptAll = () => {
     props.setPreferences(props.preferences)
     props.saveConsent()
@@ -172,6 +127,51 @@ const Container: React.FC<ContainerProps> = props => {
     return toggleBanner(false)
   }
 
+  const showDialog = () => toggleDialog(true)
+
+  const handleBodyClick = e => {
+    // Do nothing if no new implicit consent needs to be saved
+    if (
+      !props.isConsentRequired ||
+      !props.implyConsentOnInteraction ||
+      props.newDestinations.length === 0
+    ) {
+      return
+    }
+
+    // Ignore propogated clicks from inside the consent manager
+    if (
+      (banner.current && banner.current.contains(e.target)) ||
+      (preferenceDialog.current && preferenceDialog.current.contains(e.target)) ||
+      (cancelDialog.current && cancelDialog.current.contains(e.target))
+    ) {
+      return
+    }
+
+    // Accept all consent on page interaction.
+    if (!isDialogOpen && props.implyConsentOnInteraction) {
+      onAcceptAll()
+    }
+  }
+
+  React.useEffect(() => {
+    emitter.on('openDialog', showDialog)
+    if (props.isConsentRequired && props.implyConsentOnInteraction) {
+      document.body.addEventListener('click', handleBodyClick, false)
+    }
+
+    return () => {
+      emitter.removeListener('openDialog', showDialog)
+      document.body.removeEventListener('click', handleBodyClick, false)
+    }
+  })
+
+  React.useEffect(() => {
+    if (isDialogOpen) {
+      props.resetPreferences()
+    }
+  }, [isDialogOpen])
+
   const handleCategoryChange = (category: string, value: boolean) => {
     props.setPreferences({
       [category]: value
@@ -180,7 +180,6 @@ const Container: React.FC<ContainerProps> = props => {
 
   const handleSave = () => {
     toggleDialog(false)
-
     props.saveConsent()
   }
 
