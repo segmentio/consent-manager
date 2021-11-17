@@ -125,7 +125,7 @@
     },
     {
       "path": "standalone/consent-manager.js",
-      "limit": "46 KB"
+      "limit": "50 KB"
     }
   ],
   "husky": {
