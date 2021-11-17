@@ -18,7 +18,7 @@ export function openDialog() {
   emitter.emit('openDialog')
 }
 
-export const enum CloseBehavior {
+export enum CloseBehavior {
   ACCEPT = 'accept',
   DENY = 'deny',
   DISMISS = 'dismiss'
