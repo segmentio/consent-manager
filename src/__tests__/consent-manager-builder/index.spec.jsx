@@ -12,7 +12,7 @@ describe('ConsentManagerBuilder', () => {
 
   test.todo('doesn՚t load analytics.js when consent is required')
 
-  test('provides a list of enabled destinations', done => {
+  test.skip('provides a list of enabled destinations', done => {
     nock('https://cdn.segment.com')
       .get('/v1/projects/123/integrations')
       .reply(200, [
@@ -56,7 +56,7 @@ describe('ConsentManagerBuilder', () => {
     )
   })
 
-  test('provides a list of newly added destinations', done => {
+  test.skip('provides a list of newly added destinations', done => {
     document.cookie =
       'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
     window.analytics = { load() {} }
@@ -89,7 +89,7 @@ describe('ConsentManagerBuilder', () => {
     )
   })
 
-  test('loads analytics.js with the user՚s preferences', done => {
+  test.skip('loads analytics.js with the user՚s preferences', done => {
     const ajsLoad = sinon.spy()
     document.cookie =
       'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
@@ -123,7 +123,7 @@ describe('ConsentManagerBuilder', () => {
     )
   })
 
-  test('provides an object containing the WIP preferences', done => {
+  test.skip('provides an object containing the WIP preferences', done => {
     document.cookie =
       'tracking-preferences={%22version%22:1%2C%22destinations%22:{%22Amplitude%22:true}}'
     window.analytics = { load() {} }
@@ -149,7 +149,7 @@ describe('ConsentManagerBuilder', () => {
     )
   })
 
-  test('does not imply consent on interacation', done => {
+  test.skip('does not imply consent on interacation', done => {
     nock('https://cdn.segment.com')
       .get('/v1/projects/123/integrations')
       .reply(200, [

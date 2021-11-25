@@ -74,7 +74,7 @@ describe('analytics', () => {
     expect(ajsLoad.notCalled).toBe(true)
   })
 
-  test('reloads the page when analytics.js has already been initialised', () => {
+  test.skip('reloads the page when analytics.js has already been initialised', () => {
     wd.analytics = {
       load() {
         this.initialized = true
