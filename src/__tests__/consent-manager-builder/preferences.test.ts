@@ -16,6 +16,8 @@ describe('preferences', () => {
         if (type === 'a') {
           return new URL('http://localhost/')
         }
+
+        return
       }
     } as Document
   })
