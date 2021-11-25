@@ -94,6 +94,7 @@
     "gulp": "^4.0.2",
     "husky": "^3.0.8",
     "jest": "^24.9.0",
+    "jest-watch-typeahead": "^1.0.0",
     "lint-staged": "^7.0.4",
     "lodash-es": "^4.17.10",
     "nock": "^9.2.5",
