@@ -9,8 +9,10 @@ describe('analytics', () => {
     window = {} as WindowWithAJS
     wd = window
     wd.analytics = {
+      /*eslint-disable */
       track: (_event, _properties, _optionsWithConsent, _callback) => {},
       addSourceMiddleware: (_middleware: Middleware) => {}
+      /*eslint-enable */
     }
   })
 
