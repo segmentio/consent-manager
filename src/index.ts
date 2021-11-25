@@ -1,5 +1,5 @@
-import CMB from './consent-manager-builder'
 import CM from './consent-manager'
+import CMB from './consent-manager-builder'
 
 export { openDialog as openConsentManager } from './consent-manager/container'
 export {

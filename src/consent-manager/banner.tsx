@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
 import styled from 'react-emotion'
-import fontStyles from './font-styles'
-import { translations } from './translations-utils'
 
 import { Button } from './buttons'
+import fontStyles from './font-styles'
+import { translations } from './translations-utils'
 
 const Root = styled<{ backgroundColor: string; textColor: string }, 'div'>('div')`
   ${fontStyles};
@@ -80,10 +80,10 @@ const DenyButton = styled(Button)`
 `
 
 interface Props {
-  innerRef: (node: HTMLElement | null) => void
-  onChangePreferences: () => void
-  onAcceptAll: () => void
-  onDenyAll: () => void
+  innerRef(node: HTMLElement | null): void
+  onChangePreferences(): void
+  onAcceptAll(): void
+  onDenyAll(): void
   content: React.ReactNode
   backgroundColor: string
   textColor: string
@@ -104,7 +104,7 @@ export default class Banner extends PureComponent<Props> {
     } = this.props
 
     return (
-      <Root innerRef={innerRef} backgroundColor={backgroundColor} textColor={textColor}>
+      <Root backgroundColor={backgroundColor} innerRef={innerRef} textColor={textColor}>
         <div
           style={{
             display: 'flex',

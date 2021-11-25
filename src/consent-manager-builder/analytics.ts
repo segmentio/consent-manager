@@ -28,6 +28,7 @@ export default function conditionallyLoadAnalytics({
     if (!wd.analytics.initialized) {
       wd.analytics.load(writeKey)
     }
+
     return
   }
 
@@ -45,6 +46,7 @@ export default function conditionallyLoadAnalytics({
     if (shouldReload) {
       window.location.reload()
     }
+
     return
   }
 

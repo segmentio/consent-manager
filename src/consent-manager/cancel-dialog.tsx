@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react'
-import Dialog from './dialog'
 import styled from 'react-emotion'
+
 import { Button } from './buttons'
+import Dialog from './dialog'
 import { translations } from './translations-utils'
 
 const BackButton = styled(Button)`
@@ -17,9 +18,9 @@ const CloseButton = styled(Button)`
 `
 
 interface Props {
-  innerRef: (node: HTMLElement) => void
-  onBack: () => void
-  onConfirm: () => void
+  innerRef(node: HTMLElement): void
+  onBack(): void
+  onConfirm(): void
   title: React.ReactNode
   content: React.ReactNode
 }
@@ -39,10 +40,10 @@ export default class CancelDialog extends PureComponent<Props> {
 
     return (
       <Dialog
-        innerRef={innerRef}
-        title={title}
         buttons={buttons}
+        innerRef={innerRef}
         onSubmit={this.handleSubmit}
+        title={title}
         width="500px"
       >
         {content}

@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react'
+
 import ConsentManagerBuilder from '../consent-manager-builder'
-import Container from './container'
-import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
 import { CategoryPreferences, Destination, ConsentManagerProps } from '../types'
-import {translations} from './translations-utils'
+
+import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
+import Container from './container'
+import { translations } from './translations-utils'
 
 const zeroValuePreferences: CategoryPreferences = {
   marketingAndAnalytics: null,
@@ -25,7 +27,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     bannerSubContent: translations.change_preferences,
     bannerBackgroundColor: '#1f4160',
     preferencesDialogTitle: translations.data_collection_preferences,
-    cancelDialogTitle: translations.cancel_dialog_title,
+    cancelDialogTitle: translations.cancel_dialog_title
   }
 
   render() {
@@ -49,14 +51,14 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
 
     return (
       <ConsentManagerBuilder
-        onError={onError}
-        writeKey={writeKey}
-        otherWriteKeys={otherWriteKeys}
-        shouldRequireConsent={shouldRequireConsent}
         cookieDomain={cookieDomain}
+        customCategories={customCategories}
         initialPreferences={this.getInitialPreferences()}
         mapCustomPreferences={this.handleMapCustomPreferences}
-        customCategories={customCategories}
+        onError={onError}
+        otherWriteKeys={otherWriteKeys}
+        shouldRequireConsent={shouldRequireConsent}
+        writeKey={writeKey}
       >
         {({
           destinations,
@@ -67,36 +69,34 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
           setPreferences,
           resetPreferences,
           saveConsent
-        }) => {
-          return (
-            <Container
-              customCategories={customCategories}
-              destinations={destinations}
-              newDestinations={newDestinations}
-              preferences={preferences}
-              isConsentRequired={isConsentRequired}
-              setPreferences={setPreferences}
-              resetPreferences={resetPreferences}
-              saveConsent={saveConsent}
-              closeBehavior={this.props.closeBehavior}
-              implyConsentOnInteraction={
-                implyConsentOnInteraction === null || implyConsentOnInteraction === undefined
-                  ? ConsentManager.defaultProps.implyConsentOnInteraction
-                  : implyConsentOnInteraction
-              }
-              bannerContent={bannerContent}
-              bannerSubContent={bannerSubContent}
-              bannerTextColor={bannerTextColor || ConsentManager.defaultProps.bannerTextColor}
-              bannerBackgroundColor={
-                bannerBackgroundColor || ConsentManager.defaultProps.bannerBackgroundColor
-              }
-              preferencesDialogTitle={preferencesDialogTitle}
-              preferencesDialogContent={preferencesDialogContent}
-              cancelDialogTitle={cancelDialogTitle}
-              cancelDialogContent={cancelDialogContent}
-            ></Container>
-          )
-        }}
+        }) => (
+          <Container
+            bannerBackgroundColor={
+              bannerBackgroundColor || ConsentManager.defaultProps.bannerBackgroundColor
+            }
+            bannerContent={bannerContent}
+            bannerSubContent={bannerSubContent}
+            bannerTextColor={bannerTextColor || ConsentManager.defaultProps.bannerTextColor}
+            cancelDialogContent={cancelDialogContent}
+            cancelDialogTitle={cancelDialogTitle}
+            closeBehavior={this.props.closeBehavior}
+            customCategories={customCategories}
+            destinations={destinations}
+            implyConsentOnInteraction={
+              implyConsentOnInteraction === null || implyConsentOnInteraction === undefined
+                ? ConsentManager.defaultProps.implyConsentOnInteraction
+                : implyConsentOnInteraction
+            }
+            isConsentRequired={isConsentRequired}
+            newDestinations={newDestinations}
+            preferences={preferences}
+            preferencesDialogContent={preferencesDialogContent}
+            preferencesDialogTitle={preferencesDialogTitle}
+            resetPreferences={resetPreferences}
+            saveConsent={saveConsent}
+            setPreferences={setPreferences}
+          />
+        )}
       </ConsentManagerBuilder>
     )
   }

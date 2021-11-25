@@ -1,5 +1,5 @@
-import { CloseBehavior } from './consent-manager/container'
 import { PreferencesManager } from './consent-manager-builder/preferences'
+import { CloseBehavior } from './consent-manager/container'
 
 type AJS = SegmentAnalytics.AnalyticsJS & {
   initialized: boolean
@@ -12,9 +12,9 @@ export type WindowWithAJS = Window &
 
 export type WindowWithConsentManagerConfig = Window &
   typeof globalThis & {
-    consentManagerConfig?: (
+    consentManagerConfig?(
       args: StandaloneConsentManagerParams
-    ) => ConsentManagerInput | ConsentManagerInput
+    ): ConsentManagerInput | ConsentManagerInput
   }
 
 export type WindowWithConsentManagerLocalizations = Window &
@@ -33,9 +33,9 @@ export interface TranslationsDictionary {
 interface StandaloneConsentManagerParams {
   React: unknown
   version?: string
-  openConsentManager: () => void
-  doNotTrack: () => boolean | null
-  inEU: () => boolean
+  openConsentManager(): void
+  doNotTrack(): boolean | null
+  inEU(): boolean
   preferences: PreferencesManager
 }
 
@@ -83,7 +83,7 @@ interface CustomCategory {
 export interface ConsentManagerProps {
   writeKey: string
   otherWriteKeys?: string[]
-  shouldRequireConsent?: () => Promise<boolean> | boolean
+  shouldRequireConsent?(): Promise<boolean> | boolean
   implyConsentOnInteraction?: boolean
   cookieDomain?: string
   bannerContent: React.ReactNode
@@ -92,7 +92,7 @@ export interface ConsentManagerProps {
   bannerBackgroundColor?: string
   preferencesDialogTitle?: React.ReactNode
   preferencesDialogContent: React.ReactNode
-  onError?: (error: Error | undefined) => void
+  onError?(error: Error | undefined): void
   cancelDialogTitle?: React.ReactNode
   cancelDialogContent: React.ReactNode
   closeBehavior?: CloseBehavior

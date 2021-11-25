@@ -1,6 +1,7 @@
 import sinon from 'sinon'
-import { WindowWithAJS, Destination } from '../../types'
+
 import conditionallyLoadAnalytics from '../../consent-manager-builder/analytics'
+import { WindowWithAJS, Destination } from '../../types'
 
 describe('analytics', () => {
   let wd

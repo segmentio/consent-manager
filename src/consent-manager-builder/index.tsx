@@ -1,9 +1,11 @@
 import { Component } from 'react'
-import { loadPreferences, savePreferences } from './preferences'
-import fetchDestinations from './fetch-destinations'
-import conditionallyLoadAnalytics from './analytics'
-import { getConsentPreferences } from './preferences-utils'
+
 import { Destination, CategoryPreferences, CustomCategories } from '../types'
+
+import conditionallyLoadAnalytics from './analytics'
+import fetchDestinations from './fetch-destinations'
+import { loadPreferences, savePreferences } from './preferences'
+import { getConsentPreferences } from './preferences-utils'
 
 function getNewDestinations(destinations: Destination[], preferences: CategoryPreferences) {
   const newDestinations: Destination[] = []
@@ -39,20 +41,20 @@ interface Props {
   /**
    * Provide a function to define whether or not consent should be required
    */
-  shouldRequireConsent?: () => Promise<boolean> | boolean
+  shouldRequireConsent?(): Promise<boolean> | boolean
 
   /**
    * Render props for the Consent Manager builder
    */
-  children: (props: RenderProps) => React.ReactElement
+  children(props: RenderProps): React.ReactElement
 
   /**
    * Allows for customizing how to show different categories of consent.
    */
-  mapCustomPreferences?: (
+  mapCustomPreferences?(
     destinations: Destination[],
     preferences: CategoryPreferences
-  ) => { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
+  ): { destinationPreferences: CategoryPreferences; customPreferences: CategoryPreferences }
 
   /**
    * Allows for adding custom consent categories by mapping a custom category to Segment integrations
@@ -62,7 +64,7 @@ interface Props {
   /**
    * A callback for dealing with errors in the Consent Manager
    */
-  onError?: (err: Error) => void | Promise<void>
+  onError?(err: Error): void | Promise<void>
 }
 
 interface RenderProps {
@@ -71,9 +73,9 @@ interface RenderProps {
   preferences: CategoryPreferences
   isConsentRequired: boolean
   customCategories?: CustomCategories
-  setPreferences: (newPreferences: CategoryPreferences) => void
-  resetPreferences: () => void
-  saveConsent: (newPreferences?: CategoryPreferences | boolean, shouldReload?: boolean) => void
+  setPreferences(newPreferences: CategoryPreferences): void
+  resetPreferences(): void
+  saveConsent(newPreferences?: CategoryPreferences | boolean, shouldReload?: boolean): void
 }
 
 interface State {
@@ -108,6 +110,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
     if (isLoading) {
       console.log('loading')
+
       return null
     }
 
@@ -160,7 +163,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     if (mapCustomPreferences) {
       preferences = customPreferences || initialPreferences || {}
 
-      let definedObject = function(obj: object | undefined) {
+      const definedObject = function(obj: object | undefined) {
         return obj == undefined ? {} : obj
       }
 
@@ -205,6 +208,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         newPreferences,
         existingPreferences
       })
+
       return { ...prevState, preferences }
     })
   }
