@@ -189,14 +189,13 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       cookieExpires,
       cdnHost = ConsentManagerBuilder.defaultProps.cdnHost
     } = this.props
+
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
     let { destinationPreferences, customPreferences } = loadPreferences(cookieName)
-
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),
       fetchDestinations(cdnHost, [writeKey, ...otherWriteKeys])
     ])
-
     const newDestinations = getNewDestinations(destinations, destinationPreferences || {})
     const workspaceAddedNewDestinations =
       destinationPreferences &&
@@ -204,15 +203,17 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       newDestinations.length > 0
 
     let preferences: CategoryPreferences | undefined
+    const initialPrefencesHaveValue = Object.values(initialPreferences || {}).some(
+      v => v === true || v === false
+    )
+    const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
+      v => v === null || v === undefined
+    )
+
     if (mapCustomPreferences) {
       preferences = customPreferences || initialPreferences || {}
-      const hasInitialPreferenceToTrue = Object.values(initialPreferences || {}).some(Boolean)
-      const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
-        v => v === null || v === undefined
-      )
-
       if (
-        (hasInitialPreferenceToTrue && emptyCustomPreferecences) ||
+        (initialPrefencesHaveValue && emptyCustomPreferecences) ||
         (defaultDestinationBehavior === 'imply' && workspaceAddedNewDestinations)
       ) {
         const mapped = mapCustomPreferences(destinations, preferences)
@@ -316,8 +317,11 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
       const newDestinations = getNewDestinations(destinations, destinationPreferences)
 
-      // If preferences haven't changed, don't reload the page as it's a disruptive experience for end-users
-      if (prevState.havePreferencesChanged || newDestinations.length > 0) {
+      if (
+        prevState.havePreferencesChanged ||
+        newDestinations.length > 0 ||
+        typeof newPreferences === 'boolean'
+      ) {
         savePreferences({
           destinationPreferences,
           customPreferences,
@@ -336,7 +340,12 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         })
       }
 
-      return { ...prevState, destinationPreferences, preferences, newDestinations }
+      return {
+        ...prevState,
+        destinationPreferences,
+        preferences,
+        newDestinations
+      }
     })
   }
 
