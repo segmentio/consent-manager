@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.4.0 (Nov 30, 2021)
+- [#184](https://github.com/segmentio/consent-manager/pull/184) Fix the behavior of `initialPreferences`
+- [#192](https://github.com/segmentio/consent-manager/pull/192) Fix linting, dependency upgrade
+- [#188](https://github.com/segmentio/consent-manager/pull/188) Allow TS to generate code for enum
+- [#180](https://github.com/segmentio/consent-manager/pull/180) Add id to preference dialog form 
+- [#179](https://github.com/segmentio/consent-manager/pull/179) Typescript improvement
+- [#176](https://github.com/segmentio/consent-manager/pull/176) Allow customizing the texts of the preferences dialog
+- [#173](https://github.com/segmentio/consent-manager/pull/173) Fix implyConsentOnInteraction behavior
+- [#170](https://github.com/segmentio/consent-manager/pull/170) Dependency upgrades
+
+
 ## 5.3.0 (Sept 13, 2021) 
 - [#145](https://github.com/segmentio/consent-manager/pull/145) Introduce cookieName attribute to allow a custom cookie name
 - [#126](https://github.com/segmentio/consent-manager/pull/126) Fixing types directory 
