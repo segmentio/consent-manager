@@ -231,16 +231,14 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences = destinationPreferences || initialPreferences
     }
 
-    if (!initialPrefencesHaveValue) {
-      conditionallyLoadAnalytics({
-        writeKey,
-        destinations,
-        destinationPreferences,
-        isConsentRequired,
-        defaultDestinationBehavior,
-        categoryPreferences: preferences
-      })
-    }
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isConsentRequired,
+      defaultDestinationBehavior,
+      categoryPreferences: preferences
+    })
 
     this.setState({
       isLoading: false,
@@ -249,8 +247,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       preferences,
       isConsentRequired,
       destinationPreferences,
-      workspaceAddedNewDestinations: Boolean(workspaceAddedNewDestinations),
-      havePreferencesChanged: initialPrefencesHaveValue
+      workspaceAddedNewDestinations: Boolean(workspaceAddedNewDestinations)
     })
   }
 
@@ -347,8 +344,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         ...prevState,
         destinationPreferences,
         preferences,
-        newDestinations,
-        havePreferencesChanged: false
+        newDestinations
       }
     })
   }
