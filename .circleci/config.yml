@@ -6,17 +6,19 @@ orbs:
 default_params: &default_params
   context: Bintray Access
 
+#####################################################
+# Workflows
+#####################################################
 workflows:
   version: 2
-  ci-checks:
+  full:
     jobs:
       - microapp/lint:
-        <<: *default_params
+          <<: *default_params
       - microapp/test:
-        <<: *default_params
+          <<: *default_params
       - microapp/build:
-        <<: *default_params
-      - ci/validate-commits
+          <<: *default_params
 
       - microapp/upload-artifact:
           context: Artifact Bucket Access
@@ -27,5 +29,4 @@ workflows:
 
       - ci/notify-success:
           requires:
-            - ci/validate-commits
             - microapp/upload-artifact
