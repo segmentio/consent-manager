@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import { flatten, sortedUniqBy, sortBy } from 'lodash'
+
 import { Destination } from '../types'
 
 async function fetchDestinationForWriteKey(writeKey: string): Promise<Destination[]> {
@@ -23,7 +24,7 @@ async function fetchDestinationForWriteKey(writeKey: string): Promise<Destinatio
 }
 
 export default async function fetchDestinations(writeKeys: string[]): Promise<Destination[]> {
-  const destinationsRequests: Promise<Destination[]>[] = []
+  const destinationsRequests: Array<Promise<Destination[]>> = []
   for (const writeKey of writeKeys) {
     if (writeKey !== undefined) {
       destinationsRequests.push(fetchDestinationForWriteKey(writeKey))

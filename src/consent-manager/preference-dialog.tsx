@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react'
 import styled, { css } from 'react-emotion'
-import Dialog from './dialog'
+
 import { Destination, CustomCategories, CategoryPreferences } from '../types'
+
 import { Button } from './buttons'
+import Dialog from './dialog'
 import { translations } from './translations-utils'
 
 const hideOnMobile = css`
@@ -92,10 +94,10 @@ const replaceWith = (category: string, phrase: string) =>
   phrase.replace(categoryPlaceholder, category)
 
 interface PreferenceDialogProps {
-  innerRef: (element: HTMLElement | null) => void
-  onCancel: () => void
-  onSave: () => void
-  onChange: (name: string, value: boolean) => void
+  innerRef(element: HTMLElement | null): void
+  onCancel(): void
+  onSave(): void
+  onChange(name: string, value: boolean): void
   marketingDestinations: Destination[]
   advertisingDestinations: Destination[]
   functionalDestinations: Destination[]
@@ -140,13 +142,14 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
         </div>
       </div>
     )
+
     return (
       <Dialog
-        innerRef={innerRef}
-        title={title}
         buttons={buttons}
+        innerRef={innerRef}
         onCancel={onCancel}
         onSubmit={this.handleSubmit}
+        title={title}
       >
         <ContentContainer>
           {content !== '' && content !== undefined ? content : ''}
@@ -169,31 +172,31 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     <InputCell>
                       <label>
                         <input
-                          type="radio"
-                          name="functional"
-                          value="true"
-                          checked={functional === true}
-                          onChange={this.handleChange}
                           aria-label={replaceWith(
                             translations.functional_category,
                             translations.allow_category_tracking
                           )}
+                          checked={functional === true}
+                          name="functional"
+                          onChange={this.handleChange}
                           required
+                          type="radio"
+                          value="true"
                         />{' '}
                         {translations.yes}
                       </label>
                       <label>
                         <input
-                          type="radio"
-                          name="functional"
-                          value="false"
-                          checked={functional === false}
-                          onChange={this.handleChange}
                           aria-label={replaceWith(
                             translations.functional_category,
                             translations.disallow_category_tracking
                           )}
+                          checked={functional === false}
+                          name="functional"
+                          onChange={this.handleChange}
                           required
+                          type="radio"
+                          value="false"
                         />{' '}
                         {translations.no}
                       </label>
@@ -208,31 +211,31 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     <InputCell>
                       <label>
                         <input
-                          type="radio"
-                          name="marketingAndAnalytics"
-                          value="true"
-                          checked={marketingAndAnalytics === true}
-                          onChange={this.handleChange}
                           aria-label={replaceWith(
                             translations.analytics_category,
                             translations.allow_category_tracking
                           )}
+                          checked={marketingAndAnalytics === true}
+                          name="marketingAndAnalytics"
+                          onChange={this.handleChange}
                           required
+                          type="radio"
+                          value="true"
                         />{' '}
                         {translations.yes}
                       </label>
                       <label>
                         <input
-                          type="radio"
-                          name="marketingAndAnalytics"
-                          value="false"
-                          checked={marketingAndAnalytics === false}
-                          onChange={this.handleChange}
                           aria-label={replaceWith(
                             translations.analytics_category,
                             translations.disallow_category_tracking
                           )}
+                          checked={marketingAndAnalytics === false}
+                          name="marketingAndAnalytics"
+                          onChange={this.handleChange}
                           required
+                          type="radio"
+                          value="false"
                         />{' '}
                         {translations.no}
                       </label>
@@ -247,37 +250,37 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     <InputCell>
                       <label>
                         <input
-                          type="radio"
-                          name="advertising"
-                          value="true"
-                          checked={advertising === true}
-                          onChange={this.handleChange}
                           aria-label={replaceWith(
                             translations.advertising_category,
                             translations.allow_category_tracking
                           )}
+                          checked={advertising === true}
+                          name="advertising"
+                          onChange={this.handleChange}
                           required
+                          type="radio"
+                          value="true"
                         />{' '}
                         {translations.yes}
                       </label>
                       <label>
                         <input
-                          type="radio"
-                          name="advertising"
-                          value="false"
-                          checked={advertising === false}
-                          onChange={this.handleChange}
                           aria-label={replaceWith(
                             translations.advertising_category,
                             translations.disallow_category_tracking
                           )}
+                          checked={advertising === false}
+                          name="advertising"
+                          onChange={this.handleChange}
                           required
+                          type="radio"
+                          value="false"
                         />{' '}
                         {translations.no}
                       </label>
                     </InputCell>
                     <RowHeading scope="row">
-                      {translations.targeting_category}; {translations.advertising_category}
+                      {translations.targeting_category};{translations.advertising_category}
                     </RowHeading>
                     <td>
                       <p>{translations.advertising_purpose}</p>
@@ -293,25 +296,25 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                       <InputCell>
                         <label>
                           <input
-                            type="radio"
-                            name={categoryName}
-                            value="true"
-                            checked={preferences[categoryName] === true}
-                            onChange={this.handleChange}
                             aria-label={`Allow "${categoryName}" tracking`}
+                            checked={preferences[categoryName] === true}
+                            name={categoryName}
+                            onChange={this.handleChange}
                             required
+                            type="radio"
+                            value="true"
                           />{' '}
                           {translations.yes}
                         </label>
                         <label>
                           <input
-                            type="radio"
-                            name={categoryName}
-                            value="false"
-                            checked={preferences[categoryName] === false}
-                            onChange={this.handleChange}
                             aria-label={`Disallow "${categoryName}" tracking`}
+                            checked={preferences[categoryName] === false}
+                            name={categoryName}
+                            onChange={this.handleChange}
                             required
+                            type="radio"
+                            value="false"
                           />{' '}
                           {translations.no}
                         </label>

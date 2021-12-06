@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import {
   LanguageData,
   TranslationsDictionary,
@@ -43,10 +42,13 @@ const createDictionary = (obj: LanguageData): TranslationsDictionary => {
   const translationKeys = Object.keys(localizedDictionary)
   const isEmpty = !translationKeys.length
 
-  if (isEmpty) return localizedDictionary
+  if (isEmpty) {
+    return localizedDictionary
+  }
 
   return translationKeys.reduce((dictionary, key) => {
     dictionary[key.split('.').pop()!] = localizedDictionary[key]
+
     return dictionary
   }, {})
 }

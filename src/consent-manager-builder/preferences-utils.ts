@@ -1,4 +1,5 @@
 import { transform } from 'lodash'
+
 import { CategoryPreferences, CustomerPermissions } from '../types'
 
 // Segment preference keys to BC enum taken from consent-manager-config.js

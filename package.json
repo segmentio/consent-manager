@@ -19,7 +19,13 @@
     "standalone"
   ],
   "scripts": {
-    "test": "jest src/__tests__",
+    "start": "gulp",
+    "release": "gulp release",
+    "test": "gulp test",
+    "test:watch": "gulp test --watch",
+    "test:coverage": "gulp test --coverage",
+    "lint": "gulp lint",
+    "lint:fix": "gulp lint --fix",
     "prepublishOnly": "yarn run clean && yarn run build",
     "postpublish": "yarn build-storybook && yarn deploy-storybook -- --existing-output-dir=storybook-static",
     "dev": "concurrently 'yarn build-standalone --watch' 'yarn start-storybook -s ./ -p 9009'",
@@ -31,8 +37,7 @@
     "clean": "rm -rf commonjs esm standalone storybook-static",
     "deploy-storybook": "storybook-to-ghpages",
     "standalone-hash": "shasum -b -a 256 standalone/consent-manager.js | xxd -r -p | base64",
-    "build-storybook": "yarn build-standalone && build-storybook && cp -r ./standalone ./storybook-static/standalone",
-    "lint": "eslint 'src/**/*.{ts,tsx}'"
+    "build-storybook": "yarn build-standalone && build-storybook && cp -r ./standalone ./storybook-static/standalone"
   },
   "dependencies": {
     "@bigcommerce/big-design": "^0.14.0",
@@ -43,6 +48,7 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.5",
     "nanoid": "^1.0.2",
+    "ng-build": "github:bigcommerce-labs/ng-build#14.0.10",
     "prop-types": "^15.6.1",
     "react-emotion": "^9.1.2",
     "styled-components": "^4.4.1"
@@ -85,8 +91,10 @@
     "eslint-plugin-react": "^7.16.0",
     "evergreen-ui": "^3.0.0",
     "file-loader": "^4.2.0",
+    "gulp": "^4.0.2",
     "husky": "^3.0.8",
     "jest": "^24.9.0",
+    "jest-watch-typeahead": "^1.0.0",
     "lint-staged": "^7.0.4",
     "lodash-es": "^4.17.10",
     "nock": "^9.2.5",

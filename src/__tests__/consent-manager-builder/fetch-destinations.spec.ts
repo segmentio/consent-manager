@@ -1,4 +1,5 @@
 import nock from 'nock'
+
 import fetchDestinations from '../../consent-manager-builder/fetch-destinations'
 
 describe('fetchDestinations', () => {

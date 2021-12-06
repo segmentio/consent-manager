@@ -1,8 +1,9 @@
 // TODO: remove duplicate cookie library from bundle
-import cookies from 'js-cookie'
 import topDomain from '@segment/top-domain'
-import { WindowWithAJS, Preferences, CategoryPreferences } from '../types'
 import { EventEmitter } from 'events'
+import cookies from 'js-cookie'
+
+import { WindowWithAJS, Preferences, CategoryPreferences } from '../types'
 
 const COOKIE_KEY = 'tracking-preferences'
 // TODO: Make cookie expiration configurable
@@ -41,6 +42,7 @@ const emitter = new EventEmitter()
  */
 export function onPreferencesSaved(listener: (prefs: Preferences) => void) {
   emitter.on('preferencesSaved', listener)
+
   return () => emitter.off('preferencesSaved', listener)
 }
 

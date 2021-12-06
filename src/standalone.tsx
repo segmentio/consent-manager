@@ -1,10 +1,12 @@
+import inEU from '@segment/in-eu'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import inEU from '@segment/in-eu'
-import { ConsentManager, openConsentManager, doNotTrack } from '.'
-import { ConsentManagerProps, WindowWithConsentManagerConfig, ConsentManagerInput } from './types'
-import { CloseBehavior } from './consent-manager/container'
+
 import * as preferences from './consent-manager-builder/preferences'
+import { CloseBehavior } from './consent-manager/container'
+import { ConsentManagerProps, WindowWithConsentManagerConfig, ConsentManagerInput } from './types'
+
+import { ConsentManager, openConsentManager, doNotTrack } from '.'
 
 export const version = process.env.VERSION
 export { openConsentManager, doNotTrack, inEU, preferences }
@@ -25,7 +27,7 @@ if (localWindow.consentManagerConfig && typeof localWindow.consentManagerConfig 
   })
   containerRef = props.container
 } else {
-  throw new Error(`window.consentManagerConfig should be a function`)
+  throw new Error('window.consentManagerConfig should be a function')
 }
 
 if (!containerRef) {

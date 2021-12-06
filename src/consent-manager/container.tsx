@@ -1,10 +1,12 @@
 import EventEmitter from 'events'
 import React from 'react'
+
+import { Destination, CategoryPreferences, CustomCategories } from '../types'
+
 import Banner from './banner'
-import PreferenceDialog from './preference-dialog'
 import CancelDialog from './cancel-dialog'
 import { ADVERTISING_CATEGORIES, FUNCTIONAL_CATEGORIES } from './categories'
-import { Destination, CategoryPreferences, CustomCategories } from '../types'
+import PreferenceDialog from './preference-dialog'
 
 const emitter = new EventEmitter()
 export function openDialog() {
@@ -18,9 +20,9 @@ export const enum CloseBehavior {
 }
 
 interface ContainerProps {
-  setPreferences: (prefs: CategoryPreferences) => void
-  saveConsent: (newPreferences?: CategoryPreferences, shouldReload?: boolean) => void
-  resetPreferences: () => void
+  setPreferences(prefs: CategoryPreferences): void
+  saveConsent(newPreferences?: CategoryPreferences, shouldReload?: boolean): void
+  resetPreferences(): void
   closeBehavior?: CloseBehavior
   destinations: Destination[]
   customCategories?: CustomCategories | undefined
@@ -175,43 +177,43 @@ const Container: React.FC<ContainerProps> = props => {
     <div>
       {props.isConsentRequired && props.newDestinations.length >= 0 && (
         <Banner
-          innerRef={current => (banner = { current })}
-          onChangePreferences={() => toggleDialog(true)}
-          onAcceptAll={() => handleAcceptAll()}
-          onDenyAll={() => handleDenyAll()}
-          content={props.bannerContent}
-          textColor={props.bannerTextColor}
           backgroundColor={props.bannerBackgroundColor}
+          content={props.bannerContent}
+          innerRef={current => (banner = { current })}
+          onAcceptAll={() => handleAcceptAll()}
+          onChangePreferences={() => toggleDialog(true)}
+          onDenyAll={() => handleDenyAll()}
+          textColor={props.bannerTextColor}
         />
       )}
 
       {isDialogOpen && (
         <PreferenceDialog
+          advertising={props.preferences.advertising}
+          advertisingDestinations={advertisingDestinations}
+          content={props.preferencesDialogContent}
           customCategories={props.customCategories}
           destinations={props.destinations}
-          preferences={props.preferences}
-          innerRef={current => (preferenceDialog = { current })}
-          onCancel={handleCancel}
-          onSave={handleSave}
-          onChange={handleCategoryChange}
-          marketingDestinations={marketingDestinations}
-          advertisingDestinations={advertisingDestinations}
-          functionalDestinations={functionalDestinations}
-          marketingAndAnalytics={props.preferences.marketingAndAnalytics}
-          advertising={props.preferences.advertising}
           functional={props.preferences.functional}
+          functionalDestinations={functionalDestinations}
+          innerRef={current => (preferenceDialog = { current })}
+          marketingAndAnalytics={props.preferences.marketingAndAnalytics}
+          marketingDestinations={marketingDestinations}
+          onCancel={handleCancel}
+          onChange={handleCategoryChange}
+          onSave={handleSave}
+          preferences={props.preferences}
           title={props.preferencesDialogTitle}
-          content={props.preferencesDialogContent}
         />
       )}
 
       {isCancelling && (
         <CancelDialog
+          content={props.cancelDialogContent}
           innerRef={current => (cancelDialog = { current })}
           onBack={handleCancelBack}
           onConfirm={handleCancelConfirm}
           title={props.cancelDialogTitle}
-          content={props.cancelDialogContent}
         />
       )}
     </div>

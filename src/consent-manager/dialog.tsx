@@ -1,9 +1,10 @@
+import { CloseIcon } from '@bigcommerce/big-design-icons'
+import nanoid from 'nanoid'
 import React, { PureComponent } from 'react'
 import ReactDOM from 'react-dom'
 import styled, { keyframes } from 'react-emotion'
-import nanoid from 'nanoid'
+
 import fontStyles from './font-styles'
-import { CloseIcon } from '@bigcommerce/big-design-icons'
 
 const ANIMATION_DURATION = '200ms'
 const ANIMATION_EASING = 'cubic-bezier(0.0, 0.0, 0.2, 1)'
@@ -110,9 +111,9 @@ const Buttons = styled('div')`
 `
 
 interface DialogProps {
-  innerRef: (element: HTMLElement | null) => void
-  onCancel?: () => void
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  innerRef(element: HTMLElement | null): void
+  onCancel?(): void
+  onSubmit(e: React.FormEvent<HTMLFormElement>): void
   title: React.ReactNode
   buttons: React.ReactNode
   width?: string
@@ -146,16 +147,16 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
     const dialog = (
       <Overlay onClick={this.handleOverlayClick}>
         <Root
+          aria-labelledby={this.titleId}
+          aria-modal
           innerRef={this.handleRootRef}
           role="dialog"
-          aria-modal
-          aria-labelledby={this.titleId}
           width={width}
         >
           <Header>
             <Title id={this.titleId}>{title}</Title>
             {onCancel && (
-              <HeaderCancelButton onClick={onCancel} title="Cancel" aria-label="Cancel">
+              <HeaderCancelButton aria-label="Cancel" onClick={onCancel} title="Cancel">
                 <CloseIcon />
               </HeaderCancelButton>
             )}
