@@ -15617,9 +15617,9 @@ next-tick@^1.0.0, next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-"ng-build@git+https://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@github.com/bigcommerce-labs/ng-build.git#14.0.10":
+"ng-build@git+ssh://git@github.com:bigcommerce-labs/ng-build.git#14.0.10":
   version "14.0.10"
-  resolved "git+https://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@github.com/bigcommerce-labs/ng-build.git#53366df79cba5db81695969d8493180611c34a4e"
+  resolved "git+ssh://git@github.com:bigcommerce-labs/ng-build.git#53366df79cba5db81695969d8493180611c34a4e"
   dependencies:
     "@babel/core" "^7.10.2"
     "@babel/plugin-proposal-class-properties" "^7.10.1"
