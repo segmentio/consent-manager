@@ -23,8 +23,8 @@ workflows:
       - microapp/upload-artifact:
           context: Artifact Bucket Access
           requires:
-            - lint
-            - test
+            - microapp/lint
+            - microapp/test
             - microapp/build
 
       - ci/notify-success:
