@@ -17,3 +17,5 @@ const registry = new NgBuild(this, {
 })
 
 gulp.registry(registry)
+gulp.task('ci:lint', gulp.series(['lint']))
+gulp.task('ci:test', gulp.series(['test']))
