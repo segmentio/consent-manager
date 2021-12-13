@@ -48,7 +48,7 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.5",
     "nanoid": "^1.0.2",
-    "ng-build": "github:bigcommerce-labs/ng-build#14.0.10",
+    "ng-build": "git+https://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@github.com/bigcommerce-labs/ng-build.git#14.0.10",
     "prop-types": "^15.6.1",
     "react-emotion": "^9.1.2",
     "styled-components": "^4.4.1"
