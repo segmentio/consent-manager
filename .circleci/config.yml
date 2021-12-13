@@ -3,14 +3,22 @@ orbs:
   ci: bigcommerce/internal@volatile
   microapp: bigcommerce/internal-microapp@volatile
 
+default_params: &default_params
+  context: Bintray Access
+
+#####################################################
+# Workflows
+#####################################################
 workflows:
   version: 2
-  ci-checks:
+  full:
     jobs:
-      - microapp/lint
-      - microapp/test
-      - microapp/build
-      - ci/validate-commits
+      - microapp/lint:
+          <<: *default_params
+      - microapp/test:
+          <<: *default_params
+      - microapp/build:
+          <<: *default_params
 
       - microapp/upload-artifact:
           context: Artifact Bucket Access
@@ -21,5 +29,4 @@ workflows:
 
       - ci/notify-success:
           requires:
-            - ci/validate-commits
             - microapp/upload-artifact
