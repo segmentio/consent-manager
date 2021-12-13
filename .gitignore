@@ -8,3 +8,7 @@
 
 # IDE
 .vscode/
+.DS_Store
+
+# Logs
+yarn-error.log

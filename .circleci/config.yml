@@ -26,7 +26,3 @@ workflows:
             - microapp/lint
             - microapp/test
             - microapp/build
-
-      - ci/notify-success:
-          requires:
-            - microapp/upload-artifact
