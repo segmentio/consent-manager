@@ -280,7 +280,13 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         shouldReload
       })
 
-      return { ...prevState, destinationPreferences, preferences, newDestinations }
+      return {
+        ...prevState,
+        destinationPreferences,
+        preferences,
+        newDestinations,
+        isConsentRequired: false
+      }
     })
   }
 

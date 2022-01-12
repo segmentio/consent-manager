@@ -161,6 +161,11 @@ const Container: React.FC<ContainerProps> = props => {
   }
 
   const handleAcceptAll = () => {
+    props.setPreferences({
+      advertising: true,
+      functional: true,
+      marketingAndAnalytics: true
+    })
     props.saveConsent()
   }
 
