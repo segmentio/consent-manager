@@ -466,13 +466,6 @@ Options:
 
 The domain the `tracking-preferences` cookie should be scoped to.
 
-##### bannerBackgroundColor
-
-**Type**: `string`
-**Default**: `#1f4160`
-
-The color of the consent banner background.
-
 ##### bannerContent
 
 **Type**: `PropTypes.node`
