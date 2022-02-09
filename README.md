@@ -551,6 +551,8 @@ The text displayed in the cancel dialog box.
 
 An object that represents custom consent categories, and which tools are included in these categories. For example, for CCPA compliance, you could create a custom “Do Not Sell” category and list relevant destinations to it.
 
+_Note: Calling the `customCategories` object will overwrite the prebuilt categories (Analytics, Functional, Targeting and Advertising) provided by Consent Manager. Those categories will need to be redeclared inside `customCategories`. You can find examples [here](https://gist.github.com/samuelkahr/343350ad0a466ded566f0d0c8167e800) and [here](https://codepen.io/samuelkahr/pen/JjdNqzr)._
+
 ```javascript
 const customCategories = {
   'New Category': {
