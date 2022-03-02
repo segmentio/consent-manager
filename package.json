@@ -42,7 +42,7 @@
     "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^2.2.0",
     "lodash-es": "^4.17.10",
-    "nanoid": "^1.0.2",
+    "nanoid": "^3.1.31",
     "prop-types": "^15.6.1",
     "react-emotion": "^9.1.2"
   },
