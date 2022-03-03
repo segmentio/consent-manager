@@ -789,7 +789,7 @@ The domain the `tracking-preferences` cookie should be scoped to.
 - [setPreferences](#setpreferences)
 - [resetPreferences](#resetpreferences)
 - [saveConsent](#saveconsent)
-- [onError](#onError-1)
+- [onError](#onError)
 
 ##### destinations
 
