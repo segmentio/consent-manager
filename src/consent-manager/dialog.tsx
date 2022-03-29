@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import ReactDOM from 'react-dom'
-import styled, { keyframes } from 'react-emotion'
+import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
+
 import nanoid from 'nanoid'
 import fontStyles from './font-styles'
 
@@ -150,7 +152,7 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
     const dialog = (
       <Overlay onClick={this.handleOverlayClick}>
         <Root
-          innerRef={this.handleRootRef}
+          ref={this.handleRootRef}
           role="dialog"
           aria-modal
           aria-labelledby={this.titleId}
@@ -165,7 +167,7 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
             )}
           </Header>
 
-          <Form id={'preferenceDialogForm'} innerRef={this.handleFormRef} onSubmit={onSubmit}>
+          <Form id={'preferenceDialogForm'} ref={this.handleFormRef} onSubmit={onSubmit}>
             <Content>{children}</Content>
 
             <Buttons>{buttons}</Buttons>
