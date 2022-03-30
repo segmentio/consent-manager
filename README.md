@@ -789,6 +789,7 @@ The domain the `tracking-preferences` cookie should be scoped to.
 - [setPreferences](#setpreferences)
 - [resetPreferences](#resetpreferences)
 - [saveConsent](#saveconsent)
+- [onError](#onError)
 
 ##### destinations
 
@@ -868,6 +869,12 @@ Resets the [preferences][] state to the value saved in the cookie. Useful for re
 **Type**: `function(object|boolean)`
 
 Saves the preferences currently in state to a cookie called `tracking-preferences`, triggers an identify call with `destinationTrackingPreferences` and `customTrackingPreferences` traits and then reloads analytics.js using the new preferences. It can also be passed preferences like [setPreferences][] to do a final update before saving.
+
+##### onError
+
+**Type**: `function(object)`
+
+Allows you to manually handle if there is an error when initializing - e.g. if there is an ad blocker that prevented fetching the destinations. This will prevent an uncaught error e.g. `Failed to fetch`.
 
 ### Utility functions
 
