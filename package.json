@@ -39,7 +39,7 @@
     "@segment/in-regions": "^1.2.0",
     "@segment/top-domain": "^3.0.0",
     "emotion": "^9.1.2",
-    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-fetch": "^3.0.0",
     "js-cookie": "^2.2.0",
     "lodash-es": "^4.17.10",
     "nanoid": "^1.0.2",
