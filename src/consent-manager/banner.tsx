@@ -1,5 +1,5 @@
 import React, { Fragment, PureComponent } from 'react'
-import styled from '@emotion/styled'
+import styled from 'react-emotion'
 import fontStyles from './font-styles'
 import { ActionsBlockProps } from '../types'
 import { DefaultButton, GreenButton } from './buttons'
@@ -121,7 +121,7 @@ const CloseButton = styled('button')<CloseButtonProps>`
   cursor: pointer;
 `
 
-interface BannerProps {
+interface Props {
   innerRef: (node: HTMLElement | null) => void
   onClose: () => void
   onChangePreferences: () => void
@@ -136,7 +136,7 @@ interface BannerProps {
   asModal?: boolean
 }
 
-export default class Banner extends PureComponent<BannerProps> {
+export default class Banner extends PureComponent<Props> {
   static displayName = 'Banner'
 
   render() {
@@ -203,7 +203,7 @@ export default class Banner extends PureComponent<BannerProps> {
           <Overlay />
           <Centered>
             <RootCentered
-              ref={innerRef}
+              innerRef={innerRef}
               backgroundColor={backgroundColor}
               textColor={textColor}
               hideCloseButton={hideCloseButton}
@@ -216,7 +216,7 @@ export default class Banner extends PureComponent<BannerProps> {
     }
     return (
       <Root
-        ref={innerRef}
+        innerRef={innerRef}
         backgroundColor={backgroundColor}
         textColor={textColor}
         hideCloseButton={hideCloseButton}

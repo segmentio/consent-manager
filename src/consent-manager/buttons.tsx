@@ -1,5 +1,4 @@
-import styled from '@emotion/styled'
-import { css } from '@emotion/react'
+import styled, { css } from 'react-emotion'
 
 const baseStyles = css`
   height: 32px;
