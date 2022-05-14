@@ -36,6 +36,8 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
     "@segment/in-regions": "^1.2.0",
     "@segment/top-domain": "^3.0.0",
     "emotion": "^9.1.2",
@@ -43,8 +45,7 @@
     "js-cookie": "^2.2.0",
     "lodash-es": "^4.17.10",
     "nanoid": "^1.0.2",
-    "prop-types": "^15.6.1",
-    "react-emotion": "^9.1.2"
+    "prop-types": "^15.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -121,11 +122,11 @@
   "size-limit": [
     {
       "path": "esm/index.js",
-      "limit": "50 KB"
+      "limit": "55 KB"
     },
     {
       "path": "standalone/consent-manager.js",
-      "limit": "50 KB"
+      "limit": "55 KB"
     }
   ],
   "husky": {
