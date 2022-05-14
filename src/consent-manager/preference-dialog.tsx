@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
-import styled, { css } from 'react-emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 import Dialog from './dialog'
 import { DefaultButton, GreenButton } from './buttons'
 import {
@@ -142,7 +143,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                 <ColumnHeading scope="col">{headings!.allowValue}</ColumnHeading>
                 <ColumnHeading scope="col">{headings!.categoryValue}</ColumnHeading>
                 <ColumnHeading scope="col">{headings!.purposeValue}</ColumnHeading>
-                <ColumnHeading scope="col" className={hideOnMobile}>
+                <ColumnHeading scope="col" css={hideOnMobile}>
                   {headings!.toolsValue}
                 </ColumnHeading>
               </Row>
@@ -181,11 +182,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     <RowHeading scope="row">{functionalInfo?.name}</RowHeading>
                     <td>
                       <p>{functionalInfo?.description}</p>
-                      <p className={hideOnMobile}>{functionalInfo?.example}</p>
+                      <p css={hideOnMobile}>{functionalInfo?.example}</p>
                     </td>
-                    <td className={hideOnMobile}>
-                      {functionalDestinations.map(d => d.name).join(', ')}
-                    </td>
+                    <td css={hideOnMobile}>{functionalDestinations.map(d => d.name).join(', ')}</td>
                   </Row>
 
                   <Row>
@@ -218,11 +217,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     <RowHeading scope="row">{marketingInfo?.name}</RowHeading>
                     <td>
                       <p>{marketingInfo?.description}</p>
-                      <p className={hideOnMobile}>{marketingInfo?.example}</p>
+                      <p css={hideOnMobile}>{marketingInfo?.example}</p>
                     </td>
-                    <td className={hideOnMobile}>
-                      {marketingDestinations.map(d => d.name).join(', ')}
-                    </td>
+                    <td css={hideOnMobile}>{marketingDestinations.map(d => d.name).join(', ')}</td>
                   </Row>
 
                   <Row>
@@ -255,9 +252,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     <RowHeading scope="row">{advertisingInfo?.name}</RowHeading>
                     <td>
                       <p>{advertisingInfo?.description}</p>
-                      <p className={hideOnMobile}>{advertisingInfo?.example}</p>
+                      <p css={hideOnMobile}>{advertisingInfo?.example}</p>
                     </td>
-                    <td className={hideOnMobile}>
+                    <td css={hideOnMobile}>
                       {advertisingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
@@ -298,7 +295,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                       <td>
                         <p>{purpose}</p>
                       </td>
-                      <td className={hideOnMobile}>
+                      <td css={hideOnMobile}>
                         {destinations
                           .filter(d => integrations.includes(d.id))
                           .map(d => d.name)
@@ -315,7 +312,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                   <p>{essentialInfo?.description}</p>
                   <p>{essentialInfo?.example}</p>
                 </td>
-                <td className={hideOnMobile} />
+                <td css={hideOnMobile} />
               </Row>
             </tbody>
           </Table>
