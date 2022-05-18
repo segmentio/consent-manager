@@ -204,7 +204,7 @@ const Container: React.FC<ContainerProps> = props => {
   }
 
   return (
-    <div>
+    <>
       {showBanner && props.isConsentRequired && props.newDestinations.length > 0 && (
         <Banner
           innerRef={current => (banner = { current })}
@@ -253,7 +253,7 @@ const Container: React.FC<ContainerProps> = props => {
           preferencesDialogTemplate={props.preferencesDialogTemplate}
         />
       )}
-    </div>
+    </>
   )
 }
 
