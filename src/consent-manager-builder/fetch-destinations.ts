@@ -20,7 +20,12 @@ async function fetchDestinationForWriteKey(
 
   // Rename creationName to id to abstract the weird data model
   for (const destination of destinations) {
-    destination.id = destination.creationName
+    // Because of the legacy Fullstory integration the creationName for this integration is the `name`
+    if (destination.name === 'Fullstory (Actions)') {
+      destination.id = destination.name
+    } else {
+      destination.id = destination.creationName
+    }
     delete destination.creationName
   }
 
