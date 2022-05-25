@@ -184,9 +184,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       initialPreferences,
       mapCustomPreferences,
       defaultDestinationBehavior,
-      cookieDomain,
       cookieName,
-      cookieExpires,
       cdnHost = ConsentManagerBuilder.defaultProps.cdnHost
     } = this.props
 
