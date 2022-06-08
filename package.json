@@ -40,6 +40,7 @@
     "@emotion/styled": "^11.8.1",
     "@segment/in-regions": "^1.2.0",
     "@segment/top-domain": "^3.0.0",
+    "@types/lodash-es": "^4.17.6",
     "emotion": "^9.1.2",
     "isomorphic-fetch": "^3.0.0",
     "js-cookie": "^2.2.0",
@@ -63,7 +64,6 @@
     "@types/isomorphic-fetch": "^0.0.35",
     "@types/jest": "^24.0.18",
     "@types/js-cookie": "^2.2.2",
-    "@types/lodash": "^4.14.141",
     "@types/nanoid": "^2.1.0",
     "@types/nock": "^11.1.0",
     "@types/node": "^12.7.11",
@@ -117,7 +117,16 @@
     "testEnvironment": "jsdom",
     "setupFiles": [
       "./test/setupTests.ts"
-    ]
+    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ],
+    "moduleNameMapper": {
+      "^lodash-es$": "lodash"
+    }
   },
   "size-limit": [
     {
