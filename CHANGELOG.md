@@ -1,19 +1,29 @@
 # Changelog
 
+## 5.5.0 (May 25, 2022)
+
+- [#216](https://github.com/segmentio/consent-manager/pull/216) Update emotion library
+- [#220](https://github.com/segmentio/consent-manager/pull/220) Update isomorphic-fetch library to fix vulnerabilities
+- [#222](https://github.com/segmentio/consent-manager/pull/222) Upgrade to react 18 library
+- [#223](https://github.com/segmentio/consent-manager/pull/223) Replace container div with Fragment
+- [#227](https://github.com/segmentio/consent-manager/pull/227) support FullStory (actions) as integration
+- [#228](https://github.com/segmentio/consent-manager/pull/228) Fix Tracking Preferences cookie is saved automatically
+
 ## 5.4.0 (Nov 30, 2021)
+
 - [#184](https://github.com/segmentio/consent-manager/pull/184) Fix the behavior of `initialPreferences`
 - [#192](https://github.com/segmentio/consent-manager/pull/192) Fix linting, dependency upgrade
 - [#188](https://github.com/segmentio/consent-manager/pull/188) Allow TS to generate code for enum
-- [#180](https://github.com/segmentio/consent-manager/pull/180) Add id to preference dialog form 
+- [#180](https://github.com/segmentio/consent-manager/pull/180) Add id to preference dialog form
 - [#179](https://github.com/segmentio/consent-manager/pull/179) Typescript improvement
 - [#176](https://github.com/segmentio/consent-manager/pull/176) Allow customizing the texts of the preferences dialog
 - [#173](https://github.com/segmentio/consent-manager/pull/173) Fix implyConsentOnInteraction behavior
 - [#170](https://github.com/segmentio/consent-manager/pull/170) Dependency upgrades
 
+## 5.3.0 (Sept 13, 2021)
 
-## 5.3.0 (Sept 13, 2021) 
 - [#145](https://github.com/segmentio/consent-manager/pull/145) Introduce cookieName attribute to allow a custom cookie name
-- [#126](https://github.com/segmentio/consent-manager/pull/126) Fixing types directory 
+- [#126](https://github.com/segmentio/consent-manager/pull/126) Fixing types directory
 - [#164](https://github.com/segmentio/consent-manager/pull/164) Fix On Standalone script closeBehavior: accept does not work
 - [#164](https://github.com/segmentio/consent-manager/pull/164) A possibility to add default buttons to accept/deny cookies via bannerActionsBlock
 - [#164](https://github.com/segmentio/consent-manager/pull/164) A possibility to add custom buttons block via bannerActionsBlock
