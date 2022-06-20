@@ -125,6 +125,12 @@
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/"
     ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/types/",
+      "<rootDir>/commonjs/",
+      "<rootDir>/esm/",
+      "<rootDir>/standalone/"
+    ],
     "moduleNameMapper": {
       "^lodash-es$": "lodash"
     }
