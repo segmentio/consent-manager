@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.5.1 (Jun 30, 2022)
+
+- [237](https://github.com/segmentio/consent-manager/pull/237) Change emotion/core to emotion/react, and fix issue on dialog
+- [234](https://github.com/segmentio/consent-manager/pull/234) Update imports libraries of lodash to lodash-es
+- [232](https://github.com/segmentio/consent-manager/pull/232) Update library on eventsource
+- [228](https://github.com/segmentio/consent-manager/pull/228) Change tracking preference to save automatically the cookies
+
 ## 5.5.0 (May 25, 2022)
 
 - [#216](https://github.com/segmentio/consent-manager/pull/216) Update emotion library
