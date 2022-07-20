@@ -176,11 +176,9 @@ export default class Banner extends PureComponent<BannerProps> {
             <GreenButton type="button" onClick={onAcceptAll}>
               Allow all
             </GreenButton>
-            {!asModal && (
-              <DefaultButton type="button" onClick={onDenyAll}>
-                Deny all
-              </DefaultButton>
-            )}
+            <DefaultButton type="button" onClick={onDenyAll}>
+              Deny all
+            </DefaultButton>
           </ActionsBlock>
         )}
         {!hideCloseButton && (
