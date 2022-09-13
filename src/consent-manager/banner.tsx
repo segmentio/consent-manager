@@ -126,7 +126,7 @@ interface BannerProps {
   onClose: () => void
   onChangePreferences: () => void
   content: React.ReactNode
-  subContent: React.ReactNode
+  subContent: string | undefined
   actionsBlock?: ((props: ActionsBlockProps) => React.ReactElement) | true
   backgroundColor: string
   textColor: string

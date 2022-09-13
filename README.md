@@ -474,7 +474,7 @@ The content of the [consent banner](https://share.getcloudapp.com/Apurj6zv).
 
 ##### bannerSubContent
 
-**Type**: `PropTypes.node`
+**Type**: `string`
 
 The [call to action](https://share.getcloudapp.com/z8uXxpkZ) under the primary text in the Consent Manager banner.
 
