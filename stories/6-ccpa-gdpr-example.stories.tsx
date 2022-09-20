@@ -8,7 +8,6 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { Preferences } from '../src/types'
 import CookieView from './components/CookieView'
 import inRegions from '@segment/in-regions'
-import { CloseBehavior } from '../src/consent-manager/container'
 
 const bannerContent = (
   <span>
@@ -92,17 +91,13 @@ const ConsentManagerExample = () => {
     functional: false
   }
 
-  const closeBehavior = inCA()
-    ? _categories => caDefaultPreferences
-    : inEU()
-      ? CloseBehavior.DENY
-      : CloseBehavior.ACCEPT
+  const closeBehavior = inCA() ? _categories => caDefaultPreferences : inEU() ? 'deny' : 'accept'
 
   const initialPreferences = inCA()
     ? caDefaultPreferences
     : inEU()
-      ? euDefaultPreferences
-      : undefined
+    ? euDefaultPreferences
+    : undefined
 
   return (
     <Pane>
