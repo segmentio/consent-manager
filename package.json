@@ -18,7 +18,8 @@
     "commonjs",
     "esm",
     "standalone",
-    "types"
+    "types",
+    "src"
   ],
   "scripts": {
     "test": "jest src/__tests__",
