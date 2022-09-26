@@ -1,5 +1,5 @@
 // TODO: remove duplicate cookie library from bundle
-import cookies from 'js-cookie'
+import cookies, { CookieAttributes } from 'js-cookie'
 import topDomain from '@segment/top-domain'
 import { WindowWithAJS, Preferences, CategoryPreferences } from '../types'
 import { EventEmitter } from 'events'
@@ -32,6 +32,7 @@ type SavePreferences = Preferences & {
   cookieDomain?: string
   cookieName?: string
   cookieExpires?: number
+  cookieAttributes?: CookieAttributes
 }
 
 const emitter = new EventEmitter()
@@ -52,7 +53,8 @@ export function savePreferences({
   customPreferences,
   cookieDomain,
   cookieName,
-  cookieExpires
+  cookieExpires,
+  cookieAttributes = {}
 }: SavePreferences) {
   const wd = window as WindowWithAJS
   if (wd.analytics) {
@@ -72,7 +74,8 @@ export function savePreferences({
 
   cookies.set(cookieName || DEFAULT_COOKIE_NAME, value, {
     expires,
-    domain
+    domain,
+    ...cookieAttributes
   })
 
   emitter.emit('preferencesSaved', {

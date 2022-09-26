@@ -1,5 +1,6 @@
 import { CloseBehavior, CloseBehaviorFunction } from './consent-manager/container'
 import { PreferencesManager } from './consent-manager-builder/preferences'
+import { CookieAttributes } from 'js-cookie'
 
 type AJS = SegmentAnalytics.AnalyticsJS & {
   initialized: boolean
@@ -111,6 +112,7 @@ export interface ConsentManagerProps {
   implyConsentOnInteraction?: boolean
   cookieDomain?: string
   cookieName?: string
+  cookieAttributes?: CookieAttributes
   cookieExpires?: number
   bannerContent: React.ReactNode
   bannerSubContent?: string
