@@ -78,6 +78,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     cookieDomain: undefined,
     cookieName: undefined,
     cookieExpires: undefined,
+    cookieAttributes: {},
     customCategories: undefined,
     bannerActionsBlock: undefined,
     bannerHideCloseButton: false,
@@ -99,6 +100,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
       cookieDomain,
       cookieName,
       cookieExpires,
+      cookieAttributes,
       bannerContent,
       bannerActionsBlock,
       bannerSubContent,
@@ -126,6 +128,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
         cookieDomain={cookieDomain}
         cookieName={cookieName}
         cookieExpires={cookieExpires}
+        cookieAttributes={cookieAttributes}
         initialPreferences={this.getInitialPreferences()}
         mapCustomPreferences={this.handleMapCustomPreferences}
         customCategories={customCategories}
