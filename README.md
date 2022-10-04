@@ -14,7 +14,7 @@
   - [ConsentManager](#consentmanager)
     - [Install](#install)
     - [Example](#example)
-    - [Example in Next.js](#example-in-next.js)
+    - [Example in Next.js](#example-in-nextjs)
     - [ConsentManager Props](#consentmanager-props)
   - [ConsentManagerBuilder](#consentmanagerbuilder)
     - [Install](#install-1)
