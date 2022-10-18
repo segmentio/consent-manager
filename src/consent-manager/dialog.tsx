@@ -167,7 +167,11 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
             )}
           </Header>
 
-          <Form id={'preferenceDialogForm'} ref={this.handleFormRef} onSubmit={onSubmit}>
+          <Form
+            id={`preferenceDialogForm_${this.titleId}`}
+            ref={this.handleFormRef}
+            onSubmit={onSubmit}
+          >
             <Content>{children}</Content>
 
             <Buttons>{buttons}</Buttons>
