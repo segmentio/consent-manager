@@ -86,8 +86,8 @@ interface Props {
 
   /**
    * Default true
-   * Reload the page if the trackers have already been initialised so that
-   * the user's new preferences can take affect
+   * Reload the page if the trackers have already been initialized so that
+   * the user's new preferences can take effect.
    */
   shouldReload?: boolean
 }
