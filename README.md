@@ -710,6 +710,7 @@ export default function() {
 - [defaultDestinationBehavior](#defaultdestinationbehavior-1)
 - [mapCustomPreferences](#mapcustompreferences)
 - [cookieDomain](#cookiedomain-1)
+- [shouldReload](#shouldReload-1)
 
 ##### children
 
@@ -776,6 +777,13 @@ Callback function allows you to use a custom preferences format (e.g: categories
 **Default**: the [top most domain][top-domain] and all sub domains
 
 The domain the `tracking-preferences` cookie should be scoped to.
+
+##### shouldReload
+
+**Type**: `boolean`
+**Default**: `true`
+
+Reload the page if the trackers have already been initialized so that the user's new preferences can take effect.
 
 #### ConsentManagerBuilder Render Props
 
