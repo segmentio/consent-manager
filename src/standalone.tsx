@@ -4,7 +4,6 @@ import inEU from '@segment/in-eu'
 import inRegions from '@segment/in-regions'
 import { ConsentManager, openConsentManager, doNotTrack } from '.'
 import { ConsentManagerProps, WindowWithConsentManagerConfig, ConsentManagerInput } from './types'
-import { CloseBehavior } from './consent-manager/container'
 import * as preferences from './consent-manager-builder/preferences'
 
 export const version = process.env.VERSION
@@ -55,11 +54,7 @@ if (typeof props.implyConsentOnInteraction === 'string') {
 }
 
 if (props.closeBehavior !== undefined && typeof props.closeBehavior === 'string') {
-  const options = [
-    CloseBehavior.ACCEPT.toString(),
-    CloseBehavior.DENY.toString(),
-    CloseBehavior.DISMISS.toString()
-  ]
+  const options = ['accept', 'deny', 'dismiss']
 
   if (!options.includes(props.closeBehavior)) {
     throw new Error(`ConsentManager: closeBehavior should be one of ${options}`)
