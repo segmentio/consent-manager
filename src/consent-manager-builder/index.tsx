@@ -83,6 +83,13 @@ interface Props {
    * CDN to fetch list of integrations from
    */
   cdnHost?: string
+
+  /**
+   * Default true
+   * Reload the page if the trackers have already been initialized so that
+   * the user's new preferences can take effect.
+   */
+  shouldReload?: boolean
 }
 
 interface RenderProps {
@@ -118,7 +125,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     onError: undefined,
     shouldRequireConsent: () => true,
     initialPreferences: {},
-    cdnHost: 'cdn.segment.com'
+    cdnHost: 'cdn.segment.com',
+    shouldReload: true
   }
 
   state = {
@@ -185,7 +193,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       mapCustomPreferences,
       defaultDestinationBehavior,
       cookieName,
-      cdnHost = ConsentManagerBuilder.defaultProps.cdnHost
+      cdnHost = ConsentManagerBuilder.defaultProps.cdnHost,
+      shouldReload = ConsentManagerBuilder.defaultProps.shouldReload
     } = this.props
 
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
@@ -228,6 +237,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       destinations,
       destinationPreferences,
       isConsentRequired,
+      shouldReload,
       defaultDestinationBehavior,
       categoryPreferences: preferences
     })
