@@ -160,7 +160,7 @@ export default class Banner extends PureComponent<BannerProps> {
         <Content asModal={asModal}>
           <P>{content}</P>
           <P>
-            <button type="button" onClick={onChangePreferences}>
+            <button type="button" id="subContentBtn" onClick={onChangePreferences}>
               {subContent}
             </button>
           </P>

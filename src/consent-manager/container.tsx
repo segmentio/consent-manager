@@ -143,7 +143,8 @@ const Container: React.FC<ContainerProps> = props => {
     if (
       (banner.current && banner.current.contains(e.target)) ||
       (preferenceDialog.current && preferenceDialog.current.contains(e.target)) ||
-      (cancelDialog.current && cancelDialog.current.contains(e.target))
+      (cancelDialog.current && cancelDialog.current.contains(e.target)) ||
+      'subContentBtn' === e.target.id
     ) {
       return
     }
@@ -180,7 +181,7 @@ const Container: React.FC<ContainerProps> = props => {
 
   const handleSave = () => {
     toggleDialog(false)
-    props.saveConsent()
+    props.saveConsent(undefined, false)
   }
 
   const handleCancel = () => {
