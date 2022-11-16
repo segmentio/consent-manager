@@ -36,7 +36,7 @@ interface ContainerProps {
   isConsentRequired: boolean
   implyConsentOnInteraction: boolean
   bannerContent: React.ReactNode
-  bannerSubContent: React.ReactNode
+  bannerSubContent: string | undefined
   bannerActionsBlock?: ((props: ActionsBlockProps) => React.ReactElement) | true
   bannerTextColor: string
   bannerBackgroundColor: string
