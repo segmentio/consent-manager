@@ -413,7 +413,7 @@ Object that opts into users into tracking for the different tracking categories.
 
 ##### closeBehavior
 
-**Type**: `enum|string` or `function`
+**Type**: `string` or `function`
 **Default**: `dismiss`
 
 This option sets the default behavior for the x (close) button on the Consent Manager banner. Available options:
