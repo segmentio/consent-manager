@@ -10,18 +10,13 @@ import {
   CustomCategories,
   DefaultDestinationBehavior,
   ActionsBlockProps,
-  PreferenceDialogTemplate
+  PreferenceDialogTemplate,
+  CloseBehavior
 } from '../types'
 
 const emitter = new EventEmitter()
 export function openDialog() {
   emitter.emit('openDialog')
-}
-
-export enum CloseBehavior {
-  ACCEPT = 'accept',
-  DENY = 'deny',
-  DISMISS = 'dismiss'
 }
 
 export interface CloseBehaviorFunction {
@@ -108,15 +103,15 @@ const Container: React.FC<ContainerProps> = props => {
   }
 
   const onClose = () => {
-    if (props.closeBehavior === undefined || props.closeBehavior === CloseBehavior.DISMISS) {
+    if (props.closeBehavior === undefined || props.closeBehavior === 'dismiss') {
       return toggleBanner(false)
     }
 
-    if (props.closeBehavior === CloseBehavior.ACCEPT) {
+    if (props.closeBehavior === 'accept') {
       return onAcceptAll()
     }
 
-    if (props.closeBehavior === CloseBehavior.DENY) {
+    if (props.closeBehavior === 'deny') {
       return onDenyAll()
     }
 
