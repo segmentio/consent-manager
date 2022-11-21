@@ -6,7 +6,6 @@ import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { Preferences, DefaultDestinationBehavior } from '../src/types'
 import CookieView from './components/CookieView'
-import { CloseBehavior } from '../src/consent-manager/container'
 
 const bannerContent = (
   <span>
@@ -89,7 +88,7 @@ const ConsentManagerExample = (props: {
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
-        closeBehavior={CloseBehavior.ACCEPT}
+        closeBehavior={'accept'}
         defaultDestinationBehavior={props.defaultDestinationBehavior}
       />
 

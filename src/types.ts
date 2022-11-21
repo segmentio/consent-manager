@@ -1,4 +1,4 @@
-import { CloseBehavior, CloseBehaviorFunction } from './consent-manager/container'
+import { CloseBehaviorFunction } from './consent-manager/container'
 import { PreferencesManager } from './consent-manager-builder/preferences'
 import { CookieAttributes } from 'js-cookie'
 
@@ -35,6 +35,8 @@ export type ConsentManagerInput = ConsentManagerProps & {
 }
 
 export type DefaultDestinationBehavior = 'enable' | 'disable' | 'imply' | 'ask'
+
+export type CloseBehavior = 'accept' | 'deny' | 'dismiss'
 
 interface StandaloneConsentManagerParams {
   React: unknown

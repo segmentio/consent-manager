@@ -8,7 +8,7 @@ const DEFAULT_COOKIE_NAME = 'tracking-preferences'
 const COOKIE_DEFAULT_EXPIRES = 365
 
 export interface PreferencesManager {
-  loadPreferences(): Preferences
+  loadPreferences(cookieName?: string): Preferences
   onPreferencesSaved(listener: (prefs: Preferences) => void): void
   savePreferences(prefs: SavePreferences): void
 }

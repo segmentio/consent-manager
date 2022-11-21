@@ -3,10 +3,10 @@ import cookies from 'js-cookie'
 import { Pane, Heading, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager, loadPreferences, onPreferencesSaved } from '../src'
 import { storiesOf } from '@storybook/react'
-import { CloseBehavior, CloseBehaviorFunction } from '../src/consent-manager/container'
+import { CloseBehaviorFunction } from '../src/consent-manager/container'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { Preferences } from '../src/types'
+import { CloseBehavior, Preferences } from '../src/types'
 import CookieView from './components/CookieView'
 
 const bannerContent = (
@@ -135,9 +135,9 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
 }
 
 storiesOf('React Component / OnClose interactions', module)
-  .add(`Dismiss`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DISMISS} />)
-  .add(`Accept`, () => <ConsentManagerExample closeBehavior={CloseBehavior.ACCEPT} />)
-  .add(`Deny`, () => <ConsentManagerExample closeBehavior={CloseBehavior.DENY} />)
+  .add(`Dismiss`, () => <ConsentManagerExample closeBehavior={'dismiss'} />)
+  .add(`Accept`, () => <ConsentManagerExample closeBehavior={'accept'} />)
+  .add(`Deny`, () => <ConsentManagerExample closeBehavior={'deny'} />)
   .add(`Custom Close Behavior`, () => (
     <ConsentManagerExample
       closeBehavior={categories => ({
