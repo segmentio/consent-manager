@@ -8,6 +8,7 @@ import {
   CustomCategories,
   DefaultDestinationBehavior
 } from '../types'
+import { CookieAttributes } from 'js-cookie'
 
 function getNewDestinations(destinations: Destination[], preferences: CategoryPreferences) {
   const newDestinations: Destination[] = []
@@ -35,6 +36,7 @@ interface Props {
 
   cookieDomain?: string
   cookieName?: string
+  cookieAttributes?: CookieAttributes
 
   /**
    * Number of days until the preferences cookie should expire
@@ -285,6 +287,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       cookieDomain,
       cookieName,
       cookieExpires,
+      cookieAttributes,
       mapCustomPreferences,
       defaultDestinationBehavior
     } = this.props
@@ -329,7 +332,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
           customPreferences,
           cookieDomain,
           cookieName,
-          cookieExpires
+          cookieExpires,
+          cookieAttributes
         })
         conditionallyLoadAnalytics({
           writeKey,
