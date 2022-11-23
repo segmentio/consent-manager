@@ -334,7 +334,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         customPreferences,
         cookieDomain,
         cookieName,
-        cookieExpires
+        cookieExpires,
+        cookieAttributes
       })
       conditionallyLoadAnalytics({
         writeKey,
