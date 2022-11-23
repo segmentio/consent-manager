@@ -14,7 +14,7 @@
   - [ConsentManager](#consentmanager)
     - [Install](#install)
     - [Example](#example)
-    - [Example in Next.js](#example-in-next.js)
+    - [Example in Next.js](#example-in-nextjs)
     - [ConsentManager Props](#consentmanager-props)
   - [ConsentManagerBuilder](#consentmanagerbuilder)
     - [Install](#install-1)
@@ -413,7 +413,7 @@ Object that opts into users into tracking for the different tracking categories.
 
 ##### closeBehavior
 
-**Type**: `enum|string` or `function`
+**Type**: `string` or `function`
 **Default**: `dismiss`
 
 This option sets the default behavior for the x (close) button on the Consent Manager banner. Available options:
@@ -474,7 +474,7 @@ The content of the [consent banner](https://share.getcloudapp.com/Apurj6zv).
 
 ##### bannerSubContent
 
-**Type**: `PropTypes.node`
+**Type**: `string`
 
 The [call to action](https://share.getcloudapp.com/z8uXxpkZ) under the primary text in the Consent Manager banner.
 

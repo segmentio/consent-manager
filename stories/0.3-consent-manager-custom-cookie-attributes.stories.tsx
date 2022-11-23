@@ -1,12 +1,11 @@
 import React from 'react'
-import cookies from 'js-cookie'
+import cookies, { CookieAttributes } from 'js-cookie'
 import { Pane, Heading, Button } from 'evergreen-ui'
 import { ConsentManager, openConsentManager, loadPreferences, onPreferencesSaved } from '../src'
 import { storiesOf } from '@storybook/react'
-import { CloseBehaviorFunction } from '../src/consent-manager/container'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { CloseBehavior, Preferences } from '../src/types'
+import { Preferences } from '../src/types'
 import CookieView from './components/CookieView'
 
 const bannerContent = (
@@ -64,7 +63,7 @@ const cancelDialogContent = (
   </div>
 )
 
-const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBehaviorFunction }) => {
+const ConsentManagerExample = (props: { cookieAttributes: CookieAttributes }) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
 
   const cleanup = onPreferencesSaved(preferences => {
@@ -88,17 +87,11 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
         preferencesDialogContent={preferencesDialogContent}
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
-        closeBehavior={props.closeBehavior}
-        customCategories={{
-          'Do Not Sell': {
-            integrations: ['AdWords'],
-            purpose: 'To give the right to opt out of the sale of personal data.'
-          }
-        }}
+        cookieAttributes={props.cookieAttributes}
       />
 
       <Pane marginX={100} marginTop={20}>
-        <Heading> Cute Cats </Heading>
+        <Heading> Your website content </Heading>
         <Pane display="flex">
           <iframe
             src="https://giphy.com/embed/JIX9t2j0ZTN9S"
@@ -140,15 +133,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
   )
 }
 
-storiesOf('Custom Categories - Do Not Sell', module)
-  .add(`Dismiss`, () => <ConsentManagerExample closeBehavior={'dismiss'} />)
-  .add(`Accept`, () => <ConsentManagerExample closeBehavior={'accept'} />)
-  .add(`Deny`, () => <ConsentManagerExample closeBehavior={'deny'} />)
-  .add(`Custom Close Behavior`, () => (
-    <ConsentManagerExample
-      closeBehavior={categories => ({
-        ...categories,
-        'Do Not Sell': false
-      })}
-    />
-  ))
+storiesOf('React Component / Custom Cookie Attributes', module).add(
+  `Custom Cookie Attributes`,
+  () => <ConsentManagerExample cookieAttributes={{ sameSite: 'none', secure: true }} />
+)
