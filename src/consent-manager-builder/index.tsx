@@ -327,24 +327,25 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         newDestinations.length > 0 ||
         typeof newPreferences === 'boolean'
       ) {
-        savePreferences({
-          destinationPreferences,
-          customPreferences,
-          cookieDomain,
-          cookieName,
-          cookieExpires,
-          cookieAttributes
-        })
-        conditionallyLoadAnalytics({
-          writeKey,
-          destinations,
-          destinationPreferences,
-          isConsentRequired,
-          shouldReload,
-          defaultDestinationBehavior,
-          categoryPreferences: customPreferences
-        })
+        shouldReload = true
       }
+      savePreferences({
+        destinationPreferences,
+        customPreferences,
+        cookieDomain,
+        cookieName,
+        cookieExpires,
+        cookieAttributes
+      })
+      conditionallyLoadAnalytics({
+        writeKey,
+        destinations,
+        destinationPreferences,
+        isConsentRequired,
+        shouldReload,
+        defaultDestinationBehavior,
+        categoryPreferences: customPreferences
+      })
 
       return {
         ...prevState,
