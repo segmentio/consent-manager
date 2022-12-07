@@ -1,5 +1,20 @@
 # Changelog
 
+## 5.7.0 (Dec 7, 2022)
+
+- [288](https://github.com/segmentio/consent-manager/pull/288) Fix reload clicking inside banner
+- [283](https://github.com/segmentio/consent-manager/pull/283) Add shouldReload on ConsentManagerBuilder like optional attribute
+- [281](https://github.com/segmentio/consent-manager/pull/281) Replace lodash-es by lodash to fix error with nextJs
+- [277](https://github.com/segmentio/consent-manager/pull/277) docs: fix link to nextjs example in table of contents
+- [274](https://github.com/segmentio/consent-manager/pull/274) Allow passing additional cookie attributes
+- [272](https://github.com/segmentio/consent-manager/pull/272) Add src folder to files array on package.json
+- [271](https://github.com/segmentio/consent-manager/pull/271) Change enum closeBehavior to type
+- [269](https://github.com/segmentio/consent-manager/pull/269) Add nanoid like sufix to preferenceDialogForm
+- [268](https://github.com/segmentio/consent-manager/pull/268) Update type for bannerSubContent and subContent
+- [261](https://github.com/segmentio/consent-manager/pull/261) Fix acceptAll method on container
+- [258](https://github.com/segmentio/consent-manager/pull/258) Add param coockeName to method on loadPreference on Preference interface
+- [248](https://github.com/segmentio/consent-manager/pull/248) Remove validation to show deny button on modal
+
 ## 5.6.0 (July 8, 2022)
 
 - [237](https://github.com/segmentio/consent-manager/pull/237) Change emotion/core to emotion/react, and fix issue on dialog
