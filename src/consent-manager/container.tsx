@@ -112,10 +112,12 @@ const Container: React.FC<ContainerProps> = props => {
     }
 
     if (props.closeBehavior === 'accept') {
+      toggleBanner(false)
       return onAcceptAll()
     }
 
     if (props.closeBehavior === 'deny') {
+      toggleBanner(false)
       return onDenyAll()
     }
 

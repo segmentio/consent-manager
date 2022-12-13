@@ -258,6 +258,16 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                       {advertisingDestinations.map(d => d.name).join(', ')}
                     </td>
                   </Row>
+
+                  <Row>
+                    <td>N/A</td>
+                    <RowHeading scope="row">{essentialInfo?.name}</RowHeading>
+                    <td>
+                      <p>{essentialInfo?.description}</p>
+                      <p>{essentialInfo?.example}</p>
+                    </td>
+                    <td css={hideOnMobile} />
+                  </Row>
                 </>
               )}
 
@@ -304,16 +314,6 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                     </Row>
                   )
                 )}
-
-              <Row>
-                <td>N/A</td>
-                <RowHeading scope="row">{essentialInfo?.name}</RowHeading>
-                <td>
-                  <p>{essentialInfo?.description}</p>
-                  <p>{essentialInfo?.example}</p>
-                </td>
-                <td css={hideOnMobile} />
-              </Row>
             </tbody>
           </Table>
         </TableScroll>
