@@ -1,6 +1,6 @@
 # Changelog
 
-## 5.7.0 (Dec 7, 2022)
+## 5.7.0 (Dec 13, 2022)
 
 - [288](https://github.com/segmentio/consent-manager/pull/288) Fix reload clicking inside banner
 - [283](https://github.com/segmentio/consent-manager/pull/283) Add shouldReload on ConsentManagerBuilder like optional attribute
