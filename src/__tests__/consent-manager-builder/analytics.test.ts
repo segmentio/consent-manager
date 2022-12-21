@@ -255,4 +255,25 @@ describe('analytics', () => {
       }
     })
   })
+
+  test('Set devMode on true to disabled analytics load', () => {
+    const ajsLoad = sinon.spy()
+    wd.analytics.load = ajsLoad
+    const writeKey = '123'
+    const destinations = [{ id: 'Amplitude' } as Destination]
+    const destinationPreferences = {
+      Amplitude: true
+    }
+
+    conditionallyLoadAnalytics({
+      writeKey,
+      destinations,
+      destinationPreferences,
+      isConsentRequired: false,
+      categoryPreferences: {},
+      devMode: true
+    })
+
+    expect(ajsLoad.calledOnce).toBe(false)
+  })
 })

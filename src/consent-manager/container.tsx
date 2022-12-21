@@ -25,7 +25,11 @@ export interface CloseBehaviorFunction {
 
 interface ContainerProps {
   setPreferences: (prefs: CategoryPreferences) => void
-  saveConsent: (newPreferences?: CategoryPreferences, shouldReload?: boolean) => void
+  saveConsent: (
+    newPreferences?: CategoryPreferences,
+    shouldReload?: boolean,
+    devMode?: boolean
+  ) => void
   resetPreferences: () => void
   closeBehavior?: CloseBehavior | CloseBehaviorFunction
   destinations: Destination[]
