@@ -92,6 +92,12 @@ interface Props {
    * the user's new preferences can take effect.
    */
   shouldReload?: boolean
+
+  /**
+   * Default false
+   * Disable the analitics.load to make local testing.
+   */
+  devMode?: boolean
 }
 
 interface RenderProps {
@@ -105,7 +111,11 @@ interface RenderProps {
   workspaceAddedNewDestinations: boolean
   setPreferences: (newPreferences: CategoryPreferences) => void
   resetPreferences: () => void
-  saveConsent: (newPreferences?: CategoryPreferences | boolean, shouldReload?: boolean) => void
+  saveConsent: (
+    newPreferences?: CategoryPreferences | boolean,
+    shouldReload?: boolean,
+    devMode?: boolean
+  ) => void
 }
 
 interface State {
@@ -128,7 +138,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     shouldRequireConsent: () => true,
     initialPreferences: {},
     cdnHost: 'cdn.segment.com',
-    shouldReload: true
+    shouldReload: true,
+    devMode: false
   }
 
   state = {
@@ -196,7 +207,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       defaultDestinationBehavior,
       cookieName,
       cdnHost = ConsentManagerBuilder.defaultProps.cdnHost,
-      shouldReload = ConsentManagerBuilder.defaultProps.shouldReload
+      shouldReload = ConsentManagerBuilder.defaultProps.shouldReload,
+      devMode = ConsentManagerBuilder.defaultProps.devMode
     } = this.props
 
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
@@ -240,6 +252,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       destinationPreferences,
       isConsentRequired,
       shouldReload,
+      devMode,
       defaultDestinationBehavior,
       categoryPreferences: preferences
     })
@@ -281,7 +294,11 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     this.setState({ preferences })
   }
 
-  handleSaveConsent = (newPreferences: CategoryPreferences | undefined, shouldReload: boolean) => {
+  handleSaveConsent = (
+    newPreferences: CategoryPreferences | undefined,
+    shouldReload: boolean,
+    devMode?: boolean
+  ) => {
     const {
       writeKey,
       cookieDomain,
@@ -343,6 +360,7 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         destinationPreferences,
         isConsentRequired,
         shouldReload,
+        devMode,
         defaultDestinationBehavior,
         categoryPreferences: customPreferences
       })

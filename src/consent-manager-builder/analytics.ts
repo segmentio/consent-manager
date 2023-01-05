@@ -12,6 +12,7 @@ interface AnalyticsParams {
   destinationPreferences: CategoryPreferences | null | undefined
   isConsentRequired: boolean
   shouldReload?: boolean
+  devMode?: boolean
   defaultDestinationBehavior?: DefaultDestinationBehavior
   categoryPreferences: CategoryPreferences | null | undefined
 }
@@ -37,6 +38,7 @@ export default function conditionallyLoadAnalytics({
   destinationPreferences,
   isConsentRequired,
   shouldReload = true,
+  devMode = false,
   defaultDestinationBehavior,
   categoryPreferences
 }: AnalyticsParams) {
@@ -77,6 +79,10 @@ export default function conditionallyLoadAnalytics({
     if (shouldReload) {
       window.location.reload()
     }
+    return
+  }
+
+  if (devMode) {
     return
   }
 
