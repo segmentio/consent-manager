@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 
-import nanoid from 'nanoid'
+import { nanoid } from 'nanoid'
 import fontStyles from './font-styles'
 
 const ANIMATION_DURATION = '200ms'
