@@ -4,6 +4,7 @@
 
 ### Added
 
+- Removed tracking-preferences cookie in favour of bc_consent cookie. [#17](https://github.com/bigcommerce/consent-manager/pull/17)
 - Fixed Consent Manager Dialog styles for better positioning on mobile devices. [#16](https://github.com/bigcommerce/consent-manager/pull/16)
 - Added custom event when consent preferences are changed [#8](https://github.com/bigcommerce/consent-manager/pull/8)
 - Added styles for consent banner buttons for mobiles [#7](https://github.com/bigcommerce/consent-manager/pull/7)
