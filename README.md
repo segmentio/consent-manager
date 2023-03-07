@@ -23,6 +23,7 @@
     - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props)
   - [Utility functions](#utility-functions)
   - [Setting Custom Anonymous ID](#setting-custom-anonymous-id)
+  - [Destination Considerations](#destination-considerations)
 - [Development](#development)
 - [Publishing New Version](#publishing-new-version)
 - [License](#license)
@@ -918,6 +919,14 @@ analytics.setAnonymousId('YOUR_CUSTOM_ID')
 _Note: Keep in mind that setting the anonymousId in Analytics.js does not overwrite the anonymous tracking IDs for any destinations you’re using._
 
 _There are other ways to override the anonymousID, you can find more information [here][]._
+
+### Destination Considerations
+
+##### Amplitude (Actions)
+
+When an Amplitude (Actions) destination is connected and enabled to your source, Analytics.js will automatically populate a session ID in `integrations.Actions Amplitude.session_id`.
+
+Because the Consent Manager overrides the `session_id` key with a boolean value, `session_id` will have to be directly passed in to event calls by retrieving the value for `analytics_session_id` in localStorage. The value can then be set in an event's `traits` or   `properties` object. 
 
 ## Development
 
