@@ -919,6 +919,14 @@ _Note: Keep in mind that setting the anonymousId in Analytics.js does not overwr
 
 _There are other ways to override the anonymousID, you can find more information [here][]._
 
+### Destination Considerations
+
+##### Amplitude (Actions)
+
+When an Amplitude (Actions) destination is connected and enabled to your source, Analytics.js will automatically populate a session ID in `integrations.Actions Amplitude.session_id`.
+
+Because the Consent Manager overrides the `session_id` key with a boolean value, `session_id` will have to be directly passed in to event calls by retrieving the value for `analytics_session_id` in localStorage. The value can then be set in an event's `traits` or   `properties` object. 
+
 ## Development
 
 To run our storybook locally, simply do:
