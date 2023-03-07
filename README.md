@@ -23,6 +23,7 @@
     - [ConsentManagerBuilder Render Props](#consentmanagerbuilder-render-props)
   - [Utility functions](#utility-functions)
   - [Setting Custom Anonymous ID](#setting-custom-anonymous-id)
+  - [Destination Considerations](#destination-considerations)
 - [Development](#development)
 - [Publishing New Version](#publishing-new-version)
 - [License](#license)
