@@ -76,9 +76,4 @@ export function savePreferences({
     destinationPreferences,
     customPreferences
   })
-  // NOTE: bc-consent cookie is being used for the same purpose
-  cookies.remove(COOKIE_KEY, {
-    expires: COOKIE_EXPIRES,
-    domain
-  })
 }
