@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.8.0 (Mar 22, 2023)
+- [297] (https://github.com/segmentio/consent-manager/pull/297) Add devmode to disable analytics.load
+- [301] (https://github.com/segmentio/consent-manager/pull/301) Update libraries dependencies
+- [310] (https://github.com/segmentio/consent-manager/pull/310) Fixed Fullstory destination name
+
 ## 5.7.0 (Dec 13, 2022)
 
 - [288](https://github.com/segmentio/consent-manager/pull/288) Fix reload clicking inside banner
