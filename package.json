@@ -37,7 +37,7 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
-    "@emotion/react": "^11.8.2",
+    "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.8.1",
     "@segment/in-regions": "^1.2.0",
     "@segment/top-domain": "^3.0.0",
