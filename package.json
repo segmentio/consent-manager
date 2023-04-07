@@ -39,7 +39,7 @@
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
-    "@segment/in-regions": "^1.2.0",
+    "@segment/in-regions": "^1.2.3",
     "@segment/top-domain": "^3.0.0",
     "emotion": "^9.1.2",
     "isomorphic-fetch": "^3.0.0",
