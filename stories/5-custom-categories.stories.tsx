@@ -6,8 +6,15 @@ import { storiesOf } from '@storybook/react'
 import { CloseBehaviorFunction } from '../src/consent-manager/container'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { CloseBehavior, Preferences } from '../src/types'
+import { CloseBehavior, Preferences, CustomCategories } from '../src/types'
 import CookieView from './components/CookieView'
+
+const customCategories = {
+  'Do Not Sell': {
+    integrations: ['AdWords'],
+    purpose: 'To give the right to opt out of the sale of personal data.'
+  }
+}
 
 const bannerContent = (
   <span>
@@ -64,7 +71,10 @@ const cancelDialogContent = (
   </div>
 )
 
-const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBehaviorFunction }) => {
+const ConsentManagerExample = (props: {
+  closeBehavior: CloseBehavior | CloseBehaviorFunction
+  customCategories: CustomCategories
+}) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
 
   const cleanup = onPreferencesSaved(preferences => {
@@ -89,12 +99,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
         closeBehavior={props.closeBehavior}
-        customCategories={{
-          'Do Not Sell': {
-            integrations: ['AdWords'],
-            purpose: 'To give the right to opt out of the sale of personal data.'
-          }
-        }}
+        customCategories={props.customCategories}
       />
 
       <Pane marginX={100} marginTop={20}>
@@ -141,14 +146,36 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
 }
 
 storiesOf('Custom Categories - Do Not Sell', module)
-  .add(`Dismiss`, () => <ConsentManagerExample closeBehavior={'dismiss'} />)
-  .add(`Accept`, () => <ConsentManagerExample closeBehavior={'accept'} />)
-  .add(`Deny`, () => <ConsentManagerExample closeBehavior={'deny'} />)
+  .add(`Dismiss`, () => (
+    <ConsentManagerExample closeBehavior={'dismiss'} customCategories={customCategories} />
+  ))
+  .add(`Accept`, () => (
+    <ConsentManagerExample closeBehavior={'accept'} customCategories={customCategories} />
+  ))
+  .add(`Deny`, () => (
+    <ConsentManagerExample closeBehavior={'deny'} customCategories={customCategories} />
+  ))
   .add(`Custom Close Behavior`, () => (
     <ConsentManagerExample
       closeBehavior={categories => ({
         ...categories,
         'Do Not Sell': false
       })}
+      customCategories={customCategories}
+    />
+  ))
+  .add(`Essential`, () => (
+    <ConsentManagerExample
+      closeBehavior={'dismiss'}
+      customCategories={{
+        'Do Not Sell': {
+          integrations: ['AdWords'],
+          purpose: 'To give the right to opt out of the sale of personal data.'
+        },
+        Essential: {
+          integrations: ['Amplitude'],
+          purpose: 'To give the right to opt out of the sale of personal data.'
+        }
+      }}
     />
   ))

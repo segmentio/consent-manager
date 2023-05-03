@@ -273,46 +273,67 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
 
               {customCategories &&
                 Object.entries(customCategories).map(
-                  ([categoryName, { integrations, purpose }]) => (
-                    <Row key={categoryName}>
-                      <InputCell>
-                        <label>
-                          <input
-                            type="radio"
-                            name={categoryName}
-                            value="true"
-                            checked={preferences[categoryName] === true}
-                            onChange={this.handleChange}
-                            aria-label={`Allow "${categoryName}" tracking`}
-                            required
-                          />{' '}
-                          {checkboxes!.yesValue}
-                        </label>
-                        <label>
-                          <input
-                            type="radio"
-                            name={categoryName}
-                            value="false"
-                            checked={preferences[categoryName] === false}
-                            onChange={this.handleChange}
-                            aria-label={`Disallow "${categoryName}" tracking`}
-                            required
-                          />{' '}
-                          {checkboxes!.noValue}
-                        </label>
-                      </InputCell>
-                      <RowHeading scope="row">{categoryName}</RowHeading>
-                      <td>
-                        <p>{purpose}</p>
-                      </td>
-                      <td css={hideOnMobile}>
-                        {destinations
-                          .filter(d => integrations.includes(d.id))
-                          .map(d => d.name)
-                          .join(', ')}
-                      </td>
-                    </Row>
-                  )
+                  ([categoryName, { integrations, purpose }]) => {
+                    if (categoryName === 'Essential') {
+                      preferences[categoryName] = true
+                      return (
+                        <Row key={categoryName}>
+                          <td>N/A</td>
+                          <RowHeading scope="row">{categoryName}</RowHeading>
+                          <td>
+                            <p>{purpose}</p>
+                          </td>
+                          <td css={hideOnMobile}>
+                            {destinations
+                              .filter(d => integrations.includes(d.id))
+                              .map(d => d.name)
+                              .join(', ')}
+                          </td>
+                        </Row>
+                      )
+                    } else {
+                      return (
+                        <Row key={categoryName}>
+                          <InputCell>
+                            <label>
+                              <input
+                                type="radio"
+                                name={categoryName}
+                                value="true"
+                                checked={preferences[categoryName] === true}
+                                onChange={this.handleChange}
+                                aria-label={`Allow "${categoryName}" tracking`}
+                                required
+                              />{' '}
+                              {checkboxes!.yesValue}
+                            </label>
+                            <label>
+                              <input
+                                type="radio"
+                                name={categoryName}
+                                value="false"
+                                checked={preferences[categoryName] === false}
+                                onChange={this.handleChange}
+                                aria-label={`Disallow "${categoryName}" tracking`}
+                                required
+                              />{' '}
+                              {checkboxes!.noValue}
+                            </label>
+                          </InputCell>
+                          <RowHeading scope="row">{categoryName}</RowHeading>
+                          <td>
+                            <p>{purpose}</p>
+                          </td>
+                          <td css={hideOnMobile}>
+                            {destinations
+                              .filter(d => integrations.includes(d.id))
+                              .map(d => d.name)
+                              .join(', ')}
+                          </td>
+                        </Row>
+                      )
+                    }
+                  }
                 )}
             </tbody>
           </Table>
