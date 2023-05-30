@@ -1,6 +1,6 @@
 {
   "name": "@segment/consent-manager",
-  "version": "5.8.0",
+  "version": "5.8.1",
   "description": "Drop-in consent management plugin for analytics.js",
   "keywords": [
     "gdpr",
