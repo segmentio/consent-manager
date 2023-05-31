@@ -225,10 +225,10 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
 
     let preferences: CategoryPreferences | undefined
     const initialPrefencesHaveValue = Object.values(initialPreferences || {}).some(
-      v => v === true || v === false
+      v => v === true || v === false || v === 'N/A'
     )
     const emptyCustomPreferecences = Object.values(customPreferences || {}).every(
-      v => v === null || v === undefined
+      v => v === null || v === undefined || v === 'N/A'
     )
 
     if (mapCustomPreferences) {

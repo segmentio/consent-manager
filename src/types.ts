@@ -66,7 +66,7 @@ export interface CategoryPreferences {
   functional?: boolean | null | undefined
   marketingAndAnalytics?: boolean | null | undefined
   advertising?: boolean | null | undefined
-  [category: string]: boolean | null | undefined
+  [category: string]: boolean | null | undefined | string
 }
 
 export interface CustomCategories {
