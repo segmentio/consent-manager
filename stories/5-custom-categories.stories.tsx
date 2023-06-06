@@ -64,6 +64,10 @@ const cancelDialogContent = (
   </div>
 )
 
+const initialPreferences = {
+  Essential: 'N/A'
+}
+
 const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBehaviorFunction }) => {
   const [prefs, updatePrefs] = React.useState<Preferences>(loadPreferences())
 
@@ -86,6 +90,7 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
         bannerSubContent={bannerSubContent}
         preferencesDialogTitle={preferencesDialogTitle}
         preferencesDialogContent={preferencesDialogContent}
+        initialPreferences={initialPreferences}
         cancelDialogTitle={cancelDialogTitle}
         cancelDialogContent={cancelDialogContent}
         closeBehavior={props.closeBehavior}
@@ -93,6 +98,10 @@ const ConsentManagerExample = (props: { closeBehavior: CloseBehavior | CloseBeha
           'Do Not Sell': {
             integrations: ['AdWords'],
             purpose: 'To give the right to opt out of the sale of personal data.'
+          },
+          Essential: {
+            integrations: ['Amplitude'],
+            purpose: 'We use browser cookies that are necessary for the site to work as intended.'
           }
         }}
       />

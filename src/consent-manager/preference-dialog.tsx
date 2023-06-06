@@ -60,6 +60,10 @@ const InputCell = styled('td')`
     margin-bottom: 4px;
     white-space: nowrap;
   }
+  td {
+    border: none;
+    vertical-align: middle;
+  }
 `
 
 interface PreferenceDialogProps {
@@ -276,30 +280,36 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                   ([categoryName, { integrations, purpose }]) => (
                     <Row key={categoryName}>
                       <InputCell>
-                        <label>
-                          <input
-                            type="radio"
-                            name={categoryName}
-                            value="true"
-                            checked={preferences[categoryName] === true}
-                            onChange={this.handleChange}
-                            aria-label={`Allow "${categoryName}" tracking`}
-                            required
-                          />{' '}
-                          {checkboxes!.yesValue}
-                        </label>
-                        <label>
-                          <input
-                            type="radio"
-                            name={categoryName}
-                            value="false"
-                            checked={preferences[categoryName] === false}
-                            onChange={this.handleChange}
-                            aria-label={`Disallow "${categoryName}" tracking`}
-                            required
-                          />{' '}
-                          {checkboxes!.noValue}
-                        </label>
+                        {preferences[categoryName] === 'N/A' ? (
+                          <td>N/A</td>
+                        ) : (
+                          <>
+                            <label>
+                              <input
+                                type="radio"
+                                name={categoryName}
+                                value="true"
+                                checked={preferences[categoryName] === true}
+                                onChange={this.handleChange}
+                                aria-label={`Allow "${categoryName}" tracking`}
+                                required
+                              />{' '}
+                              {checkboxes!.yesValue}
+                            </label>
+                            <label>
+                              <input
+                                type="radio"
+                                name={categoryName}
+                                value="false"
+                                checked={preferences[categoryName] === false}
+                                onChange={this.handleChange}
+                                aria-label={`Disallow "${categoryName}" tracking`}
+                                required
+                              />{' '}
+                              {checkboxes!.noValue}
+                            </label>
+                          </>
+                        )}
                       </InputCell>
                       <RowHeading scope="row">{categoryName}</RowHeading>
                       <td>

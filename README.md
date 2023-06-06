@@ -744,7 +744,7 @@ Callback function that determines if consent is required before tracking can beg
 **Type**: `object`
 **Default**: `{}`
 
-The initial value of the preferences. By default it should be an object map of `{destinationId: true|false}`. If you're using [mapCustomPreferences][] it should be an object map of your custom preferences' default values.
+The initial value of the preferences. By default it should be an object map of `{destinationId: true|false|'N/A'}`. If you're using [mapCustomPreferences][] it should be an object map of your custom preferences' default values.
 
 ##### defaultDestinationBehavior
 
