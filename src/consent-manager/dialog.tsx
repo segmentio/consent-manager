@@ -150,18 +150,24 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
     const { onCancel, onSubmit, title, children, buttons, width } = this.props
 
     const dialog = (
-      <Overlay onClick={this.handleOverlayClick}>
+      <Overlay id="overlayDialog" onClick={this.handleOverlayClick}>
         <Root
+          id="rootDialog"
           ref={this.handleRootRef}
           role="dialog"
           aria-modal
           aria-labelledby={this.titleId}
           width={width}
         >
-          <Header>
+          <Header id="headerDialog">
             <Title id={this.titleId}>{title}</Title>
             {onCancel && (
-              <HeaderCancelButton onClick={onCancel} title="Cancel" aria-label="Cancel">
+              <HeaderCancelButton
+                id="headerCancelBtn"
+                onClick={onCancel}
+                title="Cancel"
+                aria-label="Cancel"
+              >
                 ✕
               </HeaderCancelButton>
             )}
@@ -172,9 +178,9 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
             ref={this.handleFormRef}
             onSubmit={onSubmit}
           >
-            <Content>{children}</Content>
+            <Content id="contentDialog">{children}</Content>
 
-            <Buttons>{buttons}</Buttons>
+            <Buttons id="buttonsDialog">{buttons}</Buttons>
           </Form>
         </Root>
       </Overlay>

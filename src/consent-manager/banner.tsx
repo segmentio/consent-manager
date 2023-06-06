@@ -157,9 +157,9 @@ export default class Banner extends PureComponent<BannerProps> {
 
     const RootContent = (
       <Fragment>
-        <Content asModal={asModal}>
-          <P>{content}</P>
-          <P>
+        <Content asModal={asModal} id="fragmentBanner">
+          <P id="pContent">{content}</P>
+          <P id="pSubContent">
             <button type="button" id="subContentBtn" onClick={onChangePreferences}>
               {subContent}
             </button>
@@ -172,17 +172,18 @@ export default class Banner extends PureComponent<BannerProps> {
             changePreferences: onChangePreferences
           })}
         {actionsBlock === true && (
-          <ActionsBlock>
-            <GreenButton type="button" onClick={onAcceptAll}>
+          <ActionsBlock id="actionBlock">
+            <GreenButton id="allowBtn" type="button" onClick={onAcceptAll}>
               Allow all
             </GreenButton>
-            <DefaultButton type="button" onClick={onDenyAll}>
+            <DefaultButton id="denyBtn" type="button" onClick={onDenyAll}>
               Deny all
             </DefaultButton>
           </ActionsBlock>
         )}
         {!hideCloseButton && (
           <CloseButton
+            id="closeButton"
             type="button"
             title="Close"
             aria-label="Close"
