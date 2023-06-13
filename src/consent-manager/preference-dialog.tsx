@@ -123,10 +123,10 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
 
     const buttons = (
       <div>
-        <DefaultButton id="prefBtnCancel" type="button" onClick={onCancel}>
+        <DefaultButton id="segmentio_segmentio_prefBtnCancel" type="button" onClick={onCancel}>
           {actionButtons!.cancelValue}
         </DefaultButton>
-        <GreenButton id="prefBtnSubmit" type="submit">
+        <GreenButton id="segmentio_prefBtnSubmit" type="submit">
           {actionButtons!.saveValue}
         </GreenButton>
       </div>
@@ -142,9 +142,9 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
       >
         {content}
 
-        <TableScroll id="prefTableScroll">
-          <Table id="prefTable">
-            <thead id="prefThead">
+        <TableScroll id="segmentio_prefTableScroll">
+          <Table id="segmentio_prefTable">
+            <thead id="segmentio_prefThead">
               <Row>
                 <ColumnHeading scope="col">{headings!.allowValue}</ColumnHeading>
                 <ColumnHeading scope="col">{headings!.categoryValue}</ColumnHeading>
@@ -155,7 +155,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
               </Row>
             </thead>
 
-            <tbody id="prefTbody">
+            <tbody id="segmentio_prefTbody">
               {!customCategories && (
                 <>
                   <Row>
