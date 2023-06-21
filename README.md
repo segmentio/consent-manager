@@ -929,6 +929,10 @@ $ yarn dev
 
 and the storybook should be opened in your browser. We recommend adding a new story for new features, and testing against existing stories when making bug fixes.
 
+## Styles
+
+The file GUIDESTYLES.md contains the list of all components you can use this id to change de styles on Consent Manager.
+
 ### Publishing New Version
 
 This package follows semantic versioning. To publish a new version:
