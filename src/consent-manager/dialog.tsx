@@ -142,8 +142,6 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
     this.titleId = nanoid()
     this.container = document.createElement('div')
     this.container.setAttribute('data-consent-manager-dialog', '')
-
-    document.body.appendChild(this.container)
   }
 
   render() {
@@ -198,7 +196,7 @@ export default class Dialog extends PureComponent<DialogProps, {}> {
         input.focus()
       }
     }
-
+    document.body.appendChild(this.container)
     document.body.addEventListener('keydown', this.handleEsc, false)
     document.body.style.overflow = 'hidden'
     innerRef(this.container)
