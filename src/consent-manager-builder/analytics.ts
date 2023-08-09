@@ -73,6 +73,14 @@ export default function conditionallyLoadAnalytics({
     integrations[destination.id] = isEnabled
   }
 
+  // Validate if the process is saved with all preferences on false
+  if (wd.analytics[1] !== undefined) {
+    let val = wd.analytics[1]
+    if (val[0] === 'identify' && !isAnythingEnabled) {
+      isAnythingEnabled = true
+    }
+  }
+
   // Reload the page if the trackers have already been initialised so that
   // the user's new preferences can take affect
   if (wd.analytics && wd.analytics.initialized) {
