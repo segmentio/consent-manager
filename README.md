@@ -712,6 +712,7 @@ export default function() {
 - [cookieDomain](#cookiedomain-1)
 - [shouldReload](#shouldReload-1)
 - [devMode](#devMode-1)
+- [useDefaultCategories](#useDefaultCategories-1)
 
 ##### children
 
@@ -792,6 +793,13 @@ Reload the page if the trackers have already been initialized so that the user's
 **Default**: `false`
 
 Disable the analitics.load to make local testing.
+
+##### useDefaultCategories
+
+**Type**: `boolean`
+**Default**: `false`
+
+Use default categories set by Consent Manager instead of detinations.
 
 #### ConsentManagerBuilder Render Props
 
