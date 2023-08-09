@@ -98,6 +98,12 @@ interface Props {
    * Disable the analitics.load to make local testing.
    */
   devMode?: boolean
+
+  /**
+   * Default false
+   * Use default categories set by Consent Manager instead of detinations
+   */
+  useDefaultCategories?: boolean
 }
 
 interface RenderProps {
@@ -129,6 +135,13 @@ interface State {
   workspaceAddedNewDestinations: boolean
 }
 
+const DEFAULT_CATEGORIES = {
+  functional: false,
+  marketingAndAnalytics: false,
+  advertising: false,
+  essential: false
+}
+
 export default class ConsentManagerBuilder extends Component<Props, State> {
   static displayName = 'ConsentManagerBuilder'
 
@@ -139,7 +152,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     initialPreferences: {},
     cdnHost: 'cdn.segment.com',
     shouldReload: true,
-    devMode: false
+    devMode: false,
+    useDefaultCategories: false
   }
 
   state = {
@@ -150,7 +164,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     destinationPreferences: {},
     isConsentRequired: true,
     havePreferencesChanged: false,
-    workspaceAddedNewDestinations: false
+    workspaceAddedNewDestinations: false,
+    useDefaultCategories: false
   }
 
   render() {
@@ -208,7 +223,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
       cookieName,
       cdnHost = ConsentManagerBuilder.defaultProps.cdnHost,
       shouldReload = ConsentManagerBuilder.defaultProps.shouldReload,
-      devMode = ConsentManagerBuilder.defaultProps.devMode
+      devMode = ConsentManagerBuilder.defaultProps.devMode,
+      useDefaultCategories = ConsentManagerBuilder.defaultProps.useDefaultCategories
     } = this.props
 
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
@@ -232,7 +248,9 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     )
 
     if (mapCustomPreferences) {
-      preferences = customPreferences || initialPreferences || {}
+      preferences = useDefaultCategories
+        ? DEFAULT_CATEGORIES
+        : customPreferences || initialPreferences || {}
       if (
         (initialPrefencesHaveValue && emptyCustomPreferecences) ||
         (defaultDestinationBehavior === 'imply' && workspaceAddedNewDestinations)
@@ -243,7 +261,9 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
         preferences = customPreferences
       }
     } else {
-      preferences = destinationPreferences || initialPreferences
+      preferences = useDefaultCategories
+        ? DEFAULT_CATEGORIES
+        : destinationPreferences || initialPreferences
     }
 
     conditionallyLoadAnalytics({
