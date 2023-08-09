@@ -75,7 +75,7 @@ export default function conditionallyLoadAnalytics({
 
   // Validate if the process is saved with all preferences on false
   if (wd.analytics[1] !== undefined) {
-    let val = wd.analytics[1]
+    const val = wd.analytics[1]
     if (val[0] === 'identify' && !isAnythingEnabled) {
       isAnythingEnabled = true
     }
