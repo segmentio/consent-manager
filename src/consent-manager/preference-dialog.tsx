@@ -280,7 +280,7 @@ export default class PreferenceDialog extends PureComponent<PreferenceDialogProp
                       </label>
                     </InputCell>
                     <RowHeading scope="row">
-                      {translations.targeting_category};{translations.advertising_category}
+                      {translations.targeting_category}; {translations.advertising_category}
                     </RowHeading>
                     <td>
                       <p>{translations.advertising_purpose}</p>
