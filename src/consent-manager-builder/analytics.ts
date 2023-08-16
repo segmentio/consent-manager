@@ -45,6 +45,7 @@ export default function conditionallyLoadAnalytics({
   const wd = window as WindowWithAJS
   const integrations = { All: false, 'Segment.io': true }
   let isAnythingEnabled = false
+  let isEverythingEnabled = true;
 
   if (!destinationPreferences) {
     if (isConsentRequired) {
@@ -69,6 +70,8 @@ export default function conditionallyLoadAnalytics({
     const isEnabled = Boolean(destinationPreferences[destination.id])
     if (isEnabled) {
       isAnythingEnabled = true
+    } else {
+      isEverythingEnabled = false
     }
     integrations[destination.id] = isEnabled
   }
@@ -86,6 +89,10 @@ export default function conditionallyLoadAnalytics({
     return
   }
 
+  // Enable all destinations if everything is enabled
+  if (isEverythingEnabled) {
+    integrations.All = true
+  }
   // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
     const middleware = getConsentMiddleware(
