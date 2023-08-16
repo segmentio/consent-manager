@@ -92,19 +92,30 @@ const Container: React.FC<ContainerProps> = props => {
   } = normalizeDestinations(props.destinations)
 
   const onAcceptAll = () => {
-    const truePreferences = Object.keys(props.preferences).reduce((acc, category) => {
-      acc[category] = true
-      return acc
-    }, {})
+    const truePreferences: CategoryPreferences = props.preferences
+    for (const preferenceName of Object.keys(props.preferences)) {
+      const value = props.preferences[preferenceName]
+      if (typeof value === 'string') {
+        truePreferences[preferenceName] = value
+      } else {
+        truePreferences[preferenceName] = true
+      }
+    }
+
     props.setPreferences(truePreferences)
     return props.saveConsent()
   }
 
   const onDenyAll = () => {
-    const falsePreferences = Object.keys(props.preferences).reduce((acc, category) => {
-      acc[category] = false
-      return acc
-    }, {})
+    const falsePreferences: CategoryPreferences = props.preferences
+    for (const preferenceName of Object.keys(props.preferences)) {
+      const value = props.preferences[preferenceName]
+      if (typeof value === 'string') {
+        falsePreferences[preferenceName] = value
+      } else {
+        falsePreferences[preferenceName] = false
+      }
+    }
 
     props.setPreferences(falsePreferences)
     return props.saveConsent()
