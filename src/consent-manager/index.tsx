@@ -248,7 +248,7 @@ export default class ConsentManager extends PureComponent<ConsentManagerProps, {
     if (customCategories) {
       for (const preferenceName of Object.keys(customCategories)) {
         const value = preferences[preferenceName]
-        if (typeof value === 'boolean') {
+        if (typeof value === 'boolean' || typeof value === 'string') {
           customPreferences[preferenceName] = value
         } else {
           customPreferences[preferenceName] = true
