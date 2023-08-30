@@ -2,7 +2,7 @@
 import cookies, { CookieAttributes } from 'js-cookie'
 import topDomain from '@segment/top-domain'
 import { WindowWithAJS, Preferences, CategoryPreferences } from '../types'
-import { EventEmitter } from 'events'
+import EventEmitter from 'events'
 
 const DEFAULT_COOKIE_NAME = 'tracking-preferences'
 const COOKIE_DEFAULT_EXPIRES = 365
