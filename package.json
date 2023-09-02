@@ -47,7 +47,7 @@
     "lodash": "^4.17.21",
     "nanoid": "^1.0.2",
     "prop-types": "^15.6.1",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
