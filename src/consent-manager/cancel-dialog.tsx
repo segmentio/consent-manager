@@ -4,7 +4,7 @@ import { DefaultButton, RedButton } from './buttons'
 import { PreferenceDialogTemplate } from '../types'
 
 interface Props {
-  innerRef: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement | null) => void
   onBack: () => void
   onConfirm: () => void
   title: React.ReactNode
