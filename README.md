@@ -1,6 +1,11 @@
 # consent-manager [![build status](https://circleci.com/gh/segmentio/consent-manager.svg?style=svg&circle-token=d3a9e0da7a07fb443f1b4e558ad9c60a55dca223)](https://circleci.com/gh/segmentio/consent-manager)
 
+⚠️ **Notice: No Further Development Planned**
+
+Please note that the Consent Manager is provided "as is" and won't receive further updates or support. We recommend exploring other solutions for ongoing development. Thank you for your understanding.
+
 > Drop-in consent management plugin for analytics.js
+
 
 [StoryBook](https://segmentio.github.io/consent-manager/index.html)
 
@@ -29,6 +34,7 @@
 
 ## Segment Consent Manager
 
+
 The Segment Consent Manager is an analytics.js add-on with support to consent management.
 
 At its core, the Consent Manager empowers your visitors to control and customize their tracking preferences on a website. They can opt out entirely of being tracked, or selectively opt out of tools in which they don’t want their information stored.
@@ -37,7 +43,8 @@ It works by taking control of the analytics.js load process to only load destina
 
 _Segment works to ensure the Consent Manager Tech Demo works with most of our product pipeline. We cannot ensure it works in your specific implementation or website. Please contact our Professional Services team for implementation support. Please see the License.txt included._
 
-_Please note, Consent Manager is not currently compatible with [Personas](https://segment.com/docs/personas/). Personas may send user data to destinations the user has explicitly opted out of for data collection._
+_Please note, Consent Manager is not currently compatible with Google Consent Mode or [Segment Engage](https://segment.com/docs/personas/). Engage may send user data to destinations the user has explicitly opted out of for data collection._
+
 
 ### Features
 
