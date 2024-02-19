@@ -1,6 +1,6 @@
 # consent-manager [![build status](https://circleci.com/gh/segmentio/consent-manager.svg?style=svg&circle-token=d3a9e0da7a07fb443f1b4e558ad9c60a55dca223)](https://circleci.com/gh/segmentio/consent-manager)
 
-> Drop-in consent management plugin for analytics.js
+> Drop-in consent management plugin for Analytics.js
 
 [StoryBook](https://segmentio.github.io/consent-manager/index.html)
 
@@ -35,9 +35,20 @@ At its core, the Consent Manager empowers your visitors to control and customize
 
 It works by taking control of the analytics.js load process to only load destinations that the user has consented to and not loading analytics.js at all if the user has opted out of everything. The user's tracking preferences are saved to a cookie and sent as an identify trait (if they haven't opted out of everything) so that you can also access them on the server-side and from destinations (warehouse).
 
-_Segment works to ensure the Consent Manager Tech Demo works with most of our product pipeline. We cannot ensure it works in your specific implementation or website. Please contact our Professional Services team for implementation support. Please see the License.txt included._
 
-_Please note, Consent Manager is not currently compatible with [Personas](https://segment.com/docs/personas/). Personas may send user data to destinations the user has explicitly opted out of for data collection._
+### Important Notes on Compatibility and Support
+
+- **Implementation Support**
+Segment works to ensure the Consent Manager Tech Demo works with most of our product pipeline. We cannot ensure it works in your specific implementation or website. Please contact our Professional Services team for implementation support. Please see the License.txt included.
+
+- **Compatibility with Engage**
+Please be aware that Consent Manager is not currently compatible with Engage. As a result, Engage may send user data to destinations the user has explicitly opted out of for data collection.
+
+
+- **Compatibility with Google Consent Mode**
+At this time, Consent Manager does not support Google Consent Mode out-of-the-box. To achieve compatibility, it is necessary to fork this repository and implement custom modifications. Segment currently has no plans to update Consent Manager for direct compatibility with Google Consent Mode.
+
+For further details or support, please contact our Professional Services team.
 
 ### Features
 
