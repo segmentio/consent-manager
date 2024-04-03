@@ -1,5 +1,12 @@
 # consent-manager [![build status](https://circleci.com/gh/segmentio/consent-manager.svg?style=svg&circle-token=d3a9e0da7a07fb443f1b4e558ad9c60a55dca223)](https://circleci.com/gh/segmentio/consent-manager)
 
+
+ ## ⚠️ Community ⚠️
+This library is community supported. Segment does not manage or update this library. We suggest forking the repo if changes are needed for your project.
+
+We highly recommend using [OneTrust](https://www.onetrust.com/) and Segment's [Consent Manager Wrapper](https://segment.com/docs/privacy/consent-management/consent-in-segment-connections/) to benefit from feature enhancements and ongoing support.
+
+
 > Drop-in consent management plugin for analytics.js
 
 [StoryBook](https://segmentio.github.io/consent-manager/index.html)
