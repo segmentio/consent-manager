@@ -36,6 +36,8 @@ We highly recommend using [OneTrust](https://www.onetrust.com/) and Segment's [C
 
 ## Segment Consent Manager
 
+_The Consent Manager library is seperate to Segment's [Consent Managment](https://segment.com/docs/privacy/consent-management/configure-consent-management/) product. For details on using Segment's [Consent Managment](https://segment.com/docs/privacy/consent-management/configure-consent-management/) product, please see the linked docs._
+
 The Segment Consent Manager is an analytics.js add-on with support to consent management.
 
 At its core, the Consent Manager empowers your visitors to control and customize their tracking preferences on a website. They can opt out entirely of being tracked, or selectively opt out of tools in which they don’t want their information stored.
